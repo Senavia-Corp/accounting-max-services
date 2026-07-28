@@ -130,6 +130,10 @@ for (const f of readdirSync("baseline/posts").sort()) {
     _type: "post",
     title: p.title,
     slug: { _type: "slug", current: p.slug },
+    // El extracto SI existe en el sitio vivo: es el <div> que sigue al <h1>.
+    // El primer rescate no lo capturo y las 10 fichas salian con un
+    // {{PENDIENTE}} visible. Se saca del snapshot de baseline/html/post/.
+    excerpt: p.excerpt || undefined,
     body: toBlocks(p.bodyHtml),
     // publishedAt y authorName se quedan fuera a proposito: la plantilla de
     // Webflow no los liga y no se inventan (R3).

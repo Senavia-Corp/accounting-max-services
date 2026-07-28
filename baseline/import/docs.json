@@ -10,13 +10,13 @@
   "intro": "Navigate IRS audits with clarity, compliance, and expert support.",
   "body": [
    {
-    "_key": "fcf70833b651",
+    "_key": "c93d22d485e8",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Audit Stress? Let Us Be Your Defense!",
-      "_key": "1ad45c34978f"
+      "_key": "fa2a92d68312"
      }
     ],
     "markDefs": [],
@@ -24,13 +24,13 @@
     "style": "h2"
    },
    {
-    "_key": "660ecea43296",
+    "_key": "070aacd4d1db",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "IRS audits can be daunting, but our experts are here to guide you. We handle documentation, representation, and negotiations to resolve issues efficiently.",
-      "_key": "9a94950cbea1"
+      "_key": "5bf33fb9037a"
      }
     ],
     "markDefs": [],
@@ -38,7 +38,7 @@
     "style": "normal"
    },
    {
-    "_key": "03ef0fe176bc",
+    "_key": "351cde07fddc",
     "children": [
      {
       "_type": "span",
@@ -46,13 +46,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "a83e431a25ba"
+      "_key": "c871b08dbf20"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Reduced penalties, accurate records, and peace of mind.",
-      "_key": "f2ea6a8704c8"
+      "_key": "724230ab0480"
      }
     ],
     "markDefs": [],
@@ -62,7 +62,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "3d621d77577c",
+    "_key": "547c7acaa392",
     "children": [
      {
       "_type": "span",
@@ -70,7 +70,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "6748593d83df"
+      "_key": "7c0d29ab7ae4"
      }
     ],
     "markDefs": [],
@@ -80,7 +80,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "53a3c6193120",
+    "_key": "843eef5f7b3c",
     "children": [
      {
       "_type": "span",
@@ -88,13 +88,13 @@
        "em"
       ],
       "text": "What should I do if I’m audited?",
-      "_key": "f98ce69b39f6"
+      "_key": "6ddba09f5051"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Contact us immediately for professional guidance.",
-      "_key": "7e13745db342"
+      "_key": "1989c9dc23db"
      }
     ],
     "markDefs": [],
@@ -104,7 +104,7 @@
     "listItem": "number"
    },
    {
-    "_key": "47b4af6acb0f",
+    "_key": "ddcd2d7061f5",
     "children": [
      {
       "_type": "span",
@@ -112,13 +112,13 @@
        "em"
       ],
       "text": "What does this service cost?",
-      "_key": "6492d7344902"
+      "_key": "55c0bde260a6"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Pricing varies; we offer personalized quotes.",
-      "_key": "b8c821fd7874"
+      "_key": "2b1bf26ae587"
      }
     ],
     "markDefs": [],
@@ -152,13 +152,13 @@
   "intro": "All services available in both English and Spanish for your ease.",
   "body": [
    {
-    "_key": "c7cb56262da6",
+    "_key": "54f114b60c70",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Seamless Service in English & Spanish – Your Comfort Comes First!",
-      "_key": "28a72192f3ec"
+      "_key": "8a1f69bfa1de"
      }
     ],
     "markDefs": [],
@@ -166,13 +166,13 @@
     "style": "h2"
    },
    {
-    "_key": "8626f68b4d46",
+    "_key": "737dda6a3ae1",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We provide all services in both English and Spanish, ensuring clarity and understanding for all clients. Our bilingual support extends to document translation and cultural considerations.",
-      "_key": "90fc101370a9"
+      "_key": "b5b95d55a574"
      }
     ],
     "markDefs": [],
@@ -180,7 +180,7 @@
     "style": "normal"
    },
    {
-    "_key": "cd8759efd276",
+    "_key": "72c9382b86c9",
     "children": [
      {
       "_type": "span",
@@ -188,13 +188,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "38145c8d1f48"
+      "_key": "702236e09e0e"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Clear communication and tailored support.",
-      "_key": "ed0e4031430c"
+      "_key": "b4302b2c1ecd"
      }
     ],
     "markDefs": [],
@@ -204,7 +204,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "dc0df1ddffc7",
+    "_key": "b716116ce54f",
     "children": [
      {
       "_type": "span",
@@ -212,7 +212,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "33bc556b934d"
+      "_key": "c6fbcc18428f"
      }
     ],
     "markDefs": [],
@@ -222,7 +222,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "b929b0b3e4d4",
+    "_key": "7af2a9950c7f",
     "children": [
      {
       "_type": "span",
@@ -230,13 +230,13 @@
        "em"
       ],
       "text": "Can I request bilingual documents?",
-      "_key": "6353e22c3f94"
+      "_key": "ab55c92168ea"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, we offer translations as needed.",
-      "_key": "f06170baa613"
+      "_key": "bd36628a36cb"
      }
     ],
     "markDefs": [],
@@ -246,7 +246,7 @@
     "listItem": "number"
    },
    {
-    "_key": "cf01c0ed92cd",
+    "_key": "d809aca883b3",
     "children": [
      {
       "_type": "span",
@@ -254,13 +254,13 @@
        "em"
       ],
       "text": "Are all services bilingual?",
-      "_key": "66ac5cc59352"
+      "_key": "3d3db53078d5"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, every service is available in English and Spanish.",
-      "_key": "6bbf13427ce3"
+      "_key": "915c662db6e5"
      }
     ],
     "markDefs": [],
@@ -294,13 +294,13 @@
   "intro": "Start your business in Florida with full legal and tax guidance.",
   "body": [
    {
-    "_key": "75e284af1204",
+    "_key": "b45f20ca88d6",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Your Florida Business Starts Here – Incorporate with Ease!",
-      "_key": "d69615eaf418"
+      "_key": "61c75f987b8a"
      }
     ],
     "markDefs": [],
@@ -308,13 +308,13 @@
     "style": "h2"
    },
    {
-    "_key": "ff48f3002bfb",
+    "_key": "6f274112d0bd",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Starting a business? We simplify the process by assisting with LLC, Corporation, or Inc. formation. From filing paperwork to guiding you through state licensing, we ensure every detail is managed with precision.",
-      "_key": "71d1329f5a7a"
+      "_key": "939a7bdd4fae"
      }
     ],
     "markDefs": [],
@@ -322,7 +322,7 @@
     "style": "normal"
    },
    {
-    "_key": "b4fcbca7d177",
+    "_key": "2aac4ec3341a",
     "children": [
      {
       "_type": "span",
@@ -330,13 +330,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "21a4b1d23a3d"
+      "_key": "8f13808f45e7"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Hassle-free setup, reduced risks, and bilingual support.",
-      "_key": "0b309f4a13d3"
+      "_key": "7b2a9f1174e6"
      }
     ],
     "markDefs": [],
@@ -346,7 +346,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "c9589be92b23",
+    "_key": "0ce102a99fd1",
     "children": [
      {
       "_type": "span",
@@ -354,7 +354,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "db8897c04c70"
+      "_key": "d53f73d521ef"
      }
     ],
     "markDefs": [],
@@ -364,7 +364,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "b2c4ca6e636a",
+    "_key": "7847ba81295d",
     "children": [
      {
       "_type": "span",
@@ -372,13 +372,13 @@
        "em"
       ],
       "text": "What’s the best entity for my business?",
-      "_key": "5f9bad47c3dd"
+      "_key": "845f1b5a917f"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " We provide tailored advice based on your goals.",
-      "_key": "c8037a3833a9"
+      "_key": "ce6f9b79e7a6"
      }
     ],
     "markDefs": [],
@@ -388,7 +388,7 @@
     "listItem": "number"
    },
    {
-    "_key": "a9c3d65cc36f",
+    "_key": "086e81387c85",
     "children": [
      {
       "_type": "span",
@@ -396,13 +396,13 @@
        "em"
       ],
       "text": "How long does incorporation take?",
-      "_key": "8ed8484a3088"
+      "_key": "17a1f0bf7a49"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Typically 1–2 weeks.",
-      "_key": "79f6549f622e"
+      "_key": "0cffdd3daa40"
      }
     ],
     "markDefs": [],
@@ -436,7 +436,7 @@
   "intro": "Expert corporate tax preparation and e-filing services to help your business stay IRS-compliant, maximize deductions, and avoid costly penalties.",
   "body": [
    {
-    "_key": "2519890a91f0",
+    "_key": "36a3597dc3a2",
     "children": [
      {
       "_type": "span",
@@ -444,13 +444,13 @@
        "strong"
       ],
       "text": "Tax Compliance Made Simple. Accuracy Guaranteed.",
-      "_key": "e1d83506ccdc"
+      "_key": "6123704ef365"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "4823671dc6ce"
+      "_key": "5cde4d9838ee"
      }
     ],
     "markDefs": [],
@@ -458,13 +458,13 @@
     "style": "h2"
    },
    {
-    "_key": "b1aff1b7a461",
+    "_key": "a7a8cfc65681",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "At ",
-      "_key": "cba17a03e500"
+      "_key": "adc245af7b87"
      },
      {
       "_type": "span",
@@ -472,13 +472,13 @@
        "strong"
       ],
       "text": "Accounting Max Services",
-      "_key": "6fdb8373f18c"
+      "_key": "93e5ab28fb4a"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ", we specialize in professional ",
-      "_key": "6103f59519be"
+      "_key": "38e4785a67ee"
      },
      {
       "_type": "span",
@@ -486,13 +486,13 @@
        "strong"
       ],
       "text": "corporate tax preparation and electronic filing",
-      "_key": "872da95891cc"
+      "_key": "f8e4f169406b"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " for businesses of all sizes—from single-member LLCs to large corporations. With over a decade of experience navigating complex IRS regulations, our goal is simple: help you file accurate returns, claim every deduction you’re entitled to, and remain fully compliant—without the stress.",
-      "_key": "7ca87690dede"
+      "_key": "01799b11441c"
      }
     ],
     "markDefs": [],
@@ -500,7 +500,7 @@
     "style": "normal"
    },
    {
-    "_key": "d010a3dd6f1d",
+    "_key": "233a1dcbc9da",
     "children": [
      {
       "_type": "span",
@@ -508,13 +508,13 @@
        "strong"
       ],
       "text": "🔍 What’s Included in Our Corporate Tax Services?",
-      "_key": "2fee16f7e360"
+      "_key": "b217a816bb4a"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "58908aedcf46"
+      "_key": "2cd48ea2f679"
      }
     ],
     "markDefs": [],
@@ -522,13 +522,13 @@
     "style": "h3"
    },
    {
-    "_key": "277f82abfd52",
+    "_key": "eb710586ba50",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We provide a full-service approach tailored to your business structure and industry. Our corporate tax preparation service includes:",
-      "_key": "4bf863bdcefe"
+      "_key": "4b4676d5b782"
      }
     ],
     "markDefs": [],
@@ -536,13 +536,13 @@
     "style": "normal"
    },
    {
-    "_key": "d90b10fb78eb",
+    "_key": "3e66b6f3dad6",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "19b15863e6e9"
+      "_key": "dfb1bd3fb3cd"
      },
      {
       "_type": "span",
@@ -550,13 +550,13 @@
        "strong"
       ],
       "text": "Preparation of Federal and State Business Tax Returns",
-      "_key": "4c9e43f17d94"
+      "_key": "2830a903cb5a"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " (Forms 1120, 1120-S, etc.)",
-      "_key": "78c558087882"
+      "_key": "461f23e474a2"
      }
     ],
     "markDefs": [],
@@ -566,13 +566,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "f45346fc6b34",
+    "_key": "30a2e543fd6e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "2cedc5d72e6b"
+      "_key": "761482838111"
      },
      {
       "_type": "span",
@@ -580,7 +580,7 @@
        "strong"
       ],
       "text": "Electronic Filing (E-File) for Faster Processing",
-      "_key": "b1ae79dddafc"
+      "_key": "d93e29ba67e7"
      }
     ],
     "markDefs": [],
@@ -590,13 +590,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "776eab487ce9",
+    "_key": "05c70e3ab070",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "3e7e81cb9a55"
+      "_key": "a69f9e84eef7"
      },
      {
       "_type": "span",
@@ -604,7 +604,7 @@
        "strong"
       ],
       "text": "Tax Planning and Strategy Review",
-      "_key": "b45988be91b7"
+      "_key": "2fd107568a34"
      }
     ],
     "markDefs": [],
@@ -614,13 +614,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "2b51dff76cd8",
+    "_key": "9b9890dcceb6",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "69051d406df8"
+      "_key": "502a1840f493"
      },
      {
       "_type": "span",
@@ -628,7 +628,7 @@
        "strong"
       ],
       "text": "Identification of Deductions and Tax Credits",
-      "_key": "69905dc25b29"
+      "_key": "5f94712c168e"
      }
     ],
     "markDefs": [],
@@ -638,13 +638,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "d1a9f87163a8",
+    "_key": "deacef28ca7c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "eb226fa2b353"
+      "_key": "85083802401e"
      },
      {
       "_type": "span",
@@ -652,7 +652,7 @@
        "strong"
       ],
       "text": "Multi-State Filing Support",
-      "_key": "d36fcf33216c"
+      "_key": "03b1c9857926"
      }
     ],
     "markDefs": [],
@@ -662,13 +662,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "4cb270c113da",
+    "_key": "d7c39a2bb6cd",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "961c4230739b"
+      "_key": "21fe73a0f320"
      },
      {
       "_type": "span",
@@ -676,7 +676,7 @@
        "strong"
       ],
       "text": "Late and Amended Return Filing",
-      "_key": "00d255e34fdb"
+      "_key": "750d77c3f5e1"
      }
     ],
     "markDefs": [],
@@ -686,13 +686,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "95a633db66b7",
+    "_key": "183b3879199e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "103720214042"
+      "_key": "c3d76afde40a"
      },
      {
       "_type": "span",
@@ -700,7 +700,7 @@
        "strong"
       ],
       "text": "Audit Assistance and IRS Representation",
-      "_key": "189fe54a1e00"
+      "_key": "d29787c0ef0b"
      }
     ],
     "markDefs": [],
@@ -710,13 +710,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "7c7fe82a3c67",
+    "_key": "04c3beb8011c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✅ ",
-      "_key": "a4d75c9a74c3"
+      "_key": "cc74a1048f39"
      },
      {
       "_type": "span",
@@ -724,7 +724,7 @@
        "strong"
       ],
       "text": "Year-Round Support & Advisory",
-      "_key": "389d8732c751"
+      "_key": "f021e9670c01"
      }
     ],
     "markDefs": [],
@@ -734,13 +734,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "29ec7febf773",
+    "_key": "47b211360479",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Whether you’re closing your fiscal year or managing quarterly payments, we ensure your tax obligations are met—accurately and on time.",
-      "_key": "bf11124a283b"
+      "_key": "287b0d9042e6"
      }
     ],
     "markDefs": [],
@@ -748,7 +748,7 @@
     "style": "normal"
    },
    {
-    "_key": "08e1c3fc13c6",
+    "_key": "1c8f5ae3c738",
     "children": [
      {
       "_type": "span",
@@ -756,13 +756,13 @@
        "strong"
       ],
       "text": "🧩 Who We Serve",
-      "_key": "4cc550df4677"
+      "_key": "3e993bbd8f0c"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "8dde1728c64c"
+      "_key": "adf93a71a3b9"
      }
     ],
     "markDefs": [],
@@ -770,13 +770,13 @@
     "style": "h3"
    },
    {
-    "_key": "a8a1f708eee6",
+    "_key": "3f764a43a380",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Our team works with a wide range of corporate clients, including:",
-      "_key": "2b21efe01003"
+      "_key": "644a921645a7"
      }
     ],
     "markDefs": [],
@@ -784,13 +784,13 @@
     "style": "normal"
    },
    {
-    "_key": "f1565b6bc7ae",
+    "_key": "806727628366",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "S Corporations (1120-S)",
-      "_key": "0836bfd8c731"
+      "_key": "8fc079a2c9f4"
      }
     ],
     "markDefs": [],
@@ -800,13 +800,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "98ef20d50af6",
+    "_key": "5257dfca8bb0",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "C Corporations (1120)",
-      "_key": "badbeb668b53"
+      "_key": "a6c7ed71edf4"
      }
     ],
     "markDefs": [],
@@ -816,13 +816,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "3fd1f7bf6b45",
+    "_key": "2a9008bbb3c4",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Limited Liability Companies (LLCs)",
-      "_key": "091f40eb59b2"
+      "_key": "c4d0e536821d"
      }
     ],
     "markDefs": [],
@@ -832,13 +832,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "bac2fe692591",
+    "_key": "47896a42dcb5",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Partnerships (1065)",
-      "_key": "8100ac3de4e2"
+      "_key": "18d51f17c8f2"
      }
     ],
     "markDefs": [],
@@ -848,13 +848,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "69b11dd20381",
+    "_key": "c4cc41844185",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Nonprofits (990)",
-      "_key": "9e74c91f4ad1"
+      "_key": "19aa87adb2b9"
      }
     ],
     "markDefs": [],
@@ -864,13 +864,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "ab1a7b6ec1b3",
+    "_key": "88c105864742",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "International business owners operating in the U.S.",
-      "_key": "b3bbe2859905"
+      "_key": "cb5ed0a701ba"
      }
     ],
     "markDefs": [],
@@ -880,7 +880,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "c0c3aa70cca9",
+    "_key": "2beb46e765fb",
     "children": [
      {
       "_type": "span",
@@ -888,13 +888,13 @@
        "strong"
       ],
       "text": "💼 Why Professional Corporate Tax Help Matters",
-      "_key": "7ffe627c9717"
+      "_key": "440b179f31e5"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "470506f8ac05"
+      "_key": "61c99a994afd"
      }
     ],
     "markDefs": [],
@@ -902,13 +902,13 @@
     "style": "h3"
    },
    {
-    "_key": "0f5bc73a43e1",
+    "_key": "cd5124f91f4c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Running a business means managing risk, and taxes are no exception. Filing incorrectly, missing deadlines, or failing to apply available deductions can lead to penalties or audits. Working with experienced tax professionals ensures:",
-      "_key": "3a3079a79fd7"
+      "_key": "63e0c2ab9b8e"
      }
     ],
     "markDefs": [],
@@ -916,13 +916,13 @@
     "style": "normal"
    },
    {
-    "_key": "b1eacffe38b7",
+    "_key": "2e3cc03660b8",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "🎯 ",
-      "_key": "b4ee34739c88"
+      "_key": "270754df8e1c"
      },
      {
       "_type": "span",
@@ -930,13 +930,13 @@
        "strong"
       ],
       "text": "Peace of Mind",
-      "_key": "99c7f22695a2"
+      "_key": "dc9611103820"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Avoid IRS issues and stay compliant",
-      "_key": "5a4785537d51"
+      "_key": "f75297eb1efa"
      }
     ],
     "markDefs": [],
@@ -946,13 +946,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e63df209cfbc",
+    "_key": "d007be8e1203",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "💰 ",
-      "_key": "0a405f108a81"
+      "_key": "a8ef64415f6d"
      },
      {
       "_type": "span",
@@ -960,13 +960,13 @@
        "strong"
       ],
       "text": "Tax Savings",
-      "_key": "c5fd9b5f6133"
+      "_key": "84aa3e2baabe"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Identify deductions, credits, and loss carryforwards",
-      "_key": "2b5e80c9be6d"
+      "_key": "947d249cf4c8"
      }
     ],
     "markDefs": [],
@@ -976,13 +976,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "ffa066f98396",
+    "_key": "0b4c23d4c2b8",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "📈 ",
-      "_key": "985ff76a1c2c"
+      "_key": "8e37b60287d3"
      },
      {
       "_type": "span",
@@ -990,13 +990,13 @@
        "strong"
       ],
       "text": "Strategic Planning",
-      "_key": "0fac222474f8"
+      "_key": "5c883ba193d3"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Align your tax strategy with your business goals",
-      "_key": "1024b5c55c67"
+      "_key": "50d0fe6b0544"
      }
     ],
     "markDefs": [],
@@ -1006,13 +1006,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "d21fe54436ef",
+    "_key": "5a2d21253a1d",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "🔒 ",
-      "_key": "72ceb1964121"
+      "_key": "ef493bb9b8ae"
      },
      {
       "_type": "span",
@@ -1020,13 +1020,13 @@
        "strong"
       ],
       "text": "Confidentiality & Accuracy",
-      "_key": "6cb71739c61b"
+      "_key": "62942a6146db"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Your data is safe and professionally handled",
-      "_key": "67d72b3bd411"
+      "_key": "70c30d7dd79a"
      }
     ],
     "markDefs": [],
@@ -1036,7 +1036,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "12fd35acbce3",
+    "_key": "974158b4b51c",
     "children": [
      {
       "_type": "span",
@@ -1044,13 +1044,13 @@
        "strong"
       ],
       "text": "🧠 FAQs – Corporate Tax Preparation",
-      "_key": "15fe70f2e585"
+      "_key": "53b925b9b68e"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "08c5cc1bf67e"
+      "_key": "f7f149e9f5f6"
      }
     ],
     "markDefs": [],
@@ -1058,7 +1058,7 @@
     "style": "h3"
    },
    {
-    "_key": "5ba14c4f2b50",
+    "_key": "d5bbaad5a14b",
     "children": [
      {
       "_type": "span",
@@ -1066,7 +1066,7 @@
        "strong"
       ],
       "text": "What documents do I need to provide?",
-      "_key": "d78f209fbc1f"
+      "_key": "672266240601"
      }
     ],
     "markDefs": [],
@@ -1074,13 +1074,13 @@
     "style": "normal"
    },
    {
-    "_key": "56646c40c66b",
+    "_key": "96d8095772b0",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We typically require:",
-      "_key": "d7a94137d637"
+      "_key": "6b1feb6753b2"
      }
     ],
     "markDefs": [],
@@ -1088,13 +1088,13 @@
     "style": "normal"
    },
    {
-    "_key": "b605880ba789",
+    "_key": "c996fd177b38",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Income and expense reports",
-      "_key": "ccc7cea4807d"
+      "_key": "4fb3139b3cea"
      }
     ],
     "markDefs": [],
@@ -1104,13 +1104,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "3e83400b9e62",
+    "_key": "3da181302c04",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Profit and loss statements",
-      "_key": "a88981f318a6"
+      "_key": "e551c82d0de0"
      }
     ],
     "markDefs": [],
@@ -1120,13 +1120,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "c234ebf1c214",
+    "_key": "a0009a28f3df",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Balance sheets",
-      "_key": "68939b210c54"
+      "_key": "f6699ba22864"
      }
     ],
     "markDefs": [],
@@ -1136,13 +1136,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "f3e154ec7f36",
+    "_key": "b024a8aeb0d5",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Prior-year tax returns",
-      "_key": "fd280104372a"
+      "_key": "894f01b6f026"
      }
     ],
     "markDefs": [],
@@ -1152,13 +1152,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "d4782dda209c",
+    "_key": "76dbe1252b9f",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Payroll summaries (if applicable)",
-      "_key": "0ee9f2f78772"
+      "_key": "acbabef1c690"
      }
     ],
     "markDefs": [],
@@ -1168,13 +1168,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "afdab6f91ebc",
+    "_key": "a00e0faf1626",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Any 1099s or other tax forms received",
-      "_key": "97886a332412"
+      "_key": "3a8decb745a1"
      }
     ],
     "markDefs": [],
@@ -1184,7 +1184,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "8e76e43dff31",
+    "_key": "c8a8bd4d8d92",
     "children": [
      {
       "_type": "span",
@@ -1192,7 +1192,7 @@
        "strong"
       ],
       "text": "Do you help with multiple years or past-due returns?",
-      "_key": "d216733b648b"
+      "_key": "24539d2a31c9"
      }
     ],
     "markDefs": [],
@@ -1200,13 +1200,13 @@
     "style": "normal"
    },
    {
-    "_key": "36d6fd16f098",
+    "_key": "a020fbee7cce",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Yes. We specialize in helping businesses catch up with missed filings or correct previous returns through amended filings.\n",
-      "_key": "17b675646c90"
+      "_key": "bcb3089f33e7"
      }
     ],
     "markDefs": [],
@@ -1214,7 +1214,7 @@
     "style": "normal"
    },
    {
-    "_key": "25e97b0a173c",
+    "_key": "1ed383310b27",
     "children": [
      {
       "_type": "span",
@@ -1222,7 +1222,7 @@
        "strong"
       ],
       "text": "Can you help me reduce my tax bill legally?",
-      "_key": "b82bcfc8ce07"
+      "_key": "b866465a9efe"
      }
     ],
     "markDefs": [],
@@ -1230,13 +1230,13 @@
     "style": "normal"
    },
    {
-    "_key": "3394069305a9",
+    "_key": "a8055ca28090",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Absolutely. We look for every opportunity to reduce your tax burden through eligible deductions, credits, and entity-specific strategies.\n",
-      "_key": "3fd3409f7d21"
+      "_key": "e3f2f1cc48b7"
      }
     ],
     "markDefs": [],
@@ -1244,7 +1244,7 @@
     "style": "normal"
    },
    {
-    "_key": "f9f802cec134",
+    "_key": "851459f55b09",
     "children": [
      {
       "_type": "span",
@@ -1252,7 +1252,7 @@
        "strong"
       ],
       "text": "Is your service available remotely?",
-      "_key": "6cfbc370327f"
+      "_key": "9ba85ff73de5"
      }
     ],
     "markDefs": [],
@@ -1260,13 +1260,13 @@
     "style": "normal"
    },
    {
-    "_key": "4b2713ed6d53",
+    "_key": "5266606bec4b",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Yes. We serve clients nationwide and internationally. All services can be completed securely online.\n",
-      "_key": "1b539c254027"
+      "_key": "c7a86536fb82"
      }
     ],
     "markDefs": [],
@@ -1274,7 +1274,7 @@
     "style": "normal"
    },
    {
-    "_key": "2a41a45afb87",
+    "_key": "be756c6acafc",
     "children": [
      {
       "_type": "span",
@@ -1282,13 +1282,13 @@
        "strong"
       ],
       "text": "🌎 Serving Clients Across the U.S. and Abroad",
-      "_key": "41a20af94e38"
+      "_key": "ff3e0b012e26"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "bb855db75624"
+      "_key": "9dd54a011336"
      }
     ],
     "markDefs": [],
@@ -1296,13 +1296,13 @@
     "style": "h3"
    },
    {
-    "_key": "3aebc208f49f",
+    "_key": "1c28435dd62c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Our corporate tax solutions are trusted by entrepreneurs, small businesses, and corporations nationwide. Based in ",
-      "_key": "787cfbce0f69"
+      "_key": "8595451e3c79"
      },
      {
       "_type": "span",
@@ -1310,13 +1310,13 @@
        "strong"
       ],
       "text": "Coral Springs, FL",
-      "_key": "301080bbac61"
+      "_key": "8bbc2442b49c"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ", we offer ",
-      "_key": "680a8b2e8a1f"
+      "_key": "4d734c5d2f4b"
      },
      {
       "_type": "span",
@@ -1324,13 +1324,13 @@
        "strong"
       ],
       "text": "bilingual support in English and Spanish",
-      "_key": "cf2c4613b6b2"
+      "_key": "514b6909a276"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ", and remote services to serve you wherever you are.",
-      "_key": "3d29b2b66cc7"
+      "_key": "7fc6f29b01d9"
      }
     ],
     "markDefs": [],
@@ -1362,13 +1362,13 @@
   "intro": "We help you get your EIN fast and start your business right.",
   "body": [
    {
-    "_key": "c5c1b0463e5c",
+    "_key": "8fc5c8c3a687",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Fast and Reliable EIN Services – Get Your Business Moving!",
-      "_key": "c64d94e35704"
+      "_key": "ef337667fa64"
      }
     ],
     "markDefs": [],
@@ -1376,13 +1376,13 @@
     "style": "h2"
    },
    {
-    "_key": "7f1e56ab2a41",
+    "_key": "862465f7720d",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "An EIN is essential for most businesses. We streamline the process, ensuring quick and accurate applications so you can focus on running your business.",
-      "_key": "bd7e070a27aa"
+      "_key": "6cfb48518685"
      }
     ],
     "markDefs": [],
@@ -1390,7 +1390,7 @@
     "style": "normal"
    },
    {
-    "_key": "44ab11b84f14",
+    "_key": "ce80cdaf1709",
     "children": [
      {
       "_type": "span",
@@ -1398,13 +1398,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "7e342e7a06d7"
+      "_key": "e6cba6b39f66"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Faster business operations and hassle-free compliance.",
-      "_key": "9a74dbe8ee38"
+      "_key": "50869ae8e46a"
      }
     ],
     "markDefs": [],
@@ -1414,7 +1414,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "b5dd33fd86c5",
+    "_key": "55577eb0ff54",
     "children": [
      {
       "_type": "span",
@@ -1422,7 +1422,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "766a863664b5"
+      "_key": "a0f90f2db83f"
      }
     ],
     "markDefs": [],
@@ -1432,7 +1432,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "d94244872dd5",
+    "_key": "0aa9eb667ec5",
     "children": [
      {
       "_type": "span",
@@ -1440,13 +1440,13 @@
        "em"
       ],
       "text": "How long does it take to get an EIN?",
-      "_key": "a923c951a5ab"
+      "_key": "b87de63b6e3f"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Usually 1–2 business days.",
-      "_key": "e3a2cc071fad"
+      "_key": "5b25821d6ecc"
      }
     ],
     "markDefs": [],
@@ -1456,7 +1456,7 @@
     "listItem": "number"
    },
    {
-    "_key": "918ead013289",
+    "_key": "0f7491ca9f2d",
     "children": [
      {
       "_type": "span",
@@ -1464,13 +1464,13 @@
        "em"
       ],
       "text": "Do I need an EIN?",
-      "_key": "42d960505f58"
+      "_key": "8e1e35b0c39f"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, for hiring employees or most business operations.",
-      "_key": "3c034b5a23e7"
+      "_key": "a613391f6e57"
      }
     ],
     "markDefs": [],
@@ -1504,13 +1504,13 @@
   "intro": "Get professional financial statements to guide smart decisions.",
   "body": [
    {
-    "_key": "551171f3be8a",
+    "_key": "66a8cea6ca5c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Professional Financial Statements for Better Business Decisions!",
-      "_key": "d42ae4624402"
+      "_key": "9032d36c6204"
      }
     ],
     "markDefs": [],
@@ -1518,13 +1518,13 @@
     "style": "h2"
    },
    {
-    "_key": "0313f001ef86",
+    "_key": "6ea3c767715e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We prepare detailed financial reports, including balance sheets, income statements, and cash flow statements. These are ideal for loans, investors, or assessing business performance.",
-      "_key": "7c3489290c93"
+      "_key": "97b8a52e8fd7"
      }
     ],
     "markDefs": [],
@@ -1532,7 +1532,7 @@
     "style": "normal"
    },
    {
-    "_key": "f251703c36e9",
+    "_key": "f58f67b61bcd",
     "children": [
      {
       "_type": "span",
@@ -1540,13 +1540,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "97f855444da6"
+      "_key": "08f4af48e64a"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Clear insights and compliance with industry standards.",
-      "_key": "922a0515459c"
+      "_key": "8b96cecf6851"
      }
     ],
     "markDefs": [],
@@ -1556,7 +1556,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "f2059e77f706",
+    "_key": "80dc51ba8e14",
     "children": [
      {
       "_type": "span",
@@ -1564,7 +1564,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "871a8129ee14"
+      "_key": "e699a6d37bdf"
      }
     ],
     "markDefs": [],
@@ -1574,7 +1574,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "255eaa5a50af",
+    "_key": "7844648690d3",
     "children": [
      {
       "_type": "span",
@@ -1582,13 +1582,13 @@
        "em"
       ],
       "text": "Why do I need financial statements?",
-      "_key": "1bd7fa1a8f8b"
+      "_key": "6cce1525a551"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " To secure funding or evaluate performance.",
-      "_key": "e57b56542f78"
+      "_key": "8cbef0a2eac6"
      }
     ],
     "markDefs": [],
@@ -1598,7 +1598,7 @@
     "listItem": "number"
    },
    {
-    "_key": "dcfc1c810906",
+    "_key": "1ba2f11b2dbb",
     "children": [
      {
       "_type": "span",
@@ -1606,13 +1606,13 @@
        "em"
       ],
       "text": "Are these accepted by banks?",
-      "_key": "5297581a5758"
+      "_key": "f7f61b513f84"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, our reports meet banking standards.",
-      "_key": "9c29027215fb"
+      "_key": "f03a9e5d448e"
      }
     ],
     "markDefs": [],
@@ -1646,13 +1646,13 @@
   "intro": "Apply for your IRS ITIN quickly—even if you don’t have an SSN.",
   "body": [
    {
-    "_key": "3efb005854ed",
+    "_key": "531ec6aeb70c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "ITIN Services Made Simple – Get Compliant Quickly!",
-      "_key": "524f443cd7d8"
+      "_key": "aee59070c370"
      }
     ],
     "markDefs": [],
@@ -1660,13 +1660,13 @@
     "style": "h2"
    },
    {
-    "_key": "e769696405c0",
+    "_key": "7d4009cfd0c9",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Need an Individual Taxpayer Identification Number (ITIN)? We guide you through the process to ensure accurate applications and renewals for individuals without an SSN.",
-      "_key": "597200a9d475"
+      "_key": "dc62cbbea2d0"
      }
     ],
     "markDefs": [],
@@ -1674,7 +1674,7 @@
     "style": "normal"
    },
    {
-    "_key": "26b27e5f3a43",
+    "_key": "d991da6f11dc",
     "children": [
      {
       "_type": "span",
@@ -1682,13 +1682,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "f8e0e984dba3"
+      "_key": "f45e72bcccee"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " IRS compliance and smooth processing.",
-      "_key": "d437975014d3"
+      "_key": "780cadaabe5b"
      }
     ],
     "markDefs": [],
@@ -1698,7 +1698,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "f0d8945de15d",
+    "_key": "e6d7797992da",
     "children": [
      {
       "_type": "span",
@@ -1706,7 +1706,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "efb8acb91031"
+      "_key": "7831d53a420d"
      }
     ],
     "markDefs": [],
@@ -1716,7 +1716,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "f2ab4358c1ea",
+    "_key": "6f636b3cf991",
     "children": [
      {
       "_type": "span",
@@ -1724,13 +1724,13 @@
        "em"
       ],
       "text": "How long does an ITIN take?",
-      "_key": "208b9e1960e7"
+      "_key": "d9fc76bcd632"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Processing typically takes 6–8 weeks.",
-      "_key": "467387dadcce"
+      "_key": "71c2fc970f3a"
      }
     ],
     "markDefs": [],
@@ -1740,7 +1740,7 @@
     "listItem": "number"
    },
    {
-    "_key": "8d37e1f5a0b9",
+    "_key": "35722c5f45b5",
     "children": [
      {
       "_type": "span",
@@ -1748,13 +1748,13 @@
        "em"
       ],
       "text": "Do you handle renewals?",
-      "_key": "6f6b08a47065"
+      "_key": "84889a35ee7c"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, we assist with ITIN renewals.",
-      "_key": "4811cf56352b"
+      "_key": "556c3f77b230"
      }
     ],
     "markDefs": [],
@@ -1788,13 +1788,13 @@
   "intro": "Track & manage your business finances with expert  support.",
   "body": [
    {
-    "_key": "aa27de27c9a1",
+    "_key": "83530751dbd4",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Stay Organized and In Control with Expert Bookkeeping!",
-      "_key": "e7546aed0207"
+      "_key": "d7dc4b90c44f"
      }
     ],
     "markDefs": [],
@@ -1802,13 +1802,13 @@
     "style": "h2"
    },
    {
-    "_key": "ce7313cb2ab8",
+    "_key": "1bd0c2130133",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Our monthly bookkeeping services help businesses maintain accurate financial records, track income/expenses, and prepare monthly reports. With our support, you can make informed decisions and focus on growth.",
-      "_key": "1fdeb70a4e8e"
+      "_key": "dfe6df54d0d4"
      }
     ],
     "markDefs": [],
@@ -1816,7 +1816,7 @@
     "style": "normal"
    },
    {
-    "_key": "136f28f2d899",
+    "_key": "c566881aeda9",
     "children": [
      {
       "_type": "span",
@@ -1824,13 +1824,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "98deaa762387"
+      "_key": "7355369d6990"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Financial clarity, compliance, and decision-making support.",
-      "_key": "3bf3b410ea75"
+      "_key": "1c2c6a4173f6"
      }
     ],
     "markDefs": [],
@@ -1840,7 +1840,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e2e475ab8f20",
+    "_key": "133806ace73f",
     "children": [
      {
       "_type": "span",
@@ -1848,7 +1848,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "318d9e4fbc26"
+      "_key": "dfca8edd7da3"
      }
     ],
     "markDefs": [],
@@ -1858,7 +1858,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "102114417997",
+    "_key": "c6f356a01a76",
     "children": [
      {
       "_type": "span",
@@ -1866,13 +1866,13 @@
        "em"
       ],
       "text": "What tools do you use?",
-      "_key": "f361742a6ff3"
+      "_key": "3135a6ebc4e2"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " QuickBooks and industry-standard software.",
-      "_key": "50ced3a4efdf"
+      "_key": "33d05ccc3142"
      }
     ],
     "markDefs": [],
@@ -1882,7 +1882,7 @@
     "listItem": "number"
    },
    {
-    "_key": "9fd7dff62143",
+    "_key": "fd8f43639cbc",
     "children": [
      {
       "_type": "span",
@@ -1890,13 +1890,13 @@
        "em"
       ],
       "text": "Can I access my reports?",
-      "_key": "5c2a8d6555b3"
+      "_key": "82e2525b0d07"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, secure online access is available.",
-      "_key": "34967179c545"
+      "_key": "0230dd3aede4"
      }
     ],
     "markDefs": [],
@@ -1930,13 +1930,13 @@
   "intro": "Certified notary services for your legal and business documents.",
   "body": [
    {
-    "_key": "da19be40b012",
+    "_key": "f36c6c1101f9",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Certified Notary Services You Can Trust!",
-      "_key": "2de8c4681f17"
+      "_key": "bf392d2667d4"
      }
     ],
     "markDefs": [],
@@ -1944,13 +1944,13 @@
     "style": "h2"
    },
    {
-    "_key": "0027a398d549",
+    "_key": "c7af63964f31",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "From contracts to affidavits, we offer professional notary services in English and Spanish. We ensure your documents are certified promptly and accurately.",
-      "_key": "b62bdd7526ee"
+      "_key": "9e96f1e08181"
      }
     ],
     "markDefs": [],
@@ -1958,7 +1958,7 @@
     "style": "normal"
    },
    {
-    "_key": "d87542b4d8d7",
+    "_key": "141a85f0e39b",
     "children": [
      {
       "_type": "span",
@@ -1966,13 +1966,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "1fdb03e04ad0"
+      "_key": "11f088514ea4"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Reliable certification and bilingual convenience.",
-      "_key": "2cf17fd76d30"
+      "_key": "3ad1592d1cdd"
      }
     ],
     "markDefs": [],
@@ -1982,7 +1982,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e4ff9d5b9134",
+    "_key": "e5b82bdf3623",
     "children": [
      {
       "_type": "span",
@@ -1990,7 +1990,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "12183bb4ff44"
+      "_key": "34ff1d221fe1"
      }
     ],
     "markDefs": [],
@@ -2000,7 +2000,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "5f6283bf605b",
+    "_key": "12379d8fb754",
     "children": [
      {
       "_type": "span",
@@ -2008,13 +2008,13 @@
        "em"
       ],
       "text": "Do I need an appointment?",
-      "_key": "c8bc9aab34a2"
+      "_key": "99916531d8f1"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Walk-ins are welcome, but appointments are recommended.",
-      "_key": "9a1a8754af86"
+      "_key": "f6399ff2a4bd"
      }
     ],
     "markDefs": [],
@@ -2024,7 +2024,7 @@
     "listItem": "number"
    },
    {
-    "_key": "574a1c74f5db",
+    "_key": "6495eccd85d4",
     "children": [
      {
       "_type": "span",
@@ -2032,13 +2032,13 @@
        "em"
       ],
       "text": "What are the costs?",
-      "_key": "31cea02fb160"
+      "_key": "237fd4a23dc1"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Pricing depends on document type.",
-      "_key": "aeb421aae767"
+      "_key": "9be2d0f2e500"
      }
     ],
     "markDefs": [],
@@ -2072,7 +2072,7 @@
   "intro": "Expert corporate tax filing for LLCs, S-Corps, and C-Corps. Stay compliant, save on taxes, and simplify your corporate filings. At Accounting Max Services, we provide accurate, stress-free business tax preparation and e-filing.",
   "body": [
    {
-    "_key": "80c2e33fddb1",
+    "_key": "5044613f0c75",
     "children": [
      {
       "_type": "span",
@@ -2080,13 +2080,13 @@
        "strong"
       ],
       "text": "💼 Full-Service Corporate Tax Preparation",
-      "_key": "96eb2e9f3277"
+      "_key": "97fe8ec452ca"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "5fd5618df46f"
+      "_key": "4cb42cd46e93"
      }
     ],
     "markDefs": [],
@@ -2094,13 +2094,13 @@
     "style": "h3"
    },
    {
-    "_key": "6c5c76abbd89",
+    "_key": "0d280358b281",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We handle the entire process—from gathering your documents to securely e-filing your corporate returns—so you can focus on running your business. Whether you operate as an LLC, S Corporation, or C Corporation, we ensure your tax return is accurate, compliant with IRS rules, and optimized for maximum deductions.",
-      "_key": "3e2cfb7f5bfc"
+      "_key": "db9691c53c8b"
      }
     ],
     "markDefs": [],
@@ -2108,7 +2108,7 @@
     "style": "normal"
    },
    {
-    "_key": "5c56e0f8a134",
+    "_key": "51efa990492f",
     "children": [
      {
       "_type": "span",
@@ -2116,13 +2116,13 @@
        "strong"
       ],
       "text": "🧾 What’s Included",
-      "_key": "8547638d566c"
+      "_key": "afa930364127"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "612cbf235f6e"
+      "_key": "591c4849bf46"
      }
     ],
     "markDefs": [],
@@ -2130,13 +2130,13 @@
     "style": "h3"
    },
    {
-    "_key": "c590a6362ecc",
+    "_key": "e0b3c4ae9cf3",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Preparation of Federal and State Corporate Returns (1120, 1120-S)",
-      "_key": "24a1409c5dfd"
+      "_key": "2f761f25a059"
      }
     ],
     "markDefs": [],
@@ -2144,13 +2144,13 @@
     "style": "normal"
    },
    {
-    "_key": "e4101ab68195",
+    "_key": "b8bb8b6875fd",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Fast and Secure E-Filing",
-      "_key": "1a8d05341682"
+      "_key": "71ac7b60b877"
      }
     ],
     "markDefs": [],
@@ -2158,13 +2158,13 @@
     "style": "normal"
    },
    {
-    "_key": "7927a3bbd1e3",
+    "_key": "d6113d4079d9",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Tax Planning and Entity Structure Review",
-      "_key": "db5613806afa"
+      "_key": "2567ed8e31b0"
      }
     ],
     "markDefs": [],
@@ -2172,13 +2172,13 @@
     "style": "normal"
    },
    {
-    "_key": "7d2448c4badf",
+    "_key": "6765396efdd2",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Multi-State Filing Support",
-      "_key": "2317914083d8"
+      "_key": "e430aa9441af"
      }
     ],
     "markDefs": [],
@@ -2186,13 +2186,13 @@
     "style": "normal"
    },
    {
-    "_key": "e9779333680b",
+    "_key": "7e15c9381185",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Amended Returns and Late Filings",
-      "_key": "baeeaa68ea9f"
+      "_key": "6f32b8d6db13"
      }
     ],
     "markDefs": [],
@@ -2200,13 +2200,13 @@
     "style": "normal"
    },
    {
-    "_key": "c46f4986a559",
+    "_key": "ee8f35675d86",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Year-Round Advisory and IRS Correspondence",
-      "_key": "3b8b2bddf697"
+      "_key": "e1cfb4ef1e4c"
      }
     ],
     "markDefs": [],
@@ -2214,7 +2214,7 @@
     "style": "normal"
    },
    {
-    "_key": "23b711227bc8",
+    "_key": "f91c9e1bb4e4",
     "children": [
      {
       "_type": "span",
@@ -2222,13 +2222,13 @@
        "strong"
       ],
       "text": "🛡️ Who We Serve",
-      "_key": "d4be89d5abf5"
+      "_key": "4c805e22dc42"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "777aa98aeda0"
+      "_key": "3ab79d5ac249"
      }
     ],
     "markDefs": [],
@@ -2236,13 +2236,13 @@
     "style": "h3"
    },
    {
-    "_key": "7ee39b92a121",
+    "_key": "6bacb14ccabb",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We work with a wide range of businesses and corporate structures:",
-      "_key": "6d11f148b3d1"
+      "_key": "c918449f472a"
      }
     ],
     "markDefs": [],
@@ -2250,13 +2250,13 @@
     "style": "normal"
    },
    {
-    "_key": "af4e4e863862",
+    "_key": "e0416aa87bd2",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "S Corporations (Form 1120-S)",
-      "_key": "62715808556c"
+      "_key": "385c6b172c80"
      }
     ],
     "markDefs": [],
@@ -2266,13 +2266,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "6a1c04b92e4a",
+    "_key": "076508e9ec0a",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "C Corporations (Form 1120)",
-      "_key": "e0b2128b808e"
+      "_key": "cc50f70f85f6"
      }
     ],
     "markDefs": [],
@@ -2282,13 +2282,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "cc0efa57bef3",
+    "_key": "6922b12a5adb",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Multi-member LLCs",
-      "_key": "be6d55f07965"
+      "_key": "35c8e8468ec4"
      }
     ],
     "markDefs": [],
@@ -2298,13 +2298,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "b0839c95b8eb",
+    "_key": "89d2d6b16d20",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Partnerships (Form 1065)",
-      "_key": "9be04d82ecea"
+      "_key": "5bff413361b2"
      }
     ],
     "markDefs": [],
@@ -2314,13 +2314,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "63e07a0dc43a",
+    "_key": "a0c85a413160",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "U.S.-based businesses with foreign ownership",
-      "_key": "5ab21f488f71"
+      "_key": "0586cc855f5f"
      }
     ],
     "markDefs": [],
@@ -2330,7 +2330,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "15f624ffa75f",
+    "_key": "aa217a0bb62f",
     "children": [
      {
       "_type": "span",
@@ -2338,13 +2338,13 @@
        "strong"
       ],
       "text": "💡 Why Choose Accounting Max Services?",
-      "_key": "44fc8fd38ff1"
+      "_key": "e7d49a69b9b4"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "b93fbb03d1c2"
+      "_key": "18807e6eb825"
      }
     ],
     "markDefs": [],
@@ -2352,13 +2352,13 @@
     "style": "h3"
    },
    {
-    "_key": "a209dc401261",
+    "_key": "d23bd09ca026",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Experienced IRS Enrolled Agents & CPAs",
-      "_key": "e5679b875a9e"
+      "_key": "0c9ec8fa2f86"
      }
     ],
     "markDefs": [],
@@ -2366,13 +2366,13 @@
     "style": "normal"
    },
    {
-    "_key": "5b9f64438b7e",
+    "_key": "e5d1f455b2ce",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ 15+ Years Serving U.S. and International Clients",
-      "_key": "43d12eeaf547"
+      "_key": "98b7a0ea1656"
      }
     ],
     "markDefs": [],
@@ -2380,13 +2380,13 @@
     "style": "normal"
    },
    {
-    "_key": "498dba7d18b0",
+    "_key": "a79dac42a463",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Personalized, Bilingual Support (English & Spanish)",
-      "_key": "9840d286b040"
+      "_key": "e750e36caff2"
      }
     ],
     "markDefs": [],
@@ -2394,13 +2394,13 @@
     "style": "normal"
    },
    {
-    "_key": "a01900c370ce",
+    "_key": "56a7bbcb55b0",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ 100% Remote and Secure Document Handling",
-      "_key": "9886aa370135"
+      "_key": "3fb5b604c770"
      }
     ],
     "markDefs": [],
@@ -2408,13 +2408,13 @@
     "style": "normal"
    },
    {
-    "_key": "8be65dc84dee",
+    "_key": "74a09c5ca921",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "✔️ Transparent Pricing – No hidden fees",
-      "_key": "be9c0446a748"
+      "_key": "0f65a365cd3e"
      }
     ],
     "markDefs": [],
@@ -2422,7 +2422,7 @@
     "style": "normal"
    },
    {
-    "_key": "2c0288e39383",
+    "_key": "1377f8ac902c",
     "children": [
      {
       "_type": "span",
@@ -2430,7 +2430,7 @@
        "strong"
       ],
       "text": "📈 Benefits of Professional Corporate Tax Help",
-      "_key": "ca8c9fc1a8b0"
+      "_key": "06c74d6fe35f"
      }
     ],
     "markDefs": [],
@@ -2438,13 +2438,13 @@
     "style": "h3"
    },
    {
-    "_key": "a65268c2cda7",
+    "_key": "43fe2c5fe9c5",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "🎯 ",
-      "_key": "5b9915078032"
+      "_key": "4200cfe69ebb"
      },
      {
       "_type": "span",
@@ -2452,13 +2452,13 @@
        "strong"
       ],
       "text": "IRS Compliance",
-      "_key": "2aa2807a1d25"
+      "_key": "57861ba48483"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Avoid penalties and audit triggers",
-      "_key": "1a3d32fd9913"
+      "_key": "3a051bfcba9e"
      }
     ],
     "markDefs": [],
@@ -2468,13 +2468,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "655b011abf56",
+    "_key": "b7afeb6b1d31",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "💰 ",
-      "_key": "e56331d34d30"
+      "_key": "96dac54279a0"
      },
      {
       "_type": "span",
@@ -2482,13 +2482,13 @@
        "strong"
       ],
       "text": "Tax Savings",
-      "_key": "6d779b4caa38"
+      "_key": "72e668bd3c93"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Maximize deductions and credits",
-      "_key": "91dbd2383d6f"
+      "_key": "4dd8e6752a9e"
      }
     ],
     "markDefs": [],
@@ -2498,13 +2498,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "31c6323db2f0",
+    "_key": "ffda8e1a9aa1",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "⏱️ ",
-      "_key": "7ba691fb0ef0"
+      "_key": "e3cf12dee450"
      },
      {
       "_type": "span",
@@ -2512,13 +2512,13 @@
        "strong"
       ],
       "text": "Time Efficiency",
-      "_key": "5c4352ae1136"
+      "_key": "551158642bca"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Focus on growing your business",
-      "_key": "4fa77dc5a99b"
+      "_key": "76996f187ddc"
      }
     ],
     "markDefs": [],
@@ -2528,13 +2528,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "11be84489416",
+    "_key": "883b9fa57165",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "🔐 ",
-      "_key": "ff669718be88"
+      "_key": "536e6677d13c"
      },
      {
       "_type": "span",
@@ -2542,13 +2542,13 @@
        "strong"
       ],
       "text": "Accuracy & Security",
-      "_key": "1b1a3070bad0"
+      "_key": "afd86205c084"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " – Your data is in expert hands",
-      "_key": "aedcd0c6fb0f"
+      "_key": "960c523cf74d"
      }
     ],
     "markDefs": [],
@@ -2558,7 +2558,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "333892bcdaa6",
+    "_key": "f9e0f8ec4e41",
     "children": [
      {
       "_type": "span",
@@ -2566,13 +2566,13 @@
        "strong"
       ],
       "text": "❓FAQs",
-      "_key": "ba3340dc1a80"
+      "_key": "e9e830264836"
      },
      {
       "_type": "span",
       "marks": [],
       "text": "\n",
-      "_key": "141a9701fccc"
+      "_key": "7ff9e64f2cbc"
      }
     ],
     "markDefs": [],
@@ -2580,7 +2580,7 @@
     "style": "h3"
    },
    {
-    "_key": "e3f614b272f1",
+    "_key": "2aa3da50a5ce",
     "children": [
      {
       "_type": "span",
@@ -2588,7 +2588,7 @@
        "strong"
       ],
       "text": "What documents do I need to provide?",
-      "_key": "dac46ecb94bf"
+      "_key": "eb3ebd5ad38e"
      }
     ],
     "markDefs": [],
@@ -2596,13 +2596,13 @@
     "style": "normal"
    },
    {
-    "_key": "eff49687e878",
+    "_key": "e09b37befe02",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "You’ll need:",
-      "_key": "25fd4ccb95b4"
+      "_key": "88a790fdba61"
      }
     ],
     "markDefs": [],
@@ -2610,13 +2610,13 @@
     "style": "normal"
    },
    {
-    "_key": "53156bc4e5f1",
+    "_key": "93a165866099",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "• Profit & Loss statement",
-      "_key": "127cfbb908d7"
+      "_key": "f614fd92005e"
      }
     ],
     "markDefs": [],
@@ -2624,13 +2624,13 @@
     "style": "normal"
    },
    {
-    "_key": "5647d71f0aa2",
+    "_key": "403b2ebfc052",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "• Balance sheet",
-      "_key": "58c856fde989"
+      "_key": "d02130c93c8e"
      }
     ],
     "markDefs": [],
@@ -2638,13 +2638,13 @@
     "style": "normal"
    },
    {
-    "_key": "3fefd2ed794c",
+    "_key": "6a399bd2434b",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "• Prior-year tax returns",
-      "_key": "674f017a22d6"
+      "_key": "bbf77170ca84"
      }
     ],
     "markDefs": [],
@@ -2652,13 +2652,13 @@
     "style": "normal"
    },
    {
-    "_key": "6b14cb2a8a4c",
+    "_key": "a4fe0b934f8a",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "• Payroll summaries",
-      "_key": "4c9a87c632d1"
+      "_key": "eb7bbea67649"
      }
     ],
     "markDefs": [],
@@ -2666,13 +2666,13 @@
     "style": "normal"
    },
    {
-    "_key": "5af0fcf72150",
+    "_key": "8d469033bfcc",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "• Business expenses and income documentation",
-      "_key": "28d11c31673d"
+      "_key": "89501109b1e9"
      }
     ],
     "markDefs": [],
@@ -2704,13 +2704,13 @@
   "intro": "We handle audits and disputes directly with the IRS for you.",
   "body": [
    {
-    "_key": "c981ce54d752",
+    "_key": "e9db6adc9517",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Your Advocate Against the IRS – Stress-Free Representation!",
-      "_key": "a7634476c61b"
+      "_key": "8d8b02d5eb95"
      }
     ],
     "markDefs": [],
@@ -2718,13 +2718,13 @@
     "style": "h2"
    },
    {
-    "_key": "8fdec5e7f320",
+    "_key": "3810d6b5f58e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Facing an IRS audit, tax dispute, or unpaid tax issues? As IRS-certified Enrolled Agents, we represent you to resolve audits, negotiate payment plans, and protect your rights. We aim for the best possible outcome while keeping you informed.",
-      "_key": "dae378f3ef0a"
+      "_key": "4bd0db0869dc"
      }
     ],
     "markDefs": [],
@@ -2732,7 +2732,7 @@
     "style": "normal"
    },
    {
-    "_key": "e88cf2314cd4",
+    "_key": "b204c9d2e024",
     "children": [
      {
       "_type": "span",
@@ -2740,13 +2740,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "91e2066dc24e"
+      "_key": "9b3c9e02fca3"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Expert advocacy, reduced penalties, and peace of mind.",
-      "_key": "291108c78ac1"
+      "_key": "ea99ad83910b"
      }
     ],
     "markDefs": [],
@@ -2756,7 +2756,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "768e74216e9e",
+    "_key": "612116d6333e",
     "children": [
      {
       "_type": "span",
@@ -2764,7 +2764,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "c439176c49c4"
+      "_key": "80292fcb874a"
      }
     ],
     "markDefs": [],
@@ -2774,7 +2774,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "34ce3496f28b",
+    "_key": "749c7bd39380",
     "children": [
      {
       "_type": "span",
@@ -2782,13 +2782,13 @@
        "em"
       ],
       "text": "What issues can you handle?",
-      "_key": "9144acb369a5"
+      "_key": "f8bc5f4621ba"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Audits, tax debts, and filing errors.",
-      "_key": "93893c492399"
+      "_key": "835c76ead666"
      }
     ],
     "markDefs": [],
@@ -2798,7 +2798,7 @@
     "listItem": "number"
    },
    {
-    "_key": "8d2cd593acf6",
+    "_key": "88e5c8ddef3d",
     "children": [
      {
       "_type": "span",
@@ -2806,13 +2806,13 @@
        "em"
       ],
       "text": "How long does it take to resolve cases?",
-      "_key": "f01bcf7cc578"
+      "_key": "66040796754b"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " It depends on complexity; timelines are provided after evaluation.",
-      "_key": "e652cd64e95c"
+      "_key": "ea88fdef475b"
      }
     ],
     "markDefs": [],
@@ -2846,13 +2846,13 @@
   "intro": "Timely and accurate sales tax filing for your Florida business.",
   "body": [
    {
-    "_key": "72adba761dc8",
+    "_key": "8b0b3b369704",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Sales Tax Compliance Made Easy – Stay Ahead of Deadlines!",
-      "_key": "4dbee472c767"
+      "_key": "f9004251a2c3"
      }
     ],
     "markDefs": [],
@@ -2860,13 +2860,13 @@
     "style": "h2"
    },
    {
-    "_key": "6431070b9d6d",
+    "_key": "943126bbc4bf",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "We handle your sales tax filing to ensure accurate calculations and timely submissions. Our team also keeps track of deadlines, so you never miss a payment.",
-      "_key": "8121e3c2fa2a"
+      "_key": "2d46693ef385"
      }
     ],
     "markDefs": [],
@@ -2874,7 +2874,7 @@
     "style": "normal"
    },
    {
-    "_key": "86d6bf9d3e87",
+    "_key": "a7c48916e850",
     "children": [
      {
       "_type": "span",
@@ -2882,13 +2882,13 @@
        "strong"
       ],
       "text": "Benefits:",
-      "_key": "249edbb2ed4a"
+      "_key": "b7cc62fb118a"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Ongoing compliance and stress-free filing.",
-      "_key": "eaa6503846f5"
+      "_key": "f482a4d4a394"
      }
     ],
     "markDefs": [],
@@ -2898,7 +2898,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e0e88bfb3afc",
+    "_key": "5310e04c898d",
     "children": [
      {
       "_type": "span",
@@ -2906,7 +2906,7 @@
        "strong"
       ],
       "text": "FAQs:",
-      "_key": "66771be10d26"
+      "_key": "1ce5d48bab6d"
      }
     ],
     "markDefs": [],
@@ -2916,7 +2916,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "0ac9d866697e",
+    "_key": "d2ed4109bb5f",
     "children": [
      {
       "_type": "span",
@@ -2924,13 +2924,13 @@
        "em"
       ],
       "text": "What happens if I’m late?",
-      "_key": "d281d43020ff"
+      "_key": "4114f7894c94"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Penalties apply, but we can help negotiate solutions.",
-      "_key": "e6bb52e78e1d"
+      "_key": "5371f6dd4f31"
      }
     ],
     "markDefs": [],
@@ -2940,7 +2940,7 @@
     "listItem": "number"
    },
    {
-    "_key": "d951f12ef285",
+    "_key": "7d3eca7645fb",
     "children": [
      {
       "_type": "span",
@@ -2948,13 +2948,13 @@
        "em"
       ],
       "text": "Can you manage multiple locations?",
-      "_key": "f2ecbbd6963a"
+      "_key": "696ac6ec031e"
      },
      {
       "_type": "span",
       "marks": [],
       "text": " Yes, we handle multi-location filings.",
-      "_key": "44a8b7507004"
+      "_key": "32e8a4dcccf9"
      }
     ],
     "markDefs": [],
@@ -3225,15 +3225,16 @@
    "_type": "slug",
    "current": "common-tax-mistakes"
   },
+  "excerpt": "Identify common tax mistakes and learn how to avoid them.",
   "body": [
    {
-    "_key": "a11e9344c3e0",
+    "_key": "ff97eacf0817",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Avoiding Common Tax Mistakes",
-      "_key": "c29fb1580cfb"
+      "_key": "18683e74788c"
      }
     ],
     "markDefs": [],
@@ -3241,13 +3242,13 @@
     "style": "normal"
    },
    {
-    "_key": "4f350048605e",
+    "_key": "aacdfb0761d0",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Many taxpayers make common mistakes that can lead to delays or penalties. These include incorrect Social Security numbers, failing to sign the return, and miscalculating deductions.",
-      "_key": "1daae818dfaa"
+      "_key": "da1cd2104d95"
      }
     ],
     "markDefs": [],
@@ -3255,13 +3256,13 @@
     "style": "normal"
    },
    {
-    "_key": "34ab3236363c",
+    "_key": "0be8490b6dbb",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tips to Avoid Mistakes",
-      "_key": "2051ce214ab6"
+      "_key": "9f08ad4a0838"
      }
     ],
     "markDefs": [],
@@ -3269,13 +3270,13 @@
     "style": "h2"
    },
    {
-    "_key": "fc78622fb28b",
+    "_key": "b682aee63064",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Double-check all information before submitting.",
-      "_key": "6b4444a32b64"
+      "_key": "bdc195a692ef"
      }
     ],
     "markDefs": [],
@@ -3285,13 +3286,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "6e33f1b57506",
+    "_key": "f9bc5a03bfd0",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Use tax software to minimize errors.",
-      "_key": "a84c3c24d822"
+      "_key": "313f93f01bb9"
      }
     ],
     "markDefs": [],
@@ -3301,13 +3302,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "d70a91946e3e",
+    "_key": "7f43bd04d943",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Consider professional help if your situation is complex.",
-      "_key": "c43f1031a0c3"
+      "_key": "d74932b164d6"
      }
     ],
     "markDefs": [],
@@ -3317,13 +3318,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "7da001dca3ab",
+    "_key": "bc577b808fa4",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "By being aware of these mistakes, you can ensure a smoother tax filing process.",
-      "_key": "ee50d113b361"
+      "_key": "156deb3d3aef"
      }
     ],
     "markDefs": [],
@@ -3346,15 +3347,16 @@
    "_type": "slug",
    "current": "navigating-business-expenses"
   },
+  "excerpt": "Learn how to navigate business expenses and maximize your tax deductions.",
   "body": [
    {
-    "_key": "f939eebc0c4a",
+    "_key": "4a28d520fb79",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Understanding Business Expenses",
-      "_key": "b4b3e364c7b0"
+      "_key": "bbf2700217c9"
      }
     ],
     "markDefs": [],
@@ -3362,13 +3364,13 @@
     "style": "normal"
    },
    {
-    "_key": "c210c379d9f1",
+    "_key": "c1af0bc22832",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Business expenses are costs incurred in the ordinary course of business. They can be deducted from your income, reducing your overall tax burden. Common business expenses include rent, utilities, and salaries.",
-      "_key": "fa623033231c"
+      "_key": "82f00a1a7bed"
      }
     ],
     "markDefs": [],
@@ -3376,13 +3378,13 @@
     "style": "normal"
    },
    {
-    "_key": "890db74544f3",
+    "_key": "543ee5dc9025",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Deductible vs. Non-Deductible Expenses",
-      "_key": "5c2be132c4f0"
+      "_key": "715614a08c40"
      }
     ],
     "markDefs": [],
@@ -3390,13 +3392,13 @@
     "style": "h2"
    },
    {
-    "_key": "03d36d3c4746",
+    "_key": "0a42353c2a95",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "It's important to distinguish between deductible and non-deductible expenses. Deductible expenses can lower your taxable income, while non-deductible expenses cannot.",
-      "_key": "be9a9432436e"
+      "_key": "d57af2ad40cb"
      }
     ],
     "markDefs": [],
@@ -3419,15 +3421,16 @@
    "_type": "slug",
    "current": "preparing-for-tax-season"
   },
+  "excerpt": "Learn how to effectively prepare for tax season and avoid last-minute stress.",
   "body": [
    {
-    "_key": "c7185775a901",
+    "_key": "a8635e4f07b1",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax Season Preparation",
-      "_key": "fb9ec9e50054"
+      "_key": "3574b3143858"
      }
     ],
     "markDefs": [],
@@ -3435,13 +3438,13 @@
     "style": "normal"
    },
    {
-    "_key": "5a57d09e8c65",
+    "_key": "14ada319819c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Preparing for tax season can be daunting, but with the right approach, it can be manageable. Start by gathering all necessary documents, including W-2s, 1099s, and receipts for deductions.",
-      "_key": "c414e33aa01c"
+      "_key": "e5ee3d645bd1"
      }
     ],
     "markDefs": [],
@@ -3449,13 +3452,13 @@
     "style": "normal"
    },
    {
-    "_key": "45cfbf768242",
+    "_key": "89aac236a042",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Steps to Prepare",
-      "_key": "071ca8d06f79"
+      "_key": "e3b93c31986a"
      }
     ],
     "markDefs": [],
@@ -3463,13 +3466,13 @@
     "style": "h2"
    },
    {
-    "_key": "ff7aa29d52e6",
+    "_key": "10aaa7beb709",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Organize your financial documents.",
-      "_key": "a52b14972c3a"
+      "_key": "cef8031d15af"
      }
     ],
     "markDefs": [],
@@ -3479,13 +3482,13 @@
     "listItem": "number"
    },
    {
-    "_key": "09e6cd60cdf3",
+    "_key": "6edfaf2019e2",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Review last year's tax return.",
-      "_key": "f9f9be4d8d16"
+      "_key": "8bbe9587a56f"
      }
     ],
     "markDefs": [],
@@ -3495,13 +3498,13 @@
     "listItem": "number"
    },
    {
-    "_key": "952bf9946a01",
+    "_key": "870fb6403c6e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Consider using tax software or hiring a professional.",
-      "_key": "c0bd63c353fa"
+      "_key": "d401c00dc83b"
      }
     ],
     "markDefs": [],
@@ -3511,13 +3514,13 @@
     "listItem": "number"
    },
    {
-    "_key": "d645ca0a6cd2",
+    "_key": "a95969494912",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Being prepared can help you file your taxes accurately and on time.",
-      "_key": "11586f998ff3"
+      "_key": "d251b560f137"
      }
     ],
     "markDefs": [],
@@ -3540,15 +3543,16 @@
    "_type": "slug",
    "current": "retirement-planning-and-taxes"
   },
+  "excerpt": "Learn how retirement planning intersects with tax considerations.",
   "body": [
    {
-    "_key": "549dd2526da7",
+    "_key": "d2347e4faed7",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Retirement Planning Considerations",
-      "_key": "19b096a7aec3"
+      "_key": "309ace2fc647"
      }
     ],
     "markDefs": [],
@@ -3556,13 +3560,13 @@
     "style": "normal"
    },
    {
-    "_key": "8ccca318066a",
+    "_key": "ceac8881d138",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "When planning for retirement, it's essential to consider the tax implications of your savings. Different retirement accounts have varying tax treatments, which can affect your withdrawals in retirement.",
-      "_key": "202b5b506143"
+      "_key": "ac6033e70b17"
      }
     ],
     "markDefs": [],
@@ -3570,13 +3574,13 @@
     "style": "normal"
    },
    {
-    "_key": "dcb140dd10b7",
+    "_key": "caf3046cacaf",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax-Deferred vs. Taxable Accounts",
-      "_key": "f9062e71261b"
+      "_key": "58a83356c2b7"
      }
     ],
     "markDefs": [],
@@ -3584,13 +3588,13 @@
     "style": "h2"
    },
    {
-    "_key": "c8105e1fc4d3",
+    "_key": "8df88f06f3e3",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Understanding the difference between tax-deferred accounts, like traditional IRAs, and taxable accounts can help you make informed decisions about your retirement savings.",
-      "_key": "970828c846e9"
+      "_key": "ec330262786e"
      }
     ],
     "markDefs": [],
@@ -3613,15 +3617,16 @@
    "_type": "slug",
    "current": "tax-credits-explained"
   },
+  "excerpt": "Discover the importance of tax credits and how they can benefit you.",
   "body": [
    {
-    "_key": "62b5d4fd7ef7",
+    "_key": "437ca232ef80",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "What Are Tax Credits?",
-      "_key": "0dc8b617cf54"
+      "_key": "311fc6356549"
      }
     ],
     "markDefs": [],
@@ -3629,13 +3634,13 @@
     "style": "normal"
    },
    {
-    "_key": "99fda2e675fb",
+    "_key": "b8fb95263a96",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax credits directly reduce the amount of tax owed, making them more beneficial than deductions. They can be refundable or non-refundable. Refundable credits can result in a refund if they exceed your tax liability.",
-      "_key": "0d4ae9351b37"
+      "_key": "7b4db0dac5a3"
      }
     ],
     "markDefs": [],
@@ -3643,13 +3648,13 @@
     "style": "normal"
    },
    {
-    "_key": "65dfeec89a71",
+    "_key": "fa3532a6a12e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Common Tax Credits",
-      "_key": "4a0bc0f13c79"
+      "_key": "66ba08706973"
      }
     ],
     "markDefs": [],
@@ -3657,7 +3662,7 @@
     "style": "h2"
    },
    {
-    "_key": "e4398d6b2006",
+    "_key": "ace23810f646",
     "children": [
      {
       "_type": "span",
@@ -3665,13 +3670,13 @@
        "strong"
       ],
       "text": "Earned Income Tax Credit",
-      "_key": "414424c28066"
+      "_key": "d05e3a12784d"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ": A benefit for working individuals with low to moderate income.",
-      "_key": "822f1da7c9bc"
+      "_key": "4fb90deee23f"
      }
     ],
     "markDefs": [],
@@ -3681,7 +3686,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e33ec0aee13d",
+    "_key": "a7758fcd0cef",
     "children": [
      {
       "_type": "span",
@@ -3689,13 +3694,13 @@
        "strong"
       ],
       "text": "Child Tax Credit",
-      "_key": "fda4ba6b4384"
+      "_key": "1df1a96b87ad"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ": A credit for taxpayers with dependent children.",
-      "_key": "e4acf0fcba6d"
+      "_key": "1b9a0a967159"
      }
     ],
     "markDefs": [],
@@ -3705,13 +3710,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "7f05e3f498be",
+    "_key": "d692b9ecb293",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Understanding tax credits can significantly impact your tax return.",
-      "_key": "56c058f03448"
+      "_key": "35d7ba361f63"
      }
     ],
     "markDefs": [],
@@ -3734,15 +3739,16 @@
    "_type": "slug",
    "current": "tax-implications-of-investing"
   },
+  "excerpt": "Explore the tax implications of investing and strategies for tax-efficient investing.",
   "body": [
    {
-    "_key": "a90e2f64a0fe",
+    "_key": "589230736e27",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Investing and Taxes",
-      "_key": "7d806c226f7e"
+      "_key": "0dbd01536329"
      }
     ],
     "markDefs": [],
@@ -3750,13 +3756,13 @@
     "style": "normal"
    },
    {
-    "_key": "dfe3de9055d0",
+    "_key": "ca7d85395808",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Investing can have significant tax implications. Understanding how capital gains tax works is crucial for investors. Short-term capital gains are taxed at ordinary income rates, while long-term gains benefit from lower rates.",
-      "_key": "e48efb3e75b8"
+      "_key": "9bf11750297b"
      }
     ],
     "markDefs": [],
@@ -3764,13 +3770,13 @@
     "style": "normal"
    },
    {
-    "_key": "8246f74dd805",
+    "_key": "094f4014e983",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Strategies for Tax-Efficient Investing",
-      "_key": "cb8c5ee1670a"
+      "_key": "ecafa10a7185"
      }
     ],
     "markDefs": [],
@@ -3778,13 +3784,13 @@
     "style": "h2"
    },
    {
-    "_key": "858878ea90b6",
+    "_key": "7e3e912a9dac",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Consider tax-advantaged accounts like IRAs and 401(k)s to minimize tax liabilities on your investments.",
-      "_key": "31f75b3bca58"
+      "_key": "e078c4c2c284"
      }
     ],
     "markDefs": [],
@@ -3807,15 +3813,16 @@
    "_type": "slug",
    "current": "tax-planning-strategies"
   },
+  "excerpt": "Explore effective strategies for tax planning to minimize your tax liabilities.",
   "body": [
    {
-    "_key": "e84cfb7cbccc",
+    "_key": "ee60bbc17d0f",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax Planning Strategies",
-      "_key": "1f3747d71cc6"
+      "_key": "6b7d9e56d05b"
      }
     ],
     "markDefs": [],
@@ -3823,13 +3830,13 @@
     "style": "normal"
    },
    {
-    "_key": "513dd84450f1",
+    "_key": "17a1f604e967",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Effective tax planning is crucial for individuals and businesses alike. It involves analyzing your financial situation to minimize tax liabilities. Strategies may include deferring income, maximizing deductions, and utilizing tax credits.",
-      "_key": "e76dedf71c7b"
+      "_key": "68af4493d150"
      }
     ],
     "markDefs": [],
@@ -3837,13 +3844,13 @@
     "style": "normal"
    },
    {
-    "_key": "fe081ff42daa",
+    "_key": "e36a6da96cd4",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Why Tax Planning Matters",
-      "_key": "6333c41a93f6"
+      "_key": "47f7adbe5a8e"
      }
     ],
     "markDefs": [],
@@ -3851,13 +3858,13 @@
     "style": "h2"
    },
    {
-    "_key": "256a0d9e0af6",
+    "_key": "460d1265329e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Proper tax planning can lead to significant savings and ensure compliance with tax laws. It allows you to make informed decisions about investments and expenditures.",
-      "_key": "1c970851e013"
+      "_key": "0f8904da2378"
      }
     ],
     "markDefs": [],
@@ -3880,15 +3887,16 @@
    "_type": "slug",
    "current": "understanding-cryptocurrency-taxes"
   },
+  "excerpt": "Get informed about the tax implications of cryptocurrency transactions.",
   "body": [
    {
-    "_key": "c91129114828",
+    "_key": "4055e4f9941a",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Cryptocurrency and Taxes",
-      "_key": "2e336c4ad61b"
+      "_key": "758f82b92e19"
      }
     ],
     "markDefs": [],
@@ -3896,13 +3904,13 @@
     "style": "normal"
    },
    {
-    "_key": "3560977fd9b0",
+    "_key": "ecb6b92119d2",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "As cryptocurrency gains popularity, understanding its tax implications is crucial. The IRS treats cryptocurrency as property, meaning that capital gains tax applies to its sale.",
-      "_key": "9a87aed7217d"
+      "_key": "77758a8c22db"
      }
     ],
     "markDefs": [],
@@ -3910,13 +3918,13 @@
     "style": "normal"
    },
    {
-    "_key": "194989fd88c2",
+    "_key": "149ac0cd1d1c",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Reporting Cryptocurrency Transactions",
-      "_key": "c0f3ab9cea3c"
+      "_key": "7ef0c1db6533"
      }
     ],
     "markDefs": [],
@@ -3924,13 +3932,13 @@
     "style": "h2"
    },
    {
-    "_key": "9c1cc5f4f948",
+    "_key": "b4a859d81a8e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "It's essential to keep accurate records of your transactions to report them correctly on your tax return.",
-      "_key": "84dce95627e5"
+      "_key": "860612851d72"
      }
     ],
     "markDefs": [],
@@ -3953,15 +3961,16 @@
    "_type": "slug",
    "current": "understanding-sales-tax"
   },
+  "excerpt": "Get to know the basics of sales tax and how it affects your purchases.",
   "body": [
    {
-    "_key": "306077e76031",
+    "_key": "888d12cd8f31",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Sales Tax Basics",
-      "_key": "b866d1e0a6c4"
+      "_key": "e45110eccb6a"
      }
     ],
     "markDefs": [],
@@ -3969,13 +3978,13 @@
     "style": "normal"
    },
    {
-    "_key": "1f28b9622f70",
+    "_key": "fab8a235d51e",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Sales tax is a consumption tax imposed on the sale of goods and services. Understanding how sales tax works is essential for both consumers and businesses. Rates vary by state and locality, and some items may be exempt.",
-      "_key": "5ea63664e20f"
+      "_key": "1e4e8f37ea84"
      }
     ],
     "markDefs": [],
@@ -3983,13 +3992,13 @@
     "style": "normal"
    },
    {
-    "_key": "c3866434e8b1",
+    "_key": "36e8434cb2de",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Calculating Sales Tax",
-      "_key": "804ee4692046"
+      "_key": "7bbf5ef52de7"
      }
     ],
     "markDefs": [],
@@ -3997,13 +4006,13 @@
     "style": "h2"
    },
    {
-    "_key": "28e339eb4bd8",
+    "_key": "ba5559d6a708",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "To calculate sales tax, multiply the purchase price by the sales tax rate. This amount is then added to the total cost of the item.",
-      "_key": "c3cec241972a"
+      "_key": "1c255dd93287"
      }
     ],
     "markDefs": [],
@@ -4026,15 +4035,16 @@
    "_type": "slug",
    "current": "understanding-tax-deductions"
   },
+  "excerpt": "Learn about tax deductions and how they can help reduce your taxable income.",
   "body": [
    {
-    "_key": "9ca4588cb527",
+    "_key": "5405dc8f78c9",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax Deductions Explained",
-      "_key": "8f72364307e3"
+      "_key": "9949bad5c4c7"
      }
     ],
     "markDefs": [],
@@ -4042,13 +4052,13 @@
     "style": "normal"
    },
    {
-    "_key": "c7778927e42c",
+    "_key": "5a948875aee1",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Tax deductions are essential for reducing your taxable income, which can lead to significant savings. They allow you to subtract certain expenses from your total income, thereby lowering the amount of income that is subject to tax. Common deductions include mortgage interest, student loan interest, and medical expenses.",
-      "_key": "4ac8601e3b7d"
+      "_key": "a3dc44fddf0d"
      }
     ],
     "markDefs": [],
@@ -4056,13 +4066,13 @@
     "style": "normal"
    },
    {
-    "_key": "987e5160eead",
+    "_key": "1cdb66e08ce2",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Types of Deductions",
-      "_key": "39797b4820be"
+      "_key": "6c61586590b0"
      }
     ],
     "markDefs": [],
@@ -4070,7 +4080,7 @@
     "style": "h2"
    },
    {
-    "_key": "231385530238",
+    "_key": "b773ed969214",
     "children": [
      {
       "_type": "span",
@@ -4078,13 +4088,13 @@
        "strong"
       ],
       "text": "Standard Deduction",
-      "_key": "fd2d9f340599"
+      "_key": "4de4e0e83bff"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ": A fixed dollar amount that reduces the income you're taxed on.",
-      "_key": "8e45b749812a"
+      "_key": "637b185a6bac"
      }
     ],
     "markDefs": [],
@@ -4094,7 +4104,7 @@
     "listItem": "bullet"
    },
    {
-    "_key": "b551eec35326",
+    "_key": "d3c181991004",
     "children": [
      {
       "_type": "span",
@@ -4102,13 +4112,13 @@
        "strong"
       ],
       "text": "Itemized Deductions",
-      "_key": "87537aaadf2c"
+      "_key": "82afdc02a6b8"
      },
      {
       "_type": "span",
       "marks": [],
       "text": ": Specific expenses that can be deducted, such as charitable contributions and medical expenses.",
-      "_key": "9ff8e8e9ce9d"
+      "_key": "0d902dfd697d"
      }
     ],
     "markDefs": [],
@@ -4118,13 +4128,13 @@
     "listItem": "bullet"
    },
    {
-    "_key": "e5b614741691",
+    "_key": "cc50a9b6e0f8",
     "children": [
      {
       "_type": "span",
       "marks": [],
       "text": "Understanding which deductions you qualify for can help you maximize your tax savings.",
-      "_key": "98a9978e17c7"
+      "_key": "d287c38f7edc"
      }
     ],
     "markDefs": [],

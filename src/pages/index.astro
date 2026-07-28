@@ -528,7 +528,13 @@ const ENTRADA =
             {/* R3: en produccion aqui hay texto de relleno de Webflow ("This is
                 some text inside of a div block."). Ni se copia ni se inventa un
                 sustituto: el hueco queda a la vista. */}
-            <div>{"{{PENDIENTE}}"} — FAQ intro copy</div>
+            {/* Sin entradilla bajo el titulo del FAQ. En produccion ese <div>
+                contiene literalmente "This is some text inside of a div block.",
+                el placeholder por defecto de Webflow — igual que el equipo demo,
+                es relleno de plantilla que lleva vivo en el sitio del cliente.
+                Migrarlo seria propagar un defecto; inventar una entradilla en el
+                sitio de un despacho fiscal esta prohibido (R3). Se omite y se
+                reporta como D12. */}
           </div>
 
           {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
