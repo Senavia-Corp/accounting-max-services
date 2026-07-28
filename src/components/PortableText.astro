@@ -1,0 +1,154 @@
+---
+// Renderizador de Portable Text. UNICA implementacion del sitio: la comparten
+// la plantilla de servicio y la de entrada de blog.
+//   Firma:  <PortableText value={bloques} />
+//
+// NO emite envoltorio. El <div class="w-richtext"> del baseline lo pone quien
+// llama, porque en cada plantilla cuelga de un contenedor distinto.
+//
+// La salida imita a la que emitia Webflow en baseline/html/ (asi el CSS portado
+// vale sin tocar una linea):
+//   - <ul role="list"> / <ol role="list">; el role sobrevive al list-style:none
+//     de Safari, y es lo que ya habia en produccion.
+//   - Las sublistas van DENTRO del <li> padre, no como hermanas. El anidamiento
+//     sale del campo `level` de Portable Text (los servicios llegan a nivel 2).
+//
+// Se construye HTML como cadena y se vuelca con set:html en vez de con JSX
+// anidado porque el anidamiento de listas es recursivo y de profundidad
+// desconocida. A cambio, el escapado es responsabilidad de este fichero: todo
+// texto pasa por esc() y todo href por hrefSeguro(). El contenido viene de un
+// CMS, que es entrada de texto libre.
+
+type Span = { _type?: string; text?: string; marks?: string[] };
+type MarkDef = { _key: string; _type: string; href?: string };
+type Bloque = {
+  _type?: string;
+  style?: string;
+  listItem?: string;
+  level?: number;
+  children?: Span[];
+  markDefs?: MarkDef[];
+};
+
+interface Props {
+  value?: Bloque[] | null;
+}
+
+const { value } = Astro.props;
+
+// Solo bloques de texto. El esquema blockContent no define ningun otro tipo;
+// si algun dia lo hace, se ignora en vez de reventar el build de 22 rutas.
+const bloques: Bloque[] = (value ?? []).filter((b) => b && b._type === "block");
+
+const esc = (s: string) =>
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/** Solo esquemas navegables. Un `javascript:` escrito en el CMS es XSS. */
+const hrefSeguro = (raw?: string): string | null => {
+  const h = (raw ?? "").trim();
+  if (!h) return null;
+  if (/^(https?:|mailto:|tel:)/i.test(h)) return h;
+  if (/^[/#]/.test(h)) return h; // ruta interna o ancla
+  return null;
+};
+
+const texto = (b: Bloque) => (b.children ?? []).map((c) => c.text ?? "").join("");
+
+const span = (s: Span, defs: MarkDef[]): string => {
+  if (s._type && s._type !== "span") return "";
+  let html = esc(s.text ?? "");
+  const marks = s.marks ?? [];
+
+  // Decoradores primero (van pegados al texto), anotaciones despues (envuelven).
+  for (const m of marks) {
+    if (defs.some((d) => d._key === m)) continue;
+    if (m === "strong") html = `<strong>${html}</strong>`;
+    else if (m === "em") html = `<em>${html}</em>`;
+    else if (m === "underline") html = `<u>${html}</u>`;
+    else if (m === "code") html = `<code>${html}</code>`;
+    // Marca desconocida: se pierde el estilo, nunca el texto.
+  }
+  for (const m of marks) {
+    const def = defs.find((d) => d._key === m);
+    if (!def || def._type !== "link") continue;
+    const href = hrefSeguro(def.href);
+    // Enlace sin URL utilizable: se queda el texto, no un <a href="#">.
+    if (!href) continue;
+    const externo = /^https?:/i.test(href) && !href.includes("accountingmaxservices.com");
+    html = `<a href="${esc(href)}"${externo ? ' rel="noopener"' : ""}>${html}</a>`;
+  }
+  return html;
+};
+
+const contenido = (b: Bloque) => (b.children ?? []).map((c) => span(c, b.markDefs ?? [])).join("");
+
+const ETIQUETA: Record<string, string> = {
+  normal: "p",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  blockquote: "blockquote",
+};
+
+const suelto = (b: Bloque): string => {
+  const html = contenido(b);
+  // Bloque vacio: Webflow exportaba parrafos con un solo ZWJ. Un <p></p> suma
+  // margen fantasma y un salto de linea al lector de pantalla.
+  if (!texto(b).trim()) return "";
+  const tag = ETIQUETA[b.style ?? "normal"] ?? "p";
+  return `<${tag}>${html}</${tag}>`;
+};
+
+// Consume los items consecutivos de nivel >= `nivel` y devuelve donde se quedo.
+const lista = (bs: Bloque[], desde: number, nivel: number): { html: string; fin: number } => {
+  const tipo = bs[desde].listItem === "number" ? "ol" : "ul";
+  let html = `<${tipo} role="list">`;
+  let abierto = false;
+  let i = desde;
+
+  while (i < bs.length) {
+    const b = bs[i];
+    if (!b.listItem) break;
+    const lv = b.level ?? 1;
+    if (lv < nivel) break;
+
+    if (lv === nivel) {
+      // Cambio de vineta a numerada en el mismo nivel: lista nueva, no mezclada.
+      if ((b.listItem === "number" ? "ol" : "ul") !== tipo) break;
+      if (abierto) html += "</li>";
+      html += `<li>${contenido(b)}`;
+      abierto = true;
+      i++;
+    } else {
+      const sub = lista(bs, i, lv);
+      // Sublista sin item padre (dato mal formado): se abre uno para no dejar
+      // un <ul> colgando fuera de <li>, que es HTML invalido.
+      html += abierto ? sub.html : `<li>${sub.html}`;
+      abierto = true;
+      i = sub.fin;
+    }
+  }
+
+  if (abierto) html += "</li>";
+  return { html: html + `</${tipo}>`, fin: i };
+};
+
+let html = "";
+let i = 0;
+while (i < bloques.length) {
+  if (bloques[i].listItem) {
+    const l = lista(bloques, i, bloques[i].level ?? 1);
+    html += l.html;
+    i = l.fin;
+  } else {
+    html += suelto(bloques[i]);
+    i++;
+  }
+}
+---
+
+<Fragment set:html={html} />

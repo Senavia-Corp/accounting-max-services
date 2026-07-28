@@ -1,0 +1,228 @@
+---
+// Cromo compartido: pie completo (promo + newsletter + NAP + servicios + barra).
+//
+// Estructura y clases de baseline/html/index.html <section class="footer">.
+// Verificado que es identico en las 26 rutas salvo el w--current de Webflow.
+//
+// Diferencias deliberadas respecto al HTML de produccion:
+//   - <section class="footer"> pasa a <footer class="footer"> (landmark
+//     contentinfo real). La clase .footer no tiene CSS, el cambio es inocuo.
+//   - Telefono y correo eran <div class="link-footer">, texto plano. Ahora son
+//     tel: y mailto:. La llamada es LA conversion de un despacho contable y la
+//     FASE 6 la va a medir; un telefono no enlazado no se puede medir ni tocar
+//     en movil.
+//   - La lista de servicios era, por artefacto del CMS de Webflow, doce <ul> de
+//     un solo <li> ("lista de 1 elemento" x12 al lector de pantalla). Ahora es
+//     un unico <ul> con doce <li>; .collection-list-footer conserva el
+//     column-count:2, asi que el aspecto no cambia.
+//   - Los 3 iconos de redes eran <a href="#">. Ver el mismo caso en Nav.astro.
+//   - El <style> incrustado del .w-embed (clip-path de .block-pic) esta ahora
+//     en src/styles/site.css.
+import FooterSubscribe from "./FooterSubscribe.astro";
+import { servicios, sanity, NEGOCIO } from "../lib/sanity";
+
+const MARCA = [
+  "67807ad95e4e63e62cd9040e-logo-black.svg",
+  "6659037c0fab9f0937fe7130-picture.png",
+  "67350550270472b1de28dba3-link.svg",
+  "673505503e9787a64371059f-face.svg",
+  "67350550ecd34bc66b17cbe5-insta.svg",
+];
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+const g = globalThis as any;
+const assets: Asset[] = await (g.__amsAssetsFooter ??= sanity.fetch(
+  `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+     originalFilename, url,
+     "w": metadata.dimensions.width,
+     "h": metadata.dimensions.height
+   }`,
+  { f: MARCA },
+));
+const servs = await (g.__amsServicios ??= servicios());
+
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset de marca "${nombre}".`);
+  return a;
+};
+
+const logo = img("67807ad95e4e63e62cd9040e-logo-black.svg");
+const pic = img("6659037c0fab9f0937fe7130-picture.png");
+
+const REDES: { icono: Asset; href: string | null }[] = [
+  { icono: img("67350550270472b1de28dba3-link.svg"), href: null },
+  { icono: img("673505503e9787a64371059f-face.svg"), href: null },
+  { icono: img("67350550ecd34bc66b17cbe5-insta.svg"), href: null },
+];
+
+// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+
+const aqui = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const activo = (href: string) => (href === aqui ? "page" : undefined);
+const marca = (href: string) => (href === aqui ? " w--current" : "");
+
+// El horario vive en NEGOCIO como una sola cadena; en el pie va partido en dos
+// lineas, igual que en produccion. Se parte, no se reescribe.
+const [dias, horas] = NEGOCIO.horario.split(" (");
+---
+
+<footer class="footer">
+  <div class="wrapper-promo">
+    <div class="block-pic">
+      {/* Fondo decorativo del bloque promocional: el mensaje esta en el texto.
+          Sin lqip a proposito: son 2,5 KB de base64 en linea x26 rutas para
+          tapar un hueco que esta bajo el pliegue y que nadie llega a ver. */}
+      <img
+        src={src(pic, 1289)}
+        srcset={`${src(pic, 500)} 500w, ${src(pic, 800)} 800w, ${src(pic, 1080)} 1080w, ${src(pic, 1289)} 1289w`}
+        sizes="(max-width: 767px) 100vw, 50vw"
+        width={pic.w}
+        height={pic.h}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="bg-pic"
+      />
+    </div>
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="block-content-promo">
+        <div class="block-promo">
+          <h2 class="h2 white">Get Expert Advice – Book Your Free Call Today!</h2>
+          <div>
+            Ready to take control of your finances? Schedule a free consultation call with our
+            expert advisors today! We’ll help you uncover opportunities, tackle challenges, and
+            set your business up for financial success.
+          </div>
+          <a
+            href="/contact-us"
+            class={`button blue w-button${marca("/contact-us")}`}
+            aria-current={activo("/contact-us")}>Book a free Consultation</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="email-subscribed">
+    <div class="w-layout-blockcontainer container w-container">
+      <FooterSubscribe />
+    </div>
+  </div>
+
+  <div class="container-footer">
+    <div class="w-layout-blockcontainer container w-container">
+      <div class="wrapper-footer">
+        <div class="block-footer">
+          <img
+            src={logo.url}
+            width={logo.w}
+            height={logo.h}
+            alt="Accounting Max Services"
+            loading="lazy"
+            decoding="async"
+            class="logo-footer"
+          />
+          <div>
+            IRS Certified EAs & CPAs offering bilingual tax and accounting services for
+            individuals & businesses.
+          </div>
+        </div>
+
+        <div class="block-footer">
+          <h3 class="h3">Contact Information</h3>
+          <ul role="list" class="list-footer">
+            <li class="list-item-footer">
+              <a href={NEGOCIO.telefonoHref} class="link-footer">{NEGOCIO.telefono}</a>
+            </li>
+            <li class="list-item-footer">
+              <a href={`mailto:${NEGOCIO.email}`} class="link-footer">{NEGOCIO.email}</a>
+            </li>
+            <li class="list-item-footer">
+              {/* En una sola linea: Astro colapsa el salto entre expresiones y
+                  "FL 33071" saldria pegado. */}
+              <div class="link-footer">
+                {NEGOCIO.calle},<br />{`${NEGOCIO.ciudad}, ${NEGOCIO.region} ${NEGOCIO.cp}`}
+              </div>
+            </li>
+            <li class="list-item-footer">
+              <div class="link-footer">
+                {dias}<br />
+                {horas ? `(${horas}` : ""}
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="block-footer">
+          <h3 class="h3">Services</h3>
+          <div class="collection-list-wrapper-footer">
+            <ul role="list" class="collection-list-footer">
+              {
+                servs.map((s) => {
+                  const href = `/services/${s.slug}`;
+                  return (
+                    <li class="collection-item-footer list-item-footer">
+                      <a
+                        href={href}
+                        class={`link-footer${marca(href)}`}
+                        aria-current={activo(href)}
+                      >
+                        {s.title.trim()}
+                      </a>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bar-footer">
+    <div class="div-block-7">
+      <div class="div-block-8">
+        {/* R3: el ano viene tal cual del HTML en produccion. No se cambia a
+            2026 ni se automatiza con new Date(): seria inventar una fecha.
+            Pendiente de confirmar con el cliente. */}
+        <div>Copyright 2025 Accounting Max Services Inc. All rights reserved.</div>
+      </div>
+      <div class="block-social-media">
+        {
+          REDES.map((r) =>
+            r.href ? (
+              <a href={r.href} class="social-link w-inline-block">
+                <img
+                  src={r.icono.url}
+                  width={r.icono.w}
+                  height={r.icono.h}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  class="icon-sociall"
+                />
+              </a>
+            ) : (
+              <span class="social-link w-inline-block">
+                <img
+                  src={r.icono.url}
+                  width={r.icono.w}
+                  height={r.icono.h}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  class="icon-sociall"
+                />
+              </span>
+            ),
+          )
+        }
+        {/* Sin enlaces de redes: ver la nota en Nav.astro (D11). */}
+      </div>
+    </div>
+  </div>
+</footer>

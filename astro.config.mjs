@@ -15,6 +15,15 @@ export default defineConfig({
   output: "static",
   adapter: vercel(),
 
+  // Paridad de URL con produccion, verificada con curl:
+  //   /about-us   -> 200
+  //   /about-us/  -> 301 a /about-us
+  // Por defecto Astro emite /about-us/index.html, que se sirve en /about-us/ —
+  // es decir, cambiaria la URL canonica de las 25 rutas indexadas. `file` emite
+  // /about-us.html y Vercel lo sirve en /about-us sin barra.
+  trailingSlash: "never",
+  build: { format: "file" },
+
   integrations: [
     sitemap({
       // R6: /es/ nace fuera del sitemap y con noindex, hasta que D3 este firmado.

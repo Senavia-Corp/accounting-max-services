@@ -1,0 +1,148 @@
+---
+// /blog-news — listado del blog.
+//
+// Estructura y clases copiadas de baseline/html/blog-news.html
+// <section class="blog">. Los datos salen de Sanity, no del HTML.
+//
+// Diferencias deliberadas respecto al HTML de produccion (detalle abajo, en
+// cada punto donde ocurren):
+//   - Fuera el style="opacity:0" de .block-blog (interaccion IX2 de Webflow).
+//   - Fuera los data-w-id y las clases .w-dyn-* (sin CSS y sin webflow.js).
+//   - div[role=list]/div[role=listitem] pasan a <ul>/<li> nativos.
+//   - El enlace "read More" gana el titulo del post en su nombre accesible.
+//   - NO se muestra fecha ni autor: la plantilla de Webflow no los ligaba y
+//     los documentos de Sanity no los traen (R3).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { posts, NEGOCIO } from "../lib/sanity";
+
+const lista = await posts();
+
+// Copia de cabecera: texto real de la pagina en produccion, migrado verbatim.
+const TITULAR = "Insights, Tips & Updates from Accounting Max Services";
+const ENTRADA =
+  "Stay informed with expert articles on taxes, accounting, and financial strategy. " +
+  "From IRS updates to small business tips, our blog helps you make smarter decisions all year round.";
+
+// La tarjeta mide ~395x250 en escritorio: .pic-blog fija height:250px y recorta
+// con object-fit:cover. Se le pide a Sanity la imagen YA recortada a esa
+// proporcion (1.58) para no transportar pixeles que el navegador va a tirar.
+// Prohibido AVIF: auto=format sirve WebP (verificado con Accept: image/avif).
+const CARD_W = 800;
+const CARD_H = 506;
+const src = (url: string, w: number) =>
+  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&auto=format`;
+const ANCHOS = [400, 600, 800, 1080];
+const srcset = (url: string) => ANCHOS.map((w) => `${src(url, w)} ${w}w`).join(", ");
+
+// Anchos reales de columna: .blog tiene padding lateral de 2em (32px) y
+// .collection-list-blog pasa de 3 columnas a 1 en <=767px.
+const SIZES = "(max-width: 767px) calc(100vw - 64px), (max-width: 991px) 201px, 395px";
+
+// Aviso en el log del build, no excepcion: reventar aqui dejaria sin build a
+// las otras 25 rutas por un fallo de datos que no se arregla en esta pagina.
+// Ver el informe de esta ruta: los 10 posts apuntan al mismo asset (el
+// picture.png del promo del pie), asi que la referencia heroImage del import
+// de la FASE 2 esta mal y hay que rehacerla en Sanity.
+const distintas = new Set(lista.map((p) => p.heroImage?.url).filter(Boolean)).size;
+if (distintas < lista.length) {
+  console.warn(
+    `[blog-news] ${lista.length} posts comparten solo ${distintas} imagen(es) de portada. ` +
+      "Las referencias post.heroImage de Sanity estan mal: revisar el import.",
+  );
+}
+---
+
+{/* Al titulo de produccion ("Blog & News") se le anade el nombre real del
+    negocio, que es la convencion que siguen las otras 25 rutas. La meta
+    description no existe en produccion; se usa la propia entradilla de la
+    pagina — texto real del cliente, no redactado aqui (R3). */}
+<BaseLayout title={`Blog & News | ${NEGOCIO.nombre}`} description={ENTRADA}>
+  <Nav />
+
+  <main>
+    <section class="blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          <h1 class="h1">{TITULAR}</h1>
+          <div>{ENTRADA}</div>
+        </div>
+
+        {/* .wrapper-team es la clase que usa el propio baseline en esta pagina
+            (artefacto de Webflow: reaprovecho la del listado de equipo). Se
+            conserva porque aporta el margin-top:3em del listado. */}
+        <div class="wrapper-team">
+          <div class="collection-list-wrapper-blog">
+            {/* .w-list-unstyled anula el padding-left:40px que webflow.css da a
+                todo <ul>; el role="list" mantiene la semantica en Safari. */}
+            <ul role="list" class="collection-list-blog w-list-unstyled">
+              {
+                lista.map((p, i) => {
+                  const href = `/post/${p.slug}`;
+                  // La primera tarjeta es la candidata a LCP: entra eager.
+                  const primera = i === 0;
+                  return (
+                    <li class="collection-item-blog">
+                      {/* En produccion este div llevaba style="opacity:0" y un
+                          data-w-id: la interaccion de Webflow lo revelaba al
+                          hacer scroll. Sin webflow.js las 10 tarjetas se
+                          quedarian invisibles, asi que el opacity:0 se cae. */}
+                      <div class="block-blog">
+                        {p.heroImage && (
+                          <img
+                            src={src(p.heroImage.url, CARD_W)}
+                            srcset={srcset(p.heroImage.url)}
+                            sizes={SIZES}
+                            width={CARD_W}
+                            height={CARD_H}
+                            /* Miniatura redundante: el <h2> que va justo al
+                               lado, dentro de la misma tarjeta, ya es su
+                               alternativa textual, y el enlace nombra el post.
+                               Repetir una descripcion x10 solo anade ruido al
+                               lector de pantalla. Si Sanity trae alt, manda el
+                               alt de Sanity. Nunca el nombre del fichero. */
+                            alt={p.heroImage.alt?.trim() ?? ""}
+                            loading={primera ? "eager" : "lazy"}
+                            fetchpriority={primera ? "high" : undefined}
+                            decoding="async"
+                            /* Sin lqip a proposito. Medido en el HTML generado:
+                               2,5 KB de base64 por imagen, 9 imagenes lazy =
+                               +22 KB de documento (34 KB -> 56 KB, un 65% mas)
+                               para tapar un hueco que ya no salta (.pic-blog
+                               fija height:250px, asi que no hay CLS) y que
+                               ademas queda bajo el pliegue. Mismo criterio que
+                               Footer.astro. */
+                            class="pic-blog"
+                          />
+                        )}
+                        <div class="block-info-blog">
+                          <h2 class="title-blog">{p.title.trim()}</h2>
+                          {/* R3: el resumen que produccion muestra aqui no
+                              existe en Sanity (el documento post solo trae
+                              title, slug, body y heroImage). No se copia del
+                              HTML ni se resume el body: hueco a la vista. */}
+                          <div class="text-blog">
+                            {p.excerpt?.trim() || "{{PENDIENTE}} post summary"}
+                          </div>
+                          {/* En produccion son 10 enlaces identicos llamados
+                              "read More". El texto visible no cambia (paridad);
+                              el nombre accesible sí, con el titulo del post. */}
+                          <a href={href} class="button mini w-button">
+                            read More<span class="visually-hidden"> about {p.title.trim()}</span>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

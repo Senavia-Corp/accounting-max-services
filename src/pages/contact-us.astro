@@ -1,0 +1,503 @@
+---
+// Ruta /contact-us.
+//
+// Estructura y clases de baseline/html/contact-us.html <section class="header-contact-page">.
+// Los datos de contacto salen de NEGOCIO (src/lib/sanity.ts), no del HTML.
+//
+// Diferencias deliberadas respecto al HTML de produccion, todas justificadas
+// mas abajo en su sitio:
+//   - los 4 campos del Lead Form pasan a tener <label> real (hoy hay 0 <label>
+//     en las 26 rutas: solo placeholders, que desaparecen al escribir);
+//   - dos casillas de consentimiento separadas, llamadas y SMS (FTSA);
+//   - los <a href="#"> de direccion y horario dejan de ser enlaces;
+//   - el <div style="opacity:0"> de las interacciones de Webflow desaparece:
+//     sin webflow.js ese estilo en linea deja el contenido INVISIBLE;
+//   - el POST va a /api/lead con nombres de campo limpios, no a Webflow.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { NEGOCIO } from "../lib/sanity";
+
+// El horario vive en NEGOCIO como una sola cadena; aqui va en dos lineas, igual
+// que en produccion. Se parte, no se reescribe (mismo criterio que Footer).
+const [dias, horas] = NEGOCIO.horario.split(" (");
+
+/**
+ * Marca de tiempo para el time-trap del servidor (FASE 4).
+ *
+ * OJO: esta pagina es estatica, asi que este valor es la hora del BUILD, no la
+ * de la visita. El <script> de abajo lo sobreescribe con Date.now() al cargar.
+ * Contrato para /api/lead:
+ *   - rechazar si (ahora - ts) < 3000 ms  -> se envio demasiado rapido, es bot;
+ *   - NO rechazar por antiguo: sin JS, o con la pagina servida desde cache, el
+ *     valor legitimo es la hora del build y puede tener dias.
+ * Es un filtro barato, no una firma: un bot decidido puede poner lo que quiera.
+ */
+const TS_BUILD = Date.now();
+
+// La descripcion reutiliza el parrafo real de la pagina. En produccion no hay
+// ni una sola meta description en las 26 rutas (R3: no se inventa copy nuevo).
+const DESCRIPCION =
+  "Have questions about your taxes, business, or finances? Our expert team is " +
+  "ready to assist you—bilingual, responsive, and always just a message away.";
+---
+
+<BaseLayout title="Contact Us | Accounting Max Services" description={DESCRIPCION}>
+  <Nav />
+
+  <main>
+    <section class="header-contact-page">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-contact-page">
+          <div class="block-info-contact">
+            <h1 class="h1">Contact Our Tax &amp; Accounting Experts in Coral Springs, FL</h1>
+            <div>{DESCRIPCION}</div>
+
+            <ul role="list" class="list">
+              <li class="list-item">
+                <a href={NEGOCIO.telefonoHref} class="block-icon-contact-page w-inline-block">
+                  <div class="box-icon-contact">
+                    {/* Iconos decorativos: el texto de al lado ya los nombra. */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="35"
+                      height="35"
+                      viewBox="0 0 24 24"
+                      class="ikonik-122hk"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M15.795 6.791 13.005 4v6.995H20l-2.791-2.79 4.503-4.503-1.414-1.414z"></path>
+                      <path
+                        fill="currentColor"
+                        d="M16.712 13.288a.999.999 0 0 0-1.414 0l-1.597 1.596c-.824-.245-2.166-.771-2.99-1.596-.874-.874-1.374-2.253-1.594-2.992l1.594-1.594a.999.999 0 0 0 0-1.414l-4-4a1.03 1.03 0 0 0-1.414 0l-2.709 2.71c-.382.38-.597.904-.588 1.437.022 1.423.396 6.367 4.297 10.268C10.195 21.6 15.142 21.977 16.566 22h.028c.528 0 1.027-.208 1.405-.586l2.712-2.712a.999.999 0 0 0 0-1.414l-3.999-4zM16.585 20c-1.248-.021-5.518-.356-8.874-3.712C4.343 12.92 4.019 8.636 4 7.414l2.004-2.005L8.59 7.995 7.297 9.288c-.238.238-.34.582-.271.912.024.115.611 2.842 2.271 4.502s4.387 2.247 4.502 2.271a.994.994 0 0 0 .912-.271l1.293-1.293 2.586 2.586L16.585 20z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="block-info-page">
+                    <div class="top-title-contact-page">Let&#x27;s talk!</div>
+                    <div class="info-contact-page">{NEGOCIO.telefono}</div>
+                  </div>
+                </a>
+              </li>
+
+              <li class="list-item">
+                <a
+                  href={`mailto:${NEGOCIO.email}`}
+                  class="block-icon-contact-page w-inline-block"
+                >
+                  <div class="box-icon-contact">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="35"
+                      height="35"
+                      viewBox="0 0 1024 1024"
+                      class="ikonik-dn3cw"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-40 110.8V792H136V270.8l-27.6-21.5 39.3-50.5 42.8 33.3h643.1l42.8-33.3 39.3 50.5-27.7 21.5zM833.6 232L512 482 190.4 232l-42.8-33.3-39.3 50.5 27.6 21.5 341.6 265.6a55.99 55.99 0 0 0 68.7 0L888 270.8l27.6-21.5-39.3-50.5-42.7 33.2z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div class="block-info-page">
+                    <div class="top-title-contact-page">Send us a message!</div>
+                    <div class="info-contact-page">{NEGOCIO.email}</div>
+                  </div>
+                </a>
+              </li>
+
+              {/*
+                Direccion y horario eran <a href="#">: enlaces a ninguna parte.
+                Aqui dejan de ser enlaces. No se inventa una URL de Google Maps
+                (R3) y un enlace que no lleva a ningun sitio es peor que ninguno.
+              */}
+              <li class="list-item">
+                <div class="block-icon-contact-page">
+                  <div class="box-icon-contact">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="35"
+                      height="35"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      class="ikonik-1cr66"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        d="M12 2C7.58172 2 4 5.58172 4 10C4 11.8919 4.40209 13.1304 5.5 14.5L12 22L18.5 14.5C19.5979 13.1304 20 11.8919 20 10C20 5.58172 16.4183 2 12 2Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                      <circle
+                        cx="12"
+                        cy="10"
+                        r="3"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"></circle>
+                    </svg>
+                  </div>
+                  <div class="block-info-page">
+                    <div class="top-title-contact-page">Visit us!</div>
+                    {/* En una sola linea: Astro colapsa el salto entre
+                        expresiones y "FL 33071" saldria pegado. */}
+                    <address class="info-contact-page">
+                      {NEGOCIO.calle},<br />{`${NEGOCIO.ciudad}, ${NEGOCIO.region} ${NEGOCIO.cp}`}
+                    </address>
+                  </div>
+                </div>
+              </li>
+
+              <li class="list-item">
+                <div class="block-icon-contact-page">
+                  <div class="box-icon-contact">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="35"
+                      height="35"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      class="ikonik-nemno"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        d="M8 4H5C3.89543 4 3 4.89543 3 6V9M8 4H16M8 4V2M8 4V6M16 4H19C20.1046 4 21 4.89543 21 6V9H3M16 4V2M16 4V6M3 9V20C3 21.1046 3.89543 22 5 22H10M17 15.25V17L18.25 18.25M22 17C22 19.7614 19.7614 22 17 22C14.2386 22 12 19.7614 12 17C12 14.2386 14.2386 12 17 12C19.7614 12 22 14.2386 22 17Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    </svg>
+                  </div>
+                  <div class="block-info-page">
+                    <div class="top-title-contact-page">Opening hours</div>
+                    <div class="info-contact-page">
+                      {dias}<br />{horas ? `(${horas}` : ""}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="block-form-contact">
+            <div class="wrapper-form-page">
+              <div class="block-form">
+                <div class="form-block-contact w-form">
+                  <div class="header-form">
+                    <h2 class="h2">Request an online consultation!</h2>
+                    <div>
+                      Get a personalized quote for your tax or accounting needs—fast,
+                      confidential, and bilingual.
+                    </div>
+                  </div>
+
+                  {/*
+                    /api/lead lo crea la FASE 4. Hasta entonces el POST devuelve
+                    404 y el bloque de error EN LINEA lo dice. No se redirige a
+                    /thank-you: esa pagina no existe, y contar su pageview como
+                    conversion es la fuente de datos falsos de siempre.
+
+                    Contrato de campos para el endpoint:
+                      full_name (req) · email (req) · phone (req) · message
+                      consent_calls / consent_sms  -> "yes" o ausentes
+                      ref_id -> honeypot: si viene con algo, descartar en silencio
+                      ts     -> ver TS_BUILD arriba
+                  */}
+                  <form id="lead-form" class="form" method="post" action="/api/lead">
+                    {/* El diseno de la tarjeta no admite etiquetas visibles sin
+                        rehacerlo, asi que van en .visually-hidden. Lo que no es
+                        admisible es dejarlas sin poner. */}
+                    <label class="visually-hidden" for="lead-full-name">Full name</label>
+                    <input
+                      id="lead-full-name"
+                      class="text-field-form w-input"
+                      type="text"
+                      name="full_name"
+                      maxlength="256"
+                      placeholder="Full name"
+                      autocomplete="name"
+                      required
+                    />
+
+                    <label class="visually-hidden" for="lead-email">Email</label>
+                    <input
+                      id="lead-email"
+                      class="text-field-form w-input"
+                      type="email"
+                      name="email"
+                      maxlength="256"
+                      placeholder="Email"
+                      autocomplete="email"
+                      required
+                    />
+
+                    <label class="visually-hidden" for="lead-phone">Phone</label>
+                    <input
+                      id="lead-phone"
+                      class="text-field-form w-input"
+                      type="tel"
+                      name="phone"
+                      maxlength="256"
+                      placeholder="Phone"
+                      autocomplete="tel"
+                      required
+                    />
+
+                    <label class="visually-hidden" for="lead-message">
+                      How can we help you? (optional)
+                    </label>
+                    <textarea
+                      id="lead-message"
+                      class="text-field-form large w-input"
+                      name="message"
+                      maxlength="5000"
+                      placeholder="How can we help you?"></textarea>
+
+                    {/*
+                      Consentimiento FTSA (Florida Telephone Solicitation Act) +
+                      TCPA. El telefono es obligatorio en este formulario, asi
+                      que hace falta consentimiento expreso y por escrito ANTES
+                      de llamar o mandar SMS con sistemas automatizados, y tiene
+                      que ser separado por canal.
+
+                      Las dos casillas son OPCIONALES y salen sin marcar a
+                      proposito: condicionar el presupuesto a que el usuario
+                      acepte que le llamen invalida el consentimiento.
+                    */}
+                    <fieldset class="lead-consent">
+                      <legend class="visually-hidden">
+                        Consent to phone calls and text messages
+                      </legend>
+
+                      <div class="lead-consent-row">
+                        <input
+                          id="lead-consent-calls"
+                          type="checkbox"
+                          name="consent_calls"
+                          value="yes"
+                        />
+                        <label class="small-text" for="lead-consent-calls">
+                          I agree that {NEGOCIO.nombre} may call me at the phone number I
+                          provide, including calls placed with automated dialing technology,
+                          about this request and its services. Consent is not required to get
+                          a quote or to buy anything, and I can withdraw it at any time by
+                          telling the person who calls me to stop.
+                        </label>
+                      </div>
+
+                      <div class="lead-consent-row">
+                        <input
+                          id="lead-consent-sms"
+                          type="checkbox"
+                          name="consent_sms"
+                          value="yes"
+                        />
+                        <label class="small-text" for="lead-consent-sms">
+                          I agree that {NEGOCIO.nombre} may send me text messages (SMS) at the
+                          phone number I provide, including messages sent with automated
+                          technology, about this request and its services. Consent is not
+                          required to get a quote or to buy anything. Message frequency varies
+                          and message and data rates may apply. Reply STOP to opt out or HELP
+                          for help.
+                        </label>
+                      </div>
+
+                      <p class="small-text lead-note">
+                        The phone number is required on this form. We only call or text you if
+                        you check a box above; if you leave both unchecked, we reply by email.
+                      </p>
+
+                      {/*
+                        D4: la politica de privacidad y el aviso GLBA no existen
+                        todavia, y un preparador de impuestos esta obligado a
+                        publicarlos antes de recoger un dato. El hueco va visible
+                        (R3), no se redacta de relleno ni se enlaza a nada.
+                      */}
+                      <p class="small-text lead-note">
+                        {"{{PENDIENTE}}"} — link to the Privacy Policy and the GLBA privacy notice.
+                      </p>
+                    </fieldset>
+
+                    {/* Trampa anti-bots. Se llama 'ref_id' y NO 'company_url' a
+                        proposito: los gestores de contrasenas autocompletan
+                        cualquier campo que huela a empresa o URL y marcarian
+                        como bot a personas reales. */}
+                    <div class="visually-hidden" aria-hidden="true">
+                      <label for="lead-ref-id">Leave this field empty</label>
+                      <input
+                        id="lead-ref-id"
+                        type="text"
+                        name="ref_id"
+                        tabindex="-1"
+                        autocomplete="off"
+                      />
+                    </div>
+
+                    <input id="lead-ts" type="hidden" name="ts" value={TS_BUILD} />
+
+                    <input
+                      type="submit"
+                      class="button w-button"
+                      data-wait="Please wait..."
+                      value="Request estimate"
+                    />
+                  </form>
+
+                  {/* Confirmacion EN LINEA, sin cambio de URL, replicando el
+                      w-form-done de Webflow. */}
+                  <div class="success-message w-form-done" role="status" tabindex="-1" data-lead-done>
+                    {/*
+                      El check original (684a1669..._check (1).png) NO se migro a
+                      Sanity y las URLs de cdn.prod.website-files.com estan
+                      prohibidas. Va como SVG en linea: mismo papel decorativo,
+                      cero peticiones, cero dependencia externa.
+                    */}
+                    <svg
+                      class="icon-check"
+                      width="100"
+                      height="100"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="12" cy="12" r="10" fill="var(--green-2)"></circle>
+                      <path
+                        d="m7.5 12.4 3 3 6-6.6"
+                        stroke="#fff"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    </svg>
+                    <div class="title-form">Thank you! Your submission has been received!</div>
+                  </div>
+
+                  <div class="w-form-fail" role="alert" tabindex="-1" data-lead-fail>
+                    <div>Oops! Something went wrong while submitting the form.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  {/* Dentro de <BaseLayout> a proposito: si va fuera, Astro lo emite DESPUES de
+      </html>. Los navegadores lo ejecutan igual por recuperacion de errores,
+      pero el HTML deja de ser valido. */}
+  <script>
+    // Mejora progresiva del envio: sin este script el formulario sigue haciendo
+    // POST a /api/lead, solo que navegando fuera de la pagina.
+    const form = document.getElementById("lead-form") as HTMLFormElement | null;
+    const bloque = form?.closest(".form-block-contact") as HTMLElement | null;
+    const hecho = bloque?.querySelector<HTMLElement>("[data-lead-done]");
+    const fallo = bloque?.querySelector<HTMLElement>("[data-lead-fail]");
+    const enviar = form?.querySelector<HTMLInputElement>('input[type="submit"]');
+    const marca = form?.querySelector<HTMLInputElement>("#lead-ts");
+
+    // La pagina es estatica: el value que viaja en el HTML es la hora del BUILD.
+    // Aqui pasa a ser la hora real de carga, que es lo que el time-trap mide.
+    if (marca) marca.value = String(Date.now());
+
+    if (form && hecho && fallo && enviar) {
+      const etiqueta = enviar.value;
+      const espera = enviar.dataset.wait ?? "Please wait...";
+
+      // .w-form-done/.w-form-fail son display:none en el CSS portado; Webflow
+      // los mostraba con estilo en linea y aqui se hace igual (no hay CSS nuevo).
+      const mostrar = (el: HTMLElement) => {
+        el.style.display = "block";
+        el.focus();
+      };
+      const ocultar = (el: HTMLElement) => {
+        el.style.display = "";
+      };
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        ocultar(fallo);
+
+        enviar.disabled = true;
+        enviar.value = espera;
+
+        try {
+          const res = await fetch(form.action, {
+            method: "POST",
+            headers: { Accept: "application/json" },
+            body: new FormData(form),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          form.style.display = "none";
+          mostrar(hecho);
+        } catch {
+          mostrar(fallo);
+        } finally {
+          enviar.disabled = false;
+          enviar.value = etiqueta;
+        }
+      });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  /* Unico CSS nuevo de la ruta, y con alcance de pagina.
+   *
+   * El sitio original no tiene ni un solo checkbox, asi que el CSS portado no
+   * trae NADA para ellos: sin esto la casilla y su texto legal salen apilados
+   * en dos lineas y con el texto en negrita (webflow.css hace label{
+   * display:block; font-weight:bold }). No es rediseno, es lo minimo para que
+   * el bloque de consentimiento sea legible.
+   */
+
+  /* .form es flex column con align-items:center: sin width los hijos encogen. */
+  .lead-consent {
+    width: 100%;
+    margin: 5px 0 10px;
+  }
+
+  .lead-consent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .lead-consent-row input[type="checkbox"] {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin: 1px 0 0;
+    accent-color: var(--green-2);
+  }
+
+  .lead-consent-row label {
+    margin-bottom: 0;
+    font-weight: 400;
+  }
+
+  .lead-note {
+    margin-bottom: 8px;
+  }
+
+  /* La direccion pasa de <div> a <address> (es el NAP del negocio, y la FASE 6
+   * lo va a marcar). El UA pone font-style:italic en <address> y ni normalize
+   * ni el CSS de Webflow lo resetean: sin esto la direccion sale en cursiva y
+   * rompe la paridad con baseline/html/contact-us.html. */
+  address.info-contact-page {
+    font-style: normal;
+  }
+</style>

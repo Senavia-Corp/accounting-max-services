@@ -1,0 +1,221 @@
+---
+// /post/<slug> — entrada de blog. 10 rutas.
+//
+// Estructura y clases copiadas de baseline/html/post/<slug>.html (las 10 son
+// identicas salvo el contenido). Los datos salen de Sanity, no del HTML.
+//
+// Diferencias deliberadas respecto al HTML de produccion:
+//   - Fuera los style="opacity:0" y los data-w-id. Eran interacciones IX2 de
+//     Webflow: sin webflow.js el titular, la imagen y las DOS columnas se
+//     quedarian invisibles para siempre. Es el cambio mas importante del port.
+//   - <section> sin clase pasa a <main>; .blog-column-left a <article> y
+//     .blog-column-right a <aside>. Las clases se conservan tal cual, que es de
+//     donde sale todo el CSS (comprobado: ni un selector de elemento).
+//   - Las diez <ul role="list"> de un solo <li> de "Featured Blogs" (artefacto
+//     del CMS de Webflow: "lista de 1 elemento" x10 al lector de pantalla)
+//     pasan a una sola <ul> con diez <li>. Mismo aspecto: webflow.css da el
+//     padding-left:40px a todo <ul>.
+//   - Fuera las clases .w-dyn-list / .w-dyn-items / .w-dyn-item: no tienen ni
+//     una regla de CSS en el port y solo las usaba el runtime del CMS.
+//   - SIN fecha y SIN autor (R3). La plantilla de Webflow no los liga y los
+//     documentos de Sanity los traen vacios. Por lo mismo NO se emite JSON-LD
+//     Article: datePublished y author son obligatorios de facto y no existen.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import PortableText from "../../components/PortableText.astro";
+import { posts, NEGOCIO } from "../../lib/sanity";
+import type { Post } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const todos = await posts();
+
+  // Aviso en el log del build, no excepcion: son fallos del import (FASE 2) que
+  // no se arreglan desde esta plantilla, y reventar aqui dejaria sin construir
+  // las otras 16 rutas. El detalle va en el informe de esta ruta.
+  const sinAlt = todos.filter((p) => !p.heroImage?.alt?.trim()).length;
+  if (sinAlt) {
+    console.warn(
+      `[post/[slug]] ${sinAlt}/${todos.length} entradas sin alt en heroImage. ` +
+        "El esquema lo exige (imageWithAlt); el import no lo relleno.",
+    );
+  }
+  const sinExtracto = todos.filter((p) => !p.excerpt?.trim()).length;
+  if (sinExtracto) {
+    console.warn(
+      `[post/[slug]] ${sinExtracto}/${todos.length} entradas sin excerpt. ` +
+        "Produccion muestra un resumen bajo el H1; sale como {{PENDIENTE}}.",
+    );
+  }
+
+  return todos.map((post) => ({
+    params: { slug: post.slug },
+    // `todos` viaja como prop para que la barra lateral no vuelva a consultar
+    // Sanity una vez por ruta.
+    props: { post, todos },
+  }));
+}
+
+interface Props {
+  post: Post;
+  todos: Post[];
+}
+
+const { post, todos } = Astro.props;
+
+const titulo = post.title.trim();
+const hero = post.heroImage;
+
+// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+const src = (w: number) => `${hero!.url}?w=${w}&q=75&auto=format`;
+// Sin pasarse del ancho original: Sanity no amplia, y pedir 1500 a una imagen
+// de 1289 devuelve 1289 con un srcset mintiendo sobre su ancho real.
+const ANCHOS = hero ? [...new Set([750, 1100, 1500].map((w) => Math.min(w, hero.w)))] : [];
+// .picture-blog-page: width 55% con max-width 750px; bajo 991px pasa a 100%.
+const SIZES = "(max-width: 991px) 100vw, 750px";
+
+// R3: el resumen que produccion muestra bajo el H1 no existe en Sanity. No se
+// copia del HTML ni se resume el body: hueco a la vista. Mismo texto que usa
+// /blog-news para el mismo dato ausente.
+const resumen = post.excerpt?.trim() || "{{PENDIENTE}} post summary";
+
+// En produccion las 26 rutas comparten el <title> "Accounting Max Services" y
+// ninguna tiene meta description. El titulo se compone con datos que ya existen
+// (el del post + el nombre del negocio); la description solo sale si Sanity la
+// trae, porque redactarla aqui seria inventar contenido (R3).
+const metaTitulo = post.metaTitle?.trim() || `${titulo} | ${NEGOCIO.nombre}`;
+
+// Primer parrafo real del cuerpo del articulo. El bloque [0] de los 10 posts es
+// un renglon corto que repite el titular, asi que se descarta por longitud y se
+// coge el primero que sea una frase de verdad (>=80 caracteres).
+const primerParrafo = (body?: any[]): string | undefined => {
+  for (const b of body ?? []) {
+    if (b?._type !== "block" || b.style !== "normal") continue;
+    const t = (b.children ?? []).map((c: any) => c.text ?? "").join("").replace(/\s+/g, " ").trim();
+    if (t.length >= 80) return t;
+  }
+  return undefined;
+};
+
+// Recorte por palabra entera; no reescribe nada, solo corta.
+const recorta = (t: string, max = 155): string => {
+  if (t.length <= max) return t;
+  const cabeza = t.slice(0, max + 1);
+  const corte = cabeza.lastIndexOf(" ");
+  return (corte > 0 ? cabeza.slice(0, corte) : t.slice(0, max)).replace(/[ ,;:.—-]+$/, "") + "…";
+};
+
+// R3: NO se redacta una description. Se sirve el texto del propio articulo tal
+// cual lo publico el cliente, recortado — mismo criterio que /blog-news, que ya
+// usa su entradilla real. Sin esto la ruta salia sin description ninguna.
+const desdeCuerpo = primerParrafo(post.body);
+const metaDesc =
+  post.metaDescription?.trim() ||
+  post.excerpt?.trim() ||
+  (desdeCuerpo && recorta(desdeCuerpo)) ||
+  undefined;
+
+// Copia fija del promo lateral: texto real de produccion, migrado verbatim.
+// No esta en Sanity (no hay documento `page` para el blog) y es el mismo en las
+// 10 rutas, igual que el promo del pie que Footer.astro tambien lleva en codigo.
+const PROMO_TITULO = "📅 Schedule Your Free Consultation Today!";
+const PROMO_TEXTO =
+  "Get a free consultation with our IRS Certified Enrolled Agents and CPAs. " +
+  "We’ll review your needs and provide expert guidance with a personalized " +
+  "estimate—no commitment required.";
+
+const aqui = `/post/${post.slug}`;
+---
+
+<BaseLayout title={metaTitulo} description={metaDesc}>
+  <Nav />
+
+  <main>
+    <div class="header-page-blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-header-blog">
+          <div class="block-title-blog">
+            <h1 class="h1">{titulo}</h1>
+            <div>{resumen}</div>
+          </div>
+
+          {
+            hero && (
+              <img
+                src={src(ANCHOS[ANCHOS.length - 1])}
+                srcset={ANCHOS.map((w) => `${src(w)} ${w}w`).join(", ")}
+                sizes={SIZES}
+                width={hero.w}
+                height={hero.h}
+                /* Alt de Sanity si lo hay. Si no, se nombra su funcion en la
+                   pagina: es una ilustracion de cabecera cuyo contenido no
+                   aporta informacion que no este ya en el H1. Nunca el nombre
+                   del fichero, y nunca vacio en una imagen de este tamano. */
+                alt={hero.alt?.trim() || `Illustration for the article “${titulo}”`}
+                /* Candidata a LCP de la pagina: ni lazy ni prioridad por
+                   defecto. Sin lqip a proposito — el asset que sirve hoy
+                   Sanity es un PNG con canal alfa y el placeholder se veria
+                   por las zonas transparentes. */
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="picture-blog-page"
+              />
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="block-blog-page">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-content-blog">
+          <article class="blog-column-left">
+            <div class="w-layout-blockcontainer container w-container">
+              <div class="w-richtext">
+                {/* Mismo componente que /services/[slug]: una sola
+                    implementacion de Portable Text en todo el sitio. */}
+                <PortableText value={post.body} />
+              </div>
+            </div>
+          </article>
+
+          {/* role="complementary" con nombre: en produccion esta columna es un
+              <div> anonimo y no se puede saltar a ella ni salir. */}
+          <aside class="blog-column-right" aria-label="More from Accounting Max Services">
+            <div class="block-promo-blog">
+              <h2 class="h3"><strong>{PROMO_TITULO}</strong></h2>
+              <div>{PROMO_TEXTO}</div>
+              <a href="/contact-us" class="button w-button">Book A Consultation</a>
+            </div>
+
+            <div class="block-blogs-features">
+              <h2 class="h3">Featured Blogs</h2>
+              <ul role="list">
+                {
+                  todos.map((p) => {
+                    const href = `/post/${p.slug}`;
+                    const actual = href === aqui;
+                    return (
+                      <li>
+                        <a
+                          href={href}
+                          class={`link-footer${actual ? " w--current" : ""}`}
+                          aria-current={actual ? "page" : undefined}
+                        >
+                          {p.title.trim()}
+                        </a>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

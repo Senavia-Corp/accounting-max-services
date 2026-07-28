@@ -1,0 +1,264 @@
+---
+// Cromo compartido: barra superior + navegacion principal.
+//
+// Estructura y clases copiadas de baseline/html/index.html <section class="menu">.
+// Los 12 servicios del desplegable salen de Sanity: en Webflow estaban
+// incrustados en el HTML de cada una de las 26 rutas.
+//
+// Diferencias deliberadas respecto al HTML de produccion:
+//   - <section class="menu"> pasa a <header class="menu"> (landmark banner
+//     real) y desaparece el role="banner" redundante del .navbar.
+//   - La hamburguesa y el desplegable eran <div>; ahora son <button> con
+//     aria-expanded/aria-controls. Los mueve src/scripts/ui.ts.
+//   - Los 3 iconos de redes eran <a href="#">: enlaces a ninguna parte en las
+//     26 rutas. No hay URL real en ningun sitio, asi que no se inventa (R3).
+//   - El logo enlazaba a "#"; ahora enlaza a "/".
+import { servicios, sanity } from "../lib/sanity";
+
+// Assets de marca. Estan en Sanity como assets sueltos (sin documento que los
+// referencie): las URLs de cdn.prod.website-files.com estan prohibidas.
+const MARCA = [
+  "678077e42e9acb0cea7a50aa-logo-white.svg",
+  "6780790ea76025cecb2cbc00-icon-top-2.svg",
+  "6780790e9529784dfd544ee0-icon-top-1.svg",
+  "67350550270472b1de28dba3-link.svg",
+  "673505503e9787a64371059f-face.svg",
+  "67350550ecd34bc66b17cbe5-insta.svg",
+];
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+// El cromo se renderiza en las 26 rutas: sin cache serian 26 consultas
+// identicas por componente. globalThis sobrevive entre renders del build.
+const g = globalThis as any;
+const assets: Asset[] = await (g.__amsAssetsNav ??= sanity.fetch(
+  `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+     originalFilename, url,
+     "w": metadata.dimensions.width,
+     "h": metadata.dimensions.height
+   }`,
+  { f: MARCA },
+));
+const servs = await (g.__amsServicios ??= servicios());
+
+/** Falla en voz alta: una imagen rota en el cromo se ve en las 26 rutas. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset de marca "${nombre}".`);
+  return a;
+};
+
+const logo = img("678077e42e9acb0cea7a50aa-logo-white.svg");
+const iconCpa = img("6780790ea76025cecb2cbc00-icon-top-2.svg");
+const iconEa = img("6780790e9529784dfd544ee0-icon-top-1.svg");
+
+// R3: los 3 iconos apuntaban a href="#". Se conservan como imagen (son assets
+// reales, migrados) pero sin enlace, y el hueco queda marcado a la vista.
+const REDES: { icono: Asset; href: string | null }[] = [
+  { icono: img("67350550270472b1de28dba3-link.svg"), href: null },
+  { icono: img("673505503e9787a64371059f-face.svg"), href: null },
+  { icono: img("67350550ecd34bc66b17cbe5-insta.svg"), href: null },
+];
+
+// La ruta viva no lleva barra final (baseline/urls-vivas.csv); Astro puede
+// servir "/about-us/" segun trailingSlash, asi que se normaliza para comparar.
+const aqui = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const activo = (href: string) => (href === aqui ? "page" : undefined);
+const marca = (href: string) => (href === aqui ? " w--current" : "");
+---
+
+<header class="menu">
+  <div class="top-bar">
+    <div class="w-layout-blockcontainer container-menu w-container">
+      <div class="wrapper-top-bar">
+        <div class="block-icons-top-bar">
+          <div class="block-top-info">
+            <div class="block-icon-top-bar">
+              {/* Icono decorativo: el texto de al lado ya dice lo mismo. */}
+              <img
+                src={iconCpa.url}
+                width={iconCpa.w}
+                height={iconCpa.h}
+                alt=""
+                loading="eager"
+                decoding="async"
+                class="icon-top-bar"
+              />
+            </div>
+            {/* El <br> es del HTML en produccion: iguala la altura de las dos
+                columnas de la barra. Se conserva por paridad. */}
+            <div class="text-top-bar">Certified Public Accounting<br /></div>
+          </div>
+          <div class="block-top-info">
+            <div class="block-icon-top-bar">
+              <img
+                src={iconEa.url}
+                width={iconEa.w}
+                height={iconEa.h}
+                alt=""
+                loading="eager"
+                decoding="async"
+                class="icon-top-bar"
+              />
+            </div>
+            <div class="text-top-bar">IRS Certified Enrolled Agent</div>
+          </div>
+        </div>
+        <div class="block-social-media">
+          <div class="text-top-bar-social">Follow us on our social networks:</div>
+          {
+            REDES.map((r) =>
+              r.href ? (
+                <a href={r.href} class="social-link w-inline-block">
+                  <img
+                    src={r.icono.url}
+                    width={r.icono.w}
+                    height={r.icono.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="icon-sociall"
+                  />
+                </a>
+              ) : (
+                <span class="social-link w-inline-block">
+                  <img
+                    src={r.icono.url}
+                    width={r.icono.w}
+                    height={r.icono.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="icon-sociall"
+                  />
+                </span>
+              ),
+            )
+          }
+          {/* Sin enlaces de redes sociales: en produccion los 3 iconos son
+              <a href="#"> muertos en las 26 rutas y no existe ninguna URL real
+              en ningun sitio. Quitar un enlace que no lleva a nada no es
+              inventar contenido, es retirar algo roto — y un "{{PENDIENTE}}"
+              visible en el sitio del cliente lo hace parecer averiado.
+              Queda registrado como D11 en DECISIONS.md. */}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* data-collapse lo usa el CSS portado (.w-nav[data-collapse='medium']);
+      los data-animation/data-duration/data-w-id eran solo para webflow.js. */}
+  <div class="navbar w-nav" data-collapse="medium" data-nav-open="false">
+    <div class="container-menu w-container">
+      <div class="wrapper-menu">
+        <a href="/" class="brand w-nav-brand" aria-current={activo("/")}>
+          <img
+            src={logo.url}
+            width={logo.w}
+            height={logo.h}
+            alt="Accounting Max Services"
+            loading="eager"
+            decoding="async"
+            class="logo"
+          />
+        </a>
+
+        <div class="block-items-menu" id="nav-items">
+          <nav class="nav-menu w-nav-menu" aria-label="Main">
+            <a href="/" class={`nav-link w-nav-link${marca("/")}`} aria-current={activo("/")}>Home</a>
+
+            <div class="dropdown w-dropdown">
+              <button
+                type="button"
+                id="nav-servicios"
+                class="nav-link w-dropdown-toggle"
+                aria-expanded="false"
+                aria-controls="nav-servicios-lista"
+              >
+                <span class="w-icon-dropdown-toggle" aria-hidden="true"></span>
+                <span>Services</span>
+              </button>
+              <div
+                id="nav-servicios-lista"
+                class="dropdown-list w-dropdown-list"
+                aria-labelledby="nav-servicios"
+              >
+                <div class="collection-list-wrapper-submenu">
+                  <ul role="list" class="collection-list-submenu">
+                    {
+                      servs.map((s) => {
+                        const href = `/services/${s.slug}`;
+                        return (
+                          <li class="collection-item-submenu">
+                            {s.icon && (
+                              <img
+                                src={s.icon.url}
+                                width={s.icon.w}
+                                height={s.icon.h}
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                                class="icon-submenu"
+                              />
+                            )}
+                            <a
+                              href={href}
+                              class={`link-submenu${marca(href)}`}
+                              aria-current={activo(href)}
+                            >
+                              {s.title.trim()}
+                            </a>
+                          </li>
+                        );
+                      })
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="/about-us"
+              class={`nav-link w-nav-link${marca("/about-us")}`}
+              aria-current={activo("/about-us")}>About Us</a
+            >
+            <a
+              href="/blog-news"
+              class={`nav-link w-nav-link${marca("/blog-news")}`}
+              aria-current={activo("/blog-news")}>Blog & news</a
+            >
+          </nav>
+
+          <nav class="nav-menu w-nav-menu" aria-label="Contact">
+            <a
+              href="/contact-us"
+              class={`nav-link w-nav-link${marca("/contact-us")}`}
+              aria-current={activo("/contact-us")}>Contact Us</a
+            >
+            <a
+              href="/contact-us"
+              class={`button top-menu-click w-button${marca("/contact-us")}`}
+              aria-current={activo("/contact-us")}>Book a consultation</a
+            >
+          </nav>
+        </div>
+
+        <button
+          type="button"
+          class="menu-button w-nav-button"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="nav-items"
+        >
+          <span class="icon w-icon-nav-menu" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+{/* Sustituye a jQuery + webflow.js (211 KB). Nav esta en las 26 rutas, asi que
+    este es el punto de carga natural del JS del sitio. */}
+<script>
+  import "../scripts/ui.ts";
+</script>

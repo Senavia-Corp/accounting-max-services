@@ -1,0 +1,146 @@
+---
+// Formulario de newsletter del pie.
+//
+// Estructura y clases de baseline/html/index.html:
+//   section.footer > .email-subscribed > .container > section.footer-subscribe
+// (OJO: en index/about-us/services hay OTRA section.footer-subscribe, la del
+// "Schedule a free consultation call Today!". Esa es una seccion de pagina, no
+// cromo, y la construye el agente de cada pagina.)
+//
+// El endpoint /api/newsletter lo crea la FASE 4. Hasta entonces el POST
+// devuelve 404 y el bloque de error EN LINEA lo dice. No se redirige a
+// /thank-you: esa pagina no existe y contar el pageview de un "gracias" como
+// conversion ya dio seis meses de datos falsos en otro proyecto.
+import { sanity } from "../lib/sanity";
+
+type Asset = { url: string; w: number; h: number };
+const g = globalThis as any;
+const icono: Asset = await (g.__amsIconoNews ??= sanity
+  .fetch<Asset[]>(
+    `*[_type == "sanity.imageAsset" && originalFilename == $f]{
+       url, "w": metadata.dimensions.width, "h": metadata.dimensions.height
+     }`,
+    { f: "678076a8aa08ffbbdb095352-news.svg" },
+  )
+  .then((r) => {
+    if (!r[0]) throw new Error("Falta en Sanity el icono de newsletter (news.svg).");
+    return r[0];
+  }));
+---
+
+<section class="footer-subscribe">
+  <div class="wrapper-form-email">
+    <div class="block-title-form-email">
+      {/* Decorativo: el titular de al lado ya dice que es la newsletter. */}
+      <img
+        src={icono.url}
+        width={icono.w}
+        height={icono.h}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="icon-news"
+      />
+      <div>
+        <h2 class="h2 white">Subscribe to the newsletter</h2>
+        <div>
+          Stay informed with tax tips, deadline reminders, and financial updates—all in your
+          inbox. Join our newsletter and get expert insights to help you stay compliant and grow
+          your business.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-block w-form">
+      {/* Sin JS el POST llega al endpoint igual. Con JS se queda en la pagina. */}
+      <form id="newsletter-form" method="post" action="/api/newsletter">
+        {/* El sitio en produccion no tiene ni un <label> en las 26 rutas: solo
+            placeholders, que desaparecen al escribir. */}
+        <label class="visually-hidden" for="newsletter-email">Email address</label>
+        <div class="block-form-email">
+          <input
+            id="newsletter-email"
+            class="text-field w-input"
+            type="email"
+            name="email"
+            maxlength="256"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+          />
+          <input type="submit" class="button-news w-button" value="Subscribe Now" />
+        </div>
+
+        {/* Trampa anti-bots. Se llama 'ref_id' y NO 'company_url' a proposito:
+            los gestores de contrasenas autocompletan cualquier campo que huela
+            a empresa o URL y marcarian como bot a personas reales. */}
+        <div class="visually-hidden" aria-hidden="true">
+          <label for="newsletter-ref-id">Leave this field empty</label>
+          <input
+            id="newsletter-ref-id"
+            type="text"
+            name="ref_id"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
+      </form>
+
+      {/* Confirmacion en linea, replicando el w-form-done de Webflow. */}
+      <div class="w-form-done" role="status" tabindex="-1" data-newsletter-done>
+        <div>Thank you! Your submission has been received!</div>
+      </div>
+      <div class="w-form-fail" role="alert" tabindex="-1" data-newsletter-fail>
+        <div>Oops! Something went wrong while submitting the form.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Mejora progresiva del envio: sin este script el formulario sigue haciendo
+  // POST a /api/newsletter, solo que navegando fuera de la pagina.
+  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
+  const bloque = form?.closest(".form-block") as HTMLElement | null;
+  const hecho = bloque?.querySelector<HTMLElement>("[data-newsletter-done]");
+  const fallo = bloque?.querySelector<HTMLElement>("[data-newsletter-fail]");
+  const enviar = form?.querySelector<HTMLInputElement>('input[type="submit"]');
+
+  if (form && hecho && fallo && enviar) {
+    const etiqueta = enviar.value;
+
+    // .w-form-done/.w-form-fail son display:none en el CSS portado; Webflow los
+    // mostraba con estilo en linea y aqui se hace igual (no hay CSS nuevo).
+    const mostrar = (el: HTMLElement) => {
+      el.style.display = "block";
+      el.focus();
+    };
+    const ocultar = (el: HTMLElement) => {
+      el.style.display = "";
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      ocultar(fallo);
+
+      enviar.disabled = true;
+      enviar.value = "Please wait...";
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.style.display = "none";
+        mostrar(hecho);
+      } catch {
+        mostrar(fallo);
+      } finally {
+        enviar.disabled = false;
+        enviar.value = etiqueta;
+      }
+    });
+  }
+</script>

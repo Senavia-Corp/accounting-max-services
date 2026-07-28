@@ -1,0 +1,526 @@
+---
+// Plantilla de servicio — 12 rutas /services/<slug>.
+//
+// Estructura y clases copiadas de baseline/html/services/<slug>.html, que es
+// identico en las 12 salvo el cuerpo, el titular, la intro y la foto. Verificado
+// por hash: las secciones .call-action y .features son byte a byte la misma en
+// las 12, y el carrusel trae los 20 testimonios en todas.
+//
+// Secciones: header-page · call-action · body-service · reviews (+ wrapper-
+// reviews) · features. En ese orden.
+//
+// Diferencias deliberadas respecto al HTML de produccion (todas justificadas
+// donde ocurren): sin data-w-id ni style="opacity:0", sin segundo <h1>, flechas
+// del carrusel como <button>, <main> real, alt escritos, y el <style> del
+// .w-embed movido al bloque <style> del final.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import PortableText from "../../components/PortableText.astro";
+import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
+import type { Servicio, Testimonio } from "../../lib/sanity";
+import type { GetStaticPaths } from "astro";
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+export const getStaticPaths = (async () => {
+  // Assets estaticos de la plantilla (no son de ningun documento): el icono de
+  // la llamada a la accion, el logo y las estrellas del carrusel, la flecha de
+  // las pistas y las 3 ilustraciones de .features. Estan en Sanity como assets
+  // sueltos; las URLs de cdn.prod.website-files.com estan prohibidas.
+  // Va DENTRO de getStaticPaths: Astro lo saca a modulo aparte y no ve las
+  // constantes del frontmatter.
+  const MARCA = [
+    "6785bf353063de8bcbcf3dfc-icon-13.svg",
+    "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
+    "684a14073e3e3c127cc2a315-starts.svg",
+    "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
+    "66591cff761a876e791ad585-1.png",
+    "66591defc9bd4c2b2a6fd8c8-2.png",
+    "66591fc962e8774f9117068b-3.png",
+  ];
+
+  const [servs, resenas, assets] = await Promise.all([
+    servicios(),
+    testimonios(),
+    sanity.fetch<Asset[]>(
+      `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+         originalFilename, url,
+         "w": metadata.dimensions.width,
+         "h": metadata.dimensions.height
+       }`,
+      { f: MARCA },
+    ),
+  ]);
+
+  // R4: `sales-tax-filing-7k40q` es la URL viva e indexada y el sufijo es el
+  // desempate de Webflow, no ruido. Si alguien "limpia" el slug en Sanity, el
+  // build cae aqui y no en el 404 de un cliente.
+  if (!servs.some((s) => s.slug === "sales-tax-filing-7k40q")) {
+    throw new Error(
+      "R4: falta el slug exacto 'sales-tax-filing-7k40q'. No se toca ni se normaliza.",
+    );
+  }
+
+  return servs.map((s) => ({
+    params: { slug: s.slug },
+    props: { servicio: s, todos: servs, resenas, assets },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  servicio: Servicio;
+  todos: Servicio[];
+  resenas: Testimonio[];
+  assets: Asset[];
+}
+
+const { servicio, todos, resenas, assets } = Astro.props;
+
+/** Falla en voz alta: un asset roto se ve en las 12 rutas. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset "${nombre}".`);
+  return a;
+};
+
+const iconoCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
+const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
+const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
+const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
+
+// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+// Los SVG no se transforman, van con su URL cruda.
+const src = (u: string, w: number) => `${u}?w=${w}&q=75&auto=format`;
+
+const titulo = servicio.title.trim();
+const intro = servicio.intro?.trim();
+
+// SEO. Hoy las 26 rutas comparten el <title> "Accounting Max Services" y
+// NINGUNA tiene meta description. Sanity tiene los campos pero estan vacios en
+// las 12: se emite lo que haya y, si no hay, se compone con el titulo del
+// servicio y el nombre del negocio — ambos dato real, no invencion (R3).
+const metaTitle = servicio.metaTitle?.trim() || `${titulo} | ${NEGOCIO.nombre}`;
+// La intro es copia real del CMS. Si no hubiera, no se emite meta description:
+// un {{PENDIENTE}} en el <head> no lo ve nadie y acabaria en los resultados.
+const metaDescription = servicio.metaDescription?.trim() || intro || undefined;
+
+// Alt de la foto de cabecera. Deberia vivir en Sanity (el esquema lo exige) pero
+// los 12 documentos lo traen a null tras el import, asi que aqui hay un texto
+// escrito MIRANDO cada foto — nunca el nombre del fichero. En cuanto alguien
+// rellene picture.alt en el CMS, este mapa deja de usarse.
+const ALT_FOTO: Record<string, string> = {
+  "audit-assistance":
+    "A Form 1040 tax return stamped AUDIT in red, next to a calculator and a keyboard.",
+  "bilingual-services-english-spanish":
+    "Two jigsaw pieces printed with the United States and Spanish flags fitting together over a world map.",
+  "business-incorporation-in-florida":
+    "Two people in aprons standing in the doorway of their shop, beside an Open sign.",
+  "corporate-tax-preparation":
+    "A person in a suit filling in tax paperwork at a desk, next to an open laptop.",
+  "employer-identification-number-application":
+    "A clipboard holding an Employer Identification Number form, on a desk with a pen and a keyboard.",
+  "financial-statement-preparation":
+    "A magnifying glass over the printed bar and pie charts of a financial report.",
+  "itin-application-irs-tax-id":
+    "Close-up of IRS Form W-7, Application for IRS Individual Taxpayer Identification Number.",
+  "monthly-bookkeeping-accounting":
+    "A person at a desk reviewing printed bar and pie chart reports beside a calculator.",
+  "notary-public-services":
+    "A hand pressing a stamp onto a document at a desk, across from a client.",
+  "personal-tax-preparation":
+    "Printed tax return forms with eyeglasses, a calculator, banknotes and a United States flag.",
+  "representation-before-the-irs":
+    "Photo montage of a columned government building over a United States banknote.",
+  "sales-tax-filing-7k40q":
+    "Hands typing on a laptop with financial charts and figures overlaid on the screen.",
+};
+
+const foto = servicio.picture;
+const altFoto = foto?.alt?.trim() || ALT_FOTO[servicio.slug] || "";
+
+// Los 3 bloques de .features. Titulares y parrafos transcritos verbatim del
+// baseline (incluidas sus comillas rectas o curvas, que alternan); el <strong>
+// va como HTML porque es texto fijo de plantilla escrito aqui, no del CMS.
+// Los alt estan escritos mirando las ilustraciones. Las cifras que salen
+// dentro de los mockups NO se transcriben: son relleno del diseno (R3).
+const FEATURES = [
+  {
+    imagen: img("66591cff761a876e791ad585-1.png"),
+    alt: "Illustration of a chat window with a Book a call button and portraits of two people on the phone.",
+    titulo: "One-on-one expert support",
+    parrafo:
+      "We believe in building strong, lasting relationships with our clients. With <strong>one-on-one expert support</strong>, you&#x27;ll have direct access to knowledgeable professionals who understand your unique financial needs. Whether you&#x27;re a business owner or an individual, we&#x27;ll work closely with you to ensure all your questions are answered and your goals are met with precision. Our personalized approach ensures you never feel lost in the process—you&#x27;re always in capable hands.",
+    invertido: false,
+  },
+  {
+    imagen: img("66591fc962e8774f9117068b-3.png"),
+    alt: "Illustration of an accounting dashboard showing a sales revenue summary and a breakdown of top expenses.",
+    titulo: "Powerful financial reporting",
+    parrafo:
+      "Our <strong>financial reporting</strong> services provide you with detailed, accurate insights into the health of your business or personal finances. We prepare <strong>customized financial statements</strong> such as income statements, balance sheets, and cash flow reports to help you make informed decisions. With our <strong>powerful financial reporting</strong>, you’ll gain a clear understanding of your financial position, giving you the tools to plan effectively, secure funding, and grow your business with confidence.",
+    invertido: true,
+  },
+  {
+    imagen: img("66591defc9bd4c2b2a6fd8c8-2.png"),
+    alt: "Illustration of an accounting dashboard with revenue, expense and net profit cards and a monthly trend chart.",
+    titulo: "Tax season, minus the stress",
+    parrafo:
+      "Tax season can be overwhelming, but with Accounting Max Services, it doesn’t have to be. We handle every aspect of <strong>tax preparation</strong>—from gathering your documents to filing your returns—so you can relax. Our goal is to make the process as seamless and stress-free as possible, ensuring that your taxes are filed accurately, on time, and with maximum refunds or minimized liabilities. With our team by your side, you’ll never have to worry about tax season again.",
+    invertido: false,
+  },
+];
+
+const aqui = `/services/${servicio.slug}`;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <Nav />
+
+  {/* El baseline no tiene <main>: las 26 rutas van de <section> en <section>
+      sin un solo landmark de contenido principal. */}
+  <main>
+    <section class="header-page">
+      {/* Sin data-w-id ni style="opacity:0". Ese opacity lo levantaba la
+          interaccion de webflow.js; sin webflow.js el bloque se quedaria
+          invisible para siempre. */}
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="block-header-page">
+          <h1 class="h1">{titulo}</h1>
+          <div>{intro ?? "{{PENDIENTE}} intro del servicio"}</div>
+          <a href="/contact-us" class="button w-button">Book A consultation</a>
+        </div>
+      </div>
+
+      {/* LCP de la ruta: eager + fetchpriority, nunca lazy. El lqip tapa el
+          hueco mientras carga. */}
+      {
+        foto && (
+          <img
+            src={src(foto.url, 1250)}
+            srcset={`${src(foto.url, 500)} 500w, ${src(foto.url, 800)} 800w, ${src(foto.url, 1080)} 1080w, ${src(foto.url, 1250)} 1250w`}
+            sizes="(max-width: 991px) 100vw, 50vw"
+            width={foto.w}
+            height={foto.h}
+            alt={altFoto}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            style={foto.lqip ? `background-image:url(${foto.lqip})` : undefined}
+            class="background-services"
+          />
+        )
+      }
+    </section>
+
+    {/* Texto identico en las 12 rutas del baseline. No esta en Sanity: hoy no
+        hay tipo para los bloques fijos de plantilla. Se transcribe verbatim. */}
+    <section class="call-action">
+      <div class="w-layout-blockcontainer container w-container">
+        {/* En produccion esto era un <section class="footer-subscribe"> anidado
+            dentro de otro <section>: un landmark de region sin nombre. La clase
+            solo aporta position:relative, asi que baja a <div>. */}
+        <div class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              {/* Decorativo: el titular de al lado ya dice lo mismo. */}
+              <img
+                src={iconoCta.url}
+                width={iconoCta.w}
+                height={iconoCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2">Schedule a free consultation call Today!</h2>
+                <div>
+                  Take the first step towards stress-free accounting! Schedule your free 30-minute
+                  consultation call now and get tailored advice for your small business.
+                </div>
+              </div>
+            </div>
+            <div>
+              <a href="/contact-us" class="button padding w-button">Book A Consultation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="body-service">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-service">
+          <div class="block-left">
+            {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio. */}
+            <div class="w-richtext">
+              {
+                servicio.body?.length ? (
+                  <PortableText value={servicio.body} />
+                ) : (
+                  <p>{"{{PENDIENTE}}"} cuerpo del servicio</p>
+                )
+              }
+            </div>
+          </div>
+
+          <div class="block-right">
+            {/* En produccion era <h1 class="h2">: un SEGUNDO <h1> en la pagina,
+                por debajo del titulo del servicio. Baja a <h2>; la clase .h2 es
+                la que pinta, asi que el aspecto no cambia. */}
+            <h2 class="h2">global financial solutions</h2>
+            <div class="collection-list-wrapper-2 w-dyn-list">
+              {/* Se mantienen los <div role="list">/<div role="listitem"> del
+                  baseline: son una lista real de 12 y el CSS portado da por
+                  hecho que no hay padding de <ul>. */}
+              <div role="list" class="collection-list-2 w-dyn-items">
+                {
+                  todos.map((s) => {
+                    const href = `/services/${s.slug}`;
+                    const actual = href === aqui;
+                    return (
+                      <div role="listitem" class="collection-item-2 w-dyn-item">
+                        <a
+                          href={href}
+                          class={`link-block w-inline-block${actual ? " w--current" : ""}`}
+                          aria-current={actual ? "page" : undefined}
+                        >
+                          {s.icon && (
+                            <img
+                              src={s.icon.url}
+                              width={s.icon.w}
+                              height={s.icon.h}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              class="icon-services"
+                            />
+                          )}
+                          <div class="title-cms-services">{s.title.trim()}</div>
+                        </a>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* D5: se muestran como testimonios y NADA MAS. Prohibido JSON-LD Review o
+        aggregateRating — los 20 no traen rating, ni fecha, ni fuente. El texto
+        "5.0 Ranking on Google reviews" es copia del sitio en produccion, se
+        migra verbatim y queda reportado, no se reescribe aqui. */}
+    <section class="reviews" aria-labelledby="titulo-resenas">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-reviews">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 id="titulo-resenas" class="h2">What Our Customers Are Saying About Us</h2>
+                <div>
+                  Trusted by small business owners nationwide, Accounting Max Services is known for
+                  delivering results. Discover how we’ve helped businesses succeed—read our customer
+                  success stories.
+                </div>
+              </div>
+              {/* En produccion eran dos <div> con una imagen dentro: sin foco,
+                  sin teclado y sin nombre. Los engancha src/scripts/ui.ts. */}
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label="Previous testimonials"
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label="Next testimonials"
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="block-services-animation">
+              <div class="splide">
+                {/* tabindex/role/aria-label van en el HTML y no solo en ui.ts:
+                    la pista se desplaza con CSS aunque el JS no cargue, y una
+                    zona con scroll que no recibe foco incumple 2.1.1. */}
+                <div
+                  id="pista-resenas"
+                  class="splide-track w-dyn-list"
+                  tabindex="0"
+                  role="group"
+                  aria-label="Customer testimonials"
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      resenas.map((t) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={logoGoogle.url}
+                                    width={logoGoogle.w}
+                                    height={logoGoogle.h}
+                                    alt="Google Reviews"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  {/* Decorativa: las 5 estrellas son lo mismo
+                                      que dice el texto de debajo. */}
+                                  <img
+                                    src={estrellas.url}
+                                    width={estrellas.w}
+                                    height={estrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                <div class="mini-text-reviews">5.0 Ranking on Google reviews</div>
+                              </div>
+                            </div>
+                            {/* Palabras de clientes reales: ni se traducen ni se
+                                editan. Salen tal cual de Sanity. */}
+                            <p class="paragraph">{t.quote}</p>
+                            <div>
+                              <div class="name-customer">{t.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">Published on Google</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Cuatro cuadrados decorativos de 100x100 en las esquinas de la seccion. */}
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
+    </section>
+
+    {/* Texto identico en las 12 rutas del baseline. Transcrito verbatim. */}
+    <section class="features" aria-labelledby="titulo-features">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML en produccion: separa el titular del
+              parrafo. Se conserva por paridad. */}
+          <h2 id="titulo-features" class="h2">
+            What to expect from accounting Max Services?<br />
+          </h2>
+          <div>
+            At Accounting Max Services, we prioritize delivering exceptional service to our clients
+            by offering personalized financial and tax solutions. When you work with us, you can
+            expect expert guidance, transparent communication, and a commitment to your financial
+            success.
+          </div>
+        </div>
+
+        <div class="div-block-5">
+          {
+            FEATURES.map((f) => {
+              const imagen = (
+                <div>
+                  <img
+                    src={src(f.imagen.url, 940)}
+                    srcset={`${src(f.imagen.url, 500)} 500w, ${src(f.imagen.url, 800)} 800w, ${src(f.imagen.url, 940)} 940w`}
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                    width={f.imagen.w}
+                    height={f.imagen.h}
+                    alt={f.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="image-2"
+                  />
+                </div>
+              );
+              const texto = (
+                <div>
+                  <h3 class="h3">{f.titulo}</h3>
+                  <div set:html={f.parrafo} />
+                </div>
+              );
+              // .rotate invierte el orden en el DOM, igual que en el baseline.
+              return (
+                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
+                  {f.invertido ? texto : imagen}
+                  {f.invertido ? imagen : texto}
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Los unicos recortes que en produccion vivian en <style> incrustados dentro
+   * del HTML de la ruta (.w-embed), no en la hoja de Webflow. Sin ellos la foto
+   * de cabecera sale como un rectangulo y las esquinas como cuadrados.
+   * Van aqui, con alcance de componente, para no tocar src/styles/ desde una
+   * plantilla; si otra ruta acaba necesitando lo mismo, su sitio es site.css. */
+  .background-services {
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+    /* El lqip va como background: sin esto, la caja del LCP sale en blanco. */
+    background-size: cover;
+    background-position: 50%;
+  }
+
+  @media screen and (max-width: 789px) {
+    .background-services {
+      clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
+  }
+
+  .corner-top-1,
+  .corner-bottom-1 {
+    clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
+  }
+
+  .corner-top-2,
+  .corner-bottom-2 {
+    clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
+  }
+</style>

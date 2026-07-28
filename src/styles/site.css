@@ -36,3 +36,138 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ===========================================================================
+ * CROMO — Nav.astro / Footer.astro / FooterSubscribe.astro / scripts/ui.ts
+ *
+ * Lo minimo para que el cromo funcione sin webflow.js. Nada de rediseno: cada
+ * bloque de aqui abajo existe porque sin el algo queda inutilizable o ilegible.
+ * ======================================================================== */
+
+/* Los controles que Webflow servia como <div>/<a href="#"> son ahora <button>.
+ * Solo falta neutralizar el fondo y el padding por defecto del UA: el borde, el
+ * cursor y la herencia de fuente ya los reseteaban webflow.css y normalize.css.
+ *
+ * Va DENTRO de layer(webflow) y con :where() (especificidad 0) a proposito: asi
+ * cualquier regla real del port (.menu-button, .nav-link, .w-dropdown-toggle...)
+ * le sigue ganando. Suelto, ganaria el reset y se comeria, por ejemplo, el
+ * background-color de .menu-button. */
+@layer webflow {
+  :where(
+    button.w-nav-button,
+    button.w-dropdown-toggle,
+    button.faq-question,
+    button.button-slider-cms
+  ) {
+    background-color: transparent;
+    padding: 0;
+    text-align: inherit;
+  }
+}
+
+/* Menu movil. webflow.js movia los .nav-menu a un overlay que creaba al vuelo;
+ * sin el, .w-nav[data-collapse='medium'] .w-nav-menu { display:none } deja el
+ * menu INALCANZABLE por debajo de 992px. ui.ts pone data-nav-open en .navbar. */
+@media screen and (max-width: 991px) {
+  .navbar[data-nav-open="true"] .block-items-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    flex-flow: column;
+    align-items: stretch;
+    height: auto;
+    padding: 10px 20px 20px;
+    background-color: var(--bllue);
+    box-shadow: 0 10px 20px #0003;
+  }
+
+  .navbar[data-nav-open="true"] .nav-menu {
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Al sacar el panel del flujo, .wrapper-menu (justify-content:center) se
+   * queda con la hamburguesa como unico hijo en flujo y la centraria encima
+   * del logo. */
+  .navbar[data-nav-open="true"] .menu-button {
+    margin-left: auto;
+  }
+
+  /* El submenu de servicios no cabe: min-width 750px y dos columnas. */
+  .navbar[data-nav-open="true"] .dropdown {
+    height: auto;
+  }
+  .navbar[data-nav-open="true"] .dropdown-list {
+    position: static;
+    box-shadow: none;
+  }
+  .navbar[data-nav-open="true"] .dropdown-list.w--open {
+    min-width: 0;
+    padding: 0 0 10px;
+  }
+  .navbar[data-nav-open="true"] .collection-list-submenu {
+    column-count: 1;
+    padding: 0;
+  }
+
+  /* La lista de servicios del pie era doce <ul class="list-footer"> de un
+   * elemento y heredaba de ahi este reset; ahora es un unico <ul
+   * class="collection-list-footer">, que necesita el mismo. */
+  .collection-list-footer {
+    padding-left: 0;
+  }
+}
+
+/* Acordeon de FAQ. Sin las interacciones de Webflow el aspa nunca cambiaba de
+ * estado: el "+" se quedaba fijo con el panel abierto. `data-open` lo pone
+ * ui.ts sobre .faq-item, que es el unico ancestro estable de .plus. */
+.faq-item .plus {
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+.faq-item[data-open="true"] .plus {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+/* Carrusel de testimonios: tiene que moverse SIN JS. Webflow dejaba la pista en
+ * overflow:hidden porque Splide (desde unpkg, sin version fijada) la desplazaba
+ * por transform; sin Splide, eso es un carrusel congelado. */
+.splide-track {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* Sin scroll-behavior:smooth a proposito. Comprobado en el navegador: en un
+   * entorno donde la animacion de scroll esta desactivada, con smooth puesto
+   * NI la asignacion de scrollLeft ni scrollBy() mueven nada — el carrusel se
+   * queda congelado y las flechas dejan de servir. El desplazamiento seco
+   * siempre funciona; el arrastre nativo sigue siendo suave. */
+}
+.splide-slide {
+  scroll-snap-align: start;
+}
+
+/* .w-form-done y .w-form-fail no fijan color y heredan el blanco de
+ * .email-subscribed: blanco sobre #dddddd es 1.3:1. El mensaje de confirmacion
+ * del formulario era ilegible. */
+.email-subscribed .w-form-done,
+.email-subscribed .w-form-fail {
+  color: var(--bllue);
+}
+
+/* Recorte del bloque de imagen del promo del pie. En produccion vivia en un
+ * <style> incrustado (.w-embed) dentro del HTML de cada ruta. */
+.block-pic {
+  clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0 100%, 0 0);
+}
+@media screen and (max-width: 789px) {
+  .block-pic {
+    clip-path: polygon(100% 0, 100% 100%, 50% 90%, 0 100%, 0 0);
+  }
+}

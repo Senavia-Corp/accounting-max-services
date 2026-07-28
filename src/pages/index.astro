@@ -1,24 +1,671 @@
 ---
+// Portada.
+//
+// Estructura y clases copiadas VERBATIM de baseline/html/index.html, en el
+// mismo orden: header · bar-services · about-us · reviews · features ·
+// call-action · faq. El cromo (menu y pie) lo ponen Nav y Footer.
+//
+// Los datos salen de Sanity; los textos de seccion son los de produccion, sin
+// reescribir (R3). Cero CSS nuevo salvo la facade del video, que no existe en
+// el port de Webflow porque en produccion no habia facade.
+//
+// Diferencias deliberadas respecto al HTML de produccion, todas justificadas
+// abajo en su sitio:
+//   - Fuera los `data-w-id` y los `style="opacity:0"` de las interacciones de
+//     Webflow. Sin webflow.js esos inline styles dejan el H1, el bloque de
+//     "about" y el titulo del FAQ INVISIBLES para siempre.
+//   - Fuera el `style="height:0px"` del panel de FAQ, por lo mismo: sin JS el
+//     acordeon se queda cerrado y el contenido inalcanzable.
+//   - El acordeon pasa de <a href="#"> a <button type="button">.
+//   - Las flechas del carrusel pasan de <div> a <button type="button">.
+//   - El <iframe> de YouTube pasa a facade click-to-load.
+//   - Fuera el <div class="w-embed"><style>…</style></div> de .reviews: esas
+//     cuatro reglas (.corner-top-1/2, .corner-bottom-1/2) ya estan en el CSS
+//     portado (accounting-max.webflow.css:1386-1417).
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { servicios, testimonios, sanity, NEGOCIO } from "../lib/sanity";
 
-// Andamiaje de FASE 1. La paridad visual real contra baseline/html/index.html
-// es trabajo de FASE 3; esto solo demuestra que el port de CSS carga y que el
-// deploy responde en una URL real de Vercel.
+// Assets sueltos en Sanity (sin documento que los referencie). Se piden por
+// nombre original en una sola consulta, igual que hacen Nav y Footer.
+const MEDIOS = [
+  "6658e5a9a386bf0eb1b0c6a0-main-picture.jpg",
+  "66591cff761a876e791ad585-1.png",
+  "66591defc9bd4c2b2a6fd8c8-2.png",
+  "66591fc962e8774f9117068b-3.png",
+  "6785bf353063de8bcbcf3dfc-icon-13.svg",
+  "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
+  "684a14073e3e3c127cc2a315-starts.svg",
+  "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
+];
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+const g = globalThis as any;
+const assets: Asset[] = await sanity.fetch(
+  `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+     originalFilename, url,
+     "w": metadata.dimensions.width,
+     "h": metadata.dimensions.height
+   }`,
+  { f: MEDIOS },
+);
+
+/** Falla en voz alta: una imagen rota en la portada es la primera impresion. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset "${nombre}" (portada).`);
+  return a;
+};
+
+const hero = img("6658e5a9a386bf0eb1b0c6a0-main-picture.jpg");
+const feat1 = img("66591cff761a876e791ad585-1.png");
+const feat2 = img("66591defc9bd4c2b2a6fd8c8-2.png");
+const feat3 = img("66591fc962e8774f9117068b-3.png");
+const iconCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
+const iconGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
+const iconEstrellas = img("684a14073e3e3c127cc2a315-starts.svg");
+const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
+
+// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+const srcset = (a: Asset, ws: number[]) =>
+  ws.map((w) => `${src(a, w)} ${w}w`).join(", ");
+
+// Sin lqip a proposito en las cuatro fotos de esta pagina:
+//   - las tres de .features son PNG CON CANAL ALFA (RGBA, verificado). Un lqip
+//     de fondo se seguiria viendo por las zonas transparentes DESPUES de cargar.
+//   - la del hero es eager + fetchpriority=high: no hay hueco que tapar, y el
+//     desenfoque saldria detras del H1.
+
+// Los 5 servicios destacados. El orden es el de servicios() (title asc): en
+// Sanity no existe el campo de orden manual que usaba la coleccion de Webflow,
+// y ordenar a ojo seria inventarlo.
+const servs = await (g.__amsServicios ??= servicios());
+const destacados = servs.filter((s) => s.feature);
+if (destacados.length !== 5) {
+  throw new Error(`Se esperaban 5 servicios con feature=true, hay ${destacados.length}.`);
+}
+
+// Los 20 testimonios se muestran TAL CUAL: ni se traducen ni se editan, y no
+// se reordenan (no hay campo por el que reproducir el orden de produccion).
+// Prohibido JSON-LD Review/aggregateRating: no hay rating, ni fecha, ni fuente
+// verificable (DECISIONS.md D5).
+const opiniones = await testimonios();
+
+// El video de la seccion "about". El id y el titulo salen del <iframe> de
+// produccion; la miniatura es la del propio video. Nada de esto es inventado.
+const VIDEO = {
+  id: "Nx4HDJ-TZn4",
+  titulo: "What Is a Financial Advisor?",
+  miniatura: "https://i.ytimg.com/vi/Nx4HDJ-TZn4/maxresdefault.jpg",
+};
+
+// Entradilla del hero: texto real de produccion, migrado verbatim. Vive en una
+// constante porque lo usan DOS sitios — el <div> bajo el H1 y la meta
+// description — y no puede divergir entre ellos.
+const ENTRADA =
+  "Simplify your international and domestic tax needs with our expert CPA team. " +
+  "At Accounting Max Services, we specialize in global tax solutions, business " +
+  "accounting, and IRS representation—serving clients in Tamarac, FL and across the U.S.";
 ---
 
-<BaseLayout
-  title="Accounting Max Services"
-  description="Tax preparation, bookkeeping and IRS representation in Coral Springs, Florida."
->
-  <main class="container">
-    <h1 class="h1">Accounting Max Services</h1>
-    <h2 class="h2">Andamiaje FASE 1</h2>
-    <h3 class="h3">Port de CSS verificado</h3>
-    <p>
-      Si los tres titulares de arriba salen con serif, el kit de Typekit esta
-      sirviendo <code>stix-two-text</code>. Si salen con sans-serif, falta
-      autorizar el dominio en el kit (D9) — no es un fallo del port.
-    </p>
-    <p>Este texto deberia salir en Campton, servido desde <code>/fonts/</code>.</p>
+{/*
+  Titulo: en produccion es literalmente "Home", sin marca. Se le anade el nombre
+  real del negocio para seguir la convencion que ya usan las otras 25 rutas
+  ("<pagina> | Accounting Max Services"). No es contenido inventado: es el NAP.
+
+  Description: produccion no tiene ni una en las 26 rutas. NO se redacta aqui
+  (R3); se sirve la propia entradilla del hero, texto real del cliente.
+*/}
+<BaseLayout title={`Home | ${NEGOCIO.nombre}`} description={ENTRADA}>
+  <Nav />
+
+  <main>
+    {/* ================================================================ HERO */}
+    <section class="header">
+      <div class="wrapper-header">
+        <div class="w-layout-blockcontainer container w-container">
+          {/* Sin style="opacity:0": era una interaccion de webflow.js y sin el
+              dejaba el H1 invisible de forma permanente. */}
+          <div class="block-header">
+            <h1 class="h1"><strong>Global Tax &amp; Accounting Services &amp; Bilingual CPA Firm</strong></h1>
+            <div>{ENTRADA}</div>
+            <a href="/contact-us" class="button w-button">Book a consultation</a>
+          </div>
+        </div>
+      </div>
+      {/* Imagen principal. Es el LCP en escritorio (.background-header va a
+          inset:0 con object-fit:cover detras del titular) y esta en
+          display:none por debajo de 992px, de ahi el sizes="100vw": en movil el
+          navegador elige el candidato pequeno y no se descarga la de 2000px. */}
+      <img
+        src={src(hero, 2000)}
+        srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
+        sizes="100vw"
+        width={hero.w}
+        height={hero.h}
+        alt="Blank IRS Form 1040 and Form 1120 tax returns on a white desk with a pen, reading glasses and a calculator."
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="background-header"
+      />
+    </section>
+
+    {/* ====================================================== BAR-SERVICES */}
+    {/* role=list/listitem sobre <div>, como en produccion: .collection-list es
+        un grid y meter <ul>/<li> arrastraria el padding del agente de usuario. */}
+    <section class="bar-services">
+      <div class="wrapper-bar-services">
+        <div class="collection-list-wrapper w-dyn-list">
+          <div role="list" class="collection-list w-dyn-items">
+            {
+              destacados.map((s) => (
+                <div role="listitem" class="collection-item w-dyn-item">
+                  <a href={`/services/${s.slug}`} class="block-bar-services w-inline-block">
+                    <div class="block-title-services">
+                      {s.icon && (
+                        <img
+                          src={s.icon.url}
+                          width={s.icon.w}
+                          height={s.icon.h}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          class="icon-bar-services"
+                        />
+                      )}
+                      {/* Icono decorativo: el nombre del servicio va justo al
+                          lado y es el nombre accesible del enlace. */}
+                      <h2 class="title-bar-services">{s.title.trim()}</h2>
+                    </div>
+                  </a>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ ABOUT-US */}
+    <section class="about-us" aria-labelledby="about-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-about">
+          <div class="block-video">
+            {/* Facade click-to-load. En produccion aqui habia un <iframe> de
+                youtube.com que se cargaba siempre: ~700 KB y cookies de Google
+                en la primera visita, sin que nadie le diera al play. El iframe
+                se inyecta al pulsar el boton (ver el <script> del final).
+                El padding-top en linea es el del HTML original: crea la caja de
+                proporcion 16:9 sobre la que .w-embed-youtubevideo se apoya. */}
+            <div
+              class="w-embed-youtubevideo youtube"
+              style="padding-top:56.17021276595745%"
+              data-yt-caja
+            >
+              <button
+                type="button"
+                class="yt-facade"
+                data-yt-id={VIDEO.id}
+                data-yt-titulo={VIDEO.titulo}
+                aria-label={`Play the video: ${VIDEO.titulo}`}
+              >
+                {/* alt="": el nombre accesible ya lo da el aria-label del boton;
+                    describir ademas la miniatura lo diria todo dos veces. */}
+                <img
+                  src={VIDEO.miniatura}
+                  width="1280"
+                  height="720"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
+                />
+                <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
+                  <path
+                    d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
+                    fill="#212121"
+                    fill-opacity="0.8"></path>
+                  <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
+                </svg>
+              </button>
+            </div>
+            {/* Adornos: cuadros de color detras del video. Vacios en origen. */}
+            <div class="block-deco-1"><div class="block-deco-2"></div></div>
+            <div class="block-deco-1-copy"><div class="block-deco-2"></div></div>
+          </div>
+
+          {/* El id lo usa el CSS portado (#w-node-_42cc5f49-… en el @media de
+              991px, accounting-max.webflow.css:3021). No se puede quitar. */}
+          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
+            <div class="block-info-content">
+              <h2 class="h2" id="about-title">
+                <strong>IRS Enrolled Agents &amp; Certified Public Accountants In Coral Springs, FL </strong>
+              </h2>
+              <div>
+                At Accounting Max Services, our team includes IRS Certified Enrolled Agents (EAs)
+                and Certified Public Accountants (CPAs), offering the highest level of tax
+                expertise and compliance support.<br />We provide a full range of <strong
+                  >global tax and accounting solutions</strong
+                >—serving both individuals and businesses in Coral Springs, FL, and
+                internationally. Whether you’re managing cross-border finances, running a U.S.
+                business, or dealing with complex international tax matters, our specialists
+                deliver accurate, personalized guidance every step of the way.
+              </div>
+              <a href="/about-us" class="button blue w-button">More About Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================= REVIEWS */}
+    <section class="reviews">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="wrapper-reviews" aria-labelledby="reviews-title">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 class="h2" id="reviews-title">What Our Customers Are Saying About Us</h2>
+                <div>
+                  Trusted by small business owners nationwide, Accounting Max Services is known
+                  for delivering results. Discover how we’ve helped businesses succeed—read our
+                  customer success stories.
+                </div>
+              </div>
+              {/* Las flechas eran <div> sin rol, sin foco y sin teclado. Ahora
+                  son <button> reales; ui.ts les engancha el desplazamiento y
+                  las inhabilita en los extremos. */}
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label="Previous testimonials"
+                  aria-controls="reviews-track"
+                >
+                  {/* Flechas decorativas: el nombre lo da el aria-label. */}
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label="Next testimonials"
+                  aria-controls="reviews-track"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="block-services-animation">
+              <div class="splide">
+                {/* ui.ts hace la pista alcanzable con teclado (2.1.1) y le pone
+                    role=group; el nombre lo damos aqui con el h2 de arriba. */}
+                <div
+                  id="reviews-track"
+                  class="splide-track w-dyn-list"
+                  aria-labelledby="reviews-title"
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      opiniones.map((o) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={iconGoogle.url}
+                                    width={iconGoogle.w}
+                                    height={iconGoogle.h}
+                                    alt="Google reviews icon"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  {/* Las estrellas son decorativas: el texto de
+                                      al lado ya dice "5.0 Ranking on Google
+                                      reviews". */}
+                                  <img
+                                    src={iconEstrellas.url}
+                                    width={iconEstrellas.w}
+                                    height={iconEstrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                <div class="mini-text-reviews">5.0 Ranking on Google reviews</div>
+                              </div>
+                            </div>
+                            <p class="paragraph">{o.quote}</p>
+                            <div>
+                              <div class="name-customer">{o.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">Published on Google</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      {/* Esquinas decorativas del bloque azul. Vacias en origen. */}
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
+    </section>
+
+    {/* ============================================================ FEATURES */}
+    <section class="features" aria-labelledby="features-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
+          <h2 class="h2" id="features-title">What to expect from accounting Max Services?<br /></h2>
+          <div>
+            At Accounting Max Services, we prioritize delivering exceptional service to our
+            clients by offering personalized financial and tax solutions. When you work with us,
+            you can expect expert guidance, transparent communication, and a commitment to your
+            financial success.
+          </div>
+        </div>
+        <div class="div-block-5">
+          {/* Los <div> sin clase que envuelven imagen y texto son las CELDAS del
+              grid de .div-block-4 (1fr 1fr). Quitarlos rompe la maqueta. */}
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat1, 1080)}
+                srcset={srcset(feat1, [500, 800, 1080, feat1.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat1.w}
+                height={feat1.h}
+                alt="Messaging app with a customer conversation, insets of two advisors on headset calls and a Book a call button."
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">One-on-one expert support</h3>
+              <div>
+                We believe in building strong, lasting relationships with our clients. With <strong
+                  >one-on-one expert support</strong
+                >, you'll have direct access to knowledgeable professionals who understand your
+                unique financial needs. Whether you're a business owner or an individual, we'll
+                work closely with you to ensure all your questions are answered and your goals are
+                met with precision. Our personalized approach ensures you never feel lost in the
+                process—you're always in capable hands.
+              </div>
+            </div>
+          </div>
+
+          <div class="div-block-4 rotate">
+            <div>
+              <h3 class="h3">Powerful financial reporting</h3>
+              <div>
+                Our <strong>financial reporting</strong> services provide you with detailed, accurate
+                insights into the health of your business or personal finances. We prepare <strong
+                  >customized financial statements</strong
+                > such as income statements, balance sheets, and cash flow reports to help you make
+                informed decisions. With our <strong>powerful financial reporting</strong>, you’ll
+                gain a clear understanding of your financial position, giving you the tools to plan
+                effectively, secure funding, and grow your business with confidence.
+              </div>
+            </div>
+            <div>
+              <img
+                src={src(feat3, 1080)}
+                srcset={srcset(feat3, [500, 800, 1080, feat3.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat3.w}
+                height={feat3.h}
+                alt="Accounting dashboard showing sales revenue and a Top Expenses breakdown by category, reviewed by an advisor on a tablet."
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+          </div>
+
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat2, 1080)}
+                srcset={srcset(feat2, [500, 800, 1080, feat2.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat2.w}
+                height={feat2.h}
+                alt="Accounting dashboard with total revenue, total expenses and net profit next to a monthly revenue and profit chart."
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">Tax season, minus the stress</h3>
+              <div>
+                Tax season can be overwhelming, but with Accounting Max Services, it doesn’t have
+                to be. We handle every aspect of <strong>tax preparation</strong>—from gathering
+                your documents to filing your returns—so you can relax. Our goal is to make the
+                process as seamless and stress-free as possible, ensuring that your taxes are filed
+                accurately, on time, and with maximum refunds or minimized liabilities. With our
+                team by your side, you’ll never have to worry about tax season again.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ========================================================= CALL-ACTION */}
+    {/* OJO: esta <section class="footer-subscribe"> NO es la newsletter del pie
+        (esa la pone <Footer /> via FooterSubscribe.astro). Comparte clase por
+        reutilizacion de estilos en Webflow, pero es contenido de la portada. */}
+    <section class="call-action" aria-labelledby="cta-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              <img
+                src={iconCta.url}
+                width={iconCta.w}
+                height={iconCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2" id="cta-title">Schedule a free consultation call Today!</h2>
+                <div>
+                  Take the first step towards stress-free accounting! Schedule your free 30-minute
+                  consultation call now and get tailored advice for your small business.
+                </div>
+              </div>
+            </div>
+            <div>
+              <a href="/contact-us" class="button padding w-button">Book A Consultation</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    {/* ================================================================= FAQ */}
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="container-faq">
+          <div class="block-title-faq">
+            <h2 class="h2" id="faq-title">Frequently Asked Questions</h2>
+            {/* R3: en produccion aqui hay texto de relleno de Webflow ("This is
+                some text inside of a div block."). Ni se copia ni se inventa un
+                sustituto: el hueco queda a la vista. */}
+            <div>{"{{PENDIENTE}}"} — FAQ intro copy</div>
+          </div>
+
+          {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
+              aria-expanded/aria-controls y esconde los paneles al arrancar.
+              Sin JS los cinco quedan abiertos y legibles: .faq-answer es
+              height:auto en el CSS portado. Por eso no se emite el
+              style="height:0px" del original. */}
+          <div class="block-faq">
+            {
+              [
+                {
+                  q: "1. What documents do I need to file my personal taxes?",
+                  a: "To file your personal taxes, you’ll typically need your W-2 or 1099 forms, ID, Social Security number, and any records of deductions, credits, or income. We’ll guide you through the checklist.",
+                },
+                {
+                  q: "2. How long does it take to get my EIN or ITIN?",
+                  a: "EINs can often be processed within 1–2 business days. ITINs may take a few weeks depending on IRS processing times. We handle the paperwork to avoid delays.",
+                },
+                {
+                  q: "3. Do you offer services in Spanish?",
+                  a: "Yes! All of our services are available in both English and Spanish. We’re proud to serve the Hispanic community with bilingual support.",
+                },
+                {
+                  q: "4. Can you help with IRS audits or letters?",
+                  a: "Absolutely. Our team includes IRS Certified Enrolled Agents who represent you directly before the IRS to resolve audits, letters, or disputes.",
+                },
+                {
+                  q: "5. Do you only serve clients in Coral Springs?",
+                  a: "No. While we’re based in Coral Springs, FL, we serve clients nationwide through secure online consultations and document portals.",
+                },
+              ].map((item, i) => (
+                <div class="faq-item">
+                  <button
+                    type="button"
+                    id={`faq-question-${i + 1}`}
+                    class="faq-question w-inline-block"
+                    aria-expanded="false"
+                    aria-controls={`faq-answer-${i + 1}`}
+                  >
+                    <h3 class="h3 title-faq">{item.q}</h3>
+                    {/* Aspa decorativa. site.css la gira con
+                        .faq-item[data-open="true"] .plus */}
+                    <span class="p-m-wrap" aria-hidden="true">
+                      <span class="minus" />
+                      <span class="plus" />
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-answer-${i + 1}`}
+                    class="faq-answer"
+                    role="region"
+                    aria-labelledby={`faq-question-${i + 1}`}
+                  >
+                    <div class="faq-answer-inner">
+                      <p>{item.a}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <Footer />
 </BaseLayout>
+
+<style>
+  /* Unico CSS propio de esta ruta: la facade del video.
+   * No sale del port de Webflow porque en produccion no habia facade, y no
+   * puede ir en site.css (es de esta pagina, no del cromo). */
+  .yt-facade {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+
+  .yt-facade img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Triangulo de reproduccion, centrado sobre la miniatura. */
+  .yt-play {
+    width: 68px;
+    height: 48px;
+    transition: opacity 0.2s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .yt-facade:hover .yt-play,
+  .yt-facade:focus-visible .yt-play {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  // Facade del video: hasta que no se pulsa, el navegador no habla con YouTube.
+  // Se usa youtube-nocookie.com y no youtube.com (que es lo que servia
+  // produccion) porque no hay politica de privacidad publicada todavia
+  // (DECISIONS.md D4): menos cookies de terceros mientras eso siga abierto.
+  const boton = document.querySelector<HTMLButtonElement>("button.yt-facade");
+  const caja = boton?.closest<HTMLElement>("[data-yt-caja]");
+
+  if (boton && caja) {
+    boton.addEventListener(
+      "click",
+      () => {
+        const marco = document.createElement("iframe");
+        // autoplay=1 es legitimo aqui: lo dispara un clic de la persona.
+        marco.src =
+          `https://www.youtube-nocookie.com/embed/${boton.dataset.ytId}` +
+          "?rel=0&controls=1&autoplay=1&mute=0&start=0";
+        marco.title = boton.dataset.ytTitulo ?? "";
+        marco.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        marco.allowFullscreen = true;
+        marco.style.cssText =
+          "position:absolute;left:0;top:0;width:100%;height:100%;border:0";
+        caja.replaceChild(marco, boton);
+        // El boton que tenia el foco acaba de desaparecer: sin esto el foco se
+        // iria al principio del documento.
+        marco.focus();
+      },
+      { once: true },
+    );
+  }
+</script>
