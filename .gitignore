@@ -14,11 +14,16 @@ pnpm-debug.log*
 
 
 # environment variables
-.env
-.env.production
+# .env y .env.production por si solos dejaban .env.local y .env.development
+# sin ignorar, que es justo donde acaban los tokens en desarrollo.
+.env*
+!.env.example
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# temporales que deja "composio run"
+.composio-run-*
