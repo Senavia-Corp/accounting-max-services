@@ -78,8 +78,12 @@ const mision = img(NOMBRES[5]);
 const vision = img(NOMBRES[6]);
 const iconoCta = img(NOMBRES[7]);
 
-// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
-const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+// Transformaciones de Sanity. Prohibido AVIF, y por eso `fm=webp` y NO
+// `auto=format`: `auto=format` no fija formato, negocia por la cabecera
+// `Accept`, y Chrome pide `image/avif` primero — asi que el CDN devolvia AVIF.
+// `fm=webp` fuerza WebP sea cual sea el navegador. Los SVG no pasan por aqui
+// (se sirven crudos): `fm=webp` los rasterizaria.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&fm=webp`;
 const ANCHOS = [500, 800, 1080, 1250];
 const srcset = (a: Asset) => ANCHOS.map((w) => `${src(a, w)} ${w}w`).join(", ");
 
@@ -94,9 +98,14 @@ const lqip = (a: Asset) =>
 //   -> (1250 - 32) / 2 = 609px.  A <=991px el grid cae a una sola columna.
 const SIZES_HERO =
   "(max-width: 991px) calc(100vw - 64px), (max-width: 1313px) calc((100vw - 96px) / 2), 609px";
-// .wrapper-mission / .wrapper-vision estan limitados a 1000px -> (1000-32)/2.
-const SIZES_MV =
-  "(max-width: 991px) calc(100vw - 64px), (max-width: 1063px) calc((100vw - 96px) / 2), 484px";
+// Aqui NO vale el ancho de la columna (484px = (1000-32)/2), que es lo que
+// declaraba antes: .pic-about-us es height:450px + object-fit:cover, o sea que
+// el candidato lo decide el alto. Con la fuente en proporcion 1250/833 = 1,5006,
+// cubrir 450px de alto exige 450 x 1,5006 = 675px de ancho por estrecha que sea
+// la columna; pidiendo 484 el navegador se quedaba en el candidato de 500w y
+// pintaba la foto AMPLIADA un 35%. A <=991px la caja baja a 350/250px de alto y
+// `calc(100vw - 64px)` ya cubre de sobra.
+const SIZES_MV = "(max-width: 991px) calc(100vw - 64px), 675px";
 
 // bar-features. Texto literal del baseline.
 //
@@ -146,7 +155,7 @@ const DESCRIPCION =
 <BaseLayout title="About Us | Accounting Max Services" description={DESCRIPCION}>
   <Nav />
 
-  <main>
+  <main id="main">
     <section class="header-page-about-us">
       <div class="container">
         <div class="wrapper-about-us">

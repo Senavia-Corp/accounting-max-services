@@ -72,8 +72,12 @@ const REDES: { icono: Asset; href: string | null }[] = [
   { icono: img("67350550ecd34bc66b17cbe5-insta.svg"), href: null },
 ];
 
-// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
-const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+// Transformaciones de Sanity. Prohibido AVIF, y por eso `fm=webp` y NO
+// `auto=format`: `auto=format` no fija formato, negocia por la cabecera
+// `Accept`, y Chrome pide `image/avif` primero — asi que el CDN devolvia AVIF.
+// `fm=webp` fuerza WebP sea cual sea el navegador. Los SVG no pasan por aqui
+// (se sirven crudos): `fm=webp` los rasterizaria.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&fm=webp`;
 
 const aqui = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const activo = (href: string) => (href === aqui ? "page" : undefined);
@@ -102,7 +106,16 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
       <img
         src={src(pic, 1289)}
         srcset={`${src(pic, 500)} 500w, ${src(pic, 800)} 800w, ${src(pic, 1080)} 1080w, ${src(pic, 1289)} 1289w`}
-        sizes="(max-width: 767px) 100vw, 50vw"
+        {/* El ancho de esta imagen NO sigue al viewport: .bg-pic va a height:90%
+            dentro de .block-pic, asi que manda la ALTURA y el ancho sale de la
+            proporcion (1289/1679 = 0,77). Medido en el build: 357px de ancho a
+            1280px de viewport, practicamente constante en escritorio.
+            Declararlo como 50vw hacia que el navegador pidiese la variante de
+            1289px — 162 KB — para un hueco de 357px, en las 54 rutas. Con un
+            valor fijo pide la de 800w (87 KB) a 2x y la de 500w (41 KB) a 1x.
+            En movil si ocupa el ancho completo: medido 375px a 375px de
+            viewport. No cambia ni un pixel de lo que se ve. */}
+        sizes="(max-width: 767px) 100vw, 400px"
         width={pic.w}
         height={pic.h}
         alt=""
@@ -177,8 +190,11 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
           <h3 class="h3">{c.footer.servicesTitle}</h3>
           <div class="collection-list-wrapper-footer">
             <ul role="list" class="collection-list-footer">
+              {/* Al REVES que el desplegable, como en produccion: la lista del
+                  pie y la del sidebar de ficha pintan la coleccion invertida.
+                  Verificado contra baseline/html en las 26 rutas. */}
               {
-                servs.map((s) => {
+                [...servs].reverse().map((s) => {
                   const href = enlace(lang, `/services/${s.slug}`);
                   return (
                     <li class="collection-item-footer list-item-footer">

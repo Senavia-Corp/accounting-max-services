@@ -26,7 +26,7 @@ const DESCRIPCION =
 <BaseLayout title="Terms of Use | Accounting Max Services" description={DESCRIPCION} noindex>
   <Nav />
 
-  <main>
+  <main id="main">
     <section class="header-page-blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-header-blog">
@@ -302,9 +302,13 @@ const DESCRIPCION =
     margin-bottom: 0;
   }
 
+  /* `break-word` y no `anywhere` por coherencia con /privacy-policy: alli
+   * `anywhere` anulaba el min-content y estrangulaba una columna de tabla. Aqui
+   * no hay tabla, asi que no cambia nada visible; se iguala para que las dos
+   * legales no diverjan. */
   .pendiente {
     padding: 0 .2em;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   address.legal-address {

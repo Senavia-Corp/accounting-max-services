@@ -24,8 +24,10 @@ const lista = await posts();
 
 const CARD_W = 800;
 const CARD_H = 506;
+// `fm=webp` y NO `auto=format`: `auto=format` negocia por la cabecera `Accept`
+// y Chrome pide `image/avif` primero, asi que devolvia AVIF, que esta prohibido.
 const src = (url: string, w: number) =>
-  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&auto=format`;
+  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&fm=webp`;
 const ANCHOS = [400, 600, 800, 1080];
 const srcset = (url: string) => ANCHOS.map((w) => `${src(url, w)} ${w}w`).join(", ");
 
@@ -40,7 +42,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 <BaseLayout title={TITULO} description={c.meta.blogDescription} lang={lang} noindex>
   <Nav lang={lang} />
 
-  <main>
+  <main id="main">
     <section class="blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="title-center">

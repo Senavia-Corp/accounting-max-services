@@ -14,8 +14,15 @@ const blockContent = {
   of: [
     {
       type: "block",
+      // H1 esta aqui porque el rich text de los 10 posts ABRE con un <h1> en
+      // produccion. Sin este estilo, htmlToBlocks no tenia destino y los importo
+      // como `normal`: el titular del cuerpo se leia como texto corrido en las
+      // 10 rutas. La plantilla no lo emite como <h1> — PortableText.astro lo
+      // baja a <h2> para no dejar dos h1 por pagina — pero el nivel tiene que
+      // sobrevivir al import para poder distinguirlo de un parrafo.
       styles: [
         { title: "Normal", value: "normal" },
+        { title: "H1", value: "h1" },
         { title: "H2", value: "h2" },
         { title: "H3", value: "h3" },
         { title: "H4", value: "h4" },
@@ -88,6 +95,12 @@ const service = {
     imageWithAlt("icon", "Icono"),
     imageWithAlt("picture", "Imagen"),
     { name: "feature", type: "boolean", title: "Destacado", initialValue: false },
+    // Orden de la coleccion en Webflow, recuperado del HTML de produccion. No
+    // venia en el crawl (ver B4), pero es deducible y esta verificado: las
+    // cuatro listas del sitio son este orden asc (desplegable), su inverso
+    // (pie y sidebar de ficha) y `feature desc, order asc` (portada). Las tres
+    // permutaciones salen exactas. Sin este campo todo caia en `title asc`.
+    { name: "order", type: "number", title: "Orden", validation: (r) => r.integer() },
     // Llave de idempotencia: el Item ID de Webflow, no el slug. Derivarlo del
     // slug reproduce el bug de duplicados de AB Aluminum.
     { name: "webflowItemId", type: "string", title: "Webflow Item ID", readOnly: true },
@@ -130,6 +143,11 @@ const post = {
     // export ni en el sitio vivo. Se dejan vacios, no se inventan (R3).
     { name: "publishedAt", type: "datetime", title: "Fecha de publicacion" },
     { name: "authorName", type: "string", title: "Autor" },
+    // Mismo caso que en `service`. Aqui no hay fecha con la que ordenar (la
+    // plantilla de Webflow no la ligaba), asi que el orden de produccion solo
+    // se puede conservar guardandolo. /blog-news y el sidebar de post usan el
+    // mismo, verificado.
+    { name: "order", type: "number", title: "Orden", validation: (r) => r.integer() },
     { name: "webflowItemId", type: "string", title: "Webflow Item ID", readOnly: true },
     ...seoFields,
   ],

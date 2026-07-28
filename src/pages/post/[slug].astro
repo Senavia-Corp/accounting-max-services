@@ -24,7 +24,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import PortableText from "../../components/PortableText.astro";
-import { posts, NEGOCIO } from "../../lib/sanity";
+import { posts, ogUrl, NEGOCIO } from "../../lib/sanity";
 import type { Post } from "../../lib/sanity";
 
 export async function getStaticPaths() {
@@ -66,8 +66,12 @@ const { post, todos } = Astro.props;
 const titulo = post.title.trim();
 const hero = post.heroImage;
 
-// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
-const src = (w: number) => `${hero!.url}?w=${w}&q=75&auto=format`;
+// Transformaciones de Sanity. Prohibido AVIF, y por eso `fm=webp` y NO
+// `auto=format`: `auto=format` no fija formato, negocia por la cabecera
+// `Accept`, y Chrome pide `image/avif` primero — asi que el CDN devolvia AVIF.
+// `fm=webp` fuerza WebP sea cual sea el navegador. Los SVG no pasan por aqui
+// (se sirven crudos): `fm=webp` los rasterizaria.
+const src = (w: number) => `${hero!.url}?w=${w}&q=75&fm=webp`;
 // Sin pasarse del ancho original: Sanity no amplia, y pedir 1500 a una imagen
 // de 1289 devuelve 1289 con un srcset mintiendo sobre su ancho real.
 const ANCHOS = hero ? [...new Set([750, 1100, 1500].map((w) => Math.min(w, hero.w)))] : [];
@@ -125,12 +129,25 @@ const PROMO_TEXTO =
   "estimate—no commitment required.";
 
 const aqui = `/post/${post.slug}`;
+
+// Alt de la imagen de cabecera. Sale del `---` y no del <img> porque lo usan dos
+// sitios: la propia imagen y og:image:alt de la tarjeta al compartir.
+// Si Sanity no lo trae, se nombra su funcion en la pagina: es una ilustracion
+// cuyo contenido no aporta nada que no este ya en el H1. Nunca el nombre del
+// fichero, y nunca vacio en una imagen de este tamano.
+const altHero = hero?.alt?.trim() || `Illustration for the article “${titulo}”`;
 ---
 
-<BaseLayout title={metaTitulo} description={metaDesc}>
+<BaseLayout
+  title={metaTitulo}
+  description={metaDesc}
+  ogType="article"
+  ogImage={ogUrl(hero)}
+  ogImageAlt={altHero}
+>
   <Nav />
 
-  <main>
+  <main id="main">
     <div class="header-page-blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-header-blog">
@@ -147,11 +164,7 @@ const aqui = `/post/${post.slug}`;
                 sizes={SIZES}
                 width={hero.w}
                 height={hero.h}
-                /* Alt de Sanity si lo hay. Si no, se nombra su funcion en la
-                   pagina: es una ilustracion de cabecera cuyo contenido no
-                   aporta informacion que no este ya en el H1. Nunca el nombre
-                   del fichero, y nunca vacio en una imagen de este tamano. */
-                alt={hero.alt?.trim() || `Illustration for the article “${titulo}”`}
+                alt={altHero}
                 /* Candidata a LCP de la pagina: ni lazy ni prioridad por
                    defecto. Sin lqip a proposito — el asset que sirve hoy
                    Sanity es un PNG con canal alfa y el placeholder se veria

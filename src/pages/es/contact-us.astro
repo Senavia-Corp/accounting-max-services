@@ -50,7 +50,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 <BaseLayout title={TITULO} description={c.meta.contactDescription} lang={lang} noindex>
   <Nav lang={lang} />
 
-  <main>
+  <main id="main">
     <section class="header-contact-page">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-contact-page">
@@ -464,5 +464,17 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
    * Webflow lo resetean. */
   address.info-contact-page {
     font-style: normal;
+  }
+
+  /* Identico al de la ruta EN. .wrapper-contact-page es flex con
+   * align-items:flex-start, asi que la tarjeta gris no se estira mientras la azul
+   * crece por el bloque de consentimiento FTSA/TCPA (D4, no se acorta): en ES
+   * acababa 476px por debajo, con ese hueco blanco bajo la gris.
+   * NO es literalmente el baseline —la gris pasa de 609 a 1085px—, y se acepta:
+   * la alternativa era recortar copia legal. A <=991px ya se apilan. */
+  @media screen and (min-width: 992px) {
+    .block-info-contact {
+      align-self: stretch;
+    }
   }
 </style>

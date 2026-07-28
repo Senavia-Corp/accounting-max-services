@@ -18,11 +18,16 @@ export default defineConfig({
   // Paridad de URL con produccion, verificada con curl:
   //   /about-us   -> 200
   //   /about-us/  -> 301 a /about-us
-  // Por defecto Astro emite /about-us/index.html, que se sirve en /about-us/ —
-  // es decir, cambiaria la URL canonica de las 25 rutas indexadas. `file` emite
-  // /about-us.html y Vercel lo sirve en /about-us sin barra.
+  //
+  // Lo hace `trailingSlash` SOLO. Aqui hubo un `build: { format: "file" }` que
+  // no servia de nada: @astrojs/vercel pisa build.format con "directory" en su
+  // hook astro:config:setup (node_modules/@astrojs/vercel/dist/index.js:132), y
+  // el build sale igual en dist/client/about-us/index.html lo pongas o no.
+  // Quien da la paridad es la primera regla que el adapter escribe en
+  // .vercel/output/config.json a partir de este trailingSlash:
+  //   { "src": "^/(.*)/$", "headers": { "Location": "/$1" }, "status": 308 }
+  // o sea, /about-us/ -> 308 -> /about-us, y el filesystem sirve el index.html.
   trailingSlash: "never",
-  build: { format: "file" },
 
   integrations: [
     sitemap({

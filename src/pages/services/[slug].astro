@@ -17,7 +17,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import PortableText from "../../components/PortableText.astro";
-import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
+import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../lib/sanity";
 import type { Servicio, Testimonio } from "../../lib/sanity";
 import type { GetStaticPaths } from "astro";
 
@@ -89,9 +89,13 @@ const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
 const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
 const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
 
-// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+// Transformaciones de Sanity. Prohibido AVIF, y por eso `fm=webp` y NO
+// `auto=format`: `auto=format` no fija formato, negocia por la cabecera
+// `Accept`, y Chrome pide `image/avif` primero — asi que el CDN devolvia AVIF.
+// `fm=webp` fuerza WebP sea cual sea el navegador. Los SVG no pasan por aqui
+// (se sirven crudos): `fm=webp` los rasterizaria.
 // Los SVG no se transforman, van con su URL cruda.
-const src = (u: string, w: number) => `${u}?w=${w}&q=75&auto=format`;
+const src = (u: string, w: number) => `${u}?w=${w}&q=75&fm=webp`;
 
 const titulo = servicio.title.trim();
 const intro = servicio.intro?.trim();
@@ -174,12 +178,17 @@ const FEATURES = [
 const aqui = `/services/${servicio.slug}`;
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription}>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  ogImage={ogUrl(foto)}
+  ogImageAlt={altFoto || undefined}
+>
   <Nav />
 
   {/* El baseline no tiene <main>: las 26 rutas van de <section> en <section>
       sin un solo landmark de contenido principal. */}
-  <main>
+  <main id="main">
     <section class="header-page">
       {/* Sin data-w-id ni style="opacity:0". Ese opacity lo levantaba la
           interaccion de webflow.js; sin webflow.js el bloque se quedaria
@@ -275,8 +284,10 @@ const aqui = `/services/${servicio.slug}`;
                   baseline: son una lista real de 12 y el CSS portado da por
                   hecho que no hay padding de <ul>. */}
               <div role="list" class="collection-list-2 w-dyn-items">
+                {/* Invertida, igual que la del pie: es el orden de produccion,
+                    verificado en dos fichas distintas del baseline. */}
                 {
-                  todos.map((s) => {
+                  [...todos].reverse().map((s) => {
                     const href = `/services/${s.slug}`;
                     const actual = href === aqui;
                     return (
@@ -496,31 +507,16 @@ const aqui = `/services/${servicio.slug}`;
 </BaseLayout>
 
 <style>
-  /* Los unicos recortes que en produccion vivian en <style> incrustados dentro
-   * del HTML de la ruta (.w-embed), no en la hoja de Webflow. Sin ellos la foto
-   * de cabecera sale como un rectangulo y las esquinas como cuadrados.
-   * Van aqui, con alcance de componente, para no tocar src/styles/ desde una
-   * plantilla; si otra ruta acaba necesitando lo mismo, su sitio es site.css. */
+  /* Los recortes (.background-services y las 4 esquinas de .reviews) ya viven en
+   * site.css y son los mismos para toda la web: aqui estaban repetidos y, como
+   * Astro emite el ambito como atributo, ganaban por especificidad y dejaban el
+   * bloque de site.css inalcanzable. Una sola fuente de verdad, alli.
+   *
+   * Estas dos SI son de la pagina y no tienen copia en site.css: el hero de la
+   * ficha lleva un lqip como background-image en linea, y sin ellas se repetiria
+   * a tamano natural en vez de tapar la caja del LCP. */
   .background-services {
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
-    /* El lqip va como background: sin esto, la caja del LCP sale en blanco. */
     background-size: cover;
     background-position: 50%;
-  }
-
-  @media screen and (max-width: 789px) {
-    .background-services {
-      clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
-    }
-  }
-
-  .corner-top-1,
-  .corner-bottom-1 {
-    clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
-  }
-
-  .corner-top-2,
-  .corner-bottom-2 {
-    clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
   }
 </style>

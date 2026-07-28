@@ -89,6 +89,19 @@ const EN = {
     menu: "Menu",
     navPrincipal: "Main",
     navContacto: "Contact",
+    // Boton de telefono del cromo movil (<992px). El numero NO esta aqui: sale
+    // de NEGOCIO.telefonoHref, que es la unica fuente valida de NAP.
+    // {negocio} es NEGOCIO.nombre, que va literal en las dos lenguas.
+    // SC 2.5.3 (Label in Name): el texto visible tiene que estar CONTENIDO en el
+    // nombre accesible. "Call" esta dentro de "Call Accounting Max Services".
+    llamar: "Call",
+    llamarAria: "Call {negocio}",
+    // Nivel 2 del cajon movil: vuelve del listado de servicios al menu.
+    volver: "Back",
+    volverAria: "Back to main menu",
+    // SC 2.4.1 (Bypass Blocks): el cromo mete hasta 18 elementos focalizables
+    // antes del contenido en escritorio. No existia ninguno en las 54 rutas.
+    saltar: "Skip to content",
   },
 
   footer: {
@@ -423,6 +436,14 @@ const ES: Cadenas = {
     menu: "Menú",
     navPrincipal: "Principal",
     navContacto: "Contacto",
+    llamar: "Llamar",
+    // "Llamar a {negocio}" y no "Llamar {negocio}": el nombre del negocio va
+    // literal porque es NAP, pero la preposicion es de la frase, no del nombre.
+    // "Llamar" sigue contenido en "Llamar a Accounting Max Services" (SC 2.5.3).
+    llamarAria: "Llamar a {negocio}",
+    volver: "Volver",
+    volverAria: "Volver al menú principal",
+    saltar: "Saltar al contenido",
   },
 
   footer: {

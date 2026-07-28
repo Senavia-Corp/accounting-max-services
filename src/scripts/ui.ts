@@ -16,6 +16,18 @@
 
 const MOVIL = window.matchMedia("(max-width: 991px)");
 
+/**
+ * Los elementos que de verdad pueden recibir foco dentro de `raiz`.
+ * getClientRects() descarta lo que esta en display:none — que aqui es
+ * justo lo que hay que descartar: el nivel 1 del cajon cuando se ve el 2, el
+ * submenu cerrado, y en escritorio el boton de telefono y el de volver.
+ */
+const FOCO = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+const focos = (raiz: HTMLElement): HTMLElement[] =>
+  Array.from(raiz.querySelectorAll<HTMLElement>(FOCO)).filter(
+    (el) => el.getClientRects().length > 0,
+  );
+
 /* ------------------------------------------------------------------ 1 y 2 --
  * Menu: hamburguesa + desplegable de servicios.
  * En produccion los dos eran <div> sin rol, sin foco y sin teclado. Aqui son
@@ -30,6 +42,8 @@ function iniciarMenu() {
     navbar.querySelectorAll<HTMLButtonElement>("button.w-dropdown-toggle"),
   );
 
+  const cajon = navbar.querySelector<HTMLElement>(".block-items-menu");
+
   const lista = (t: HTMLElement) =>
     document.getElementById(t.getAttribute("aria-controls") ?? "");
 
@@ -38,6 +52,10 @@ function iniciarMenu() {
     t.classList.toggle("w--open", abierto);
     // .dropdown-list.w--open ya existe en el CSS portado: display:flex.
     lista(t)?.classList.toggle("w--open", abierto);
+    // En movil el desplegable no se anida: ocupa el cajon entero como segundo
+    // nivel. Doce enlaces planos son una lista, no una navegacion. En
+    // escritorio data-nivel no lo lee nadie, asi que se deja siempre en 1.
+    if (cajon) cajon.dataset.nivel = abierto && MOVIL.matches ? "2" : "1";
   };
   const cerrarDesplegables = () => toggles.forEach((t) => desplegar(t, false));
 
@@ -46,11 +64,29 @@ function iniciarMenu() {
     navbar.dataset.navOpen = String(abierto);
     hamburguesa.setAttribute("aria-expanded", String(abierto));
     hamburguesa.classList.toggle("w--open", abierto);
+    // Bloqueo de scroll. La regla html.nav-abierto{overflow:hidden} vive DENTRO
+    // del @media(max-width:991px) de site.css, asi que esto no puede tocar
+    // escritorio ni aunque la clase se quede pegada. Sin el, la pagina de
+    // detras (11 613px en la portada) se desplaza bajo el dedo.
+    document.documentElement.classList.toggle("nav-abierto", abierto);
     if (!abierto) cerrarDesplegables();
   };
 
   hamburguesa?.addEventListener("click", () => {
-    abrirMenu(hamburguesa.getAttribute("aria-expanded") !== "true");
+    const abrir = hamburguesa.getAttribute("aria-expanded") !== "true";
+    abrirMenu(abrir);
+    // El cajon es position:fixed y tapa la pagina entera: si el foco se queda
+    // en la hamburguesa, lo que hay debajo sigue siendo tabulable a ciegas.
+    if (abrir && cajon) focos(cajon)[0]?.focus();
+  });
+
+  // Vuelta al nivel 1 desde el listado de servicios.
+  navbar.querySelectorAll<HTMLButtonElement>("button.nav-volver").forEach((b) => {
+    b.addEventListener("click", () => {
+      const abierto = toggles.find((t) => t.getAttribute("aria-expanded") === "true");
+      cerrarDesplegables();
+      abierto?.focus();
+    });
   });
 
   toggles.forEach((t) => {
@@ -69,18 +105,37 @@ function iniciarMenu() {
     });
   });
 
-  // Escape cierra lo mas interior primero y devuelve el foco a quien abrio.
   navbar.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    const abierto = toggles.find((t) => t.getAttribute("aria-expanded") === "true");
-    if (abierto) {
-      cerrarDesplegables();
-      abierto.focus();
+    // Escape cierra lo mas interior primero y devuelve el foco a quien abrio.
+    if (e.key === "Escape") {
+      const abierto = toggles.find((t) => t.getAttribute("aria-expanded") === "true");
+      if (abierto) {
+        cerrarDesplegables();
+        abierto.focus();
+        return;
+      }
+      if (navbar.dataset.navOpen === "true") {
+        abrirMenu(false);
+        hamburguesa?.focus();
+      }
       return;
     }
-    if (navbar.dataset.navOpen === "true") {
-      abrirMenu(false);
-      hamburguesa?.focus();
+
+    // Trampa de foco, SOLO con el cajon abierto. El cajon tapa la pagina entera:
+    // salir tabulando seria tabular a ciegas por 11 613px de contenido invisible.
+    // El limite es .navbar ENTERA (marca + telefono + hamburguesa + cajon), no
+    // solo el cajon, para que la hamburguesa quede siempre a un Shift+Tab.
+    if (e.key !== "Tab" || navbar.dataset.navOpen !== "true") return;
+    const f = focos(navbar);
+    if (f.length === 0) return;
+    const primero = f[0];
+    const ultimo = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === primero) {
+      e.preventDefault();
+      ultimo.focus();
+    } else if (!e.shiftKey && document.activeElement === ultimo) {
+      e.preventDefault();
+      primero.focus();
     }
   });
 

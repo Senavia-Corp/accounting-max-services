@@ -67,10 +67,30 @@ export type Imagen = {
   alt?: string; altEs?: string;
 } | null;
 
+/**
+ * URL de la imagen para `og:image`: 1200x630 recortado.
+ *
+ * NI WebP NI AVIF, nunca, aunque el resto del sitio sirva `fm=webp`: Facebook y
+ * LinkedIn no los renderizan en las tarjetas y saldria una tarjeta rota. Es el
+ * mismo motivo razonado en og-default.png.ts.
+ *
+ * JPEG y no PNG, que es lo unico que se aparta de aquella nota. PNG es sin
+ * perdida y Sanity ignora `q` con `fm=png`: estas fotos salian de 402 KB a
+ * 1,4 MB, y WhatsApp deja de pintar la miniatura pasados unos 300 KB — el
+ * formato acabaria impidiendo justo lo que og:image venia a arreglar. En JPEG
+ * son 39 KB y las cuatro plataformas lo renderizan. og-default.png sigue en PNG:
+ * es un diseno plano y ahi PNG comprime mejor (23 KB).
+ *
+ * Devuelve undefined si no hay imagen, para que BaseLayout caiga a
+ * /og-default.png sin que cada plantilla tenga que comprobarlo.
+ */
+export const ogUrl = (img: Imagen): string | undefined =>
+  img ? `${img.url}?w=1200&h=630&fit=crop&q=80&fm=jpg` : undefined;
+
 export type Servicio = {
   _id: string; title: string; slug: string; intro?: string; body?: any[];
   titleEs?: string; introEs?: string; bodyEs?: any[];
-  feature: boolean; icon: Imagen; picture: Imagen;
+  feature: boolean; order?: number; icon: Imagen; picture: Imagen;
   metaTitle?: string; metaDescription?: string;
   metaTitleEs?: string; metaDescriptionEs?: string;
 };
@@ -78,7 +98,7 @@ export type Servicio = {
 export type Post = {
   _id: string; title: string; slug: string; excerpt?: string; body?: any[];
   titleEs?: string; excerptEs?: string; bodyEs?: any[];
-  heroImage: Imagen; publishedAt?: string; authorName?: string;
+  heroImage: Imagen; publishedAt?: string; authorName?: string; order?: number;
   metaTitle?: string; metaDescription?: string;
   metaTitleEs?: string; metaDescriptionEs?: string;
 };
@@ -86,18 +106,23 @@ export type Post = {
 /** Los testimonios NO se traducen: son palabras de clientes reales (FASE 5). */
 export type Testimonio = { _id: string; author: string; quote: string };
 
+// `order` es el orden de la coleccion en Webflow, recuperado del HTML de
+// produccion (tools/restaurar-orden.mjs). El desempate por `title asc` NO es
+// decoracion: mientras el campo este vacio en Sanity, GROQ ordenaria por nada y
+// devolveria las 12 fichas en un orden arbitrario. Con el desempate, un dataset
+// sin `order` se comporta exactamente como antes.
 export const servicios = (): Promise<Servicio[]> =>
-  sanity.fetch(`*[_type == "service"] | order(title asc){
+  sanity.fetch(`*[_type == "service"] | order(order asc, title asc){
     _id, title, "slug": slug.current, intro, body,
-    titleEs, introEs, bodyEs, feature,
+    titleEs, introEs, bodyEs, feature, order,
     icon ${IMAGEN}, picture ${IMAGEN},
     metaTitle, metaDescription, metaTitleEs, metaDescriptionEs
   }`);
 
 export const posts = (): Promise<Post[]> =>
-  sanity.fetch(`*[_type == "post"] | order(title asc){
+  sanity.fetch(`*[_type == "post"] | order(order asc, title asc){
     _id, title, "slug": slug.current, excerpt, body,
-    titleEs, excerptEs, bodyEs, publishedAt, authorName,
+    titleEs, excerptEs, bodyEs, publishedAt, authorName, order,
     heroImage ${IMAGEN},
     metaTitle, metaDescription, metaTitleEs, metaDescriptionEs
   }`);

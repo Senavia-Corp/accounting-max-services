@@ -28,11 +28,13 @@ const ENTRADA =
 // La tarjeta mide ~395x250 en escritorio: .pic-blog fija height:250px y recorta
 // con object-fit:cover. Se le pide a Sanity la imagen YA recortada a esa
 // proporcion (1.58) para no transportar pixeles que el navegador va a tirar.
-// Prohibido AVIF: auto=format sirve WebP (verificado con Accept: image/avif).
+// Prohibido AVIF, y por eso `fm=webp` y NO `auto=format`: `auto=format` no fija
+// formato, negocia por la cabecera `Accept`, y Chrome pide `image/avif` primero
+// — asi que el CDN devolvia AVIF. `fm=webp` fuerza WebP en cualquier navegador.
 const CARD_W = 800;
 const CARD_H = 506;
 const src = (url: string, w: number) =>
-  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&auto=format`;
+  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&fm=webp`;
 const ANCHOS = [400, 600, 800, 1080];
 const srcset = (url: string) => ANCHOS.map((w) => `${src(url, w)} ${w}w`).join(", ");
 
@@ -61,7 +63,7 @@ if (distintas < lista.length) {
 <BaseLayout title={`Blog & News | ${NEGOCIO.nombre}`} description={ENTRADA}>
   <Nav />
 
-  <main>
+  <main id="main">
     <section class="blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="title-center">

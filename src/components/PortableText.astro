@@ -86,8 +86,19 @@ const span = (s: Span, defs: MarkDef[]): string => {
 
 const contenido = (b: Bloque) => (b.children ?? []).map((c) => span(c, b.markDefs ?? [])).join("");
 
+// `h1` baja a <h2>. En el baseline los 10 posts abren el cuerpo con un <h1>
+// dentro del rich text ("Avoiding Common Tax Mistakes"). Un <h1> real aqui haria
+// DOS por ruta: el titulo del post ya es el <h1 class="h1"> de la cabecera.
+//
+// OJO: hoy esta entrada NO se dispara. El estilo `h1` ni siquiera llega a
+// Sanity: `blockContent.styles` (src/sanity/schemas.mjs:16) solo declara
+// normal/h2/h3/h4, asi que htmlToBlocks no tiene destino para <h1> y lo importo
+// como `normal` — los 10 posts tienen 0 bloques `h1` y 80 `normal`. El arreglo
+// completo es de DATOS (anadir el estilo y reimportar), no de plantilla. Esto
+// queda puesto para que el dia que se reimporte salga bien de una vez.
 const ETIQUETA: Record<string, string> = {
   normal: "p",
+  h1: "h2",
   h2: "h2",
   h3: "h3",
   h4: "h4",

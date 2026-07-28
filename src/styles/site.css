@@ -6,10 +6,58 @@
  */
 
 /* Accesibilidad: Webflow no trae foco visible en ningun control, y la FASE 3
- * reconstruye acordeon/hamburguesa/carrusel con <button> reales. */
+ * reconstruye acordeon/hamburguesa/carrusel con <button> reales.
+ *
+ * Anillo de DOS TONOS y no `currentColor`. Con currentColor el anillo hereda el
+ * color del texto del control, y `outline-offset:2px` lo pinta FUERA de el, o
+ * sea sobre el fondo del contenedor y no sobre el del control: en el CTA "Book A
+ * consultation" de .header-page (texto blanco sobre verde, pero <body> blanco
+ * detras) salia blanco sobre blanco, 1,00:1 en las 24 fichas de servicio.
+ * Ahora la sombra navy ocupa 0-4px y el perfil blanco se pinta encima en 2-4px,
+ * asi que siempre queda una banda de cada tono: sobre cuerpo claro se ve la
+ * navy (13,4:1 contra blanco, 4,4:1 contra el verde del boton) y sobre el navy
+ * del cromo se ve la blanca (13,4:1), que es justo lo que ya funcionaba en
+ * .call-action, .block-right y el carrusel. SC 1.4.11 pide 3:1.
+ *
+ * `box-shadow` SUSTITUYE la propiedad entera, o sea que a todo control que ya
+ * tuviera sombra se la llevaba por delante mientras estaba enfocado. Medido en
+ * las 12 tarjetas de .block-bar-services: la sombra de reposo desaparecia y el
+ * fondo de seccion salia liso a 4px del borde. Por eso el anillo se CONCATENA
+ * con --sombra-reposo en vez de pisar la lista.
+ *
+ * El anillo va PRIMERO en la lista a proposito: en `box-shadow` la primera
+ * sombra se pinta encima, asi que las dos bandas conservan su color exacto —
+ * medido byte a byte: identicas a antes en los 15 controles— y la sombra de
+ * reposo asoma por fuera de los 4px, que es justo donde se veia.
+ * El valor por defecto `0 0 #0000` es una sombra nula: el control que no
+ * declara --sombra-reposo pinta exactamente lo mismo que antes.
+ *
+ * No se usa un pseudo-elemento para el anillo porque <input> y <textarea> son
+ * elementos reemplazados y no admiten ::before/::after: dejaria sin indicador
+ * los 4 campos del Lead Form de /contact-us y sus 2 casillas, y el campo del
+ * boletin con su <input type=submit>, que van en el pie de todas las rutas. Y
+ * las dos bandas no caben en `outline`, que es una linea de un solo color. */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--white);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--bllue), var(--sombra-reposo, 0 0 #0000);
+}
+
+/* Los unicos controles focalizables con sombra propia en todo el port. El valor
+ * se repite aqui porque CSS no sabe leer la sombra que ya tiene un elemento:
+ * la variable es la lista que hay que RE-ANADIR bajo el anillo, no la que lo
+ * pinta en reposo — eso lo sigue haciendo el vendor y no se toca.
+ * La herencia de las custom properties no molesta: ninguno de los tres tiene
+ * descendientes focalizables (.block-bar-services lleva un <img> decorativo y
+ * los campos no llevan nada). */
+.block-bar-services {
+  --sombra-reposo: 0 2px 5px 3px #0003; /* accounting-max:420 */
+}
+.text-field-form {
+  --sombra-reposo: 0 2px 5px #0003; /* accounting-max:1853 */
+}
+.button-slider-cms:hover {
+  --sombra-reposo: 0 2px 11px -4px #fff3; /* accounting-max:1672 */
 }
 
 /* Utilidad para etiquetas de formulario accesibles sin cambiar el diseno:
@@ -62,27 +110,368 @@
     background-color: transparent;
     padding: 0;
     text-align: inherit;
+    /* El UA no hereda letter-spacing en los controles de formulario: lo fija en
+     * `normal`. El body del port va a -0.5px, asi que el titulo de cada pregunta
+     * del FAQ salia 27px mas ancho que en produccion (412,2 -> 439,3 medidos). */
+    letter-spacing: inherit;
+  }
+
+  /* .faq-question era un <a href="#">, o sea que su texto heredaba el #333 de
+   * `a{color:var(--black)}` (accounting-max:112). Como <button> heredaba el
+   * navy del body: rgb(51,51,51) -> rgb(36,49,55) medido en .title-faq.
+   * Aqui NO vale :where(): `button,input,…{color:inherit}` de normalize:205 es
+   * 0-0-1 y le gana a una especificidad 0 dentro de la misma capa. Con
+   * `button.faq-question` (0-1-1) gana esta y sigue perdiendo ante cualquier
+   * regla del port que use la clase con mas peso. Los otros tres <button> no lo
+   * necesitan: sustituyen a <div>, que ya heredaba, y `color:inherit` es
+   * justamente lo que hace falta.
+   *
+   * Lo mismo en /contact-us: la direccion y el horario eran <a href="#"> y aqui
+   * son <div>/<address>, asi que perdian el #333 igual (medido). Los dos
+   * primeros items de esa lista siguen siendo <a> de verdad (tel: y mailto:),
+   * donde esta declaracion no cambia nada porque ya es su color. */
+  button.faq-question,
+  .block-icon-contact-page {
+    color: var(--black);
   }
 }
 
-/* Menu movil. webflow.js movia los .nav-menu a un overlay que creaba al vuelo;
- * sin el, .w-nav[data-collapse='medium'] .w-nav-menu { display:none } deja el
- * menu INALCANZABLE por debajo de 992px. ui.ts pone data-nav-open en .navbar. */
+/* Las <img> del port llevan width/height reales para reservar el hueco; las de
+ * produccion no llevaban ninguno. El CSS de Webflow fija UNA SOLA dimension por
+ * clase (.logo{height}, .image-2{width}, .flecha{width}...), asi que la otra se
+ * quedaba con el valor del atributo — que gana porque nadie declaraba `auto` —
+ * y la imagen salia estirada. Medido contra el baseline a 1440:
+ *   .image-2   369 -> 996 de alto      .icon-start   91,4 -> 228,5 de ancho
+ *   .logo      123,3 -> 150 de ancho   .icon-top-bar   20 -> 50
+ * Va DENTRO de layer(webflow) y con especificidad de elemento: asi pierde ante
+ * cualquier clase del port que si fije la dimension, y solo neutraliza el
+ * atributo donde Webflow no decia nada. Es exactamente el estado de produccion.
+ * El aspect-ratio derivado de los atributos sobrevive, o sea que el hueco se
+ * sigue reservando y no se reintroduce CLS. */
+@layer webflow {
+  img {
+    width: auto;
+    height: auto;
+  }
+
+  /* El tick de "mensaje enviado" era un <img> (check.png, 512x512) y ahora es un
+   * <svg> en linea. `webflow.css:57` solo alcanza a img, asi que el svg se
+   * quedaba en `display:inline` en vez de `inline-block`. La caja es la misma
+   * (100x100, el png tambien era cuadrado); cambia el alineado con la linea
+   * base. Se ve solo tras enviar el formulario, pero es un pixel que no cuesta. */
+  svg.icon-check {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+/* ===========================================================================
+ * CROMO MOVIL (<992px) — REDISENO, no paridad.
+ *
+ * Por encima de 992px no cambia ni un pixel: todo lo de aqui abajo vive dentro
+ * de @media (max-width:991px), y lo unico que existe en las dos anchuras
+ * (.nav-telefono, .nav-volver) se apaga explicitamente en min-width:992px.
+ *
+ * Lo que estaba roto, medido a 375x812 sobre el despliegue real:
+ *   .brand render 190x150 dentro de un .menu de 125 -> colgaba 68,8px, y el
+ *   panel abria en y125: el logotipo AMS salia partido por la mitad.
+ *   .menu-button con el gris por defecto de Webflow (#dedede) y, al abrir,
+ *   glifo blanco sobre #C8C8C8 = 1,67:1 (SC 1.4.11 pide 3:1) sin cambiar de
+ *   forma. Sin bloqueo de scroll. 12 enlaces de servicio de 25px de alto.
+ *   Ningun <a href="tel:"> en el cromo de las 54 rutas.
+ * ======================================================================== */
+
+/* Alto real del cromo, para el `top` del cajon movil y el scroll-margin del
+ * destino del enlace de salto. En escritorio es el .menu{height:125px} del
+ * port; por debajo de 992 lo redefine el @media de mas abajo. Vive en :root y
+ * no en .menu porque #main no es descendiente de .menu y no lo heredaria. */
+:root {
+  --menu-alto: 125px;
+}
+
+/* --- Enlace de salto (SC 2.4.1) -------------------------------------------
+ * Oculto hasta que recibe el foco. No se usa .visually-hidden porque este SI
+ * tiene que aparecer al tabular, y con `position:fixed` no lo recorta el
+ * .menu, que es sticky y crea contexto de apilamiento. */
+.saltar-al-contenido {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 4px;
+  background-color: var(--bllue);
+  color: var(--white);
+  text-decoration: none;
+  font-size: 15px;
+  transform: translateY(-200%);
+  transition: transform 0.2s;
+}
+.saltar-al-contenido:focus-visible {
+  transform: translateY(0);
+}
+
+/* El cromo es sticky: sin esto el salto deja el principio de #main debajo de
+ * la cabecera. */
+#main {
+  scroll-margin-top: var(--menu-alto);
+}
+
+/* --- Objetivos tactiles del pie (SC 2.5.5 / 2.5.8) ------------------------
+ * .link-footer median 122x18 y el campo del boletin 179x25. Son enlaces y un
+ * campo de formulario reales, no decoracion: por debajo de 24x24 incumplen ya
+ * el minimo AA de WCAG 2.2. Se gana altura con padding, sin mover el diseno:
+ * el interlineado de la columna ya deja ese aire. */
+.link-footer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* El telefono y el correo del bloque de contacto eran <div> en produccion.
+ * Footer.astro:155-158 los convierte en tel:/mailto: — la llamada es la
+ * conversion del despacho y ese cambio no se discute — pero al hacerse <a> les
+ * alcanza `a{color:var(--black);text-decoration:underline}` (accounting-max:112),
+ * que a un <div> nunca le llegaba: salian en #333 y subrayados al lado de la
+ * direccion y el horario, que siguen siendo <div> en navy y sin subrayar. Es la
+ * misma compensacion que el bloque de .block-icon-contact-page de mas arriba,
+ * en el caso simetrico de /contact-us.
+ * Acotado por [href^=]: casa exactamente esos dos y ningun otro. Los doce
+ * enlaces de servicio del pie SI van subrayados en produccion y se quedan como
+ * estan (auditoria-diseno.md §6). */
+.link-footer[href^="tel:"],
+.link-footer[href^="mailto:"] {
+  color: var(--bllue);
+  text-decoration: none;
+}
+
+/* Aqui vivia `.text-field.w-input, .text-field-form.w-input { min-height:44px }`.
+ * Se ha quitado: NO subia nada, bajaba. Webflow ya da 50px a los dos campos
+ * (accounting-max:1002 y :1852) y 100 al textarea (`.text-field-form.large`,
+ * :1857), pero aquella regla es 0-2-1 y esta SIN capa, asi que ganaba a las tres
+ * y recortaba el boletin de 50 a 44 y el textarea de 100 a 44. Medido contra el
+ * baseline: input del boletin 50px -> 44px. El minimo de SC 2.5.8 ya lo cumplen
+ * los campos por su propio CSS, asi que la regla sobra. */
+
+/* --- Boton de telefono ----------------------------------------------------
+ * Gana a `a { color: var(--black); text-decoration: underline }` del port
+ * (accounting-max:112), que lo pintaria #333 y subrayado sobre navy = 1,7:1.
+ * Perfil en --green-1 sobre --bllue = 6,35:1 (SC 1.4.11 pide 3:1 para el
+ * limite de un control); la etiqueta blanca sobre navy, 13,4:1. */
+.nav-telefono {
+  flex: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--green-1);
+  border-radius: 4px;
+  color: var(--white);
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+.nav-telefono:hover {
+  background-color: #ffffff1a;
+}
+.nav-telefono-icono {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+/* En escritorio el telefono ya vive en el pie y en /contact-us, y el nivel 2
+ * del cajon no existe: el desplegable es el panel de dos columnas de siempre. */
+@media screen and (min-width: 992px) {
+  .nav-telefono,
+  .nav-volver {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 991px) {
-  .navbar[data-nav-open="true"] .block-items-menu {
+  /* --- Altura del cromo ---------------------------------------------------
+   * .menu{height:125px} es FIJA (accounting-max:164) y .top-bar/.navbar son
+   * porcentajes de ella (35%/65%, lineas 790 y 173): al cambiar la altura hay
+   * que cambiar las tres o los porcentajes mienten.
+   * --menu-alto TIENE que ser .top-bar + .navbar, porque es el `top` del cajon.
+   * 44px de barra superior y no 32: a 320px las dos credenciales siguen
+   * partiendo en 2 lineas (10px/20px) y 32 las cortaria.
+   * `main` no necesita compensacion: .menu es sticky, o sea EN FLUJO. */
+  :root {
+    --menu-alto: 108px;
+  }
+  .menu {
+    height: var(--menu-alto);
+  }
+  .top-bar {
+    height: 44px;
+  }
+  .navbar {
+    height: 64px;
+  }
+
+  /* --- Barra superior: fuera los 3 iconos mudos ---------------------------
+   * Son <span> sin href (D11: no hay URL real y no se inventa) con <img alt="">:
+   * ni nombre accesible ni destino, o sea cero informacion. A 375 se comian
+   * 126,9 de 375 = 33,8% del ancho y obligaban a las DOS credenciales — que si
+   * son informacion, y son la unica senal de confianza del cromo — a partirse
+   * en dos lineas de 75,9px. Quitar de la vista movil tres imagenes decorativas
+   * no es quitar contenido.
+   * El <br> de topCpa es paridad de escritorio (iguala las dos columnas); aqui
+   * solo fuerza dos cajas de linea aunque el texto quepa en una.
+   * Va acotado a .top-bar: .block-social-media se reutiliza TAL CUAL en el
+   * .bar-footer, donde no hay ninguna presion de ancho y produccion los muestra.
+   * Sin acotar tambien los apagaba alli (medido: .div-block-7 85px -> 50px). */
+  .top-bar .block-social-media {
+    display: none;
+  }
+  .text-top-bar br {
+    display: none;
+  }
+  .wrapper-top-bar {
+    padding-inline: 12px;
+  }
+
+  /* --- La marca deja de colgar -------------------------------------------
+   * Gana a .brand (accounting-max:778): position:absolute + inset:0% auto auto
+   * + padding:15px 20px 35px + border-radius:0 0% 100% 100% + fondo navy. En
+   * escritorio ese blob sobre el hero es EL DISENO y se queda intacto; aqui es
+   * el bug. float:left de .w-nav-brand (webflow:1581) no hay que neutralizarlo:
+   * en un contenedor flex el float computa a none.
+   * margin-right:auto sustituye al .menu-button{margin-left:auto} que se borra:
+   * al sacar .block-items-menu del flujo, .wrapper-menu (justify-content:center)
+   * se quedaba sin el hueco del 100% que empujaba la hamburguesa a la derecha. */
+  .brand {
+    position: static;
+    height: 100%;
+    margin-right: auto;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+  }
+  .logo {
+    height: 48px;
+  }
+
+  /* Fila de la barra: [logo] ......... [telefono] [hamburguesa].
+   * Gana al .wrapper-menu{padding-left:15px} de @media 767 (accounting-max:2689),
+   * para tener el mismo canal a los dos lados en las tres anchuras. */
+  .wrapper-menu {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+
+  /* --- Hamburguesa dibujada en CSS ---------------------------------------
+   * Gana a .menu-button{background:var(--gray); width:100px; color:var(--black);
+   * font-size:50px} (accounting-max:2320), a .w-nav-button{padding:18px}
+   * (webflow:1650) y sobre todo a .w-nav-button.w--open{background:#C8C8C8;
+   * color:#fff} (webflow:1664), que es el 1,67:1 que incumple SC 1.4.11.
+   * El <span class="icon w-icon-nav-menu"> NO cambia en el marcado: content:""
+   * apaga el glifo de la fuente webflow-icons y el propio span hace de barra
+   * central. (Ese span sigue sujeto a [class^="w-icon-"]{font-family:...
+   * !important} de webflow.css:6 — un !important DENTRO de una capa gana a todo
+   * lo no-important sin capa. Aqui da igual porque el contenido va vacio.)
+   * 200ms, dentro de la banda 150-250. El @media prefers-reduced-motion de mas
+   * arriba en este mismo fichero lo deja en 0,01ms. */
+  .menu-button {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--white);
+  }
+  .menu-button.w--open {
+    background-color: transparent;
+    color: var(--white);
+  }
+  .menu-button .icon {
+    flex: none;
+    display: block;
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background-color: currentColor;
+    transition: background-color 0.2s;
+  }
+  .menu-button .icon::before,
+  .menu-button .icon::after {
+    content: "";
     position: absolute;
-    top: 100%;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background-color: currentColor;
+    transition: transform 0.2s;
+  }
+  .menu-button .icon::before {
+    top: -7px;
+  }
+  .menu-button .icon::after {
+    top: 7px;
+  }
+  .menu-button.w--open .icon {
+    background-color: transparent;
+  }
+  .menu-button.w--open .icon::before {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-button.w--open .icon::after {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* --- El cajon -----------------------------------------------------------
+   * Cerrado, .block-items-menu es hoy un hueco vacio de width:100% dentro de
+   * .wrapper-menu (sus .nav-menu si estan ocultos por
+   * .w-nav[data-collapse='medium'] .w-nav-menu, webflow:1688).
+   * Abierto: fixed bajo el cromo. `top: var(--menu-alto)` es exacto a CUALQUIER
+   * scroll porque .menu es el primer elemento del <body> y es sticky top:0, o
+   * sea su borde superior esta siempre en y0. */
+  .block-items-menu {
+    display: none;
+  }
+  .navbar[data-nav-open="true"] .block-items-menu {
+    display: flex;
+    position: fixed;
+    top: var(--menu-alto);
     left: 0;
     right: 0;
+    bottom: 0;
     z-index: 10;
     flex-flow: column;
+    justify-content: flex-start;
     align-items: stretch;
+    gap: 0;
+    width: auto;
     height: auto;
-    padding: 10px 20px 20px;
+    padding: 12px 20px 32px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background-color: var(--bllue);
     box-shadow: 0 10px 20px #0003;
   }
 
+  /* Bloqueo de scroll: sin el, la pagina de detras (11 613px en la portada) se
+   * desplaza bajo el dedo con el cajon abierto. La clase la pone ui.ts, y la
+   * regla vive DENTRO del @media para que sea imposible que aplique en
+   * escritorio aunque la clase se quede pegada. */
+  html.nav-abierto {
+    overflow: hidden;
+  }
+
+  /* --- Ritmo del cajon ----------------------------------------------------
+   * Antes: 4 filas de 49px pegadas, hueco de 10px, Contact Us, y el CTA a 0px.
+   * margin-left/right:0 no es decoracion: .w-nav-link (webflow:1587),
+   * .w-dropdown (webflow:1064) y .button (accounting-max:325) traen margen
+   * horizontal auto, y en un flex column con align-items:stretch un margen auto
+   * CANCELA el stretch y centra la fila. */
   .navbar[data-nav-open="true"] .nav-menu {
     display: flex;
     flex-flow: column;
@@ -90,36 +479,193 @@
     width: 100%;
     height: auto;
   }
-
-  /* Al sacar el panel del flujo, .wrapper-menu (justify-content:center) se
-   * queda con la hamburguesa como unico hijo en flujo y la centraria encima
-   * del logo. */
-  .navbar[data-nav-open="true"] .menu-button {
-    margin-left: auto;
+  .navbar[data-nav-open="true"] .nav-menu + .nav-menu {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #ffffff26;
+  }
+  .navbar[data-nav-open="true"] .nav-link {
+    height: auto;
+    min-height: 48px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 12px 0;
+    justify-content: flex-start;
+  }
+  .navbar[data-nav-open="true"] .button.top-menu-click {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    margin: 16px 0 0;
+    text-align: center;
   }
 
-  /* El submenu de servicios no cabe: min-width 750px y dos columnas. */
+  /* --- Los 12 servicios, escalonados en un segundo nivel ------------------
+   * Antes en movil: .dropdown-list.w--open seguia con min-width:750px y
+   * column-count:2, los 12 .link-submenu median 25px de alto (por debajo del
+   * 44x44 y tambien del 24x24 de SC 2.5.8) y el panel abierto llegaba a y895
+   * con un viewport de 812.
+   * Ahora ui.ts pone data-nivel en .block-items-menu y el nivel 2 oculta el
+   * resto del menu: 12 enlaces planos son una lista, no una navegacion.
+   * El disparador SIGUE VISIBLE en el nivel 2 — es el que tiene aria-expanded
+   * y aria-controls, y esconder el control cuyo panel esta abierto rompe el
+   * patron disclosure. */
+  .block-items-menu[data-nivel="2"] .nav-menu > .nav-link,
+  .block-items-menu[data-nivel="2"] .nav-menu + .nav-menu {
+    display: none;
+  }
+
   .navbar[data-nav-open="true"] .dropdown {
+    width: 100%;
     height: auto;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .navbar[data-nav-open="true"] .nav-link.w-dropdown-toggle {
+    width: 100%;
+    padding-right: 28px;
+  }
+  .navbar[data-nav-open="true"] .w-icon-dropdown-toggle {
+    margin-right: 0;
+    transition: transform 0.2s;
+  }
+  .navbar[data-nav-open="true"] .w-dropdown-toggle.w--open .w-icon-dropdown-toggle {
+    transform: rotate(180deg);
   }
   .navbar[data-nav-open="true"] .dropdown-list {
     position: static;
+    background-color: transparent;
     box-shadow: none;
   }
   .navbar[data-nav-open="true"] .dropdown-list.w--open {
+    display: block;
+    width: 100%;
     min-width: 0;
-    padding: 0 0 10px;
+    max-width: none;
+    padding: 0 0 8px;
+    border-radius: 0;
   }
   .navbar[data-nav-open="true"] .collection-list-submenu {
     column-count: 1;
+    padding: 0 0 0 12px;
+    border-left: 1px solid #ffffff26;
+  }
+  .navbar[data-nav-open="true"] .collection-item-submenu {
+    gap: 12px;
     padding: 0;
   }
+  .navbar[data-nav-open="true"] .icon-submenu {
+    flex: none;
+    height: 20px;
+  }
+  /* 25px -> 44px de alto. El <img class="icon-submenu"> se queda FUERA del <a>
+   * a proposito: meterlo dentro cambiaria el DOM de escritorio y arrastraria el
+   * icono al .link-submenu:hover{transform:scale(1.05)translate(10px)}. */
+  .navbar[data-nav-open="true"] .link-submenu {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-height: 44px;
+    color: var(--white);
+    transition: color 0.2s;
+  }
+  .navbar[data-nav-open="true"] .link-submenu:hover {
+    transform: none;
+  }
+  .navbar[data-nav-open="true"] .link-submenu.w--current {
+    color: var(--green-1);
+  }
 
-  /* La lista de servicios del pie era doce <ul class="list-footer"> de un
-   * elemento y heredaba de ahi este reset; ahora es un unico <ul
-   * class="collection-list-footer">, que necesita el mismo. */
-  .collection-list-footer {
+  /* Vuelta al nivel 1. Es un <button> real: cierra el desplegable y devuelve el
+   * foco al disparador "Services" (lo hace ui.ts). El disparador tambien
+   * cierra, como en cualquier disclosure; dos salidas para lo mismo es lo
+   * normal en un cajon (aspa y "cancelar"). */
+  .nav-volver {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0;
+    /* El reset de fondo de mas arriba en este fichero enumera los <button> que
+     * sustituyen a controles de Webflow; este es nuevo, asi que hay que
+     * neutralizarle aqui el gris por defecto del navegador. */
+    background-color: transparent;
+    color: var(--green-1);
+    font-size: 15px;
+    text-align: left;
+  }
+  .nav-volver-flecha {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-left: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+}
+
+/* El desplegable de servicios y la rejilla de /blog-news eran <div> en
+ * produccion y aqui son <ul>, asi que heredan `ul,ol{margin-bottom:10px}`
+ * (webflow.css:256) que un <div> nunca recibia: el panel abierto salia 10px mas
+ * alto y la seccion .blog otros 10 (2327 -> 2337 medidos). El `padding-left:40px` de esa
+ * misma regla no llega a verse porque .collection-list-submenu declara
+ * `padding:15px`, y tampoco hay vineta porque .collection-item-submenu es
+ * `display:flex`, que anula `list-item`.
+ *
+ * La lista del pie es el tercer caso y el unico donde esos 40px SI se ven, asi
+ * que la sangria NO se quita: se devuelve a donde estaba. En produccion cada
+ * servicio era su propio <ul class="list-footer">, o sea que los 40px caian en
+ * CADA FILA; aqui el <ul> es el contenedor multicolumna (column-count:2), asi
+ * que la sangria se la come entera la primera columna y la segunda arranca 20px
+ * a la izquierda (medido a 1440: enlace de la 2a columna en 1073, baseline
+ * 1093). Con `box-sizing:border-box` global (webflow.css:40) el <li> sigue
+ * midiendo la columna completa y el disco cae en el mismo sitio. */
+.collection-list-submenu,
+.collection-list-blog,
+.collection-list-footer {
+  margin-block: 0;
+}
+.collection-list-footer {
+  padding-left: 0;
+}
+.collection-item-footer {
+  padding-left: 40px;
+}
+
+/* Por debajo de 992 produccion quitaba la sangria a las doce filas con
+ * `.list-footer{padding-left:0}` (accounting-max:2303, dentro del @media que
+ * abre en :2165). El <ul> del port no lleva .list-footer, asi que esa regla ya
+ * no alcanza a nada y hay que repetirla sobre la fila. Sin esto la columna de
+ * servicios queda sangrada respecto a la de contacto de encima (medido a 375:
+ * enlace en 83,9 contra 63,9 del baseline). */
+@media screen and (max-width: 991px) {
+  .collection-item-footer {
     padding-left: 0;
+  }
+}
+
+/* Recortes que en produccion vivian en un <style> incrustado (.w-embed) dentro
+ * del HTML, no en la hoja de Webflow. Sin ellos las cuatro esquinas del bloque
+ * azul de .reviews salen como cuadrados de 100x100 (medido: clip-path `none`) y
+ * la imagen de cabecera de las 12 fichas de servicio pierde su corte diagonal.
+ * Mismo caso que .block-pic, mas abajo. */
+.corner-top-1,
+.corner-bottom-1 {
+  clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
+}
+.corner-top-2,
+.corner-bottom-2 {
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.background-services {
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+@media screen and (max-width: 789px) {
+  .background-services {
+    clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
   }
 }
 

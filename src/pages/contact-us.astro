@@ -45,7 +45,7 @@ const DESCRIPCION =
 <BaseLayout title="Contact Us | Accounting Max Services" description={DESCRIPCION}>
   <Nav />
 
-  <main>
+  <main id="main">
     <section class="header-contact-page">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-contact-page">
@@ -505,5 +505,22 @@ const DESCRIPCION =
    * rompe la paridad con baseline/html/contact-us.html. */
   address.info-contact-page {
     font-style: normal;
+  }
+
+  /* .wrapper-contact-page es flex con align-items:flex-start, asi que la tarjeta
+   * gris nunca se estira: su alto lo fija su contenido. La azul, en cambio, crece
+   * por el bloque de consentimiento FTSA/TCPA (justificado por D4, no se acorta),
+   * y acababa 447px por debajo de la gris: bajo la gris quedaba un hueco blanco
+   * de casi 450px que se leia como un fallo de maquetacion.
+   *
+   * OJO, esto NO es literalmente el baseline: deja la gris en 1006px donde
+   * produccion tenia 559. Se acepta a cambio de eliminar el hueco, porque la
+   * alternativa era recortar copia legal, y eso no es maquetacion.
+   *
+   * A <=991px las tarjetas ya se apilan y no hace falta. */
+  @media screen and (min-width: 992px) {
+    .block-info-contact {
+      align-self: stretch;
+    }
   }
 </style>

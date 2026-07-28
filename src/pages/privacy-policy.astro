@@ -86,7 +86,7 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
 <BaseLayout title="Privacy Policy | Accounting Max Services" description={DESCRIPCION} noindex>
   <Nav />
 
-  <main>
+  <main id="main">
     <section class="header-page-blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-header-blog">
@@ -507,10 +507,23 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
   }
 
   /* normalize.css ya da a <mark> amarillo sobre negro; solo falta que respire y
-   * que no parta palabras a la mitad al envolver. */
+   * que no parta palabras a la mitad al envolver.
+   *
+   * `anywhere` hacia justo lo contrario de lo que pide esa ultima frase: ademas
+   * de permitir el corte, ANULA la aportacion de la palabra al min-content de la
+   * celda. Con table-layout:auto eso estrangulaba la columna «Do we share?» a
+   * 119px y partia «{{PENDIENTE» / «: Yes / No}}» a la mitad en las 7 filas de
+   * la tabla del modelo FTC. `break-word` protege igual del desborde sin tocar
+   * el min-content: la columna recupera 148px —el ancho del vocablo mas largo,
+   * «{{PENDIENTE:»— y el corte pasa a caer en el espacio.
+   *
+   * Ojo, el marcador sigue ocupando dos lineas: min-content es el vocablo mas
+   * largo, no la frase entera (162px), y los espacios siguen siendo puntos de
+   * corte validos. Lo que se arregla es que no parta palabras, que es lo que
+   * pedia la regla. */
   .pendiente {
     padding: 0 .2em;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
   }
 
   /* El CSS portado no estiliza <table> en absoluto: sin esto la tabla del

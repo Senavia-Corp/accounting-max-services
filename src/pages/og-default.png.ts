@@ -4,9 +4,11 @@
 // WhatsApp, Facebook o LinkedIn sale una tarjeta sin imagen.
 //
 // POR QUE PNG Y NO AVIF/WEBP: Facebook y LinkedIn no renderizan AVIF ni WebP en
-// las tarjetas. El resto del sitio si sirve WebP via `auto=format` de Sanity,
-// pero aqui seria una tarjeta rota. PNG ademas comprime muy bien un diseño
-// plano: 23 KB para 1200x630.
+// las tarjetas, asi que aqui saldria una tarjeta rota. El resto del sitio sirve
+// WebP con `fm=webp` — NO con `auto=format`, que no fija formato: negocia por la
+// cabecera `Accept` y Chrome pide `image/avif` primero, asi que el CDN devolvia
+// AVIF (52 de 94 URL medidas). PNG ademas comprime muy bien un diseño plano:
+// 23 KB para 1200x630.
 //
 // POR QUE VA EMPOTRADA EN BASE64 Y NO SE GENERA EN EL BUILD:
 //   - `sharp` NO es dependencia declarada del proyecto (no esta en package.json

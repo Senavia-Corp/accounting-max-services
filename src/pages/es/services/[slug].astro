@@ -24,7 +24,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
 import PortableText from "../../../components/PortableText.astro";
-import { servicios, testimonios, sanity, NEGOCIO } from "../../../lib/sanity";
+import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../../lib/sanity";
 import type { Servicio, Testimonio } from "../../../lib/sanity";
 import { t } from "../../../lib/i18n";
 import { requiereEs, requiereTodoEs, enlace } from "../../../lib/es";
@@ -106,7 +106,9 @@ const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
 const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
 const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
 
-const src = (u: string, w: number) => `${u}?w=${w}&q=75&auto=format`;
+// `fm=webp` y NO `auto=format`: `auto=format` negocia por la cabecera `Accept`
+// y Chrome pide `image/avif` primero, asi que devolvia AVIF, que esta prohibido.
+const src = (u: string, w: number) => `${u}?w=${w}&q=75&fm=webp`;
 
 // Alt de la foto de cabecera, en espanol.
 //
@@ -173,10 +175,17 @@ const tituloDe = (s: Servicio) =>
   requiereEs<string>(s, "titleEs", enlace(lang, `/services/${s.slug}`)).trim();
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription} lang={lang} noindex>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  lang={lang}
+  noindex
+  ogImage={ogUrl(foto)}
+  ogImageAlt={altFoto || undefined}
+>
   <Nav lang={lang} />
 
-  <main>
+  <main id="main">
     <section class="header-page">
       <div class="w-layout-blockcontainer container w-container">
         <div class="block-header-page">
@@ -253,8 +262,9 @@ const tituloDe = (s: Servicio) =>
             <h2 class="h2">{c.service.sidebarTitle}</h2>
             <div class="collection-list-wrapper-2 w-dyn-list">
               <div role="list" class="collection-list-2 w-dyn-items">
+                {/* Invertida, como la EN y como el pie. Ver services/[slug].astro. */}
                 {
-                  todos.map((s) => {
+                  [...todos].reverse().map((s) => {
                     const href = enlace(lang, `/services/${s.slug}`);
                     const actual = href === aqui;
                     return (
@@ -450,28 +460,12 @@ const tituloDe = (s: Servicio) =>
 </BaseLayout>
 
 <style>
-  /* Identico al de la ruta EN: los recortes que en produccion vivian en <style>
-   * incrustados dentro del HTML (.w-embed). Sin ellos la foto de cabecera sale
-   * como un rectangulo y las esquinas como cuadrados. */
+  /* Identico al de la ruta EN: los recortes se quedan solo en site.css, porque
+   * repetirlos aqui los volvia inalcanzables alli (el ambito de Astro es un
+   * atributo y gana por especificidad). Sobreviven las dos declaraciones que no
+   * tienen copia en site.css y que colocan el lqip en linea del hero. */
   .background-services {
-    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
     background-size: cover;
     background-position: 50%;
-  }
-
-  @media screen and (max-width: 789px) {
-    .background-services {
-      clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
-    }
-  }
-
-  .corner-top-1,
-  .corner-bottom-1 {
-    clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
-  }
-
-  .corner-top-2,
-  .corner-bottom-2 {
-    clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
   }
 </style>

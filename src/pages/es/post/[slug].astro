@@ -14,7 +14,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
 import PortableText from "../../../components/PortableText.astro";
-import { posts, NEGOCIO } from "../../../lib/sanity";
+import { posts, ogUrl, NEGOCIO } from "../../../lib/sanity";
 import type { Post } from "../../../lib/sanity";
 import { t, interpola } from "../../../lib/i18n";
 import { requiereEs, requiereTodoEs, enlace } from "../../../lib/es";
@@ -47,7 +47,9 @@ const resumen = requiereEs<string>(post, "excerptEs", aqui).trim();
 const cuerpo = requiereEs<any[]>(post, "bodyEs", aqui);
 
 const hero = post.heroImage;
-const src = (w: number) => `${hero!.url}?w=${w}&q=75&auto=format`;
+// `fm=webp` y NO `auto=format`: `auto=format` negocia por la cabecera `Accept`
+// y Chrome pide `image/avif` primero, asi que devolvia AVIF, que esta prohibido.
+const src = (w: number) => `${hero!.url}?w=${w}&q=75&fm=webp`;
 // Sin pasarse del ancho original: Sanity no amplia.
 const ANCHOS = hero ? [...new Set([750, 1100, 1500].map((w) => Math.min(w, hero.w)))] : [];
 const SIZES = "(max-width: 991px) 100vw, 750px";
@@ -84,10 +86,18 @@ const tituloDe = (p: Post) =>
   requiereEs<string>(p, "titleEs", enlace(lang, `/post/${p.slug}`)).trim();
 ---
 
-<BaseLayout title={metaTitulo} description={metaDesc} lang={lang} noindex>
+<BaseLayout
+  title={metaTitulo}
+  description={metaDesc}
+  lang={lang}
+  noindex
+  ogType="article"
+  ogImage={ogUrl(hero)}
+  ogImageAlt={altHero}
+>
   <Nav lang={lang} />
 
-  <main>
+  <main id="main">
     <div class="header-page-blog">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-header-blog">

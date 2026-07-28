@@ -55,7 +55,9 @@ const mision = img(NOMBRES[5]);
 const vision = img(NOMBRES[6]);
 const iconoCta = img(NOMBRES[7]);
 
-const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+// `fm=webp` y NO `auto=format`: `auto=format` negocia por la cabecera `Accept`
+// y Chrome pide `image/avif` primero, asi que devolvia AVIF, que esta prohibido.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&fm=webp`;
 const ANCHOS = [500, 800, 1080, 1250];
 const srcset = (a: Asset) => ANCHOS.map((w) => `${src(a, w)} ${w}w`).join(", ");
 
@@ -67,8 +69,11 @@ const lqip = (a: Asset) =>
 // Anchos reales medidos sobre el CSS portado, identicos a los de la ruta EN.
 const SIZES_HERO =
   "(max-width: 991px) calc(100vw - 64px), (max-width: 1313px) calc((100vw - 96px) / 2), 609px";
-const SIZES_MV =
-  "(max-width: 991px) calc(100vw - 64px), (max-width: 1063px) calc((100vw - 96px) / 2), 484px";
+// El de mision/vision no declara el ancho de la columna (484px) sino el que
+// exige CUBRIR los 450px de alto de .pic-about-us con object-fit:cover: con la
+// fuente en proporcion 1,5006 son 675px. Con 484 se elegia el candidato de 500w
+// y la foto se pintaba ampliada un 35%. Identico al de la ruta EN.
+const SIZES_MV = "(max-width: 991px) calc(100vw - 64px), 675px";
 
 // Los 4 iconos de bar-features, en el mismo orden que c.about.features.
 const ICONOS = [NOMBRES[1], NOMBRES[2], NOMBRES[3], NOMBRES[4]];
@@ -84,7 +89,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 <BaseLayout title={TITULO} description={c.meta.aboutDescription} lang={lang} noindex>
   <Nav lang={lang} />
 
-  <main>
+  <main id="main">
     <section class="header-page-about-us">
       <div class="container">
         <div class="wrapper-about-us">
