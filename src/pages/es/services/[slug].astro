@@ -1,0 +1,477 @@
+---
+// Plantilla de servicio en espanol — 12 rutas /es/services/<slug>
+//
+// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
+// firmado. La explicacion completa esta en src/pages/es/index.astro.
+//
+// ============================================================================
+// LOS SLUGS NO SE TRADUCEN. /es/services/notary-public-services, no
+// /es/servicios/servicios-notariales. Politica y razones: src/lib/es.ts.
+//
+// Y AQUI ADEMAS ES OBLIGACION LEGAL, no solo coherencia de URLs:
+// `notary-public-services` es una de las 12 paginas y "Notary Public" NO se
+// traduce como "notario". En Florida esta tipificado como infraccion que un
+// notary se anuncie en espanol como notario o notario publico, porque en
+// Latinoamerica ese termino designa a un abogado. Ni en el slug, ni en el H1,
+// ni en el cuerpo, ni en el alt de la foto. Si hace falta explicar que hace,
+// se describe la funcion sin usar esa palabra.
+// ============================================================================
+//
+// Espejo de src/pages/services/[slug].astro: mismas secciones y en el mismo
+// orden (header-page · call-action · body-service · reviews · features), mismas
+// clases, mismos assets y el mismo <style> de recortes.
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Nav from "../../../components/Nav.astro";
+import Footer from "../../../components/Footer.astro";
+import PortableText from "../../../components/PortableText.astro";
+import { servicios, testimonios, sanity, NEGOCIO } from "../../../lib/sanity";
+import type { Servicio, Testimonio } from "../../../lib/sanity";
+import { t } from "../../../lib/i18n";
+import { requiereEs, requiereTodoEs, enlace } from "../../../lib/es";
+import type { GetStaticPaths } from "astro";
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+export const getStaticPaths = (async () => {
+  const MARCA = [
+    "6785bf353063de8bcbcf3dfc-icon-13.svg",
+    "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
+    "684a14073e3e3c127cc2a315-starts.svg",
+    "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
+    "66591cff761a876e791ad585-1.png",
+    "66591defc9bd4c2b2a6fd8c8-2.png",
+    "66591fc962e8774f9117068b-3.png",
+  ];
+
+  const [servs, resenas, assets] = await Promise.all([
+    servicios(),
+    testimonios(),
+    sanity.fetch<Asset[]>(
+      `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+         originalFilename, url,
+         "w": metadata.dimensions.width,
+         "h": metadata.dimensions.height
+       }`,
+      { f: MARCA },
+    ),
+  ]);
+
+  // R4: `sales-tax-filing-7k40q` es la URL viva e indexada y el sufijo es el
+  // desempate de Webflow. La ruta ES la comparte byte a byte.
+  if (!servs.some((s) => s.slug === "sales-tax-filing-7k40q")) {
+    throw new Error(
+      "R4: falta el slug exacto 'sales-tax-filing-7k40q'. No se toca ni se normaliza.",
+    );
+  }
+
+  return servs.map((s) => ({
+    params: { slug: s.slug },
+    props: { servicio: s, todos: servs, resenas, assets },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  servicio: Servicio;
+  todos: Servicio[];
+  resenas: Testimonio[];
+  assets: Asset[];
+}
+
+const { servicio, todos, resenas, assets } = Astro.props;
+
+const lang = "es" as const;
+const c = t(lang);
+const aqui = enlace(lang, `/services/${servicio.slug}`);
+
+// R5 — el aserto que impide servir ingles bajo /es/. Se comprueba el documento
+// ENTERO antes de pintar nada: mejor caer una vez con todos los campos que le
+// faltan que campo a campo en tres builds seguidos.
+requiereTodoEs(servicio, "service", aqui);
+
+const titulo = requiereEs<string>(servicio, "titleEs", aqui).trim();
+const intro = requiereEs<string>(servicio, "introEs", aqui).trim();
+const cuerpo = requiereEs<any[]>(servicio, "bodyEs", aqui);
+const metaTitle = requiereEs<string>(servicio, "metaTitleEs", aqui).trim();
+const metaDescription = requiereEs<string>(servicio, "metaDescriptionEs", aqui).trim();
+
+/** Falla en voz alta: un asset roto se ve en las 12 rutas. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset "${nombre}".`);
+  return a;
+};
+
+const iconoCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
+const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
+const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
+const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
+
+const src = (u: string, w: number) => `${u}?w=${w}&q=75&auto=format`;
+
+// Alt de la foto de cabecera, en espanol.
+//
+// Es la traduccion de los alt que la ruta EN escribio MIRANDO cada foto, no
+// texto nuevo (R3): se describe la misma imagen en la otra lengua. En cuanto
+// alguien rellene picture.altEs en Sanity, este mapa deja de usarse.
+//
+// GLOSARIO aplicado: "Form 1040", "IRS Form W-7", "Employer Identification
+// Number" y "Application for IRS Individual Taxpayer Identification Number" son
+// nombres de formulario del IRS — identificadores, no palabras — y van
+// literales. "AUDIT" y "Open" son el texto que aparece impreso EN la foto: se
+// describe lo que se ve, no se traduce el rotulo. En `notary-public-services`
+// no aparece la palabra "notario" por la razon legal del encabezado.
+const ALT_FOTO: Record<string, string> = {
+  "audit-assistance":
+    "Una declaración Form 1040 con un sello rojo que dice AUDIT, junto a una calculadora y un teclado.",
+  "bilingual-services-english-spanish":
+    "Dos piezas de rompecabezas con las banderas de Estados Unidos y de España encajando sobre un mapamundi.",
+  "business-incorporation-in-florida":
+    "Dos personas con delantal en la puerta de su negocio, junto a un letrero que dice Open.",
+  "corporate-tax-preparation":
+    "Una persona de traje rellenando documentación fiscal en un escritorio, junto a una computadora portátil abierta.",
+  "employer-identification-number-application":
+    "Un portapapeles con un formulario de Employer Identification Number, sobre un escritorio con un bolígrafo y un teclado.",
+  "financial-statement-preparation":
+    "Una lupa sobre las gráficas de barras y de sectores impresas de un informe financiero.",
+  "itin-application-irs-tax-id":
+    "Primer plano del IRS Form W-7, Application for IRS Individual Taxpayer Identification Number.",
+  "monthly-bookkeeping-accounting":
+    "Una persona revisando en su escritorio informes impresos con gráficas de barras y de sectores, junto a una calculadora.",
+  "notary-public-services":
+    "Una mano estampando un sello sobre un documento en un escritorio, frente a un cliente.",
+  "personal-tax-preparation":
+    "Formularios de declaración de impuestos impresos, con unas gafas, una calculadora, billetes y una bandera de Estados Unidos.",
+  "representation-before-the-irs":
+    "Fotomontaje de un edificio gubernamental con columnas sobre un billete de Estados Unidos.",
+  "sales-tax-filing-7k40q":
+    "Unas manos escribiendo en una computadora portátil con gráficas y cifras financieras superpuestas en la pantalla.",
+};
+
+const foto = servicio.picture;
+// altEs de Sanity si lo hay; si no, la traduccion de arriba. NUNCA `alt` (EN):
+// un alt en ingles bajo una URL /es/ es el fallback silencioso que R5 prohibe.
+const altFoto = foto?.altEs?.trim() || ALT_FOTO[servicio.slug] || "";
+if (foto && !altFoto) {
+  throw new Error(
+    `R5 · ${aqui}: no hay alt en espanol para la foto del servicio "${servicio.slug}".\n` +
+      `  Arreglo: rellenar picture.altEs en Sanity (${servicio._id}) o anadir el slug a ALT_FOTO.`,
+  );
+}
+
+// Los 3 bloques de .features. Mismo texto que la portada (c.features.items) y
+// alt propios de las rutas de servicio (c.service.featuresAlt), igual que en EN.
+const FEATURES = [
+  { imagen: img("66591cff761a876e791ad585-1.png"), alt: c.service.featuresAlt[0], invertido: false },
+  { imagen: img("66591fc962e8774f9117068b-3.png"), alt: c.service.featuresAlt[1], invertido: true },
+  { imagen: img("66591defc9bd4c2b2a6fd8c8-2.png"), alt: c.service.featuresAlt[2], invertido: false },
+].map((f, i) => ({ ...f, titulo: c.features.items[i].title, parrafo: c.features.items[i].html }));
+
+const CONTACTO = enlace(lang, "/contact-us");
+
+/** Titulo del servicio de la barra lateral. En ES nunca cae al ingles. */
+const tituloDe = (s: Servicio) =>
+  requiereEs<string>(s, "titleEs", enlace(lang, `/services/${s.slug}`)).trim();
+---
+
+<BaseLayout title={metaTitle} description={metaDescription} lang={lang} noindex>
+  <Nav lang={lang} />
+
+  <main>
+    <section class="header-page">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="block-header-page">
+          <h1 class="h1">{titulo}</h1>
+          <div>{intro}</div>
+          <a href={CONTACTO} class="button w-button">{c.service.heroCta}</a>
+        </div>
+      </div>
+
+      {/* LCP de la ruta: eager + fetchpriority, nunca lazy. */}
+      {
+        foto && (
+          <img
+            src={src(foto.url, 1250)}
+            srcset={`${src(foto.url, 500)} 500w, ${src(foto.url, 800)} 800w, ${src(foto.url, 1080)} 1080w, ${src(foto.url, 1250)} 1250w`}
+            sizes="(max-width: 991px) 100vw, 50vw"
+            width={foto.w}
+            height={foto.h}
+            alt={altFoto}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            style={foto.lqip ? `background-image:url(${foto.lqip})` : undefined}
+            class="background-services"
+          />
+        )
+      }
+    </section>
+
+    <section class="call-action">
+      <div class="w-layout-blockcontainer container w-container">
+        {/* En produccion era un <section class="footer-subscribe"> anidado: un
+            landmark de region sin nombre. Baja a <div>, igual que en EN. */}
+        <div class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              <img
+                src={iconoCta.url}
+                width={iconoCta.w}
+                height={iconoCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2">{c.cta.title}</h2>
+                <div>{c.cta.text}</div>
+              </div>
+            </div>
+            <div>
+              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="body-service">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-service">
+          <div class="block-left">
+            {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio.
+                El cuerpo es bodyEs: PortableText es el MISMO componente que usa
+                la ruta EN, solo cambia el campo del que sale el dato. */}
+            <div class="w-richtext">
+              <PortableText value={cuerpo} />
+            </div>
+          </div>
+
+          <div class="block-right">
+            {/* En produccion era un SEGUNDO <h1 class="h2">. Baja a <h2>; la
+                clase .h2 es la que pinta. Minusculas como en el original. */}
+            <h2 class="h2">{c.service.sidebarTitle}</h2>
+            <div class="collection-list-wrapper-2 w-dyn-list">
+              <div role="list" class="collection-list-2 w-dyn-items">
+                {
+                  todos.map((s) => {
+                    const href = enlace(lang, `/services/${s.slug}`);
+                    const actual = href === aqui;
+                    return (
+                      <div role="listitem" class="collection-item-2 w-dyn-item">
+                        <a
+                          href={href}
+                          class={`link-block w-inline-block${actual ? " w--current" : ""}`}
+                          aria-current={actual ? "page" : undefined}
+                        >
+                          {s.icon && (
+                            <img
+                              src={s.icon.url}
+                              width={s.icon.w}
+                              height={s.icon.h}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              class="icon-services"
+                            />
+                          )}
+                          <div class="title-cms-services">{tituloDe(s)}</div>
+                        </a>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* D5 sigue vigente en espanol: se muestran como testimonios y NADA MAS.
+        Prohibido JSON-LD Review o aggregateRating. Los 20 no se traducen. */}
+    <section class="reviews" aria-labelledby="titulo-resenas">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-reviews">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 id="titulo-resenas" class="h2">{c.reviews.title}</h2>
+                <div>{c.reviews.text}</div>
+              </div>
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label={c.reviews.prev}
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label={c.reviews.next}
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="block-services-animation">
+              <div class="splide">
+                <div
+                  id="pista-resenas"
+                  class="splide-track w-dyn-list"
+                  tabindex="0"
+                  role="group"
+                  aria-label={c.reviews.grupo}
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      resenas.map((r) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={logoGoogle.url}
+                                    width={logoGoogle.w}
+                                    height={logoGoogle.h}
+                                    alt={c.reviews.googleAltServicio}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  <img
+                                    src={estrellas.url}
+                                    width={estrellas.w}
+                                    height={estrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                <div class="mini-text-reviews">{c.reviews.ranking}</div>
+                              </div>
+                            </div>
+                            {/* NO SE TRADUCE: palabras de clientes reales. */}
+                            <p class="paragraph">{r.quote}</p>
+                            <div>
+                              <div class="name-customer">{r.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">{c.reviews.publicado}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
+    </section>
+
+    <section class="features" aria-labelledby="titulo-features">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML en produccion: se conserva por paridad. */}
+          <h2 id="titulo-features" class="h2">{c.features.title}<br /></h2>
+          <div>{c.features.text}</div>
+        </div>
+
+        <div class="div-block-5">
+          {
+            FEATURES.map((f) => {
+              const imagen = (
+                <div>
+                  <img
+                    src={src(f.imagen.url, 940)}
+                    srcset={`${src(f.imagen.url, 500)} 500w, ${src(f.imagen.url, 800)} 800w, ${src(f.imagen.url, 940)} 940w`}
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                    width={f.imagen.w}
+                    height={f.imagen.h}
+                    alt={f.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="image-2"
+                  />
+                </div>
+              );
+              const texto = (
+                <div>
+                  <h3 class="h3">{f.titulo}</h3>
+                  <div set:html={f.parrafo} />
+                </div>
+              );
+              // .rotate invierte el orden en el DOM, igual que en el baseline.
+              return (
+                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
+                  {f.invertido ? texto : imagen}
+                  {f.invertido ? imagen : texto}
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  /* Identico al de la ruta EN: los recortes que en produccion vivian en <style>
+   * incrustados dentro del HTML (.w-embed). Sin ellos la foto de cabecera sale
+   * como un rectangulo y las esquinas como cuadrados. */
+  .background-services {
+    clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+    background-size: cover;
+    background-position: 50%;
+  }
+
+  @media screen and (max-width: 789px) {
+    .background-services {
+      clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
+    }
+  }
+
+  .corner-top-1,
+  .corner-bottom-1 {
+    clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
+  }
+
+  .corner-top-2,
+  .corner-bottom-2 {
+    clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
+  }
+</style>

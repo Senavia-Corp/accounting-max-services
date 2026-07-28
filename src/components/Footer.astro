@@ -18,8 +18,23 @@
 //   - Los 3 iconos de redes eran <a href="#">. Ver el mismo caso en Nav.astro.
 //   - El <style> incrustado del .w-embed (clip-path de .block-pic) esta ahora
 //     en src/styles/site.css.
+//
+// FASE 5 — el pie es bilingue. `lang` llega por prop desde las rutas /es/ y,
+// si no llega, se deduce de la ruta. El texto sale de src/lib/i18n.ts; en `en`
+// son las mismas cadenas que estaban aqui a mano, asi que el HTML de las 26
+// rutas EN no cambia. EL NAP NO PASA POR EL TRADUCTOR: telefono, correo,
+// direccion y horario salen de NEGOCIO y se pintan identicos en las dos
+// lenguas — incluido "Monday - Friday (8:00 AM - 5:00 PM)".
 import FooterSubscribe from "./FooterSubscribe.astro";
 import { servicios, sanity, NEGOCIO } from "../lib/sanity";
+import { t, idiomaDeRuta, type Lang } from "../lib/i18n";
+import { requiereEs, enlace } from "../lib/es";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname) } = Astro.props;
+const c = t(lang);
 
 const MARCA = [
   "67807ad95e4e63e62cd9040e-logo-black.svg",
@@ -64,6 +79,15 @@ const aqui = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const activo = (href: string) => (href === aqui ? "page" : undefined);
 const marca = (href: string) => (href === aqui ? " w--current" : "");
 
+// Los slugs NO se traducen: solo cambia el prefijo (ver src/lib/es.ts).
+const CONTACTO = enlace(lang, "/contact-us");
+
+/** Titulo del servicio en la lengua de la ruta. En ES nunca cae al ingles. */
+const titulo = (s: (typeof servs)[number]) =>
+  lang === "es"
+    ? requiereEs<string>(s, "titleEs", `/es/services/${s.slug}`).trim()
+    : s.title.trim();
+
 // El horario vive en NEGOCIO como una sola cadena; en el pie va partido en dos
 // lineas, igual que en produccion. Se parte, no se reescribe.
 const [dias, horas] = NEGOCIO.horario.split(" (");
@@ -90,16 +114,12 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
     <div class="w-layout-blockcontainer container w-container">
       <div class="block-content-promo">
         <div class="block-promo">
-          <h2 class="h2 white">Get Expert Advice – Book Your Free Call Today!</h2>
-          <div>
-            Ready to take control of your finances? Schedule a free consultation call with our
-            expert advisors today! We’ll help you uncover opportunities, tackle challenges, and
-            set your business up for financial success.
-          </div>
+          <h2 class="h2 white">{c.footer.promoTitle}</h2>
+          <div>{c.footer.promoText}</div>
           <a
-            href="/contact-us"
-            class={`button blue w-button${marca("/contact-us")}`}
-            aria-current={activo("/contact-us")}>Book a free Consultation</a
+            href={CONTACTO}
+            class={`button blue w-button${marca(CONTACTO)}`}
+            aria-current={activo(CONTACTO)}>{c.footer.promoCta}</a
           >
         </div>
       </div>
@@ -108,7 +128,7 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
 
   <div class="email-subscribed">
     <div class="w-layout-blockcontainer container w-container">
-      <FooterSubscribe />
+      <FooterSubscribe lang={lang} />
     </div>
   </div>
 
@@ -120,19 +140,16 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
             src={logo.url}
             width={logo.w}
             height={logo.h}
-            alt="Accounting Max Services"
+            alt={c.footer.logoAlt}
             loading="lazy"
             decoding="async"
             class="logo-footer"
           />
-          <div>
-            IRS Certified EAs & CPAs offering bilingual tax and accounting services for
-            individuals & businesses.
-          </div>
+          <div>{c.footer.tagline}</div>
         </div>
 
         <div class="block-footer">
-          <h3 class="h3">Contact Information</h3>
+          <h3 class="h3">{c.footer.contactTitle}</h3>
           <ul role="list" class="list-footer">
             <li class="list-item-footer">
               <a href={NEGOCIO.telefonoHref} class="link-footer">{NEGOCIO.telefono}</a>
@@ -157,12 +174,12 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
         </div>
 
         <div class="block-footer">
-          <h3 class="h3">Services</h3>
+          <h3 class="h3">{c.footer.servicesTitle}</h3>
           <div class="collection-list-wrapper-footer">
             <ul role="list" class="collection-list-footer">
               {
                 servs.map((s) => {
-                  const href = `/services/${s.slug}`;
+                  const href = enlace(lang, `/services/${s.slug}`);
                   return (
                     <li class="collection-item-footer list-item-footer">
                       <a
@@ -170,7 +187,7 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
                         class={`link-footer${marca(href)}`}
                         aria-current={activo(href)}
                       >
-                        {s.title.trim()}
+                        {titulo(s)}
                       </a>
                     </li>
                   );
@@ -189,7 +206,7 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
         {/* R3: el ano viene tal cual del HTML en produccion. No se cambia a
             2026 ni se automatiza con new Date(): seria inventar una fecha.
             Pendiente de confirmar con el cliente. */}
-        <div>Copyright 2025 Accounting Max Services Inc. All rights reserved.</div>
+        <div>{c.footer.copyright}</div>
       </div>
       <div class="block-social-media">
         {

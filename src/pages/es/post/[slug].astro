@@ -1,0 +1,173 @@
+---
+// Entrada de blog en espanol — 10 rutas /es/post/<slug>
+//
+// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
+// firmado. La explicacion completa esta en src/pages/es/index.astro.
+//
+// Espejo de src/pages/post/[slug].astro: mismas clases, mismos landmarks
+// (<article>/<aside>), misma barra lateral. Sigue SIN fecha y SIN autor (R3), y
+// por lo mismo SIN JSON-LD Article: datePublished y author son obligatorios de
+// facto y no existen en ninguno de los 10 documentos.
+//
+// LOS SLUGS NO SE TRADUCEN (ver src/lib/es.ts).
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Nav from "../../../components/Nav.astro";
+import Footer from "../../../components/Footer.astro";
+import PortableText from "../../../components/PortableText.astro";
+import { posts, NEGOCIO } from "../../../lib/sanity";
+import type { Post } from "../../../lib/sanity";
+import { t, interpola } from "../../../lib/i18n";
+import { requiereEs, requiereTodoEs, enlace } from "../../../lib/es";
+
+export async function getStaticPaths() {
+  const todos = await posts();
+  return todos.map((post) => ({
+    params: { slug: post.slug },
+    // `todos` viaja como prop para que la barra lateral no vuelva a consultar.
+    props: { post, todos },
+  }));
+}
+
+interface Props {
+  post: Post;
+  todos: Post[];
+}
+
+const { post, todos } = Astro.props;
+
+const lang = "es" as const;
+const c = t(lang);
+const aqui = enlace(lang, `/post/${post.slug}`);
+
+// R5 — se comprueba el documento entero antes de pintar nada.
+requiereTodoEs(post, "post", aqui);
+
+const titulo = requiereEs<string>(post, "titleEs", aqui).trim();
+const resumen = requiereEs<string>(post, "excerptEs", aqui).trim();
+const cuerpo = requiereEs<any[]>(post, "bodyEs", aqui);
+
+const hero = post.heroImage;
+const src = (w: number) => `${hero!.url}?w=${w}&q=75&auto=format`;
+// Sin pasarse del ancho original: Sanity no amplia.
+const ANCHOS = hero ? [...new Set([750, 1100, 1500].map((w) => Math.min(w, hero.w)))] : [];
+const SIZES = "(max-width: 991px) 100vw, 750px";
+
+// SEO. metaTitleEs/metaDescriptionEs no existen en los 10 posts — tampoco sus
+// equivalentes ingleses (los 10 traen metaTitle/metaDescription vacios), asi
+// que no hay nada que traducir y no se inventa (R3). Se COMPONEN a partir de
+// dato en espanol: el titulo traducido + el nombre del negocio (que es NAP y va
+// literal), y el extracto traducido. Es exactamente lo que hace la ruta EN con
+// sus equivalentes ingleses — no es una caida al ingles, asi que no viola R5.
+const metaTitulo =
+  post.metaTitleEs?.trim() || interpola(c.meta.plantillaTitulo, { pagina: titulo, negocio: NEGOCIO.nombre });
+
+/** Recorte por palabra entera; no reescribe nada, solo corta. */
+const recorta = (t: string, max = 155): string => {
+  if (t.length <= max) return t;
+  const cabeza = t.slice(0, max + 1);
+  const corte = cabeza.lastIndexOf(" ");
+  return (corte > 0 ? cabeza.slice(0, corte) : t.slice(0, max)).replace(/[ ,;:.—-]+$/, "") + "…";
+};
+
+const metaDesc = post.metaDescriptionEs?.trim() || recorta(resumen);
+
+// Alt de la imagen de cabecera. altEs de Sanity si lo hay; si no, se nombra su
+// funcion en la pagina con la plantilla de i18n. NUNCA el alt ingles: bajo una
+// URL /es/ eso es el fallback silencioso que R5 prohibe.
+const altHero =
+  hero?.altEs?.trim() || interpola(c.post.heroAltFallback, { titulo });
+
+const CONTACTO = enlace(lang, "/contact-us");
+
+/** Titulo del post en la barra lateral. En ES nunca cae al ingles. */
+const tituloDe = (p: Post) =>
+  requiereEs<string>(p, "titleEs", enlace(lang, `/post/${p.slug}`)).trim();
+---
+
+<BaseLayout title={metaTitulo} description={metaDesc} lang={lang} noindex>
+  <Nav lang={lang} />
+
+  <main>
+    <div class="header-page-blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-header-blog">
+          <div class="block-title-blog">
+            <h1 class="h1">{titulo}</h1>
+            <div>{resumen}</div>
+          </div>
+
+          {
+            hero && (
+              <img
+                src={src(ANCHOS[ANCHOS.length - 1])}
+                srcset={ANCHOS.map((w) => `${src(w)} ${w}w`).join(", ")}
+                sizes={SIZES}
+                width={hero.w}
+                height={hero.h}
+                alt={altHero}
+                /* Candidata a LCP: ni lazy ni prioridad por defecto. Sin lqip a
+                   proposito — el asset es un PNG con canal alfa y el
+                   placeholder se veria por las zonas transparentes. */
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                class="picture-blog-page"
+              />
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="block-blog-page">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-content-blog">
+          <article class="blog-column-left">
+            <div class="w-layout-blockcontainer container w-container">
+              <div class="w-richtext">
+                {/* Mismo componente que /es/services/[slug]: una sola
+                    implementacion de Portable Text en todo el sitio. */}
+                <PortableText value={cuerpo} />
+              </div>
+            </div>
+          </article>
+
+          {/* role="complementary" con nombre: en produccion esta columna es un
+              <div> anonimo y no se puede saltar a ella ni salir. */}
+          <aside class="blog-column-right" aria-label={c.post.asideLabel}>
+            <div class="block-promo-blog">
+              <h2 class="h3"><strong>{c.post.promoTitle}</strong></h2>
+              <div>{c.post.promoText}</div>
+              <a href={CONTACTO} class="button w-button">{c.post.promoCta}</a>
+            </div>
+
+            <div class="block-blogs-features">
+              <h2 class="h3">{c.post.destacadosTitle}</h2>
+              <ul role="list">
+                {
+                  todos.map((p) => {
+                    const href = enlace(lang, `/post/${p.slug}`);
+                    const actual = href === aqui;
+                    return (
+                      <li>
+                        <a
+                          href={href}
+                          class={`link-footer${actual ? " w--current" : ""}`}
+                          aria-current={actual ? "page" : undefined}
+                        >
+                          {tituloDe(p)}
+                        </a>
+                      </li>
+                    );
+                  })
+                }
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>

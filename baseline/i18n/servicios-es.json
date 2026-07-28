@@ -1,0 +1,2800 @@
+{
+  "service.6785b6be18a274e9bd9e2ccd": {
+    "slug": "audit-assistance",
+    "titleEs": "Asistencia en Auditorías",
+    "introEs": "Enfrente las auditorías del IRS con claridad, cumplimiento y apoyo experto.",
+    "bodyEs": [
+      {
+        "_key": "c93d22d485e8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "fa2a92d68312",
+            "_type": "span",
+            "marks": [],
+            "text": "¿Estrés por una auditoría? ¡Déjenos ser su defensa!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "070aacd4d1db",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "5bf33fb9037a",
+            "_type": "span",
+            "marks": [],
+            "text": "Las auditorías del IRS pueden ser abrumadoras, pero nuestros expertos están aquí para guiarle. Nos encargamos de la documentación, la representación y las negociaciones para resolver los problemas de forma eficiente."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "351cde07fddc",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c871b08dbf20",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "724230ab0480",
+            "_type": "span",
+            "marks": [],
+            "text": " Menos multas, registros exactos y tranquilidad."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "547c7acaa392",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "7c0d29ab7ae4",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "843eef5f7b3c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6ddba09f5051",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Qué debo hacer si me auditan?"
+          },
+          {
+            "_key": "1989c9dc23db",
+            "_type": "span",
+            "marks": [],
+            "text": " Contáctenos de inmediato para recibir orientación profesional."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "ddcd2d7061f5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "55c0bde260a6",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto cuesta este servicio?"
+          },
+          {
+            "_key": "2b1bf26ae587",
+            "_type": "span",
+            "marks": [],
+            "text": " El precio varía; ofrecemos cotizaciones personalizadas."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Asistencia en Auditorías | Accounting Max Services",
+    "metaDescriptionEs": "Enfrente las auditorías del IRS con claridad, cumplimiento y apoyo experto. Documentación, representación y negociación en Coral Springs, FL."
+  },
+  "service.6785b80386d5a1463c6c4ce9": {
+    "slug": "bilingual-services-english-spanish",
+    "titleEs": "Servicios Bilingües (Inglés y Español)",
+    "introEs": "Todos los servicios están disponibles en inglés y en español para su comodidad.",
+    "bodyEs": [
+      {
+        "_key": "54f114b60c70",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8a1f69bfa1de",
+            "_type": "span",
+            "marks": [],
+            "text": "Atención fluida en inglés y español: ¡su comodidad es lo primero!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "737dda6a3ae1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b5b95d55a574",
+            "_type": "span",
+            "marks": [],
+            "text": "Prestamos todos nuestros servicios en inglés y en español, para garantizar claridad y comprensión a todos los clientes. Nuestro apoyo bilingüe incluye la traducción de documentos y las consideraciones culturales."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "72c9382b86c9",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "702236e09e0e",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "b4302b2c1ecd",
+            "_type": "span",
+            "marks": [],
+            "text": " Comunicación clara y apoyo personalizado."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "b716116ce54f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c6fbcc18428f",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "7af2a9950c7f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "ab55c92168ea",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Puedo solicitar documentos bilingües?"
+          },
+          {
+            "_key": "bd36628a36cb",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, ofrecemos traducciones cuando se necesiten."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "d809aca883b3",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "3d3db53078d5",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Todos los servicios son bilingües?"
+          },
+          {
+            "_key": "915c662db6e5",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, todos los servicios están disponibles en inglés y en español."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Servicios Bilingües | Accounting Max Services",
+    "metaDescriptionEs": "Todos los servicios están disponibles en inglés y en español para su comodidad, incluida la traducción de documentos."
+  },
+  "service.6785b651297dbfede43de007": {
+    "slug": "business-incorporation-in-florida",
+    "titleEs": "Constitución de Empresas en FL",
+    "introEs": "Constituya su empresa en Florida con orientación legal y fiscal completa.",
+    "bodyEs": [
+      {
+        "_key": "b45f20ca88d6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "61c75f987b8a",
+            "_type": "span",
+            "marks": [],
+            "text": "Su empresa en Florida empieza aquí: ¡constitúyala sin complicaciones!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "6f274112d0bd",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "939a7bdd4fae",
+            "_type": "span",
+            "marks": [],
+            "text": "¿Va a abrir un negocio? Simplificamos el proceso y le asistimos en la formación de una LLC, Corporation o Inc. Desde la presentación de los documentos hasta la orientación sobre las licencias estatales, nos aseguramos de que cada detalle se maneje con precisión."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "2aac4ec3341a",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8f13808f45e7",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "7b2a9f1174e6",
+            "_type": "span",
+            "marks": [],
+            "text": " Constitución sin complicaciones, menos riesgos y atención bilingüe."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "0ce102a99fd1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "d53f73d521ef",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "7847ba81295d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "845f1b5a917f",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuál es la mejor figura legal para mi negocio?"
+          },
+          {
+            "_key": "ce6f9b79e7a6",
+            "_type": "span",
+            "marks": [],
+            "text": " Le damos asesoría personalizada según sus objetivos."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "086e81387c85",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "17a1f0bf7a49",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto tarda la constitución?"
+          },
+          {
+            "_key": "0cffdd3daa40",
+            "_type": "span",
+            "marks": [],
+            "text": " Por lo general, 1–2 semanas."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Constitución de Empresas en FL | Accounting Max Services",
+    "metaDescriptionEs": "Constituya su empresa en Florida con orientación legal y fiscal completa: LLC, Corporation o Inc., trámites y licencias estatales."
+  },
+  "service.6785b5fda3f8132ff2b2a924": {
+    "slug": "corporate-tax-preparation",
+    "titleEs": "Preparación de Impuestos Corporativos",
+    "introEs": "Preparación experta de impuestos corporativos y presentación electrónica para que su empresa cumpla con el IRS, maximice deducciones y evite multas costosas.",
+    "bodyEs": [
+      {
+        "_key": "36a3597dc3a2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6123704ef365",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Cumplimiento fiscal simplificado. Exactitud garantizada."
+          },
+          {
+            "_key": "5cde4d9838ee",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "a7a8cfc65681",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "adc245af7b87",
+            "_type": "span",
+            "marks": [],
+            "text": "En "
+          },
+          {
+            "_key": "93e5ab28fb4a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Accounting Max Services"
+          },
+          {
+            "_key": "38e4785a67ee",
+            "_type": "span",
+            "marks": [],
+            "text": ", nos especializamos en la "
+          },
+          {
+            "_key": "f8e4f169406b",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "preparación profesional de impuestos corporativos y su presentación electrónica"
+          },
+          {
+            "_key": "01799b11441c",
+            "_type": "span",
+            "marks": [],
+            "text": " para empresas de todos los tamaños: desde LLC de un solo miembro hasta grandes corporaciones. Con más de una década de experiencia navegando las complejas normas del IRS, nuestro objetivo es simple: ayudarle a presentar declaraciones exactas, reclamar cada deducción a la que tiene derecho y cumplir plenamente, sin estrés."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "233a1dcbc9da",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b217a816bb4a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🔍 ¿Qué incluyen nuestros servicios de impuestos corporativos?"
+          },
+          {
+            "_key": "2cd48ea2f679",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "eb710586ba50",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4b4676d5b782",
+            "_type": "span",
+            "marks": [],
+            "text": "Ofrecemos un servicio integral adaptado a la estructura y al sector de su empresa. Nuestro servicio de preparación de impuestos corporativos incluye:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "3e66b6f3dad6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "dfb1bd3fb3cd",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "2830a903cb5a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preparación de declaraciones de impuestos federales y estatales para empresas"
+          },
+          {
+            "_key": "461f23e474a2",
+            "_type": "span",
+            "marks": [],
+            "text": " (Forms 1120, 1120-S, etc.)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "30a2e543fd6e",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "761482838111",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "d93e29ba67e7",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Presentación electrónica (E-File) para un procesamiento más rápido"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "05c70e3ab070",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "a69f9e84eef7",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "2fd107568a34",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Planificación fiscal y revisión de estrategia"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "9b9890dcceb6",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "502a1840f493",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "5f94712c168e",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Identificación de deducciones y créditos fiscales"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "deacef28ca7c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "85083802401e",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "03b1c9857926",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Apoyo para presentaciones en varios estados"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "d7c39a2bb6cd",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "21fe73a0f320",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "750d77c3f5e1",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Presentación de declaraciones tardías y enmendadas"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "183b3879199e",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c3d76afde40a",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "d29787c0ef0b",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Asistencia en auditorías y representación ante el IRS"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "04c3beb8011c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "cc74a1048f39",
+            "_type": "span",
+            "marks": [],
+            "text": "✅ "
+          },
+          {
+            "_key": "f021e9670c01",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Apoyo y asesoría durante todo el año"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "47b211360479",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "287b0d9042e6",
+            "_type": "span",
+            "marks": [],
+            "text": "Ya sea que esté cerrando su año fiscal o gestionando pagos trimestrales, nos aseguramos de que cumpla sus obligaciones fiscales con exactitud y a tiempo."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "1c8f5ae3c738",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "3e993bbd8f0c",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🧩 A quién atendemos"
+          },
+          {
+            "_key": "adf93a71a3b9",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "3f764a43a380",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "644a921645a7",
+            "_type": "span",
+            "marks": [],
+            "text": "Nuestro equipo trabaja con una amplia variedad de clientes corporativos, entre ellos:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "806727628366",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8fc079a2c9f4",
+            "_type": "span",
+            "marks": [],
+            "text": "S Corporations (1120-S)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "5257dfca8bb0",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "a6c7ed71edf4",
+            "_type": "span",
+            "marks": [],
+            "text": "C Corporations (1120)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "2a9008bbb3c4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c4d0e536821d",
+            "_type": "span",
+            "marks": [],
+            "text": "Limited Liability Companies (LLCs)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "47896a42dcb5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "18d51f17c8f2",
+            "_type": "span",
+            "marks": [],
+            "text": "Partnerships (1065)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "c4cc41844185",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "19aa87adb2b9",
+            "_type": "span",
+            "marks": [],
+            "text": "Organizaciones sin fines de lucro (990)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "88c105864742",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "cb5ed0a701ba",
+            "_type": "span",
+            "marks": [],
+            "text": "Empresarios internacionales que operan en EE. UU."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "2beb46e765fb",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "440b179f31e5",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "💼 Por qué importa la ayuda profesional con los impuestos corporativos"
+          },
+          {
+            "_key": "61c99a994afd",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "cd5124f91f4c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "63e0c2ab9b8e",
+            "_type": "span",
+            "marks": [],
+            "text": "Dirigir una empresa implica gestionar riesgos, y los impuestos no son la excepción. Presentar la declaración con errores, no cumplir los plazos o no aplicar las deducciones disponibles puede derivar en multas o auditorías. Trabajar con profesionales fiscales con experiencia le garantiza:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "2e3cc03660b8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "270754df8e1c",
+            "_type": "span",
+            "marks": [],
+            "text": "🎯 "
+          },
+          {
+            "_key": "dc9611103820",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Tranquilidad"
+          },
+          {
+            "_key": "f75297eb1efa",
+            "_type": "span",
+            "marks": [],
+            "text": " – Evite problemas con el IRS y manténgase en cumplimiento"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "d007be8e1203",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "a8ef64415f6d",
+            "_type": "span",
+            "marks": [],
+            "text": "💰 "
+          },
+          {
+            "_key": "84aa3e2baabe",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Ahorro fiscal"
+          },
+          {
+            "_key": "947d249cf4c8",
+            "_type": "span",
+            "marks": [],
+            "text": " – Identifique deducciones, créditos y pérdidas trasladables"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "0b4c23d4c2b8",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8e37b60287d3",
+            "_type": "span",
+            "marks": [],
+            "text": "📈 "
+          },
+          {
+            "_key": "5c883ba193d3",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Planificación estratégica"
+          },
+          {
+            "_key": "50d0fe6b0544",
+            "_type": "span",
+            "marks": [],
+            "text": " – Alinee su estrategia fiscal con los objetivos de su empresa"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "5a2d21253a1d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "ef493bb9b8ae",
+            "_type": "span",
+            "marks": [],
+            "text": "🔒 "
+          },
+          {
+            "_key": "62942a6146db",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Confidencialidad y exactitud"
+          },
+          {
+            "_key": "70c30d7dd79a",
+            "_type": "span",
+            "marks": [],
+            "text": " – Sus datos están seguros y se manejan profesionalmente"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "974158b4b51c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "53b925b9b68e",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🧠 Preguntas frecuentes – Preparación de impuestos corporativos"
+          },
+          {
+            "_key": "f7f149e9f5f6",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "d5bbaad5a14b",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "672266240601",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "¿Qué documentos debo entregar?"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "96d8095772b0",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6b1feb6753b2",
+            "_type": "span",
+            "marks": [],
+            "text": "Por lo general solicitamos:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "c996fd177b38",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4fb3139b3cea",
+            "_type": "span",
+            "marks": [],
+            "text": "Reportes de ingresos y gastos"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "3da181302c04",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e551c82d0de0",
+            "_type": "span",
+            "marks": [],
+            "text": "Estados de resultados"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "a0009a28f3df",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f6699ba22864",
+            "_type": "span",
+            "marks": [],
+            "text": "Balances generales"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "b024a8aeb0d5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "894f01b6f026",
+            "_type": "span",
+            "marks": [],
+            "text": "Declaraciones de impuestos de años anteriores"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "76dbe1252b9f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "acbabef1c690",
+            "_type": "span",
+            "marks": [],
+            "text": "Resúmenes de nómina (si aplica)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "a00e0faf1626",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "3a8decb745a1",
+            "_type": "span",
+            "marks": [],
+            "text": "Cualquier 1099 u otro formulario fiscal recibido"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "c8a8bd4d8d92",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "24539d2a31c9",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "¿Ayudan con varios años o con declaraciones vencidas?"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "a020fbee7cce",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "bcb3089f33e7",
+            "_type": "span",
+            "marks": [],
+            "text": "Sí. Nos especializamos en ayudar a las empresas a ponerse al día con declaraciones no presentadas o a corregir declaraciones anteriores mediante declaraciones enmendadas.\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "1ed383310b27",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b866465a9efe",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "¿Pueden ayudarme a reducir legalmente mi factura de impuestos?"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "a8055ca28090",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e3f2f1cc48b7",
+            "_type": "span",
+            "marks": [],
+            "text": "Por supuesto. Buscamos cada oportunidad de reducir su carga fiscal mediante deducciones y créditos elegibles y estrategias propias de cada tipo de entidad.\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "851459f55b09",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "9ba85ff73de5",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "¿El servicio está disponible de forma remota?"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "5266606bec4b",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c7a86536fb82",
+            "_type": "span",
+            "marks": [],
+            "text": "Sí. Atendemos a clientes en todo el país y en el extranjero. Todos los servicios pueden completarse de forma segura en línea.\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "be756c6acafc",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "ff3e0b012e26",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🌎 Atendemos a clientes en EE. UU. y en el extranjero"
+          },
+          {
+            "_key": "9dd54a011336",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "1c28435dd62c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8595451e3c79",
+            "_type": "span",
+            "marks": [],
+            "text": "Emprendedores, pequeñas empresas y corporaciones de todo el país confían en nuestras soluciones de impuestos corporativos. Con sede en "
+          },
+          {
+            "_key": "8bbc2442b49c",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Coral Springs, FL"
+          },
+          {
+            "_key": "4d734c5d2f4b",
+            "_type": "span",
+            "marks": [],
+            "text": ", ofrecemos "
+          },
+          {
+            "_key": "514b6909a276",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "atención bilingüe en inglés y español"
+          },
+          {
+            "_key": "7fc6f29b01d9",
+            "_type": "span",
+            "marks": [],
+            "text": " y servicios remotos para atenderle donde esté."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Impuestos Corporativos | Accounting Max Services",
+    "metaDescriptionEs": "Preparación de impuestos corporativos y presentación electrónica para que su empresa cumpla con el IRS, maximice deducciones y evite multas costosas."
+  },
+  "service.6785b675f49ea1df71a030bc": {
+    "slug": "employer-identification-number-application",
+    "titleEs": "Solicitud de EIN",
+    "introEs": "Le ayudamos a obtener su EIN rápidamente y a empezar su negocio con el pie derecho.",
+    "bodyEs": [
+      {
+        "_key": "8fc5c8c3a687",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "ef337667fa64",
+            "_type": "span",
+            "marks": [],
+            "text": "Servicios de EIN rápidos y confiables: ¡ponga su negocio en marcha!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "862465f7720d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6cfb48518685",
+            "_type": "span",
+            "marks": [],
+            "text": "El EIN es indispensable para la mayoría de los negocios. Simplificamos el proceso y garantizamos solicitudes rápidas y exactas para que usted se concentre en dirigir su empresa."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "ce80cdaf1709",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e6cba6b39f66",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "50869ae8e46a",
+            "_type": "span",
+            "marks": [],
+            "text": " Operaciones más ágiles y cumplimiento sin complicaciones."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "55577eb0ff54",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "a0f90f2db83f",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "0aa9eb667ec5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b87de63b6e3f",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto tarda en obtenerse un EIN?"
+          },
+          {
+            "_key": "5b25821d6ecc",
+            "_type": "span",
+            "marks": [],
+            "text": " Por lo general, 1–2 días hábiles."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "0f7491ca9f2d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8e1e35b0c39f",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Necesito un EIN?"
+          },
+          {
+            "_key": "a613391f6e57",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, para contratar empleados y para la mayoría de las operaciones del negocio."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Solicitud de EIN | Accounting Max Services",
+    "metaDescriptionEs": "Le ayudamos a obtener su EIN de forma rápida y exacta para que empiece a operar su negocio sin demoras ni complicaciones."
+  },
+  "service.6785b7cf849d22fe47ec5d3b": {
+    "slug": "financial-statement-preparation",
+    "titleEs": "Preparación de Estados Financieros",
+    "introEs": "Obtenga estados financieros profesionales que guíen decisiones inteligentes.",
+    "bodyEs": [
+      {
+        "_key": "66a8cea6ca5c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "9032d36c6204",
+            "_type": "span",
+            "marks": [],
+            "text": "¡Estados financieros profesionales para mejores decisiones de negocio!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "6ea3c767715e",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "97b8a52e8fd7",
+            "_type": "span",
+            "marks": [],
+            "text": "Preparamos reportes financieros detallados, incluidos balances generales, estados de resultados y estados de flujo de efectivo. Son ideales para solicitar préstamos, presentar a inversionistas o evaluar el desempeño del negocio."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "f58f67b61bcd",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "08f4af48e64a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "8b96cecf6851",
+            "_type": "span",
+            "marks": [],
+            "text": " Información clara y cumplimiento de los estándares del sector."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "80dc51ba8e14",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e699a6d37bdf",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "7844648690d3",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6cce1525a551",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Por qué necesito estados financieros?"
+          },
+          {
+            "_key": "8cbef0a2eac6",
+            "_type": "span",
+            "marks": [],
+            "text": " Para conseguir financiamiento o evaluar el desempeño."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "1ba2f11b2dbb",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f7f61b513f84",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Los aceptan los bancos?"
+          },
+          {
+            "_key": "f03a9e5d448e",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, nuestros reportes cumplen los estándares bancarios."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Estados Financieros | Accounting Max Services",
+    "metaDescriptionEs": "Balances generales, estados de resultados y flujo de efectivo: reportes profesionales para préstamos, inversionistas o evaluar su negocio."
+  },
+  "service.6785b68d438040df32283237": {
+    "slug": "itin-application-irs-tax-id",
+    "titleEs": "Solicitud de ITIN (identificación fiscal del IRS)",
+    "introEs": "Solicite su ITIN del IRS rápidamente, incluso si no tiene un SSN.",
+    "bodyEs": [
+      {
+        "_key": "531ec6aeb70c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "aee59070c370",
+            "_type": "span",
+            "marks": [],
+            "text": "Servicios de ITIN sin complicaciones: ¡cumpla rápidamente!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "7d4009cfd0c9",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "dc62cbbea2d0",
+            "_type": "span",
+            "marks": [],
+            "text": "¿Necesita un Individual Taxpayer Identification Number (ITIN)? Le guiamos durante todo el proceso para asegurar solicitudes y renovaciones exactas para personas sin SSN."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "d991da6f11dc",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f45e72bcccee",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "780cadaabe5b",
+            "_type": "span",
+            "marks": [],
+            "text": " Cumplimiento ante el IRS y un trámite sin contratiempos."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "e6d7797992da",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "7831d53a420d",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "6f636b3cf991",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "d9fc76bcd632",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto tarda un ITIN?"
+          },
+          {
+            "_key": "71c2fc970f3a",
+            "_type": "span",
+            "marks": [],
+            "text": " El trámite suele tardar 6–8 semanas."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "35722c5f45b5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "84889a35ee7c",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Gestionan renovaciones?"
+          },
+          {
+            "_key": "556c3f77b230",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, le asistimos con las renovaciones de ITIN."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Solicitud de ITIN | Accounting Max Services",
+    "metaDescriptionEs": "Solicite o renueve su ITIN del IRS con nuestra guía, incluso si no tiene un SSN. Solicitudes exactas y trámite sin contratiempos."
+  },
+  "service.6785b7688ba793590840ab73": {
+    "slug": "monthly-bookkeeping-accounting",
+    "titleEs": "Teneduría de Libros y Contabilidad Mensual",
+    "introEs": "Controle y administre las finanzas de su negocio con apoyo experto.",
+    "bodyEs": [
+      {
+        "_key": "83530751dbd4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "d7dc4b90c44f",
+            "_type": "span",
+            "marks": [],
+            "text": "¡Manténgase organizado y en control con una teneduría de libros experta!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "1bd0c2130133",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "dfe6df54d0d4",
+            "_type": "span",
+            "marks": [],
+            "text": "Nuestros servicios mensuales de teneduría de libros ayudan a las empresas a mantener registros financieros exactos, controlar ingresos y gastos y preparar reportes mensuales. Con nuestro apoyo, usted puede tomar decisiones informadas y concentrarse en crecer."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "c566881aeda9",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "7355369d6990",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "1c2c6a4173f6",
+            "_type": "span",
+            "marks": [],
+            "text": " Claridad financiera, cumplimiento y apoyo para tomar decisiones."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "133806ace73f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "dfca8edd7da3",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "c6f356a01a76",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "3135a6ebc4e2",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Qué herramientas utilizan?"
+          },
+          {
+            "_key": "33d05ccc3142",
+            "_type": "span",
+            "marks": [],
+            "text": " QuickBooks y software estándar del sector."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "fd8f43639cbc",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "82e2525b0d07",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Puedo consultar mis reportes?"
+          },
+          {
+            "_key": "0230dd3aede4",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, hay acceso seguro en línea."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Contabilidad Mensual | Accounting Max Services",
+    "metaDescriptionEs": "Teneduría de libros mensual: registros financieros exactos, control de ingresos y gastos y reportes mensuales para decidir con datos."
+  },
+  "service.6785b7e7d9e67de3023efc36": {
+    "slug": "notary-public-services",
+    "titleEs": "Servicios de Notary Public",
+    "introEs": "Servicios de Notary Public para certificar sus documentos legales y comerciales.",
+    "bodyEs": [
+      {
+        "_key": "f36c6c1101f9",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "bf392d2667d4",
+            "_type": "span",
+            "marks": [],
+            "text": "¡Servicios de Notary Public en los que puede confiar!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "c7af63964f31",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "9e96f1e08181",
+            "_type": "span",
+            "marks": [],
+            "text": "Desde contratos hasta declaraciones juradas, ofrecemos servicios profesionales de Notary Public en inglés y español. Nos aseguramos de que sus documentos queden certificados con rapidez y exactitud."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "141a85f0e39b",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "11f088514ea4",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "3ad1592d1cdd",
+            "_type": "span",
+            "marks": [],
+            "text": " Certificación confiable y comodidad bilingüe."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "e5b82bdf3623",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "34ff1d221fe1",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "12379d8fb754",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "99916531d8f1",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Necesito una cita?"
+          },
+          {
+            "_key": "f6399ff2a4bd",
+            "_type": "span",
+            "marks": [],
+            "text": " Puede venir sin cita, pero recomendamos agendar una."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "6495eccd85d4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "237fd4a23dc1",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto cuesta?"
+          },
+          {
+            "_key": "9be2d0f2e500",
+            "_type": "span",
+            "marks": [],
+            "text": " El precio depende del tipo de documento."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Servicios de Notary Public | Accounting Max Services",
+    "metaDescriptionEs": "Servicios de Notary Public en inglés y español, desde contratos hasta declaraciones juradas, con rapidez y exactitud en Coral Springs, FL."
+  },
+  "service.6785b62ad9e67de3023d7ffe": {
+    "slug": "personal-tax-preparation",
+    "titleEs": "Preparación de Impuestos Personales",
+    "introEs": "Presentación experta de impuestos corporativos para LLC, S-Corps y C-Corps. Cumpla con las normas, ahorre en impuestos y simplifique sus declaraciones corporativas. En Accounting Max Services ofrecemos preparación y presentación electrónica de impuestos empresariales con exactitud y sin estrés.",
+    "bodyEs": [
+      {
+        "_key": "5044613f0c75",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "97fe8ec452ca",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "💼 Preparación integral de impuestos corporativos"
+          },
+          {
+            "_key": "4cb42cd46e93",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "0d280358b281",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "db9691c53c8b",
+            "_type": "span",
+            "marks": [],
+            "text": "Nos encargamos de todo el proceso, desde reunir sus documentos hasta presentar electrónicamente y de forma segura sus declaraciones corporativas, para que usted se concentre en dirigir su empresa. Ya opere como LLC, S Corporation o C Corporation, nos aseguramos de que su declaración sea exacta, cumpla las normas del IRS y esté optimizada para obtener el máximo de deducciones."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "51efa990492f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "afa930364127",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🧾 Qué incluye"
+          },
+          {
+            "_key": "591c4849bf46",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "e0b3c4ae9cf3",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "2f761f25a059",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Preparación de declaraciones corporativas federales y estatales (1120, 1120-S)"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "b8bb8b6875fd",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "71ac7b60b877",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Presentación electrónica rápida y segura"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "d6113d4079d9",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "2567ed8e31b0",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Planificación fiscal y revisión de la estructura de la entidad"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "6765396efdd2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e430aa9441af",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Apoyo para presentaciones en varios estados"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "7e15c9381185",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "6f32b8d6db13",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Declaraciones enmendadas y presentaciones tardías"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "ee8f35675d86",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e1cfb4ef1e4c",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Asesoría durante todo el año y correspondencia con el IRS"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "f91c9e1bb4e4",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4c805e22dc42",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "🛡️ A quién atendemos"
+          },
+          {
+            "_key": "3ab79d5ac249",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "6bacb14ccabb",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "c918449f472a",
+            "_type": "span",
+            "marks": [],
+            "text": "Trabajamos con una amplia variedad de negocios y estructuras corporativas:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "e0416aa87bd2",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "385c6b172c80",
+            "_type": "span",
+            "marks": [],
+            "text": "S Corporations (Form 1120-S)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "076508e9ec0a",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "cc50f70f85f6",
+            "_type": "span",
+            "marks": [],
+            "text": "C Corporations (Form 1120)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "6922b12a5adb",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "35c8e8468ec4",
+            "_type": "span",
+            "marks": [],
+            "text": "LLC de varios miembros"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "89d2d6b16d20",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "5bff413361b2",
+            "_type": "span",
+            "marks": [],
+            "text": "Partnerships (Form 1065)"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "a0c85a413160",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "0586cc855f5f",
+            "_type": "span",
+            "marks": [],
+            "text": "Empresas radicadas en EE. UU. con propietarios extranjeros"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "aa217a0bb62f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e7d49a69b9b4",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "💡 ¿Por qué elegir Accounting Max Services?"
+          },
+          {
+            "_key": "18807e6eb825",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "d23bd09ca026",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "0c9ec8fa2f86",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Enrolled Agents del IRS y CPAs con experiencia"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "e5d1f455b2ce",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "98b7a0ea1656",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ 15+ años atendiendo a clientes de EE. UU. e internacionales"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "a79dac42a463",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e750e36caff2",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Atención personalizada y bilingüe (inglés y español)"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "56a7bbcb55b0",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "3fb5b604c770",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Manejo de documentos 100% remoto y seguro"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "74a09c5ca921",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "0f65a365cd3e",
+            "_type": "span",
+            "marks": [],
+            "text": "✔️ Precios transparentes – Sin cargos ocultos"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "1377f8ac902c",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "06c74d6fe35f",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "📈 Beneficios de la ayuda profesional con los impuestos corporativos"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "43fe2c5fe9c5",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4200cfe69ebb",
+            "_type": "span",
+            "marks": [],
+            "text": "🎯 "
+          },
+          {
+            "_key": "57861ba48483",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Cumplimiento ante el IRS"
+          },
+          {
+            "_key": "3a051bfcba9e",
+            "_type": "span",
+            "marks": [],
+            "text": " – Evite multas y señales que disparan auditorías"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "b7afeb6b1d31",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "96dac54279a0",
+            "_type": "span",
+            "marks": [],
+            "text": "💰 "
+          },
+          {
+            "_key": "72e668bd3c93",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Ahorro fiscal"
+          },
+          {
+            "_key": "4dd8e6752a9e",
+            "_type": "span",
+            "marks": [],
+            "text": " – Maximice deducciones y créditos"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "ffda8e1a9aa1",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e3cf12dee450",
+            "_type": "span",
+            "marks": [],
+            "text": "⏱️ "
+          },
+          {
+            "_key": "551158642bca",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Eficiencia en el tiempo"
+          },
+          {
+            "_key": "76996f187ddc",
+            "_type": "span",
+            "marks": [],
+            "text": " – Concéntrese en hacer crecer su empresa"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "883b9fa57165",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "536e6677d13c",
+            "_type": "span",
+            "marks": [],
+            "text": "🔐 "
+          },
+          {
+            "_key": "afd86205c084",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Exactitud y seguridad"
+          },
+          {
+            "_key": "960c523cf74d",
+            "_type": "span",
+            "marks": [],
+            "text": " – Sus datos están en manos expertas"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "f9e0f8ec4e41",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "e9e830264836",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "❓Preguntas frecuentes"
+          },
+          {
+            "_key": "7ff9e64f2cbc",
+            "_type": "span",
+            "marks": [],
+            "text": "\n"
+          }
+        ],
+        "markDefs": [],
+        "style": "h3"
+      },
+      {
+        "_key": "2aa3da50a5ce",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "eb3ebd5ad38e",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "¿Qué documentos debo entregar?"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "e09b37befe02",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "88a790fdba61",
+            "_type": "span",
+            "marks": [],
+            "text": "Necesitará:"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "93a165866099",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f614fd92005e",
+            "_type": "span",
+            "marks": [],
+            "text": "• Estado de resultados"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "403b2ebfc052",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "d02130c93c8e",
+            "_type": "span",
+            "marks": [],
+            "text": "• Balance general"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "6a399bd2434b",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "bbf77170ca84",
+            "_type": "span",
+            "marks": [],
+            "text": "• Declaraciones de impuestos de años anteriores"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "a4fe0b934f8a",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "eb7bbea67649",
+            "_type": "span",
+            "marks": [],
+            "text": "• Resúmenes de nómina"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "8d469033bfcc",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "89501109b1e9",
+            "_type": "span",
+            "marks": [],
+            "text": "• Documentación de ingresos y gastos del negocio"
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Impuestos Personales | Accounting Max Services",
+    "metaDescriptionEs": "Presentación experta de impuestos corporativos para LLC, S-Corps y C-Corps. Ahorre en impuestos y simplifique sus declaraciones corporativas."
+  },
+  "service.6785b6a9a1a91b4448ce47d5": {
+    "slug": "representation-before-the-irs",
+    "titleEs": "Representación ante el IRS",
+    "introEs": "Nos encargamos por usted de las auditorías y disputas directamente con el IRS.",
+    "bodyEs": [
+      {
+        "_key": "e9db6adc9517",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "8d8b02d5eb95",
+            "_type": "span",
+            "marks": [],
+            "text": "Su defensor ante el IRS: ¡representación sin estrés!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "3810d6b5f58e",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4bd0db0869dc",
+            "_type": "span",
+            "marks": [],
+            "text": "¿Enfrenta una auditoría del IRS, una disputa fiscal o impuestos sin pagar? Como Enrolled Agents certificados por el IRS, le representamos para resolver auditorías, negociar planes de pago y proteger sus derechos. Buscamos el mejor resultado posible y le mantenemos informado en todo momento."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "b204c9d2e024",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "9b3c9e02fca3",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "ea99ad83910b",
+            "_type": "span",
+            "marks": [],
+            "text": " Defensa experta, menos multas y tranquilidad."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "612116d6333e",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "80292fcb874a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "749c7bd39380",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f8bc5f4621ba",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Qué asuntos pueden atender?"
+          },
+          {
+            "_key": "835c76ead666",
+            "_type": "span",
+            "marks": [],
+            "text": " Auditorías, deudas fiscales y errores en las declaraciones."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "88e5c8ddef3d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "66040796754b",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Cuánto tarda en resolverse un caso?"
+          },
+          {
+            "_key": "ea88fdef475b",
+            "_type": "span",
+            "marks": [],
+            "text": " Depende de la complejidad; damos los plazos tras la evaluación."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Representación ante el IRS | Accounting Max Services",
+    "metaDescriptionEs": "Enrolled Agents certificados por el IRS le representan en auditorías, disputas y deudas fiscales, y negocian planes de pago por usted."
+  },
+  "service.6785b740bd0b2a8d83f16207": {
+    "slug": "sales-tax-filing-7k40q",
+    "titleEs": "Presentación del Sales Tax",
+    "introEs": "Presentación puntual y exacta del Sales Tax para su negocio en Florida.",
+    "bodyEs": [
+      {
+        "_key": "8b0b3b369704",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "f9004251a2c3",
+            "_type": "span",
+            "marks": [],
+            "text": "Cumplimiento del Sales Tax sin complicaciones: ¡adelántese a los plazos!"
+          }
+        ],
+        "markDefs": [],
+        "style": "h2"
+      },
+      {
+        "_key": "943126bbc4bf",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "2d46693ef385",
+            "_type": "span",
+            "marks": [],
+            "text": "Nos encargamos de la presentación de su Sales Tax para garantizar cálculos exactos y envíos puntuales. Nuestro equipo también lleva el control de los plazos, para que usted nunca pierda un pago."
+          }
+        ],
+        "markDefs": [],
+        "style": "normal"
+      },
+      {
+        "_key": "a7c48916e850",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "b7cc62fb118a",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Beneficios:"
+          },
+          {
+            "_key": "f482a4d4a394",
+            "_type": "span",
+            "marks": [],
+            "text": " Cumplimiento continuo y presentaciones sin estrés."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "5310e04c898d",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "1ce5d48bab6d",
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Preguntas frecuentes:"
+          }
+        ],
+        "markDefs": [],
+        "listItem": "bullet",
+        "level": 1,
+        "style": "normal"
+      },
+      {
+        "_key": "d2ed4109bb5f",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "4114f7894c94",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Qué pasa si me atraso?"
+          },
+          {
+            "_key": "5371f6dd4f31",
+            "_type": "span",
+            "marks": [],
+            "text": " Se aplican multas, pero podemos ayudarle a negociar soluciones."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      },
+      {
+        "_key": "7d3eca7645fb",
+        "_type": "block",
+        "children": [
+          {
+            "_key": "696ac6ec031e",
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "¿Pueden gestionar varias ubicaciones?"
+          },
+          {
+            "_key": "32e8a4dcccf9",
+            "_type": "span",
+            "marks": [],
+            "text": " Sí, gestionamos presentaciones para varias ubicaciones."
+          }
+        ],
+        "markDefs": [],
+        "listItem": "number",
+        "level": 2,
+        "style": "normal"
+      }
+    ],
+    "metaTitleEs": "Presentación del Sales Tax | Accounting Max Services",
+    "metaDescriptionEs": "Presentación puntual y exacta del Sales Tax para su negocio en Florida, con control de plazos y soporte para varias ubicaciones."
+  }
+}

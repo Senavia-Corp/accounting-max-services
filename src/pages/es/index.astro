@@ -1,0 +1,565 @@
+---
+// Portada en espanol — /es
+//
+// ============================================================================
+// R6 — ESTA RUTA, COMO LAS OTRAS 25 DE /es/, NACE CON noindex.
+//
+//   <meta name="robots" content="noindex">   (prop `noindex` de BaseLayout)
+//   fuera del sitemap                        (filtro en astro.config.mjs)
+//   SIN hreflang reciproco                   (ni aqui ni en la ruta EN)
+//
+// No es una precaucion generica: D3 —revisor nativo con criterio fiscal para el
+// espanol— sigue PENDIENTE. Todo el espanol del sitio es traduccion nueva sin
+// revisar, y esto es un despacho fiscal. Indexar consejo fiscal mal traducido
+// es el riesgo que D3 existe para cerrar. Las tres cosas se levantan JUNTAS y
+// solo cuando D3 este firmado.
+//
+// Por lo mismo NO hay selector de idioma en el cromo EN: enlazar desde las 26
+// rutas indexadas a traducciones sin revisar las publica de facto, y el noindex
+// no impide que una persona las lea. Las claves common.idioma* de i18n.ts
+// quedan preparadas y sin usar hasta que D3 se firme.
+// ============================================================================
+//
+// Espejo de src/pages/index.astro: misma estructura, mismas clases, mismo orden
+// de secciones y los MISMOS componentes (Nav, Footer), con lang="es". Lo unico
+// que cambia es de donde sale el texto: aqui de src/lib/i18n.ts (plantilla) y de
+// los campos *Es de Sanity (contenido). Cero CSS nuevo.
+//
+// LOS SLUGS NO SE TRADUCEN: /es/services/notary-public-services, no
+// /es/servicios/... La politica y sus tres razones estan en src/lib/es.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
+import { t, interpola } from "../../lib/i18n";
+import { requiereEs, enlace } from "../../lib/es";
+
+const lang = "es" as const;
+const c = t(lang);
+
+const MEDIOS = [
+  "6658e5a9a386bf0eb1b0c6a0-main-picture.jpg",
+  "66591cff761a876e791ad585-1.png",
+  "66591defc9bd4c2b2a6fd8c8-2.png",
+  "66591fc962e8774f9117068b-3.png",
+  "6785bf353063de8bcbcf3dfc-icon-13.svg",
+  "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
+  "684a14073e3e3c127cc2a315-starts.svg",
+  "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
+];
+
+type Asset = { originalFilename: string; url: string; w: number; h: number };
+
+const g = globalThis as any;
+const assets: Asset[] = await (g.__amsMediosPortada ??= sanity.fetch(
+  `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+     originalFilename, url,
+     "w": metadata.dimensions.width,
+     "h": metadata.dimensions.height
+   }`,
+  { f: MEDIOS },
+));
+
+/** Falla en voz alta: una imagen rota en la portada es la primera impresion. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset "${nombre}" (portada ES).`);
+  return a;
+};
+
+const hero = img("6658e5a9a386bf0eb1b0c6a0-main-picture.jpg");
+const feat1 = img("66591cff761a876e791ad585-1.png");
+const feat2 = img("66591defc9bd4c2b2a6fd8c8-2.png");
+const feat3 = img("66591fc962e8774f9117068b-3.png");
+const iconCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
+const iconGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
+const iconEstrellas = img("684a14073e3e3c127cc2a315-starts.svg");
+const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
+
+// Transformaciones de Sanity. Prohibido AVIF: auto=format sirve WebP.
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+const srcset = (a: Asset, ws: number[]) => ws.map((w) => `${src(a, w)} ${w}w`).join(", ");
+
+const servs = await (g.__amsServicios ??= servicios());
+const destacados = servs.filter((s) => s.feature);
+if (destacados.length !== 5) {
+  throw new Error(`Se esperaban 5 servicios con feature=true, hay ${destacados.length}.`);
+}
+
+// Los 20 testimonios se muestran TAL CUAL: son palabras de clientes reales, no
+// se traducen ni se editan (regla de FASE 5). El unico texto que cambia a su
+// alrededor son los rotulos de la interfaz. D5 sigue vigente: prohibido JSON-LD
+// Review o aggregateRating, tambien aqui.
+const opiniones = await testimonios();
+
+// Titulo real del video en YouTube: es el nombre de una obra de un tercero y
+// esta en ingles. No se traduce en ninguna de las dos rutas (R3).
+const VIDEO = {
+  id: "Nx4HDJ-TZn4",
+  titulo: c.home.videoTitulo,
+  miniatura: "https://i.ytimg.com/vi/Nx4HDJ-TZn4/maxresdefault.jpg",
+};
+
+const CONTACTO = enlace(lang, "/contact-us");
+const SOBRE = enlace(lang, "/about-us");
+
+// {negocio} = NEGOCIO.nombre: es NAP y va literal en las dos lenguas.
+const TITULO = interpola(c.meta.plantillaTitulo, {
+  pagina: c.meta.homeTitle,
+  negocio: NEGOCIO.nombre,
+});
+---
+
+<BaseLayout title={TITULO} description={c.meta.homeDescription} lang={lang} noindex>
+  <Nav lang={lang} />
+
+  <main>
+    {/* ================================================================ HERO */}
+    <section class="header">
+      <div class="wrapper-header">
+        <div class="w-layout-blockcontainer container w-container">
+          <div class="block-header">
+            <h1 class="h1"><strong>{c.home.heroTitle}</strong></h1>
+            <div>{c.home.heroIntro}</div>
+            <a href={CONTACTO} class="button w-button">{c.home.heroCta}</a>
+          </div>
+        </div>
+      </div>
+      <img
+        src={src(hero, 2000)}
+        srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
+        sizes="100vw"
+        width={hero.w}
+        height={hero.h}
+        alt={c.home.heroAlt}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="background-header"
+      />
+    </section>
+
+    {/* ====================================================== BAR-SERVICES */}
+    <section class="bar-services">
+      <div class="wrapper-bar-services">
+        <div class="collection-list-wrapper w-dyn-list">
+          <div role="list" class="collection-list w-dyn-items">
+            {
+              destacados.map((s) => (
+                <div role="listitem" class="collection-item w-dyn-item">
+                  <a
+                    href={enlace(lang, `/services/${s.slug}`)}
+                    class="block-bar-services w-inline-block"
+                  >
+                    <div class="block-title-services">
+                      {s.icon && (
+                        <img
+                          src={s.icon.url}
+                          width={s.icon.w}
+                          height={s.icon.h}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          class="icon-bar-services"
+                        />
+                      )}
+                      {/* R5: titleEs o el build cae. Nunca el titulo ingles. */}
+                      <h2 class="title-bar-services">
+                        {requiereEs<string>(s, "titleEs", `/es/services/${s.slug}`).trim()}
+                      </h2>
+                    </div>
+                  </a>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ ABOUT-US */}
+    <section class="about-us" aria-labelledby="about-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-about">
+          <div class="block-video">
+            {/* Facade click-to-load, igual que en la ruta EN: hasta que no se
+                pulsa, el navegador no habla con YouTube. */}
+            <div
+              class="w-embed-youtubevideo youtube"
+              style="padding-top:56.17021276595745%"
+              data-yt-caja
+            >
+              <button
+                type="button"
+                class="yt-facade"
+                data-yt-id={VIDEO.id}
+                data-yt-titulo={VIDEO.titulo}
+                aria-label={interpola(c.home.videoCta, { titulo: VIDEO.titulo })}
+              >
+                <img
+                  src={VIDEO.miniatura}
+                  width="1280"
+                  height="720"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
+                />
+                <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
+                  <path
+                    d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
+                    fill="#212121"
+                    fill-opacity="0.8"></path>
+                  <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="block-deco-1"><div class="block-deco-2"></div></div>
+            <div class="block-deco-1-copy"><div class="block-deco-2"></div></div>
+          </div>
+
+          {/* El id lo usa el CSS portado (@media 991px). No se puede quitar. */}
+          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
+            <div class="block-info-content">
+              {/* GLOSARIO: "Enrolled Agents" y "Certified Public Accountants"
+                  van literales. Traducirlos fabrica credenciales falsas. */}
+              <h2 class="h2" id="about-title"><strong>{c.home.aboutTitle}</strong></h2>
+              {/* Lleva <strong> y <br>: solo vale con set:html. */}
+              <div set:html={c.home.aboutHtml} />
+              <a href={SOBRE} class="button blue w-button">{c.home.aboutCta}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================= REVIEWS */}
+    <section class="reviews">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="wrapper-reviews" aria-labelledby="reviews-title">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 class="h2" id="reviews-title">{c.reviews.title}</h2>
+                <div>{c.reviews.text}</div>
+              </div>
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label={c.reviews.prev}
+                  aria-controls="reviews-track"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label={c.reviews.next}
+                  aria-controls="reviews-track"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="block-services-animation">
+              <div class="splide">
+                <div
+                  id="reviews-track"
+                  class="splide-track w-dyn-list"
+                  aria-labelledby="reviews-title"
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      opiniones.map((o) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={iconGoogle.url}
+                                    width={iconGoogle.w}
+                                    height={iconGoogle.h}
+                                    alt={c.reviews.googleAltPortada}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  <img
+                                    src={iconEstrellas.url}
+                                    width={iconEstrellas.w}
+                                    height={iconEstrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                {/* La cifra (5.0) se copia tal cual; solo se
+                                    traduce la formula que la rodea. */}
+                                <div class="mini-text-reviews">{c.reviews.ranking}</div>
+                              </div>
+                            </div>
+                            {/* NO SE TRADUCE: palabras de clientes reales. */}
+                            <p class="paragraph">{o.quote}</p>
+                            <div>
+                              <div class="name-customer">{o.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">{c.reviews.publicado}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
+    </section>
+
+    {/* ============================================================ FEATURES */}
+    <section class="features" aria-labelledby="features-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
+          <h2 class="h2" id="features-title">{c.features.title}<br /></h2>
+          <div>{c.features.text}</div>
+        </div>
+        <div class="div-block-5">
+          {/* Mismo orden e inversion (.rotate) que la ruta EN: imagen, texto /
+              texto, imagen / imagen, texto. Los <div> sin clase son las celdas
+              del grid de .div-block-4; quitarlos rompe la maqueta. */}
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat1, 1080)}
+                srcset={srcset(feat1, [500, 800, 1080, feat1.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat1.w}
+                height={feat1.h}
+                alt={c.home.featuresAlt[0]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">{c.features.items[0].title}</h3>
+              <div set:html={c.features.items[0].html} />
+            </div>
+          </div>
+
+          <div class="div-block-4 rotate">
+            <div>
+              <h3 class="h3">{c.features.items[1].title}</h3>
+              <div set:html={c.features.items[1].html} />
+            </div>
+            <div>
+              <img
+                src={src(feat3, 1080)}
+                srcset={srcset(feat3, [500, 800, 1080, feat3.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat3.w}
+                height={feat3.h}
+                alt={c.home.featuresAlt[1]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+          </div>
+
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat2, 1080)}
+                srcset={srcset(feat2, [500, 800, 1080, feat2.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat2.w}
+                height={feat2.h}
+                alt={c.home.featuresAlt[2]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">{c.features.items[2].title}</h3>
+              <div set:html={c.features.items[2].html} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ========================================================= CALL-ACTION */}
+    <section class="call-action" aria-labelledby="cta-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              <img
+                src={iconCta.url}
+                width={iconCta.w}
+                height={iconCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2" id="cta-title">{c.cta.title}</h2>
+                <div>{c.cta.text}</div>
+              </div>
+            </div>
+            <div>
+              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    {/* ================================================================= FAQ */}
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="container-faq">
+          <div class="block-title-faq">
+            <h2 class="h2" id="faq-title">{c.faq.title}</h2>
+            {/* Sin entradilla, igual que la ruta EN: en produccion ese <div>
+                contiene el placeholder de Webflow. No se migra ni se inventa
+                un sustituto (R3, D12). */}
+          </div>
+
+          {/* Mismo marcado de acordeon que la ruta EN: lo mueve scripts/ui.ts,
+              que carga Nav. Las preguntas van en primera persona porque son la
+              voz del visitante, igual que en el original. */}
+          <div class="block-faq">
+            {
+              c.faq.items.map((item, i) => (
+                <div class="faq-item">
+                  <button
+                    type="button"
+                    id={`faq-question-${i + 1}`}
+                    class="faq-question w-inline-block"
+                    aria-expanded="false"
+                    aria-controls={`faq-answer-${i + 1}`}
+                  >
+                    <h3 class="h3 title-faq">{item.q}</h3>
+                    <span class="p-m-wrap" aria-hidden="true">
+                      <span class="minus" />
+                      <span class="plus" />
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-answer-${i + 1}`}
+                    class="faq-answer"
+                    role="region"
+                    aria-labelledby={`faq-question-${i + 1}`}
+                  >
+                    <div class="faq-answer-inner">
+                      <p>{item.a}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>
+
+<style>
+  /* Identico al de la ruta EN: la facade del video no existe en el port de
+   * Webflow porque en produccion no habia facade. Alcance de componente. */
+  .yt-facade {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
+
+  .yt-facade img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .yt-play {
+    width: 68px;
+    height: 48px;
+    transition: opacity 0.2s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .yt-facade:hover .yt-play,
+  .yt-facade:focus-visible .yt-play {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  // Facade del video. Mismo comportamiento que en la ruta EN: youtube-nocookie
+  // y no youtube.com porque no hay politica de privacidad publicada (D4).
+  const boton = document.querySelector<HTMLButtonElement>("button.yt-facade");
+  const caja = boton?.closest<HTMLElement>("[data-yt-caja]");
+
+  if (boton && caja) {
+    boton.addEventListener(
+      "click",
+      () => {
+        const marco = document.createElement("iframe");
+        marco.src =
+          `https://www.youtube-nocookie.com/embed/${boton.dataset.ytId}` +
+          "?rel=0&controls=1&autoplay=1&mute=0&start=0";
+        marco.title = boton.dataset.ytTitulo ?? "";
+        marco.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        marco.allowFullscreen = true;
+        marco.style.cssText =
+          "position:absolute;left:0;top:0;width:100%;height:100%;border:0";
+        caja.replaceChild(marco, boton);
+        marco.focus();
+      },
+      { once: true },
+    );
+  }
+</script>

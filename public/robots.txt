@@ -1,0 +1,28 @@
+# robots.txt — accountingmaxservices.com
+#
+# En produccion este fichero responde 200 con CERO bytes: sin User-agent, sin
+# Disallow y, sobre todo, sin Sitemap. El sitio queda rastreable igual, pero
+# ningun buscador recibe el indice de URLs.
+
+User-agent: *
+Allow: /
+
+# Rutas en español. Nacen con <meta name="robots" content="noindex"> y fuera del
+# sitemap hasta que un revisor nativo con criterio fiscal firme la traduccion
+# (DECISIONS.md D3): «Enrolled Agent» o «CPA» mal traducidos son credenciales
+# falsas, y en Florida es infraccion que un notary se anuncie como «notario».
+#
+# OJO, tension conocida: Disallow impide el rastreo, y una URL que no se rastrea
+# no puede mostrar su noindex. Si alguna /es/ llegara a enlazarse desde fuera,
+# Google podria listar la URL desnuda sin poder leer el noindex. Se acepta a
+# proposito mientras /es/ no exista publicamente: hoy no hay ninguna ruta /es/
+# construida y el objetivo es que no se rastree contenido fiscal sin revisar.
+# Cuando D3 se firme, esta linea se BORRA (no se cambia por Allow) y el noindex
+# se quita de las paginas.
+Disallow: /es/
+
+# Endpoints del formulario (FASE 4). No son paginas y no deben aparecer en el
+# indice. La proteccion real es del servidor; esto solo evita el ruido.
+Disallow: /api/
+
+Sitemap: https://www.accountingmaxservices.com/sitemap-index.xml

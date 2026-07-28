@@ -1,0 +1,252 @@
+---
+// Datos estructurados (schema.org / JSON-LD). FASE 6a.
+//
+// Se monta desde cada pagina en el <slot name="head"> de BaseLayout:
+//   <JsonLd slot="head" tipo="…" … />
+//
+// TODO lo que sale de aqui es dato real:
+//   - el NAP viene de NEGOCIO (src/lib/sanity.ts), que es la unica fuente valida;
+//   - los titulos y descripciones los pasa la propia pagina, ya calculados;
+//   - el horario se PARSEA de NEGOCIO.horario, no se transcribe a mano: si
+//     alguien cambia la cadena, o se traduce correctamente, o no se emite.
+//
+// Lo que NO sale de aqui, y por que:
+//   - Review / aggregateRating: PROHIBIDO (DECISIONS.md D5). Los 20 testimonios
+//     no traen rating, ni fecha, ni fuente verificable — sus `Published On` son
+//     identicos, artefacto del import masivo. Emitirlos es infraccion de las
+//     directrices de Google con penalizacion manual.
+//   - Article / BlogPosting en /post/<slug>: los 10 posts NO tienen fecha ni
+//     autor, y eso es correcto (R3: no se inventan). `author` es requisito de
+//     los resultados enriquecidos de Article y `datePublished` es de facto
+//     obligatorio; emitir Article sin ellos da un marcado invalido, y
+//     rellenarlos seria inventar la autoria de consejo fiscal. Se emite WebPage,
+//     que describe la pagina con exactitud y no exige ninguno de los dos.
+//   - priceRange, numberOfEmployees, foundingDate, hasCredential, sameAs,
+//     geo: no hay dato. Los 3 iconos de redes del pie apuntan a href="#" (ver
+//     Nav.astro), asi que no existe ni un perfil social verificable.
+import { NEGOCIO, sanity } from "../lib/sanity";
+
+export type Faq = { q: string; a: string };
+
+/**
+ * Las 5 preguntas del acordeon de la portada, VERBATIM del HTML en produccion.
+ * Viven aqui para que el marcado y lo que ve la persona no puedan divergir:
+ * index.astro pinta el acordeon con esta misma constante. Si alguien edita una
+ * respuesta, cambia en los dos sitios a la vez — que es justo el requisito de
+ * Google para FAQPage (la respuesta tiene que estar visible en la pagina).
+ */
+export const FAQ_PORTADA: Faq[] = [
+  {
+    q: "1. What documents do I need to file my personal taxes?",
+    a: "To file your personal taxes, you’ll typically need your W-2 or 1099 forms, ID, Social Security number, and any records of deductions, credits, or income. We’ll guide you through the checklist.",
+  },
+  {
+    q: "2. How long does it take to get my EIN or ITIN?",
+    a: "EINs can often be processed within 1–2 business days. ITINs may take a few weeks depending on IRS processing times. We handle the paperwork to avoid delays.",
+  },
+  {
+    q: "3. Do you offer services in Spanish?",
+    a: "Yes! All of our services are available in both English and Spanish. We’re proud to serve the Hispanic community with bilingual support.",
+  },
+  {
+    q: "4. Can you help with IRS audits or letters?",
+    a: "Absolutely. Our team includes IRS Certified Enrolled Agents who represent you directly before the IRS to resolve audits, letters, or disputes.",
+  },
+  {
+    q: "5. Do you only serve clients in Coral Springs?",
+    a: "No. While we’re based in Coral Springs, FL, we serve clients nationwide through secure online consultations and document portals.",
+  },
+];
+
+interface Props {
+  /** Que se emite ADEMAS del negocio. Por defecto solo el negocio. */
+  tipo?: "home" | "page" | "service" | "post";
+  /** Titulo real de la pagina. Lo necesitan el breadcrumb y el WebPage. */
+  nombre?: string;
+  /** Description ya calculada por la pagina. Aqui no se redacta ninguna (R3). */
+  descripcion?: string;
+  /** Imagen principal de la pagina, URL absoluta (las de Sanity ya lo son). */
+  imagen?: string;
+  /** FAQ real. Si no se pasa y tipo="home", se usan las 5 de la portada. */
+  faq?: Faq[];
+}
+
+const { tipo = "page", nombre, descripcion, imagen, faq } = Astro.props;
+
+// `Astro.site` esta fijado en astro.config.mjs; sin el no habria ni canonical.
+const SITE = Astro.site!.origin;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const ID_NEGOCIO = `${SITE}/#business`;
+
+// El logo real, para `logo`. Se pide a Sanity una sola vez por build (las URLs
+// de cdn.prod.website-files.com estan prohibidas y hardcodear el hash del asset
+// lo dejaria roto en cuanto se re-suba). Si falta, se omite el campo: un fallo
+// de SEO no debe tumbar el build de 26 rutas.
+const g = globalThis as any;
+const logo: { url: string } | null = await (g.__amsLogoJsonLd ??= sanity
+  .fetch(
+    `*[_type == "sanity.imageAsset" && originalFilename == $f][0]{ url }`,
+    { f: "67807ad95e4e63e62cd9040e-logo-black.svg" },
+  )
+  .catch(() => null));
+
+// La imagen OG del sitio (1200x630, PNG). Sirve tambien de `image` del negocio:
+// es raster y cumple las guias de imagen de Google, cosa que el SVG no.
+const OG = `${SITE}/og-default.png`;
+
+/**
+ * "Monday - Friday (8:00 AM - 5:00 PM)" -> OpeningHoursSpecification.
+ * Si la cadena de NEGOCIO deja de encajar, devuelve null y el campo NO se
+ * emite. Preferimos un horario ausente a uno inventado.
+ */
+const DIAS = [
+  "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+];
+
+function horarioSchema(txt: string) {
+  const m = txt.match(
+    /^\s*([A-Za-z]+)\s*[-–—]\s*([A-Za-z]+)\s*\(\s*(\d{1,2}):(\d{2})\s*([AP])\.?M\.?\s*[-–—]\s*(\d{1,2}):(\d{2})\s*([AP])\.?M\.?\s*\)\s*$/i,
+  );
+  if (!m) return null;
+  const desde = DIAS.findIndex((d) => d.toLowerCase() === m[1].toLowerCase());
+  const hasta = DIAS.findIndex((d) => d.toLowerCase() === m[2].toLowerCase());
+  if (desde < 0 || hasta < 0) return null;
+
+  const dias: string[] = [];
+  for (let i = desde; ; i = (i + 1) % 7) {
+    dias.push(DIAS[i]);
+    if (i === hasta) break;
+  }
+  const h24 = (h: string, ap: string) =>
+    (Number(h) % 12) + (ap.toUpperCase() === "P" ? 12 : 0);
+  const hhmm = (h: number, mm: string) => `${String(h).padStart(2, "0")}:${mm}`;
+
+  return {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: dias,
+    opens: hhmm(h24(m[3], m[5]), m[4]),
+    closes: hhmm(h24(m[6], m[8]), m[7]),
+  };
+}
+
+const horario = horarioSchema(NEGOCIO.horario);
+if (!horario) {
+  console.warn(
+    `[JsonLd] NEGOCIO.horario ("${NEGOCIO.horario}") ya no encaja con el patron; ` +
+      "se emite el negocio SIN openingHoursSpecification en vez de inventarlo.",
+  );
+}
+
+// AccountingService es subtipo de LocalBusiness (LocalBusiness > FinancialService
+// > AccountingService), asi que Google lo trata como negocio local sin necesidad
+// de declarar los dos tipos.
+const negocio: Record<string, unknown> = {
+  "@type": "AccountingService",
+  "@id": ID_NEGOCIO,
+  name: NEGOCIO.nombre,
+  url: `${SITE}/`,
+  // E.164, tal como lo exige schema.org. Sale del mismo href del <a> del pie.
+  telephone: NEGOCIO.telefonoHref.replace(/^tel:/, ""),
+  email: NEGOCIO.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: NEGOCIO.calle,
+    addressLocality: NEGOCIO.ciudad,
+    addressRegion: NEGOCIO.region,
+    postalCode: NEGOCIO.cp,
+    addressCountry: NEGOCIO.pais,
+  },
+  image: OG,
+  ...(logo?.url ? { logo: logo.url } : {}),
+  // areaServed sale de la copia real del sitio: la sede esta en Coral Springs, FL
+  // y la FAQ 5 dice "we serve clients nationwide". Nada mas.
+  areaServed: [
+    {
+      "@type": "City",
+      name: NEGOCIO.ciudad,
+      containedInPlace: { "@type": "State", name: "Florida" },
+    },
+    { "@type": "Country", name: "United States" },
+  ],
+  // El sitio tiene una pagina de servicio entera ("Bilingual Services –
+  // English/Spanish") y la FAQ 3 lo confirma. Dato del cliente, no supuesto.
+  knowsLanguage: ["en", "es"],
+  ...(horario ? { openingHoursSpecification: [horario] } : {}),
+};
+
+// ---------------------------------------------------------------- breadcrumb
+// No existe indice /services: las rutas son /services/<slug> a secas. Meter un
+// escalon intermedio "Services" apuntaria a un 404, asi que el rastro de un
+// servicio es Home > <servicio>. El blog SI tiene indice (/blog-news).
+const migas: { name: string; item: string }[] = [];
+if ((tipo === "service" || tipo === "post") && nombre) {
+  migas.push({ name: "Home", item: `${SITE}/` });
+  if (tipo === "post") migas.push({ name: "Blog & News", item: `${SITE}/blog-news` });
+  migas.push({ name: nombre, item: url });
+}
+
+const breadcrumb =
+  migas.length > 1
+    ? {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: migas.map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: m.name,
+          item: m.item,
+        })),
+      }
+    : null;
+
+// ------------------------------------------------------------------ WebPage
+// Sustituye a Article en los posts (ver la cabecera del fichero).
+const pagina =
+  tipo === "post" && nombre
+    ? {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: nombre,
+        ...(descripcion ? { description: descripcion } : {}),
+        ...(imagen
+          ? { primaryImageOfPage: { "@type": "ImageObject", url: imagen } }
+          : {}),
+        ...(breadcrumb ? { breadcrumb: { "@id": `${url}#breadcrumb` } } : {}),
+        publisher: { "@id": ID_NEGOCIO },
+        inLanguage: "en",
+      }
+    : null;
+
+// ------------------------------------------------------------------ FAQPage
+// Solo la portada, y solo porque sus 5 preguntas y respuestas estan realmente
+// en el HTML (requisito de Google: el contenido tiene que ser visible). No se
+// fabrica una FAQ para ninguna otra ruta.
+//
+// El "1. " del titular es numeracion de la maqueta, no parte de la pregunta: se
+// quita para el marcado. La pregunta sigue apareciendo literal en la pagina.
+const preguntas = tipo === "home" ? (faq ?? FAQ_PORTADA) : null;
+const faqPage = preguntas?.length
+  ? {
+      "@type": "FAQPage",
+      "@id": `${url}#faq`,
+      mainEntity: preguntas.map((f) => ({
+        "@type": "Question",
+        name: f.q.replace(/^\s*\d+\.\s*/, ""),
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    }
+  : null;
+
+const grafo = {
+  "@context": "https://schema.org",
+  "@graph": [negocio, breadcrumb, pagina, faqPage].filter(Boolean),
+};
+
+// Escapar "<" es obligatorio: un "</script>" dentro de una cadena del JSON
+// cerraria la etiqueta y volcaria el resto como HTML.
+const json = JSON.stringify(grafo).replace(/</g, "\\u003c");
+---
+
+{/* is:inline: Astro no debe tratar esto como modulo JS ni empaquetarlo. */}
+<script type="application/ld+json" is:inline set:html={json} />

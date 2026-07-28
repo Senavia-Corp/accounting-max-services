@@ -1,0 +1,547 @@
+---
+// Ruta /privacy-policy — BORRADOR (bloqueo D4).
+//
+// Un preparador de impuestos entra en la definicion de "financial institution"
+// de la Gramm-Leach-Bliley Act, asi que la Regla de Privacidad de la FTC
+// (16 CFR Parte 313) le obliga a entregar un aviso de privacidad ANTES de
+// recoger informacion personal no publica. El formulario de /contact-us ya
+// recoge nombre, correo y telefono, de modo que hoy el sitio esta pidiendo
+// datos sin el aviso publicado: eso es el bloqueo D4.
+//
+// R3 — QUE ES HECHO Y QUE ES MARCADOR:
+//   - Hecho: el NAP, que sale de NEGOCIO; los campos que recogen los dos
+//     formularios del sitio (verificados en contact-us.astro y
+//     FooterSubscribe.astro); los terceros a los que el navegador pide fuentes
+//     (use.typekit.net, fonts.googleapis.com, fonts.gstatic.com — ver
+//     BaseLayout.astro); que hoy no hay analitica ni cookies de publicidad (D7).
+//   - Marcador: TODO lo que depende de una decision del despacho o de un dato
+//     que solo ellos tienen — con quien comparten, cuanto conservan, que
+//     proveedores usan, que salvaguardas tienen, la fecha de entrada en vigor.
+//     Se marca con <mark class="pendiente">, amarillo y visible. Inventar
+//     cualquiera de esas casillas convierte el documento en una declaracion
+//     falsa ante la FTC, que es peor que no tenerlo.
+//
+// El texto del formulario modelo de la FTC (Apendice A de la Parte 313) esta
+// reconstruido de memoria, no copiado del Registro Federal. El abogado tiene
+// que cotejarlo palabra por palabra: la Regla exige el formato del modelo para
+// acogerse al puerto seguro.
+//
+// noindex a proposito: es un borrador con huecos. Se quita cuando el abogado
+// firme. Ojo: el filtro de sitemap de astro.config.mjs solo excluye /es/, asi
+// que esta ruta SI entra en el sitemap — conviene excluirla tambien mientras
+// dure el borrador (no se toca aqui: ese fichero no es de este agente).
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { NEGOCIO } from "../lib/sanity";
+
+const DESCRIPCION =
+  "How Accounting Max Services collects, uses, shares and protects your " +
+  "personal information, including our Gramm-Leach-Bliley Act (GLBA) privacy notice.";
+
+// Filas del formulario modelo de la FTC. La columna "Do we share?" es una
+// decision del despacho: va marcada en las siete. La columna "Can you limit?"
+// lleva la respuesta fija del modelo, que solo vale si la fila es "Yes"; si el
+// despacho no comparte, ambas celdas pasan a "We don't share".
+const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
+  {
+    razon: "For our everyday business purposes",
+    detalle:
+      "such as to process your transactions, maintain your account(s), respond to court orders and legal investigations, or report to credit bureaus",
+    limitar: "No",
+  },
+  {
+    razon: "For our marketing purposes",
+    detalle: "to offer our products and services to you",
+    limitar: "No",
+  },
+  {
+    razon: "For joint marketing with other financial companies",
+    detalle: "",
+    limitar: "No",
+  },
+  {
+    razon: "For our affiliates' everyday business purposes",
+    detalle: "information about your transactions and experiences",
+    limitar: "No",
+  },
+  {
+    razon: "For our affiliates' everyday business purposes",
+    detalle: "information about your creditworthiness",
+    limitar: "Yes",
+  },
+  {
+    razon: "For our affiliates to market to you",
+    detalle: "",
+    limitar: "Yes",
+  },
+  {
+    razon: "For nonaffiliates to market to you",
+    detalle: "",
+    limitar: "Yes",
+  },
+];
+---
+
+<BaseLayout title="Privacy Policy | Accounting Max Services" description={DESCRIPCION} noindex>
+  <Nav />
+
+  <main>
+    <section class="header-page-blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-header-blog">
+          {/* Sin foto al lado, a diferencia de /post/: el bloque ocupa el ancho. */}
+          <div class="block-title-blog legal-header">
+            <h1 class="h1">Privacy Policy</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block-blog-page">
+      <div class="w-layout-blockcontainer container w-container">
+        {/*
+          Aviso de borrador. Va ARRIBA, antes de una sola linea del documento, y
+          no se quita hasta que un abogado de Florida revise la pagina entera.
+        */}
+        <div class="legal-draft" role="note" aria-labelledby="draft-title">
+          <h2 class="h3" id="draft-title">Draft — do not publish as is</h2>
+          <p>
+            This page is an <strong>unreviewed draft</strong>. It has not been read or approved
+            by an attorney, and it is <strong>not</strong> the firm&#39;s privacy notice yet.
+          </p>
+          <p>
+            Every passage highlighted like <mark class="pendiente">{"{{PENDIENTE: example}}"}</mark>
+            is a decision only the firm can make. Those gaps were left visible on purpose:
+            filling them in with plausible-sounding text would turn this into a false
+            statement to the FTC and to clients, which is worse than having no notice at all.
+          </p>
+          <p>
+            Before this page goes live, counsel must: (1) complete every highlighted gap;
+            (2) check the model-form wording below against the current text of
+            16 CFR Part 313, Appendix A, because the Privacy Rule&#39;s safe harbour depends
+            on the exact model format; and (3) confirm the firm&#39;s obligations under IRC
+            &sect;7216 and the FTC Safeguards Rule.
+          </p>
+          <p>
+            In the sharing table, the &ldquo;Can you limit this sharing?&rdquo; answers are the
+            model form&#39;s fixed answers and only apply to rows answered
+            &ldquo;Yes&rdquo;. Any row the firm answers &ldquo;No&rdquo; must read
+            &ldquo;We don&#39;t share&rdquo; in <em>both</em> columns.
+          </p>
+        </div>
+
+        <div class="legal-body">
+          <p class="legal-meta">
+            <strong>Effective date:</strong>
+            <mark class="pendiente">
+              {"{{PENDIENTE: effective date and last-revised date. The firm sets this on the day it publishes; it must not be invented here (R3)}}"}
+            </mark>
+          </p>
+
+          <p>
+            This notice explains how <strong>{NEGOCIO.nombre}</strong> handles personal
+            information — both the information you send us through this website and the
+            information you give us when we prepare your taxes or keep your books.
+          </p>
+
+          <p>
+            Tax preparers and accounting firms are &ldquo;financial institutions&rdquo; under the
+            Gramm-Leach-Bliley Act (GLBA), so the first part of this page is our GLBA privacy
+            notice, in the format the Federal Trade Commission&#39;s Privacy Rule
+            (16 CFR Part 313) requires. The second part covers this website specifically.
+          </p>
+
+          {/* ---------------- PARTE 1: aviso GLBA ---------------- */}
+          <h2 class="h2">Part 1 — Our GLBA privacy notice</h2>
+
+          <h3 class="h3">Why do we send you this notice?</h3>
+          <p>
+            Financial companies choose how they share your personal information. Federal law
+            gives you the right to limit some but not all sharing. Federal law also requires us
+            to tell you how we collect, share and protect your personal information. Please
+            read this notice carefully.
+          </p>
+
+          <h3 class="h3">What information do we collect?</h3>
+          <p>
+            The types of personal information we collect and share depend on the service you
+            have with us. When you use this website, we collect only what you type into our
+            forms:
+          </p>
+          <ul>
+            <li>
+              <strong>Consultation request form</strong> (on our Contact page): your full name,
+              email address, phone number, an optional message, and whether you ticked the boxes
+              agreeing to phone calls or text messages.
+            </li>
+            <li>
+              <strong>Newsletter form</strong> (at the bottom of every page): your email address.
+            </li>
+          </ul>
+          <p>
+            When we work with you as a client, we collect a great deal more than that — the
+            information a tax return or a set of books requires:
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the real list of categories the firm collects during an engagement. To be confirmed one by one, not assumed: the taxpayer's and dependents' Social Security numbers or ITINs, income and employment data, tax return information, bank account and routing numbers for direct deposit, identity documents, business information (EIN, payroll, sales), transaction history. Every category listed here is a statement to the FTC and to clients}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">How do we collect your personal information?</h3>
+          <p>We collect your personal information, for example, when you:</p>
+          <ul>
+            <li>fill in the consultation request form or the newsletter form on this website;</li>
+            <li>call us, email us, or visit our office;</li>
+            <li>
+              <mark class="pendiente">
+                {"{{PENDIENTE: the other ways information reaches the firm — paper documents dropped off at the office, a secure portal, signing the engagement letter, IRS authorisations such as Form 2848 or Form 8821}}"}
+              </mark>
+            </li>
+          </ul>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: if the firm also receives information about you from THIRD PARTIES — the IRS, an employer, another adviser, a credit reporting agency — the Privacy Rule requires that to be disclosed here, together with who those sources are}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">How and why do we share your personal information?</h3>
+          <p>
+            All financial companies need to share customers&#39; personal information to run
+            their everyday business. In the section below, we list the reasons financial
+            companies can share their customers&#39; personal information, whether we share, and
+            whether you can limit that sharing.
+          </p>
+
+          {/* La tabla del modelo de la FTC no se puede resumir ni recortar: son
+              las siete filas fijas. Lo unico que falta es la respuesta. */}
+          <div class="legal-table-scroll">
+            <table class="legal-table">
+              <caption class="visually-hidden">
+                Reasons we can share your personal information, whether we share, and whether you
+                can limit that sharing
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Reasons we can share your personal information</th>
+                  <th scope="col">Do we share?</th>
+                  <th scope="col">Can you limit this sharing?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  COMPARTIR.map((f) => (
+                    <tr>
+                      <th scope="row">
+                        {f.razon}
+                        {f.detalle && <> — {f.detalle}</>}
+                      </th>
+                      <td>
+                        <mark class="pendiente">{"{{PENDIENTE: Yes / No}}"}</mark>
+                      </td>
+                      <td>{f.limitar}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="h3">To limit our sharing</h3>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: how to exercise the limit — phone, form, postal address — and how long it takes to take effect. This section is only needed if one of the three limitable rows in the table is answered 'Yes'. If the firm shares with neither affiliates nor nonaffiliates for marketing, replace this whole section with: 'We don't share your personal information in ways that you can limit'}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Why can&#39;t I limit all sharing?</h3>
+          <p>Federal law gives you the right to limit only:</p>
+          <ul>
+            <li>
+              sharing for affiliates&#39; everyday business purposes — information about your
+              creditworthiness;
+            </li>
+            <li>affiliates from using your information to market to you;</li>
+            <li>sharing for nonaffiliates to market to you.</li>
+          </ul>
+          <p>
+            State laws and individual companies may give you additional rights to limit sharing.
+          </p>
+
+          <h3 class="h3">How do we protect your personal information?</h3>
+          <p>
+            To protect your personal information from unauthorized access and use, we use
+            security measures that comply with federal law. These measures include computer
+            safeguards and secured files and buildings.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the safeguards that actually exist. The FTC Safeguards Rule (16 CFR Part 314) requires tax preparers to keep a Written Information Security Plan with a named coordinator, a risk assessment, encryption, multi-factor authentication and an incident response plan. What belongs here is what the firm HAS, not what it ought to have. If there is no WISP, the answer is not to write this paragraph — it is to write the WISP}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Definitions</h3>
+          <dl class="legal-defs">
+            <dt>Affiliates</dt>
+            <dd>
+              Companies related by common ownership or control. They can be financial and
+              nonfinancial companies.
+              <mark class="pendiente">
+                {"{{PENDIENTE: name the firm's affiliates, or state expressly that the firm has no affiliates. One of the two has to appear — the model form does not allow the question to be left open}}"}
+              </mark>
+            </dd>
+            <dt>Nonaffiliates</dt>
+            <dd>
+              Companies not related by common ownership or control. They can be financial and
+              nonfinancial companies.
+              <mark class="pendiente">
+                {"{{PENDIENTE: the categories or names of the nonaffiliates the firm shares with, or the express statement that the firm does not share with nonaffiliates so they can market to you}}"}
+              </mark>
+            </dd>
+            <dt>Joint marketing</dt>
+            <dd>
+              A formal agreement between nonaffiliated financial companies that together market
+              financial products or services to you.
+              <mark class="pendiente">
+                {"{{PENDIENTE: the joint marketing partners, if there are any; if there are none, say so expressly}}"}
+              </mark>
+            </dd>
+          </dl>
+
+          <h3 class="h3">Service providers</h3>
+          <p>
+            We use outside companies to run the practice — software, storage, e-filing and
+            communications. They only get the information they need to do their job for us.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the list of providers that touch client data — tax preparation software, the e-file transmitter, cloud storage, email, CRM, document portal, SMS provider, website host — plus confirmation that each one is under a written confidentiality contract, which the Safeguards Rule requires}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Tax return information: IRC &sect;7216</h3>
+          <p>
+            On top of GLBA, federal tax law applies its own, stricter rule to anyone who
+            prepares returns. Under Internal Revenue Code &sect;7216 and Treasury Regulation
+            &sect;301.7216, we may not disclose or use your tax return information for any
+            purpose other than preparing your return without your prior written consent, in
+            the specific form the regulation requires. Disclosing it without that consent is a
+            criminal offence.
+          </p>
+          <p>
+            This means that if we ever ask to use your tax return information for something
+            else — a referral, another service, or a third party — we will ask you to sign a
+            separate &sect;7216 consent first, and you are free to say no.
+          </p>
+
+          {/* ---------------- PARTE 2: el sitio web ---------------- */}
+          <h2 class="h2">Part 2 — This website</h2>
+
+          <h3 class="h3">What happens to what you send us through this site</h3>
+          <p>
+            The two forms on this site (the consultation request and the newsletter) send what
+            you typed to our own website servers. Both forms also carry two hidden technical
+            fields used only to filter out automated spam; neither one collects anything about
+            you.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: where each submission goes once it leaves the website — mailbox, CRM, spreadsheet, newsletter tool — who at the firm can read it, and how long it stays there}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Phone calls and text messages</h3>
+          <p>
+            The consultation form asks for your phone number, and it has two separate,
+            optional tick boxes: one for phone calls and one for text messages (SMS). They are
+            unticked by default. We only call or text you about your request if you tick the
+            matching box; if you leave both unticked, we reply by email. Ticking a box is never
+            a condition of getting a quote or of hiring us, and you can withdraw consent at any
+            time — tell the person who calls you to stop, or reply STOP to any text message.
+            Message and data rates may apply.
+          </p>
+
+          <h3 class="h3">Cookies, analytics and advertising</h3>
+          <p>
+            As this page is written, this website sets no analytics cookies and no advertising
+            cookies, and it runs no tracking or advertising scripts.
+          </p>
+          <p>
+            Your browser does contact three outside services to load the fonts the site is
+            designed in: Adobe Typekit (<code>use.typekit.net</code>) and Google Fonts
+            (<code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>). Those
+            requests tell Adobe and Google your IP address and general browser information. We
+            do not receive that data and we do not use it.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: this section must be rewritten IN THE SAME deploy that adds analytics or advertising pixels. Publishing 'this site sets no analytics cookies' and switching tracking on the following week is exactly the kind of false statement the FTC pursues}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Server logs</h3>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: what the website host records automatically — IP address, timestamp, page requested, browser user agent — how long it keeps those logs and who can read them. This depends on the hosting provider and the plan the firm ends up on}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Please do not send us sensitive documents by email or through this site</h3>
+          <p>
+            Neither email nor a website form is a secure way to send a Social Security number,
+            a tax document or a bank statement. Please do not attach or type that kind of
+            information into the form on our Contact page. Use the form to tell us how to reach
+            you, and we will tell you the secure way to send documents.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the name and web address of the secure document portal the firm uses, so it can be named here; or the alternative instruction, such as handing documents over in person or sending them by certified mail}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">How long we keep your information</h3>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the real retention periods, by type of record — client files, copies of returns (the IRS imposes minimum retention on preparers), enquiries that never became clients, newsletter subscribers — and how records are destroyed once the period ends}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Children</h3>
+          <p>
+            This website is meant for adults. It is not directed to children under 13 and we do
+            not knowingly collect personal information from them through it. Information about a
+            child that a parent gives us as part of a tax return is client information and is
+            covered by Part 1 of this notice.
+          </p>
+
+          <h3 class="h3">Your rights under state law</h3>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: which state privacy laws the firm recognises, and how someone exercises those rights. For counsel to check: whether the firm meets the thresholds of the Florida Digital Bill of Rights; what applies to clients in California, Colorado, Virginia and other states; and how far those laws' exemption for GLBA-covered data reaches, which is broad but not total}}"}
+            </mark>
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: if the firm serves clients outside the United States — the About Us page says 'across the U.S. and abroad' — this has to say where their data is stored and processed, and under whose law}}"}
+            </mark>
+          </p>
+
+          <h3 class="h3">Changes to this notice</h3>
+          <p>
+            If we change how we handle your information, we will update this page and change the
+            effective date at the top. If the change affects how we share information you can
+            limit, we will send you a new notice, as federal law requires.
+          </p>
+
+          <h3 class="h3">Questions?</h3>
+          <p>
+            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>, email
+            <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
+          </p>
+          <address class="legal-address">
+            {NEGOCIO.nombre}<br />
+            {NEGOCIO.calle}<br />
+            {`${NEGOCIO.ciudad}, ${NEGOCIO.region} ${NEGOCIO.cp}`}
+          </address>
+          <p>Office hours: {NEGOCIO.horario}</p>
+
+          <p>See also our <a href="/terms">Terms of Use</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Unico CSS nuevo de la ruta, con alcance de pagina. El sitio de Webflow no
+   * tiene ni una pagina de texto largo: no hay estilo de tabla, ni medida de
+   * lectura, ni separacion entre secciones. Esto es lo minimo para que un
+   * documento legal se pueda leer; no hay rediseno. */
+
+  /* En /post/ este bloque comparte fila con la foto de cabecera y por eso vale
+   * el 45%. Aqui no hay foto. */
+  .legal-header {
+    width: 100%;
+  }
+
+  /* .container son 1250px: a 16px eso es una linea de ~200 caracteres. */
+  .legal-body,
+  .legal-draft {
+    max-width: 820px;
+  }
+
+  /* .h2/.h3 traen margin-top:0 del CSS portado: sin esto las secciones se
+   * pegan unas a otras y el documento se vuelve un muro. */
+  .legal-body h2 {
+    margin-top: 2em;
+  }
+  .legal-body h3 {
+    margin-top: 1.75em;
+  }
+  .legal-body ul,
+  .legal-body dl {
+    margin-bottom: 1.25em;
+  }
+  .legal-body dt {
+    font-weight: 700;
+  }
+  .legal-body dd {
+    margin: 0 0 1em;
+  }
+
+  .legal-meta {
+    margin-bottom: 2em;
+  }
+
+  .legal-draft {
+    background-color: #fff8d6;
+    border-left: 6px solid #b58900;
+    padding: 1.25em 1.5em;
+    margin-bottom: 3em;
+  }
+  .legal-draft > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* normalize.css ya da a <mark> amarillo sobre negro; solo falta que respire y
+   * que no parta palabras a la mitad al envolver. */
+  .pendiente {
+    padding: 0 .2em;
+    overflow-wrap: anywhere;
+  }
+
+  /* El CSS portado no estiliza <table> en absoluto: sin esto la tabla del
+   * modelo de la FTC sale sin bordes y no se distinguen las tres columnas. */
+  .legal-table-scroll {
+    overflow-x: auto;
+    margin-bottom: 1.5em;
+  }
+  .legal-table {
+    border-collapse: collapse;
+    min-width: 600px;
+    width: 100%;
+  }
+  .legal-table th,
+  .legal-table td {
+    border: 1px solid var(--gray);
+    padding: .6em .75em;
+    text-align: left;
+    vertical-align: top;
+  }
+  .legal-table thead th {
+    background-color: var(--gray);
+  }
+  .legal-table tbody th {
+    font-weight: 400;
+  }
+
+  /* El UA pone <address> en cursiva y ni normalize ni Webflow lo resetean:
+   * mismo caso que la direccion de /contact-us. */
+  address.legal-address {
+    font-style: normal;
+    margin-bottom: 1em;
+  }
+</style>

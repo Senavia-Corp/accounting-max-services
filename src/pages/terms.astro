@@ -1,0 +1,314 @@
+---
+// Ruta /terms — BORRADOR (bloqueo D4, misma tanda que /privacy-policy).
+//
+// Estas condiciones cubren el USO DEL SITIO WEB. No son la carta de encargo:
+// lo que gobierna un trabajo de preparacion de impuestos o de contabilidad es
+// el documento que el cliente firma, y eso se dice expresamente mas abajo.
+//
+// R3 — el reparto es el mismo que en /privacy-policy: el NAP sale de NEGOCIO y
+// es real; todo lo que es una decision del despacho o de su abogado
+// (jurisdiccion, arbitraje, tope de responsabilidad, indemnizacion, fecha de
+// entrada en vigor, politica de cancelacion) va como <mark class="pendiente">.
+// Un limite de responsabilidad inventado no protege de nada y una clausula de
+// arbitraje escrita a ojo es directamente inejecutable.
+//
+// noindex mientras sea borrador, igual que /privacy-policy.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { NEGOCIO } from "../lib/sanity";
+
+const DESCRIPCION =
+  "The terms that govern your use of the Accounting Max Services website, " +
+  "including what this site is and is not, and how we handle what you send us.";
+---
+
+<BaseLayout title="Terms of Use | Accounting Max Services" description={DESCRIPCION} noindex>
+  <Nav />
+
+  <main>
+    <section class="header-page-blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-header-blog">
+          <div class="block-title-blog legal-header">
+            <h1 class="h1">Terms of Use</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block-blog-page">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="legal-draft" role="note" aria-labelledby="draft-title">
+          <h2 class="h3" id="draft-title">Draft — do not publish as is</h2>
+          <p>
+            This page is an <strong>unreviewed draft</strong>. It has not been read or approved
+            by an attorney and it is <strong>not</strong> yet binding on anyone.
+          </p>
+          <p>
+            Every passage highlighted like <mark class="pendiente">{"{{PENDIENTE: example}}"}</mark>
+            is a business or legal decision only the firm and its counsel can make — the
+            governing law, whether disputes go to arbitration, the cap on liability, and so on.
+            Those gaps are visible on purpose. A liability cap or an arbitration clause invented
+            by a drafter who was guessing does not protect the firm; it just looks like it does.
+          </p>
+          <p>
+            Counsel should also confirm that nothing here conflicts with the firm&#39;s
+            engagement letter, with the professional obligations of Enrolled Agents
+            (IRS Circular 230) and CPAs, or with the Florida Board of Accountancy&#39;s rules
+            on advertising and on limiting liability to clients.
+          </p>
+        </div>
+
+        <div class="legal-body">
+          <p class="legal-meta">
+            <strong>Effective date:</strong>
+            <mark class="pendiente">
+              {"{{PENDIENTE: effective date and last-revised date. The firm sets this on the day it publishes; it must not be invented here (R3)}}"}
+            </mark>
+          </p>
+
+          <p>
+            These Terms of Use apply to this website, <strong>accountingmaxservices.com</strong>,
+            operated by <strong>{NEGOCIO.nombre}</strong>. By using the site you accept them. If
+            you do not accept them, please do not use the site.
+          </p>
+
+          <h2 class="h2">1. This site is information, not advice</h2>
+          <p>
+            Everything on this website — the service pages, the blog, the answers to frequent
+            questions — is general information. It is not tax, accounting, legal or financial
+            advice, and it is not written for your situation. Tax rules change, and they apply
+            differently to different people. Do not act on anything you read here without
+            talking to us or to another qualified professional about your own circumstances.
+          </p>
+
+          <h2 class="h2">2. Using the site does not make you a client</h2>
+          <p>
+            Reading this site, sending the consultation request form, subscribing to the
+            newsletter, calling us or emailing us does not by itself create a
+            client relationship, and it does not put us to work on your behalf. We become your
+            representative only when we have both agreed on the work in writing.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the exact name of the document that does create the relationship — engagement letter, services agreement — and a statement that it PREVAILS over these Terms wherever the two conflict}}"}
+            </mark>
+          </p>
+          <p>
+            Because you are not yet a client, please do not send us confidential details before
+            we have agreed to work together — see section 4.
+          </p>
+
+          <h2 class="h2">3. Who may use the site</h2>
+          <p>
+            You may use this site if you are 18 or older and can enter into a binding agreement.
+            You agree to use it only for lawful purposes, and not to: interfere with or overload
+            the site or its servers; try to reach any part of it you have not been given access
+            to; scrape, copy or reuse its content for a competing service; submit false
+            information or someone else&#39;s personal information without their permission; or
+            use the forms to send unsolicited commercial messages.
+          </p>
+
+          <h2 class="h2">4. Information you send us</h2>
+          <p>
+            You are responsible for the accuracy of what you type into our forms, and for having
+            the right to give us any information about another person.
+          </p>
+          <p>
+            <strong>Do not send sensitive documents through this site or by email.</strong>
+            Neither is a secure channel. Do not put a Social Security number, an ITIN, a bank
+            account number or a tax document into the consultation form. Use the form to tell us
+            how to reach you; we will then tell you the secure way to send documents.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the secure channel the firm actually offers for documents — the portal's name and web address, or the alternative instruction. Without it, the paragraph above forbids something without offering a substitute}}"}
+            </mark>
+          </p>
+          <p>
+            How we handle what you do send us is described in our
+            <a href="/privacy-policy">Privacy Policy</a>, which includes our
+            Gramm-Leach-Bliley Act privacy notice and forms part of these Terms.
+          </p>
+
+          <h2 class="h2">5. Phone calls, text messages and email</h2>
+          <p>
+            The consultation form has two separate, optional tick boxes: one for phone calls and
+            one for text messages. They are unticked by default, ticking them is never a
+            condition of getting a quote, and you can withdraw consent at any time — tell the
+            person who calls you to stop, or reply STOP to any text message. Message and data
+            rates may apply. If you leave both boxes unticked, we reply by email.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: consent to electronic communications and electronic signatures (ESIGN Act / Florida UETA). If the firm sends notices, engagement letters or returns for signature electronically, this needs the consent clause and the procedure for withdrawing that consent}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">6. Content and trade marks</h2>
+          <p>
+            The text, images, layout and code of this site belong to {NEGOCIO.nombre} or to its
+            licensors, and are protected by copyright and trade mark law. You may read, print
+            and share pages for your own personal or internal business use. You may not
+            republish, sell or build a derivative service from them without our written
+            permission.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: licensed third-party content — stock photography, icons and typefaces, including the Adobe Typekit kit the site loads. Confirm the licences are in the firm's name and add whatever attribution each one requires}}"}
+            </mark>
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the agent and address for intellectual property complaints (DMCA), if the firm wants to offer that procedure}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">7. Links to other sites</h2>
+          <p>
+            This site may link to websites we do not run — the IRS, the Florida Department of
+            Revenue, software providers and others. We link to them because they may be useful,
+            not because we control or endorse them. We are not responsible for their content or
+            their privacy practices, and once you follow a link, their terms apply, not ours.
+          </p>
+
+          <h2 class="h2">8. Availability</h2>
+          <p>
+            We try to keep the site available and up to date, but we do not promise that it will
+            always be reachable, error free, or current. We may change, suspend or withdraw any
+            part of it at any time, including during tax season, and we may restrict access to
+            anyone who breaks these Terms.
+          </p>
+
+          <h2 class="h2">9. Payments</h2>
+          <p>
+            This website does not take payments. Fees for our services, and how they are billed,
+            are agreed separately with each client.
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: if the firm ever takes payment through the site, or lets visitors book and pay for a consultation, this section needs prices, currency, taxes, the payment processor, and the refund, cancellation and no-show policy}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">10. No warranties</h2>
+          <p>
+            The site is provided &ldquo;as is&rdquo; and &ldquo;as available&rdquo;. To the
+            fullest extent the law allows, we make no warranties of any kind about the site or
+            its content, including implied warranties of merchantability, fitness for a
+            particular purpose, accuracy, or non-infringement.
+          </p>
+          <p>
+            This section is about the website. It does not limit anything we owe a client under
+            a signed engagement, and it does not limit any professional duty we have as
+            Enrolled Agents or CPAs.
+          </p>
+
+          <h2 class="h2">11. Limitation of liability</h2>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: the liability cap and its carve-outs, drafted by counsel. It has to say what the firm is and is not answerable for in relation to USE OF THIS WEBSITE, and it has to respect the limits Florida law and the Board of Accountancy rules place on a professional trying to limit liability to a client. A cap copied from another website protects nobody}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">12. Indemnification</h2>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: decide with counsel whether to include a user indemnity at all, and how far it reaches. This is a business decision, not standard filler}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">13. Governing law and where disputes are heard</h2>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: governing law and forum. For a firm based in Coral Springs the expected answer is Florida law and the courts of Broward County, but that is a decision for the firm and its counsel, not something to infer from a postal address — and it has to be checked against the equivalent clause in the engagement letter}}"}
+            </mark>
+          </p>
+          <p>
+            <mark class="pendiente">
+              {"{{PENDIENTE: dispute resolution — whether there is mandatory arbitration, a class action waiver, a small claims carve-out, and a deadline for bringing a claim. If arbitration is chosen, the institution and its rules have to be named; without that the clause does not work}}"}
+            </mark>
+          </p>
+
+          <h2 class="h2">14. Changes to these Terms</h2>
+          <p>
+            We may update these Terms. The version in force is the one published on this page,
+            with the effective date shown at the top. If you keep using the site after a change,
+            you accept the updated Terms.
+          </p>
+
+          <h2 class="h2">15. If part of these Terms cannot be enforced</h2>
+          <p>
+            If a court finds any part of these Terms unenforceable, the rest stays in force. Our
+            not enforcing a right on one occasion does not mean we give it up.
+          </p>
+
+          <h2 class="h2">16. How to reach us</h2>
+          <p>
+            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>, email
+            <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
+          </p>
+          <address class="legal-address">
+            {NEGOCIO.nombre}<br />
+            {NEGOCIO.calle}<br />
+            {`${NEGOCIO.ciudad}, ${NEGOCIO.region} ${NEGOCIO.cp}`}
+          </address>
+          <p>Office hours: {NEGOCIO.horario}</p>
+
+          <p>See also our <a href="/privacy-policy">Privacy Policy</a>.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Mismo bloque que /privacy-policy: el CSS portado no tiene nada para una
+   * pagina de texto largo. Cada regla esta porque sin ella el documento no se
+   * lee. Sin tabla aqui, que solo la necesita el modelo de la FTC. */
+  .legal-header {
+    width: 100%;
+  }
+
+  .legal-body,
+  .legal-draft {
+    max-width: 820px;
+  }
+
+  .legal-body h2 {
+    margin-top: 2em;
+  }
+  .legal-body h3 {
+    margin-top: 1.75em;
+  }
+  .legal-body ul {
+    margin-bottom: 1.25em;
+  }
+
+  .legal-meta {
+    margin-bottom: 2em;
+  }
+
+  .legal-draft {
+    background-color: #fff8d6;
+    border-left: 6px solid #b58900;
+    padding: 1.25em 1.5em;
+    margin-bottom: 3em;
+  }
+  .legal-draft > :last-child {
+    margin-bottom: 0;
+  }
+
+  .pendiente {
+    padding: 0 .2em;
+    overflow-wrap: anywhere;
+  }
+
+  address.legal-address {
+    font-style: normal;
+    margin-bottom: 1em;
+  }
+</style>

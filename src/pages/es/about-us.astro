@@ -1,0 +1,236 @@
+---
+// Sobre nosotros en espanol — /es/about-us
+//
+// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
+// firmado. La explicacion completa esta en src/pages/es/index.astro.
+//
+// Espejo de src/pages/about-us.astro. Mismas secciones, mismas clases, mismos
+// assets. R2 sigue vigente: LA SECCION DE EQUIPO NO SE CONSTRUYE — las seis
+// fichas del baseline son plantilla de Webflow con correos @example.com. No se
+// traducen seis personas que no existen.
+//
+// LOS SLUGS NO SE TRADUCEN (ver src/lib/es.ts).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import { sanity, NEGOCIO } from "../../lib/sanity";
+import { t, interpola } from "../../lib/i18n";
+import { enlace } from "../../lib/es";
+
+const lang = "es" as const;
+const c = t(lang);
+
+const NOMBRES = [
+  "6849e6147012d174d25cfab6-1700-n-university-dr-coral-springs-fl-aerial-2-largehighdefinition-copia.webp",
+  "68701233f93e3383147d1a60-validation.png",
+  "6870123fd6bfee6489fdaeac-bilingual.png",
+  "6870124c5e68d92f652dbf9d-financial-statement.png",
+  "68701296d6420dd033c71c8d-satisfaction.png",
+  "6870159e4206bf0d27b834a9-mission.webp",
+  "6870159ea2fefa14c4296c25-vision.webp",
+  "6785bf353063de8bcbcf3dfc-icon-13.svg",
+];
+
+type Asset = { originalFilename: string; url: string; w: number; h: number; lqip?: string };
+
+const assets: Asset[] = await sanity.fetch(
+  `*[_type == "sanity.imageAsset" && originalFilename in $f]{
+     originalFilename, url,
+     "w": metadata.dimensions.width,
+     "h": metadata.dimensions.height,
+     "lqip": metadata.lqip
+   }`,
+  { f: NOMBRES },
+);
+
+/** Falla en voz alta: mejor romper el build que publicar un hueco. */
+const img = (nombre: string): Asset => {
+  const a = assets.find((x) => x.originalFilename === nombre);
+  if (!a) throw new Error(`Falta en Sanity el asset "${nombre}" de /es/about-us.`);
+  return a;
+};
+
+const hero = img(NOMBRES[0]);
+const mision = img(NOMBRES[5]);
+const vision = img(NOMBRES[6]);
+const iconoCta = img(NOMBRES[7]);
+
+const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&auto=format`;
+const ANCHOS = [500, 800, 1080, 1250];
+const srcset = (a: Asset) => ANCHOS.map((w) => `${src(a, w)} ${w}w`).join(", ");
+
+const lqip = (a: Asset) =>
+  a.lqip
+    ? `background-image:url(${a.lqip});background-size:cover;background-position:50% 50%`
+    : undefined;
+
+// Anchos reales medidos sobre el CSS portado, identicos a los de la ruta EN.
+const SIZES_HERO =
+  "(max-width: 991px) calc(100vw - 64px), (max-width: 1313px) calc((100vw - 96px) / 2), 609px";
+const SIZES_MV =
+  "(max-width: 991px) calc(100vw - 64px), (max-width: 1063px) calc((100vw - 96px) / 2), 484px";
+
+// Los 4 iconos de bar-features, en el mismo orden que c.about.features.
+const ICONOS = [NOMBRES[1], NOMBRES[2], NOMBRES[3], NOMBRES[4]];
+
+const CONTACTO = enlace(lang, "/contact-us");
+
+const TITULO = interpola(c.meta.plantillaTitulo, {
+  pagina: c.meta.aboutTitle,
+  negocio: NEGOCIO.nombre,
+});
+---
+
+<BaseLayout title={TITULO} description={c.meta.aboutDescription} lang={lang} noindex>
+  <Nav lang={lang} />
+
+  <main>
+    <section class="header-page-about-us">
+      <div class="container">
+        <div class="wrapper-about-us">
+          <div>
+            <img
+              src={src(hero, 1250)}
+              srcset={srcset(hero)}
+              sizes={SIZES_HERO}
+              width={hero.w}
+              height={hero.h}
+              alt={c.about.heroAlt}
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              style={lqip(hero)}
+              class="pic-about-us"
+            />
+          </div>
+          <div>
+            <h1 class="h1">{c.about.title}</h1>
+            {/* Lleva <strong>: solo vale con set:html. GLOSARIO: "Enrolled
+                Agents" y "CPAs" van literales dentro del parrafo. */}
+            <div set:html={c.about.introHtml} />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bar-features">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-bar-features">
+          <div class="wrapper-bar-features-intro">
+            {
+              c.about.features.map((f, i) => {
+                const icono = img(ICONOS[i]);
+                return (
+                  <div class="block-item-features">
+                    {/* Decorativo: el titular de debajo dice lo mismo. */}
+                    <img
+                      src={src(icono, 200)}
+                      width="200"
+                      height="200"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      class="icon-feature"
+                    />
+                    {/* <h2> con class="h3": evita el salto de nivel tras el h1
+                        sin cambiar un pixel (mismo criterio que la ruta EN). */}
+                    <h2 class="h3 title-special">{f.title}</h2>
+                    {/* En EN los items 2, 3 y 4 no tienen espacio tras el </em>
+                        ("your choice.We proudly serve"): es una errata del
+                        cliente que alli se migra tal cual. En ES no se
+                        reproduce — copiar una errata al traducir es fabricar un
+                        defecto nuevo. El espacio va dentro de `lead`. */}
+                    <div>
+                      <em>{f.lead}</em>
+                      {f.text}
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mission-vision">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-mission">
+          <div class="block-left-info">
+            <img
+              src={src(mision, 1250)}
+              srcset={srcset(mision)}
+              sizes={SIZES_MV}
+              width={mision.w}
+              height={mision.h}
+              alt={c.about.missionAlt}
+              loading="lazy"
+              decoding="async"
+              style={lqip(mision)}
+              class="pic-about-us"
+            />
+          </div>
+          <div class="block-right-info">
+            <h2 class="h2">{c.about.missionTitle}</h2>
+            <div>{c.about.missionText}</div>
+            <a href={CONTACTO} class="button w-button">{c.about.cta}</a>
+          </div>
+        </div>
+
+        {/* A <=991px .wrapper-vision usa flex-flow:wrap-reverse: la foto sube
+            sobre el texto sin tocar el orden del DOM. */}
+        <div class="wrapper-vision">
+          <div class="block-left-info">
+            <h2 class="h2">{c.about.visionTitle}</h2>
+            <div>{c.about.visionText}</div>
+            <a href={CONTACTO} class="button w-button">{c.about.cta}</a>
+          </div>
+          <div class="block-right-info">
+            <img
+              src={src(vision, 1250)}
+              srcset={srcset(vision)}
+              sizes={SIZES_MV}
+              width={vision.w}
+              height={vision.h}
+              alt={c.about.visionAlt}
+              loading="lazy"
+              decoding="async"
+              style={lqip(vision)}
+              class="pic-about-us"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* OJO: esta .footer-subscribe es de la PAGINA, no la newsletter del pie. */}
+    <section class="call-action">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              <img
+                src={iconoCta.url}
+                width={iconoCta.w}
+                height={iconoCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2">{c.cta.title}</h2>
+                <div>{c.cta.text}</div>
+              </div>
+            </div>
+            <div>
+              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>

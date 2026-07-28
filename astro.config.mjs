@@ -27,7 +27,20 @@ export default defineConfig({
   integrations: [
     sitemap({
       // R6: /es/ nace fuera del sitemap y con noindex, hasta que D3 este firmado.
-      filter: (page) => !page.includes("/es/"),
+      // Y fuera tambien las dos paginas legales: son BORRADORES pendientes de
+      // revision de un abogado y ya llevan noindex (D4). Tenerlas en el sitemap
+      // mientras dicen noindex es contradictorio y Search Console lo reporta.
+      // Ojo con /es a secas: el indice en espanol sale SIN barra final, asi que
+      // un filtro que busque "/es/" lo deja pasar. Se comprueba la ruta.
+      filter: (page) => {
+        const ruta = new URL(page).pathname.replace(/\/+$/, "") || "/";
+        return (
+          ruta !== "/es" &&
+          !ruta.startsWith("/es/") &&
+          ruta !== "/privacy-policy" &&
+          ruta !== "/terms"
+        );
+      },
     }),
   ],
 });

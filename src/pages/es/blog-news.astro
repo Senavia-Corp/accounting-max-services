@@ -1,0 +1,110 @@
+---
+// Listado del blog en espanol — /es/blog-news
+//
+// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
+// firmado. La explicacion completa esta en src/pages/es/index.astro.
+//
+// Espejo de src/pages/blog-news.astro. Mismas clases, mismos recortes de
+// imagen, mismos anchos de columna. Sigue SIN fecha ni autor (R3): la plantilla
+// de Webflow no los ligaba y los documentos de Sanity no los traen.
+//
+// LOS SLUGS NO SE TRADUCEN: /es/post/understanding-sales-tax mantiene el slug
+// ingles. La politica esta en src/lib/es.ts.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import { posts, NEGOCIO } from "../../lib/sanity";
+import { t, interpola } from "../../lib/i18n";
+import { requiereEs, enlace } from "../../lib/es";
+
+const lang = "es" as const;
+const c = t(lang);
+
+const lista = await posts();
+
+const CARD_W = 800;
+const CARD_H = 506;
+const src = (url: string, w: number) =>
+  `${url}?w=${w}&h=${Math.round((w * CARD_H) / CARD_W)}&fit=crop&q=75&auto=format`;
+const ANCHOS = [400, 600, 800, 1080];
+const srcset = (url: string) => ANCHOS.map((w) => `${src(url, w)} ${w}w`).join(", ");
+
+const SIZES = "(max-width: 767px) calc(100vw - 64px), (max-width: 991px) 201px, 395px";
+
+const TITULO = interpola(c.meta.plantillaTitulo, {
+  pagina: c.meta.blogTitle,
+  negocio: NEGOCIO.nombre,
+});
+---
+
+<BaseLayout title={TITULO} description={c.meta.blogDescription} lang={lang} noindex>
+  <Nav lang={lang} />
+
+  <main>
+    <section class="blog">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          <h1 class="h1">{c.blog.title}</h1>
+          <div>{c.blog.intro}</div>
+        </div>
+
+        {/* .wrapper-team es la clase que usa el propio baseline aqui (artefacto
+            de Webflow). Se conserva porque aporta el margin-top:3em. */}
+        <div class="wrapper-team">
+          <div class="collection-list-wrapper-blog">
+            <ul role="list" class="collection-list-blog w-list-unstyled">
+              {
+                lista.map((p, i) => {
+                  const href = enlace(lang, `/post/${p.slug}`);
+                  const primera = i === 0;
+                  // R5: titleEs y excerptEs o el build cae. Nunca el ingles.
+                  const titulo = requiereEs<string>(p, "titleEs", href).trim();
+                  const extracto = requiereEs<string>(p, "excerptEs", href).trim();
+                  return (
+                    <li class="collection-item-blog">
+                      <div class="block-blog">
+                        {p.heroImage && (
+                          <img
+                            src={src(p.heroImage.url, CARD_W)}
+                            srcset={srcset(p.heroImage.url)}
+                            sizes={SIZES}
+                            width={CARD_W}
+                            height={CARD_H}
+                            /* Miniatura redundante: el <h2> de al lado ya es su
+                               alternativa textual y el enlace nombra el post.
+                               Si Sanity trae altEs, manda altEs. NUNCA se cae
+                               al alt ingles: en una ruta /es/ eso es
+                               exactamente el fallback silencioso que R5
+                               prohibe. Sin altEs va vacio, que es lo correcto
+                               para una imagen decorativa. */
+                            alt={p.heroImage.altEs?.trim() ?? ""}
+                            loading={primera ? "eager" : "lazy"}
+                            fetchpriority={primera ? "high" : undefined}
+                            decoding="async"
+                            class="pic-blog"
+                          />
+                        )}
+                        <div class="block-info-blog">
+                          <h2 class="title-blog">{titulo}</h2>
+                          <div class="text-blog">{extracto}</div>
+                          <a href={href} class="button mini w-button">
+                            {c.blog.readMore}
+                            <span class="visually-hidden">
+                              {interpola(c.blog.readMoreSobre, { titulo })}
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</BaseLayout>

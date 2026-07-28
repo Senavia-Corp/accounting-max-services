@@ -11,7 +11,21 @@
 // devuelve 404 y el bloque de error EN LINEA lo dice. No se redirige a
 // /thank-you: esa pagina no existe y contar el pageview de un "gracias" como
 // conversion ya dio seis meses de datos falsos en otro proyecto.
+//
+// FASE 5 — bilingue. `lang` llega por prop desde Footer; si no llega, se
+// deduce de la ruta. En `en` las cadenas son las mismas que estaban aqui a
+// mano. UNICO cambio visible en el HTML EN: el submit gana data-wait, porque
+// el <script> se compila aparte y no puede leer el frontmatter — sin ese
+// atributo el boton diria "Please wait..." tambien en /es/. Es el mismo patron
+// que ya usa el formulario de /contact-us.
 import { sanity } from "../lib/sanity";
+import { t, idiomaDeRuta, type Lang } from "../lib/i18n";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname) } = Astro.props;
+const c = t(lang);
 
 type Asset = { url: string; w: number; h: number };
 const g = globalThis as any;
@@ -42,12 +56,8 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
         class="icon-news"
       />
       <div>
-        <h2 class="h2 white">Subscribe to the newsletter</h2>
-        <div>
-          Stay informed with tax tips, deadline reminders, and financial updates—all in your
-          inbox. Join our newsletter and get expert insights to help you stay compliant and grow
-          your business.
-        </div>
+        <h2 class="h2 white">{c.newsletter.title}</h2>
+        <div>{c.newsletter.text}</div>
       </div>
     </div>
 
@@ -56,7 +66,7 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
       <form id="newsletter-form" method="post" action="/api/newsletter">
         {/* El sitio en produccion no tiene ni un <label> en las 26 rutas: solo
             placeholders, que desaparecen al escribir. */}
-        <label class="visually-hidden" for="newsletter-email">Email address</label>
+        <label class="visually-hidden" for="newsletter-email">{c.newsletter.emailLabel}</label>
         <div class="block-form-email">
           <input
             id="newsletter-email"
@@ -64,18 +74,23 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
             type="email"
             name="email"
             maxlength="256"
-            placeholder="Enter your email"
+            placeholder={c.newsletter.emailPlaceholder}
             autocomplete="email"
             required
           />
-          <input type="submit" class="button-news w-button" value="Subscribe Now" />
+          <input
+            type="submit"
+            class="button-news w-button"
+            value={c.newsletter.submit}
+            data-wait={c.newsletter.wait}
+          />
         </div>
 
         {/* Trampa anti-bots. Se llama 'ref_id' y NO 'company_url' a proposito:
             los gestores de contrasenas autocompletan cualquier campo que huela
             a empresa o URL y marcarian como bot a personas reales. */}
         <div class="visually-hidden" aria-hidden="true">
-          <label for="newsletter-ref-id">Leave this field empty</label>
+          <label for="newsletter-ref-id">{c.newsletter.honeypot}</label>
           <input
             id="newsletter-ref-id"
             type="text"
@@ -88,10 +103,10 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
 
       {/* Confirmacion en linea, replicando el w-form-done de Webflow. */}
       <div class="w-form-done" role="status" tabindex="-1" data-newsletter-done>
-        <div>Thank you! Your submission has been received!</div>
+        <div>{c.newsletter.done}</div>
       </div>
       <div class="w-form-fail" role="alert" tabindex="-1" data-newsletter-fail>
-        <div>Oops! Something went wrong while submitting the form.</div>
+        <div>{c.newsletter.fail}</div>
       </div>
     </div>
   </div>
@@ -108,6 +123,8 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
 
   if (form && hecho && fallo && enviar) {
     const etiqueta = enviar.value;
+    // El rotulo de espera viaja en data-wait: el <script> no ve el frontmatter.
+    const espera = enviar.dataset.wait ?? "Please wait...";
 
     // .w-form-done/.w-form-fail son display:none en el CSS portado; Webflow los
     // mostraba con estilo en linea y aqui se hace igual (no hay CSS nuevo).
@@ -124,7 +141,7 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
       ocultar(fallo);
 
       enviar.disabled = true;
-      enviar.value = "Please wait...";
+      enviar.value = espera;
 
       try {
         const res = await fetch(form.action, {
