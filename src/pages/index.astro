@@ -1,17 +1,24 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 
+// Andamiaje de FASE 1. La paridad visual real contra baseline/html/index.html
+// es trabajo de FASE 3; esto solo demuestra que el port de CSS carga y que el
+// deploy responde en una URL real de Vercel.
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Accounting Max Services"
+  description="Tax preparation, bookkeeping and IRS representation in Coral Springs, Florida."
+>
+  <main class="container">
+    <h1 class="h1">Accounting Max Services</h1>
+    <h2 class="h2">Andamiaje FASE 1</h2>
+    <h3 class="h3">Port de CSS verificado</h3>
+    <p>
+      Si los tres titulares de arriba salen con serif, el kit de Typekit esta
+      sirviendo <code>stix-two-text</code>. Si salen con sans-serif, falta
+      autorizar el dominio en el kit (D9) — no es un fallo del port.
+    </p>
+    <p>Este texto deberia salir en Campton, servido desde <code>/fonts/</code>.</p>
+  </main>
+</BaseLayout>

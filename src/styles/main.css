@@ -1,0 +1,18 @@
+/* Punto de entrada de estilos.
+ *
+ * Direccion de las capas, que es lo contrario de lo intuitivo:
+ * las declaraciones SIN capa ganan a TODAS las capadas, sin importar la
+ * especificidad. Por eso el CSS generado por Webflow (95 KB) va dentro de
+ * layer(webflow) y el nuestro va suelto: asi site.css gana siempre sin
+ * necesidad de un solo !important.
+ *
+ * Poner site.css en una capa "encima" haria justo lo contrario y garantizaria
+ * la guerra de especificidad que esto evita.
+ *
+ * Los @import tienen que ir antes que cualquier otra regla del fichero.
+ */
+@import url("./vendor/normalize.css") layer(webflow);
+@import url("./vendor/webflow.css") layer(webflow);
+@import url("./vendor/accounting-max.webflow.css") layer(webflow);
+
+@import url("./site.css");

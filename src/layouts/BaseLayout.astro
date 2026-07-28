@@ -1,0 +1,69 @@
+---
+import "../styles/main.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** R6: las rutas /es/ nacen con noindex hasta que D3 este firmado. */
+  noindex?: boolean;
+  lang?: "en" | "es";
+}
+
+const { title, description, noindex = false, lang = "en" } = Astro.props;
+
+// Canonical absoluto. En produccion hoy no hay ni un solo rel=canonical en
+// ninguna de las 26 rutas, y el staging .webflow.io es un duplicado completo.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    {/*
+      Typekit: SOLO la hoja de estilos. El <script> blq3zch.js + Typekit.load()
+      del sitio original es el cargador antiguo y duplica la misma peticion.
+      El kit sirve `stix-two-text`, que alimenta .h1/.h2/.h3 (61 usos): es carga
+      estructural, no se puede quitar.
+
+      OJO (D9): los kits de Typekit estan restringidos por dominio. Hasta que
+      alguien anada *.vercel.app al kit, los titulares caeran a sans-serif en
+      las previews. Es esperado, NO es un port de CSS mal hecho.
+    */}
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="stylesheet" href="https://use.typekit.net/blq3zch.css" />
+
+    {/*
+      Ubuntu 400 y Open Sans 600 son los DOS unicos usos reales de fuentes de
+      Google en el CSS: `body` (linea 87) y `.h3.title-faq` (linea 727).
+      El sitio original los cargaba con webfont.js pidiendo 24 variantes de
+      Ubuntu/Open Sans/Roboto; Roboto no se usa ni una vez. Aqui van los dos
+      ficheros exactos, que es lo que hace falta para mantener la paridad.
+    */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Ubuntu:wght@400&display=swap"
+    />
+
+    {/*
+      Eliminado respecto al sitio original:
+      - webfont.js de Google + WebFont.load(): 24 variantes, 2 en uso real.
+      - el <script> blq3zch.js + Typekit.load(): cargador antiguo que duplica
+        la peticion que ya hace el <link> de arriba.
+      - jQuery 3.5.1 y webflow.js (211 KB): los sustituye JS propio en FASE 3.
+      - Swiper desde unpkg SIN version fijada.
+      Analitica: ninguna todavia, a proposito (D7).
+    */}
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

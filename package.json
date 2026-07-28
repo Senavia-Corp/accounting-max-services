@@ -12,6 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/vercel": "^11.0.3",
+    "@sanity/client": "^7.25.0",
     "astro": "^7.1.4"
   }
 }
