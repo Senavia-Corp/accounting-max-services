@@ -16,5 +16,10 @@
     "@astrojs/vercel": "^11.0.3",
     "@sanity/client": "^7.25.0",
     "astro": "^7.1.4"
+  },
+  "devDependencies": {
+    "@portabletext/block-tools": "^5.1.12",
+    "@sanity/schema": "^6.6.0",
+    "jsdom": "^29.1.1"
   }
 }
