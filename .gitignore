@@ -27,3 +27,11 @@ pnpm-debug.log*
 
 # temporales que deja "composio run"
 .composio-run-*
+
+# Documentos con identificadores de cuentas del cliente.
+# Viven en ~/outputs/accounting-max-privado/ — el repo es publico.
+ACCOUNTS.md
+DECISIONS.md
+
+# salida del adapter de Vercel
+.vercel/
