@@ -1,0 +1,6324 @@
+{
+  "post.understanding-sales-tax": {
+    "slug": "understanding-sales-tax",
+    "title": "Florida Sales Tax: What You Collect, When You File",
+    "excerpt": "What Broward County businesses collect, when they have to register, and the day a Florida sales tax return becomes late.",
+    "metaTitle": "Florida Sales Tax 2026: Rates, Filing & Due Dates",
+    "metaDescription": "Broward businesses collect 7% — Florida's 6% plus a 1% county surtax. What to collect, how often to file, and the day your return turns late.",
+    "body": [
+      {
+        "_key": "6c87f8a4f8c3",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you sell taxable goods in Broward County, you collect ",
+            "_key": "c5eab829c7e7"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "7%",
+            "_key": "4ea9f0a48bfa"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ": Florida's 6% state sales tax plus the county's 1% discretionary sales surtax. That is the easy part. What catches most new businesses is everything after the rate — when you have to register, how often you file, and what the state counts as late.",
+            "_key": "ff7c39bdb9de"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "91c91c51a5a2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What you collect in Broward County",
+            "_key": "8ef24b30808f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "d9f2b8175981",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Florida's general state sales tax rate is 6%, with a handful of exceptions the Department of Revenue lists separately, such as commercial electricity at 6.95% and amusement machine receipts at 4%.",
+            "_key": "43b33231d7cd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "8b150f4d1433",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Most counties add a ",
+            "_key": "5687b9e06d77"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "discretionary sales surtax",
+            "_key": "71aee2f7cf89"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " on top — a local county tax that applies to most transactions already subject to sales tax. Broward's surtax is 1%, effective January 1, 2019 and scheduled to run through December 31, 2048, according to ",
+            "_key": "d499a1b71c2b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "ef3c34619131"
+            ],
+            "text": "Form DR-15DSS for calendar year 2026",
+            "_key": "47825da6a92e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". So most taxable sales delivered in Broward carry 7% in total.",
+            "_key": "30f5feec8fc6"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "ef3c34619131",
+            "_type": "link",
+            "href": "https://floridarevenue.com/Forms_library/current/dr15dss_26.pdf"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "931c1d002f0e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two rules about the surtax cause more errors than the rate itself:",
+            "_key": "29ebb55f3531"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "614d580b333b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "The surtax follows the delivery, not the customer.",
+            "_key": "fdeca430b5a8"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " You charge the rate of the county where delivery is made — not where your shop sits and not where the buyer happens to live.",
+            "_key": "9fde331813d7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "225be7f44b29",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "The surtax stops at $5,000 on tangible goods.",
+            "_key": "26d502b20f47"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Only the first $5,000 of the sale, use, lease, rental or license of an item of tangible personal property is subject to surtax. The cap does not apply to admissions, transient rentals, prepaid calling arrangements or service charges.",
+            "_key": "c4d0804667d0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "117dc514087f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Why the delivery rule matters right now: Palm Beach County's rate changed on January 1, 2026. Its 1% local government infrastructure surtax was repealed effective December 31, 2025, and a new 0.5% school capital outlay surtax began January 1, 2026. For 2026, the same item delivered to Coral Springs carries 1% surtax and delivered to Boca Raton carries 0.5%. County rates are republished every November in Form DR-15DSS, so a rate you memorized last year may already be wrong.",
+            "_key": "c96bb6d76c84"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "2ae3bf036027",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Who has to register",
+            "_key": "9d87cc00cabb"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "80ce01d8f98e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you sell taxable goods or services in Florida, you register with the state before your first sale and collect from that point on. Two situations are less obvious:",
+            "_key": "4bb679bb8ebd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e27188591c85",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Remote sellers.",
+            "_key": "80ce0a215ff5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Effective July 1, 2021, a business with no physical presence in Florida must register and remit electronically if its taxable remote sales into the state exceeded $100,000 in the previous calendar year.",
+            "_key": "7e7a3e418180"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "bc818b63a7b8",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Marketplace sales.",
+            "_key": "09b828f21e40"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Marketplace providers register and collect on the sales they facilitate. If you also sell more than $100,000 to Florida customers ",
+            "_key": "7073c5ae1849"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "outside",
+            "_key": "c09f7de64edd"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " the marketplace, you register and collect on those sales yourself.",
+            "_key": "905cad6a45d3"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "d5816cbaaf46",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The threshold looks at the previous calendar year, which means the obligation can arrive in January on the strength of sales you made months earlier. If you are still setting the company up, it is worth getting the registration sequence right the first time — that is part of what we handle when we ",
+            "_key": "54ce341104d6"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "bd04147dda70"
+            ],
+            "text": "incorporate a business in Florida",
+            "_key": "76876e35077b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "600969f169c6"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "bd04147dda70",
+            "_type": "link",
+            "href": "/services/business-incorporation-in-florida"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "30e593382bb2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "How often you file",
+            "_key": "bd3aec8c821e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "4814afc00a3b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Florida assigns your filing frequency based on how much sales tax you collect in a year:",
+            "_key": "52895063cf8e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "65340fd1aaa9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "More than $1,000 — ",
+            "_key": "89cf401f0111"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "monthly",
+            "_key": "134a5ab3187b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "12bf2547b845",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "$501 to $1,000 — ",
+            "_key": "de17f29518e6"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "quarterly",
+            "_key": "bea1a09774f4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "c4167c599f35",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "$101 to $500 — ",
+            "_key": "e51adbea51cb"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "semiannual",
+            "_key": "1613fda6280a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "eebd567e0a8d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "$100 or less — ",
+            "_key": "6d06df89e344"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "annual",
+            "_key": "05369547fd5c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "a3f0901d013b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Frequency is not something you pick, and it is not fixed for life. A business that grows past the next threshold gets moved up, and filing on your old schedule after that is a late filing even if you paid everything you owed. This is the single most common reason a compliant business ends up with penalties, and it is the reason our ",
+            "_key": "ea47e040b5b9"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "b6f38afaedc6"
+            ],
+            "text": "sales tax filing service",
+            "_key": "03054aad37cc"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " starts by confirming which frequency the state currently has you on rather than which one you have been using.",
+            "_key": "d2b49ed82e3e"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "b6f38afaedc6",
+            "_type": "link",
+            "href": "/services/sales-tax-filing-7k40q"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "8d47ec38f43a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "When the return is due",
+            "_key": "61090665d141"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "d8a5f6a96783",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Returns and payments are due on the ",
+            "_key": "55ab8bb5fcfa"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "1st",
+            "_key": "d305e73e4ca9"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the month following each reporting period and are ",
+            "_key": "74108869d752"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "late after the 20th",
+            "_key": "8a3417c28639"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". A monthly filer reporting January files in February, on time through February 20.",
+            "_key": "c32f137eee62"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "4dfee43006f0",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "When the 20th falls on a Saturday, Sunday or holiday, the rule splits by how you file:",
+            "_key": "46aab27a7171"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "3bcabfd66408",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Electronic filers",
+            "_key": "9cc2fe5d158e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " get until the next business day.",
+            "_key": "b7077e2bbf90"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "2a6f263b1ec7",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Paper returns",
+            "_key": "10b3fdc9c7a6"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " are timely if postmarked or hand-delivered on the first business day following the 20th.",
+            "_key": "bcab2ca9af0c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "f9eb0451579c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Electronic filing is not always optional. A business that paid $5,000 or more in sales and use tax during Florida's prior fiscal year must file and pay electronically, beginning with the January return of the following calendar year.",
+            "_key": "50915b62d39c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "bd0370188b21",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Where this stops being simple",
+            "_key": "dd8597c8c704"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "0190992abcd2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The rate and the calendar are the mechanical part, and most owners can run them once someone sets them up correctly. The judgment calls sit elsewhere: whether what you sell is taxable at all, whether a customer's resale or exemption certificate is valid, how to handle deliveries across county lines, and what to do about periods you already filed wrong.",
+            "_key": "0cc5e5c0f8a2"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ca5feff59463",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That last one matters more than it sounds. Sales tax you collect is not your revenue — you are holding the state's money until you remit it. Errors there are treated differently from an honest mistake on an income tax return, so they are worth fixing deliberately rather than quietly.",
+            "_key": "9695de8a0aef"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "58959c7a7159",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "All figures above are Florida Department of Revenue rules current as of July 2026 and are general information, not advice about your business.",
+            "_key": "e2c5b5ab6176"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "fbbc7a5d3a2b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Not sure which frequency you are on?",
+            "_key": "040c260f8b24"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "939b4b42ec87",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring us your last four returns and your gross sales broken out by county. We will tell you whether the state has you on the right filing frequency, whether you crossed the $100,000 remote-sales threshold last year, and what to do about any period already filed — before the next 20th comes around. Start with our ",
+            "_key": "7eba13e1e578"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "d476f6096497"
+            ],
+            "text": "Florida sales tax filing service",
+            "_key": "9f0419839835"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call the office at (754) 244-3993.",
+            "_key": "e94c343b3b5d"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "d476f6096497",
+            "_type": "link",
+            "href": "/services/sales-tax-filing-7k40q"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.understanding-tax-deductions": {
+    "slug": "understanding-tax-deductions",
+    "title": "Standard Deduction Or Itemized: How To Choose",
+    "excerpt": "The 2025 standard deduction amounts, when itemizing is worth the paperwork, and why living in Florida changes that answer.",
+    "metaTitle": "Standard Deduction vs. Itemizing: 2025 Amounts",
+    "metaDescription": "The 2025 standard deduction is $15,750 single, $31,500 joint. When itemizing beats it, and why Florida residents clear that bar less often.",
+    "body": [
+      {
+        "_key": "b6422b82f45b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For tax year 2025 the standard deduction is ",
+            "_key": "4d06343a1830"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$15,750",
+            "_key": "3f1c6ea81d5f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " if you file single or married filing separately, ",
+            "_key": "5caf9656d592"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$31,500",
+            "_key": "50264094abf1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " if you file jointly or as a qualifying surviving spouse, and ",
+            "_key": "50d6c1b80eda"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$23,625",
+            "_key": "9b6b43aa1bfa"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " if you file as head of household. You take that amount with no receipts and no arithmetic. Itemizing only makes sense if your deductible expenses add up to more than it.",
+            "_key": "fe5f0cacd247"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "f93d290b083b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That single comparison is the whole decision. Everything below is about which side of it you land on.",
+            "_key": "280561caa28c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "a27479b366ea",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Deduction is not the same as credit",
+            "_key": "1225aa3830fe"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "0b172615fdf8",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A deduction reduces the income you are taxed on. A credit reduces the tax itself. If you are in a 22% bracket, a $1,000 deduction saves you roughly $220; a $1,000 credit saves you $1,000. People lose real money confusing the two, usually by chasing deductions while missing a credit they qualified for. We cover the other half of that in ",
+            "_key": "d4ea181c9300"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "acdc2f40a512"
+            ],
+            "text": "our guide to tax credits",
+            "_key": "a1232473b5ad"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "c34d0063de1e"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "acdc2f40a512",
+            "_type": "link",
+            "href": "/post/tax-credits-explained"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9d51422d35e9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What gets added on top of the standard deduction",
+            "_key": "480dda9ddfbd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "ce85858bbaf2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The standard deduction is not always a single flat number. Two additions matter for tax year 2025:",
+            "_key": "551d92baac7d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9cd82b1a0661",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Age or blindness.",
+            "_key": "1ff2b5d888eb"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " The additional standard deduction is $1,600 for 2025, rising to $2,000 if you are also unmarried and not a surviving spouse.",
+            "_key": "0a6a16450e03"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "7aa74a262a53",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "The enhanced deduction for seniors.",
+            "_key": "71213d20c27b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Beginning in 2025, taxpayers age 65 or older may be eligible for a deduction of up to $6,000, or $12,000 if married filing jointly and both spouses qualify.",
+            "_key": "425781016c32"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "ad889355ca7d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two more deductions that began in tax year 2025 are available whether you itemize or not: a deduction for qualified tips, and one for qualified overtime compensation of up to $12,500, or $25,000 for a joint return. Because they do not require itemizing, they do not change the standard-versus-itemized decision at all — they sit outside it.",
+            "_key": "4e6c0e932e35"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "21d5ba2d6f89",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Who cannot take the standard deduction",
+            "_key": "06c8eeb4d687"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "8cd2e0dcb1e5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The IRS lists four situations where the standard deduction is off the table entirely:",
+            "_key": "f2d67c5e1958"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "05ab3f6eecb1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You are married filing separately and your spouse itemizes.",
+            "_key": "b0fb05285032"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "a9e9a74a5c79",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You were a nonresident alien or a dual-status alien during the year, with some exceptions.",
+            "_key": "6fb4e5e8d86c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "23de8171d045",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You file for a period shorter than 12 months because you changed your accounting period.",
+            "_key": "164e3218cf1c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "94fa50cd3988",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You are filing as an estate, trust, common trust fund or partnership.",
+            "_key": "7a70ff70eef2"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "23a9ad236036",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The second one is not an edge case in South Florida. If you are filing on an ",
+            "_key": "0f90b6fbf3c1"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "7213c62460e6"
+            ],
+            "text": "ITIN because you are not eligible for a Social Security number",
+            "_key": "a9368ea2b7f3"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", your residency status for tax purposes is the first thing to establish, because it determines whether this comparison even applies to you.",
+            "_key": "3c5235f6d552"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "7213c62460e6",
+            "_type": "link",
+            "href": "/services/itin-application-irs-tax-id"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "d78e6bcbd9a5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Why Florida makes itemizing harder to reach",
+            "_key": "37a7388327c8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "f0fddaf84315",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Itemized deductions are mostly built from four categories: state and local taxes, mortgage interest, charitable contributions, and qualifying medical expenses above a floor.",
+            "_key": "207d77c4b00c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "43590a7dbf49",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The first category is where Florida residents fall behind. In a state with an income tax, residents accumulate state income tax withholding all year and that amount counts toward the state and local tax deduction. Florida has no personal income tax, so a Florida filer's state and local deduction comes from property taxes and, in some cases, sales tax paid — not from income tax withheld.",
+            "_key": "464680e89a14"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "90bc3ff66948",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The practical consequence: a Florida household and a New Jersey household with identical incomes and identical mortgages will not reach the same itemized total, and the Florida one is more likely to be better off taking the standard deduction. That is not a rule you can look up. It is a comparison someone has to run for your actual numbers.",
+            "_key": "14032bc063da"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "13bd86a90fa6",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What this does not decide for you",
+            "_key": "37e478419ab7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "1150e5ff5bf1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Whether an expense qualifies at all, whether a floor applies before it counts, and how the pieces interact with credits is where the general answer stops being useful. If you have a mortgage, significant medical costs in one year, or income from more than one source, the arithmetic is worth doing properly rather than guessing at it in April.",
+            "_key": "db73d28a573a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "d5830a2282fa",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Figures above are for tax year 2025 and come from IRS guidance current as of July 2026. They are general information, not advice about your return.",
+            "_key": "6b729450202e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "454e9dc3167c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Run the comparison before you file, not after",
+            "_key": "436650c320ed"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "239504072032",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring last year's return and a rough total of your mortgage interest, property tax and charitable giving. We will tell you in one sitting which side of the $15,750 or $31,500 line you land on this year, and whether anything is worth timing differently before December. Start with ",
+            "_key": "401bd1341484"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "572d69380b37"
+            ],
+            "text": "personal tax preparation",
+            "_key": "ba64ca4ac1a6"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "d022e95c71b2"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "572d69380b37",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.tax-credits-explained": {
+    "slug": "tax-credits-explained",
+    "title": "Tax Credits: Refundable, Nonrefundable, Who Qualifies",
+    "excerpt": "A credit cuts your tax dollar for dollar. Which ones pay you back even when you owe nothing, and what they were worth in 2025.",
+    "metaTitle": "Tax Credits 2025: Refundable vs. Nonrefundable",
+    "metaDescription": "A credit cuts tax dollar for dollar; a deduction only cuts income. Which 2025 credits still pay you back when your tax bill is already zero.",
+    "body": [
+      {
+        "_key": "5c7dfe0d1b46",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A tax credit cuts your tax bill dollar for dollar. A $1,000 credit removes $1,000 of tax. That makes credits far more valuable than deductions of the same size, which only reduce the income you are taxed on.",
+            "_key": "c5d2449778f7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "a50a80a83b90",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The distinction that decides whether money reaches your bank account is a different one: whether the credit is refundable.",
+            "_key": "b704654b8558"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "048d091fe818",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Refundable and nonrefundable",
+            "_key": "32c44eeb4368"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "55c7f8d2d405",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A ",
+            "_key": "e3452e6547a7"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "nonrefundable",
+            "_key": "d989d2be754d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " credit can reduce your tax to zero and stops there. If the credit is larger than your tax, the excess is lost.",
+            "_key": "d23128fc0eff"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "e5d57e428d6c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A ",
+            "_key": "490026e13fa5"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "refundable",
+            "_key": "4ab4e9466fbd"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " credit can be paid to you as a refund even if you owe no tax at all.",
+            "_key": "ad086c179613"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "e84b6374b06b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "This is why two households with the same credits can see completely different outcomes. A working household with little or no tax liability gets nothing from a nonrefundable credit and can receive real money from a refundable one. It is also why people with low tax liability sometimes skip filing and lose money they were entitled to: a refundable credit only reaches you if a return is filed.",
+            "_key": "78043b365f18"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7da719678120",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The two that reach the most households",
+            "_key": "d53f50987dbd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "3753d6ef72b3",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For tax year 2025:",
+            "_key": "1e2988ca491b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "758228f40dff",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Child Tax Credit",
+            "_key": "5643dc10c14f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — worth up to ",
+            "_key": "9b7e489477dc"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$2,200",
+            "_key": "63b4df81e520"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " per qualifying child. If your federal income tax liability is small or zero, part of it may still come to you through the ",
+            "_key": "862860766587"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Additional Child Tax Credit",
+            "_key": "3c7a0296525d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", worth up to ",
+            "_key": "9b4fc125cce2"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$1,700",
+            "_key": "213276010843"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " per qualifying child depending on your income. That refundable portion is the part that matters most to lower-income filers.",
+            "_key": "785b9c86536d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "86164b513e07",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Earned Income Tax Credit",
+            "_key": "cecaaec98f5f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — a refundable credit for people who work and have earned income below a limit that changes each year. For 2025 the maximum EITC is ",
+            "_key": "e846c9db0c70"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$8,046",
+            "_key": "69e61282b883"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for taxpayers with three or more qualifying children; for tax year 2026 that maximum rises to ",
+            "_key": "f53a44fbf5cc"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$8,231",
+            "_key": "34a97adf5db5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "d76278cf2d38"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "26237d3ca7de",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Both have detailed qualifying rules — relationship, age, residency and support tests for a child; earned income and investment income limits for the EITC. Those rules are where claims get denied, not the arithmetic.",
+            "_key": "e65c3a470ed8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "123a7e7a4f5c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The education credits, and why they are not interchangeable",
+            "_key": "a0ef01ae323b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "3ed915ff47cd",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two credits cover higher education costs, and the difference between them is exactly the refundable-versus-nonrefundable distinction above:",
+            "_key": "296d6b3dda53"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "17a7b2079387",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "American Opportunity Tax Credit",
+            "_key": "36fde29f64e3"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — up to ",
+            "_key": "a967b125ad00"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$2,500",
+            "_key": "24ecc1e8b69a"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for tuition, certain required fees and course materials paid during the year. Up to ",
+            "_key": "c6938cf6cedb"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "40%",
+            "_key": "d698e7c31cb8"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of it is refundable, meaning up to ",
+            "_key": "c53ec9ed10cf"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$1,000",
+            "_key": "732d603b6266"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " can come back to you even if it exceeds the tax you owe.",
+            "_key": "d0f6b4c7f777"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "c38077febecc",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Lifetime Learning Credit",
+            "_key": "8d22cdf2265a"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — up to ",
+            "_key": "7d2897361d54"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$2,000",
+            "_key": "59a9c5cef838"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " per return regardless of how many students you paid expenses for. It is ",
+            "_key": "ec2ace863153"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "nonrefundable",
+            "_key": "a39a9fded684"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ": it reduces tax to zero and no further.",
+            "_key": "61fb425921d1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "38fc675e2333",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A household with modest tax liability and a student in the family can therefore receive money from one of these and nothing from the other. Which one you are eligible for depends on the student's year of study and other conditions — it is not a choice you simply make.",
+            "_key": "aa6cfb28fd2a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "040f0bd98f3c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The ITIN complication, which is common here",
+            "_key": "05932ea065d0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "ca4cdc212f35",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Credit eligibility can depend on what kind of taxpayer identification number appears on the return, and for which person on it. That is not a footnote in South Florida, where mixed-status households are ordinary.",
+            "_key": "925e083b42e6"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ec1b67463529",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two practical points. First, an ITIN that has not been used on a federal return in three consecutive years becomes inactive, and an inactive ITIN on a return can cost you credits you actually qualified for. Second, renewal is not automatic — it takes a Form W-7, and it takes time. If anyone on your return files with an ITIN, check its status before filing season rather than during it. We handle that as part of ",
+            "_key": "8e5e165af98f"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "cf98a742f58b"
+            ],
+            "text": "ITIN applications and renewals",
+            "_key": "9bfddfbba8d1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "36f786dcdd3e"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "cf98a742f58b",
+            "_type": "link",
+            "href": "/services/itin-application-irs-tax-id"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "63802ccd685a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Why the amounts here have years attached",
+            "_key": "92af157d62e0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "4af397038329",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Credit amounts, income limits and phase-out ranges are adjusted regularly, and several were changed by legislation taking effect in 2025. An article that quotes a credit amount without saying which year it belongs to is worse than useless — it looks authoritative and is wrong by the time you read it.",
+            "_key": "3028d648d729"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ea75bc13d6b4",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "So: every figure above is tax year 2025 unless labelled otherwise, and comes from IRS guidance current as of July 2026. Before you rely on any of them for a return, confirm the year you are actually filing for.",
+            "_key": "5a2d840d5cdf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "6802b59812c3",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Find out which credits you actually qualify for",
+            "_key": "3ea81ff4b6e8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "12e13357288d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Most people do not lose credits by calculating them wrong. They lose them by not knowing a credit existed, or by having a return rejected over an identification number. If you have children, income from work below the EITC limits, or anyone on your return filing with an ITIN, a review before you file is worth more than an amendment after. Book ",
+            "_key": "f0a909a62d1a"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "1d825a16c689"
+            ],
+            "text": "personal tax preparation",
+            "_key": "5abb8f936e31"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " or call (754) 244-3993.",
+            "_key": "0d0c396da8cc"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "1d825a16c689",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.common-tax-mistakes": {
+    "slug": "common-tax-mistakes",
+    "title": "Common Tax Return Mistakes: What To Do Next",
+    "excerpt": "The errors the IRS sees most, the two that hit bilingual and ITIN filers hardest, and how to fix a return you already sent.",
+    "metaTitle": "Common Tax Return Mistakes & How To Fix Them",
+    "metaDescription": "Wrong SSN, unsigned return, wrong filing status, expired ITIN. The errors the IRS sees most and what to do once you have already filed one.",
+    "body": [
+      {
+        "_key": "1451cec903a6",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Most rejected or delayed returns are not caused by complicated tax positions. They are caused by a name that does not match a card, a missing signature, or a number typed one digit off. The IRS publishes the list of errors it sees most, and almost all of them are mechanical.",
+            "_key": "4211e3304015"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "83cfc9f52066",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The errors the IRS sees most",
+            "_key": "554eac1558f8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "17f10509a74f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Wrong Social Security number or name.",
+            "_key": "079819f618ff"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Every SSN must appear exactly as printed on the card, and every name — yours and each dependent's — must match the name on that person's Social Security card.",
+            "_key": "fa6563fddbfe"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "bfbd82861eab",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Filing before all your documents arrive.",
+            "_key": "b4c8eabaf46c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " A return sent before the last 1099 shows up is a return that will need correcting.",
+            "_key": "49cdb991148b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "249e1dcf3808",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Wrong filing status.",
+            "_key": "d1759a88ba54"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " More than one status can apply to the same person, and the wrong choice changes the tax.",
+            "_key": "6ff001b6744d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "f0b66d4d2a4c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Math errors.",
+            "_key": "3bf4caee433b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Still common, from simple addition to the calculations behind credits.",
+            "_key": "3b4534391dc4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "91de035f7c7d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Inaccurate income entries.",
+            "_key": "b17377c03b35"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Wages, dividends, interest and anything else already reported to the IRS on an information return.",
+            "_key": "4e69aea620a3"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "48a2a56cf695",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Wrong bank routing or account number.",
+            "_key": "d937d48e215f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " A refund sent to the wrong account is a slow problem to unwind.",
+            "_key": "f993168943f9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "8f4f8a7d1cec",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "An unsigned return.",
+            "_key": "274ff509d1cf"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " An unsigned return is not valid. On a joint return, in most cases both spouses must sign.",
+            "_key": "14670a6928b6"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "fb322baefbce",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Filing electronically prevents a good share of these, because the software does the arithmetic and prompts for what is missing. It does not catch a name that does not match a card, and it does not catch the two errors below.",
+            "_key": "54746467422d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9abc177c6117",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two that hit our clients harder than most",
+            "_key": "ddcefe3d4f3b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "1d5d812168db",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "An ITIN that has gone inactive.",
+            "_key": "c1907af57208"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " An ITIN not used on a federal return for three consecutive tax years becomes inactive. Renewal requires a Form W-7 and it is not instant. A return filed with an inactive ITIN can lose credits the household actually qualified for. If anyone on your return uses an ITIN, check its status in the autumn, not in April. That is part of ",
+            "_key": "e0d3cfc5814b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "8ad4ccb06e31"
+            ],
+            "text": "what we handle with ITIN applications and renewals",
+            "_key": "509d35ea373c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "a243651b448e"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "8ad4ccb06e31",
+            "_type": "link",
+            "href": "/services/itin-application-irs-tax-id"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "593644a4a0f1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Name mismatches in households with two surnames.",
+            "_key": "5665f314f477"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Social Security records hold one exact version of a name. If the card says one thing and the return says another — a compound surname shortened, a maternal surname dropped, a married name never updated — the return can be rejected over something that has nothing to do with your taxes. Copy the card, not your memory of it.",
+            "_key": "388969c7441b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "fed07d9b7f98",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The question everybody has to answer",
+            "_key": "37961eba945d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "03fb4ec46d56",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Every person filing a Form 1040, 1040-SR, 1040-NR, 1041, 1065, 1120 or 1120-S must check \"Yes\" or \"No\" to the digital asset question. It is not limited to people who bought or sold anything — every filer answers it.",
+            "_key": "20e1a56a26b2"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "8c8f4d9c932c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "It gets missed because it looks like it belongs to somebody else, and it gets answered wrongly because people assume that not selling means the answer is no. If you received digital assets in any form during the year, that assumption is worth checking before you sign. ",
+            "_key": "63b05704649e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "e761558b1c0c"
+            ],
+            "text": "What counts as a reportable digital asset event",
+            "_key": "d253eaf095f6"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is a longer subject than the checkbox suggests.",
+            "_key": "ba9e4a6b0935"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "e761558b1c0c",
+            "_type": "link",
+            "href": "/post/understanding-cryptocurrency-taxes"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "20d37d1a8fd5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You already filed and something is wrong",
+            "_key": "80b9d30c9d83"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "5c28f65a1d99",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Not every error needs an amended return. The IRS corrects some math errors on its own and will write to you about it. When an amendment is genuinely needed, it is filed on ",
+            "_key": "93ed03a7280e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Form 1040-X",
+            "_key": "f93c80aeb530"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", and you file a separate 1040-X for each year you are amending.",
+            "_key": "bb14d5b770e1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "180fceb7eb1f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The important thing is to know which situation you are in before you act. Filing an unnecessary amendment on top of a correction the IRS has already made creates a second problem. If you have received a notice you do not understand, that is the moment to get help reading it — before replying and before the response window closes. That is exactly what ",
+            "_key": "cbdbda485cf7"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "b7a9944c02b8"
+            ],
+            "text": "audit assistance",
+            "_key": "1fa163e71744"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is for.",
+            "_key": "1eb5167778fd"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "b7a9944c02b8",
+            "_type": "link",
+            "href": "/services/audit-assistance"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "c962e97a2758",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "When it stops being a typo",
+            "_key": "4ef7384bfb0e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "7e4ee0e90188",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A letter proposing changes to your return, a request for documents, or an examination is a different situation from a mistyped digit. In those cases you are entitled to be represented, and an ",
+            "_key": "8bae3d7dd0b2"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Enrolled Agent",
+            "_key": "58a0cd30c6ff"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — a practitioner licensed to represent taxpayers before the IRS — or a ",
+            "_key": "08339960ad71"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "CPA",
+            "_key": "bfb5cd0c8384"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " can deal with the agency directly on your behalf.",
+            "_key": "ba5325402dcd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7f4ee737124d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "This article describes general IRS guidance current as of July 2026. It is not advice about your return or about any notice you have received.",
+            "_key": "8f3adc8e94ae"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "bd226b41ac7a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Got a letter from the IRS? Do not answer it alone",
+            "_key": "30e4eb42f722"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "c56b4d6f5d58",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring the notice, the return it refers to, and the envelope it came in — the deadline is usually printed on it. We will tell you what the IRS is actually asking for, whether an amended return is the right answer, and who should sign the response. Start with ",
+            "_key": "459998a95350"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "9e1c7bd6a782"
+            ],
+            "text": "representation before the IRS",
+            "_key": "cc7e0ad94b4c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "74e4e3e919fa"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "9e1c7bd6a782",
+            "_type": "link",
+            "href": "/services/representation-before-the-irs"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.preparing-for-tax-season": {
+    "slug": "preparing-for-tax-season",
+    "title": "Tax Season Checklist: Documents You Need First",
+    "excerpt": "What to gather before your appointment so your return is not sitting half-finished while February goes by.",
+    "metaTitle": "Tax Season Checklist: What Documents To Gather",
+    "metaDescription": "W-2s, 1099s, ITIN status, last year's return. What to collect before your appointment so nothing holds your filing up in February.",
+    "body": [
+      {
+        "_key": "85190a61ad17",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The single thing that decides whether your return takes one appointment or three is whether your documents are complete when you walk in. Nothing else on this page matters as much as that.",
+            "_key": "56034d0c494a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e11cd608ae0c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Here is what to gather, in the order you are likely to receive it.",
+            "_key": "ff2d6328b366"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e4847847b3aa",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Identification, before anything else",
+            "_key": "1dd7612b2c00"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "f29ff44295b7",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Photo ID for you and your spouse.",
+            "_key": "0d577576d12e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "bb44196dd07d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Social Security cards — the physical cards, for every person who will appear on the return. Names and numbers must match them exactly, and this is the most common reason a return gets rejected.",
+            "_key": "249e7b2ecedf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "35c29dd26533",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If anyone on the return files with an ",
+            "_key": "7fb2c408e664"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "ITIN",
+            "_key": "f2ca06f84df4"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", the ITIN and its current status. An ITIN not used on a federal return for three consecutive years goes inactive, and renewal takes a Form W-7 and time. Check this in the autumn, not in April.",
+            "_key": "092a539d05ab"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "d1e21efdfc65",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Dates of birth for every dependent.",
+            "_key": "36acd7b5b52e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "9429ffb3da83",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Income documents",
+            "_key": "e5743aa134c4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "937a973597ae",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "W-2",
+            "_key": "fe365330c917"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " from each employer.",
+            "_key": "2f4309422558"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "1b3264f35555",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "1099",
+            "_key": "3161f45a2b7e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " forms in all their varieties: contract work, interest, dividends, retirement distributions, government payments, brokerage sales.",
+            "_key": "079a143d4304"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "1efc7e79f613",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you sold digital assets, the new ",
+            "_key": "e2349867c538"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Form 1099-DA",
+            "_key": "88d657a22cae"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". Brokers report 2025 transactions on it and must send you a copy by February 17, 2026.",
+            "_key": "604ed3608b6f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "616cf821fc91",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Records of income that never generated a form at all. Cash work, rent collected, and side income are still reportable whether or not anyone sent you paperwork.",
+            "_key": "ce0ae1f0c887"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "aa0741aedbea",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Last year's return. It is the fastest way to catch something that existed last year and is missing this year.",
+            "_key": "af0be62ea855"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "8bd421d29812",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Deduction and credit records",
+            "_key": "df25d4eaa67b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "4b56ed56772e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Mortgage interest and property tax statements.",
+            "_key": "921ae5eb5ee0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "8825eb098afe",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Charitable contribution receipts.",
+            "_key": "a501afb597d1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "fa7db8d76d6e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Medical expenses, if the year was unusual.",
+            "_key": "c0a6133fa25f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "75c31a9ac16c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Childcare costs, with the provider's identification number.",
+            "_key": "0682d0095de3"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "f72386896663",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Education expenses and tuition statements.",
+            "_key": "a27bad7bd3f9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "5480c06b3e23",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Whether these are worth assembling at all depends on whether you will itemize, and for many Florida households the standard deduction wins. If you are unsure which side you are on, ",
+            "_key": "34c450de7182"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "a0958363deff"
+            ],
+            "text": "the standard-versus-itemized comparison",
+            "_key": "d2731d1b0d8b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is the thing to settle first.",
+            "_key": "a13b96930e3e"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "a0958363deff",
+            "_type": "link",
+            "href": "/post/understanding-tax-deductions"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "a5b7ee954a02",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you own a business",
+            "_key": "b4dd1ddbb7e9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "d40d73caf794",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring the year's books, not a folder of receipts. Bank and credit card statements, mileage records, and payroll reports if you have employees. If your bookkeeping has fallen behind, that is worth fixing before February rather than reconstructing under deadline pressure — it is the difference between a return and an archaeology project. We do that as ",
+            "_key": "f594c86ad2fc"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "76fa45c22b01"
+            ],
+            "text": "monthly bookkeeping and accounting",
+            "_key": "493f62dbe498"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "28cee8c3bc3a"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "76fa45c22b01",
+            "_type": "link",
+            "href": "/services/monthly-bookkeeping-accounting"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7f85abb1cd16",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "One thing to decide early",
+            "_key": "2e568b31a13e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "52cda4d175c0",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Do not file before your documents are complete. The IRS lists filing too early — before every reporting document has arrived — as one of the most common causes of returns that need correcting. A return filed in late January without a 1099 that shows up in February becomes an amended return, and amended returns take longer than simply waiting did.",
+            "_key": "7aad438e87c8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1c670a2f3b4d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The deadline, and the extension people misunderstand",
+            "_key": "ab98cf17a3bd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "a3f1314e36ff",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For the 2025 tax year the filing deadline is ",
+            "_key": "9f866a702e6e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "April 15, 2026",
+            "_key": "e6f1a59fbb07"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". If you need more time, you request it by that same date on ",
+            "_key": "e157880f9857"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Form 4868",
+            "_key": "dfbf5346fd27"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", which you can submit electronically regardless of income, and it gives you until ",
+            "_key": "c08f1f7d880c"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "October 15, 2026",
+            "_key": "a1b09c9a572d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " to file.",
+            "_key": "b45eb3ad6ef4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ca24f0146bf9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Here is the part that costs people money: ",
+            "_key": "b033b8d6ef26"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "an extension gives you more time to file, not more time to pay.",
+            "_key": "2b91c87560e3"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Tax owed is still due April 15. To keep penalties and interest down, you estimate your total liability, subtract what you have already paid, and pay the balance by the original deadline — even though the return itself goes in later.",
+            "_key": "f8506f80da3d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "54d5718aafa9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "An extension is a reasonable tool when a document genuinely has not arrived. It is not a way to postpone a payment.",
+            "_key": "68bcb6cf5bbd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1925bfba2558",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What to keep, and for how long",
+            "_key": "d3534e5b17aa"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "ef8b78a1a32b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Keep the records that support any item of income, deduction or credit on your return until the period of limitations for that return runs out. As a general rule that means ",
+            "_key": "adadb3d810e2"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "three years",
+            "_key": "b05fd84475c5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", though several situations extend it.",
+            "_key": "31c3ff8589d8"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "3ae9a49f0b53",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Some records are worth keeping well past that, because they establish a number you will need much later: home purchase and sale documents, stock transactions, IRA records, and business or rental property documentation. Those are basis records, and basis is the figure nobody can reconstruct for you once the paperwork is gone.",
+            "_key": "e6921e70241f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "86b2951da439",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "This checklist reflects IRS guidance current as of July 2026 and is general information. Which documents your particular return needs depends on your circumstances.",
+            "_key": "7ec9ec16ff8a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9333d252f319",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring the folder. We will tell you what is missing.",
+            "_key": "930339e10faf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "100a3bad8fde",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You do not need to have it all before you call. Come with what you have and we will tell you exactly what is still outstanding, in English or in Spanish — ",
+            "_key": "1a46cbf1c1ff"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "cd32d09bf1a2"
+            ],
+            "text": "every service we offer is available in both",
+            "_key": "18c08937f4c2"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". Then book ",
+            "_key": "b42733e96263"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "b8cd2c84b3fb"
+            ],
+            "text": "personal tax preparation",
+            "_key": "0434f1437728"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " once the folder is complete, or call (754) 244-3993 to talk it through first.",
+            "_key": "b4e269c2f790"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "cd32d09bf1a2",
+            "_type": "link",
+            "href": "/services/bilingual-services-english-spanish"
+          },
+          {
+            "_key": "b8cd2c84b3fb",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.tax-planning-strategies": {
+    "slug": "tax-planning-strategies",
+    "title": "Tax Planning: What To Decide Before December 31",
+    "excerpt": "Planning happens before the year closes; preparation happens after. What a Florida business owner actually decides in the fourth quarter.",
+    "metaTitle": "Tax Planning Strategies For Florida Businesses",
+    "metaDescription": "Preparation reports the year you had. Planning changes it. Estimated payments, timing and entity choice — the calls a Florida owner makes by Q4.",
+    "body": [
+      {
+        "_key": "bd95ccd46f4e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Tax preparation reports the year you had. Tax planning changes it. The difference is entirely a matter of timing: once December 31 passes, most of what could have been decided is closed, and your preparer is left recording decisions someone else already made.",
+            "_key": "cc38a281aa1b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "cf558d35dcdb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Here is what is genuinely still open before year end, and what is not.",
+            "_key": "411eaeadef84"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "02eefe3c7a8d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Estimated payments: the deadline most owners get wrong",
+            "_key": "804a57dc3334"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "e43e2a593695",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you are self-employed or your income does not have tax withheld from it, you pay as you go. Estimated tax payments are generally due ",
+            "_key": "1044d7dd73c4"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "April 15, June 15 and September 15",
+            "_key": "78a48fc6406c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the tax year, and ",
+            "_key": "65b828060670"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "January 15",
+            "_key": "7c442557fc23"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the following year.",
+            "_key": "0dfceaf2ffeb"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "f5d9b5f3511a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The penalty for underpaying is avoidable, and the rule for avoiding it is specific. You generally escape the underpayment penalty if you paid at least:",
+            "_key": "afe9e2368693"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "2a473f31e688",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "90%",
+            "_key": "481bef08a759"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the tax shown on this year's return, or",
+            "_key": "693e0cc33e38"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "7562dfd11def",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "100%",
+            "_key": "6519be109fed"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the tax shown on last year's return, whichever is less.",
+            "_key": "dad36dc1c39e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "d4fc9bfdbca2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If your prior-year adjusted gross income was more than $150,000 — or $75,000 if married filing separately — that 100% becomes ",
+            "_key": "46478c6bfe67"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "110%",
+            "_key": "6a68ce2db294"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". Separately, most taxpayers avoid the penalty if they end up owing less than $1,000 after withholding and refundable credits.",
+            "_key": "cc6e25a1336b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "53fdf11c9ea8",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The practical point: the prior-year figure is known. It is on a return that already exists. A business with a good year can protect itself from the penalty by paying against last year's number rather than guessing at this year's — and that is a decision, not a calculation.",
+            "_key": "f022895e628f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "53b7818b00ec",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What timing actually controls",
+            "_key": "a68ba14f093f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "80b89860a2c3",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Within the rules, a business has some control over which year income and expenses land in. Accelerating a deductible purchase into December or deferring an invoice into January changes which year the tax falls in.",
+            "_key": "4877cb7bcb9b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e024675697ae",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two cautions, because this gets oversold. First, timing moves tax between years — it rarely eliminates it, and pulling deductions forward can leave next year thin. Second, whether you can shift an item at all depends on your accounting method, which is not something to change casually. This is a conversation to have with your ",
+            "_key": "fccb6f0e599e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "167e2386d505"
+            ],
+            "text": "corporate tax preparation",
+            "_key": "750b7b6a27c5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " in October, not a trick to apply in December.",
+            "_key": "402e683a5c25"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "167e2386d505",
+            "_type": "link",
+            "href": "/services/corporate-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7b0893017e48",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Entity structure, and why it is a planning question",
+            "_key": "f3c518e4cb26"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "16c2f7168c93",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Whether you operate as a sole proprietor, an ",
+            "_key": "64f58f05b67a"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "LLC",
+            "_key": "47ff26f7505b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", an ",
+            "_key": "215d5a265d5b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "S-Corp",
+            "_key": "93361e907d1b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " or a ",
+            "_key": "370332f70b20"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "C-Corp",
+            "_key": "4b10de068c46"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " affects how profit is taxed, what payroll obligations you carry, and what paperwork the year requires. It is a genuine planning decision with real consequences in both directions.",
+            "_key": "b35d4bd16677"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "4bee45924878",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What it is not is a universal answer. The advice that a particular structure always saves money is wrong often enough to be dangerous, because the right answer depends on your profit level, whether you take a salary, how many owners there are, and what you intend to do with the business. If you are weighing it, weigh it with your actual numbers — and note that changing structure has its own timing rules. We work through this when we ",
+            "_key": "1d38500ff39c"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "8eb9743fdc3a"
+            ],
+            "text": "incorporate a business in Florida",
+            "_key": "f00e32b4902b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "d27d298488da"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "8eb9743fdc3a",
+            "_type": "link",
+            "href": "/services/business-incorporation-in-florida"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "93d98a49253e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The deduction that depends on your structure",
+            "_key": "9dfedd5097f5"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "77aa9c62171e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Owners of sole proprietorships, partnerships, S corporations and some trusts and estates may be eligible for the ",
+            "_key": "5fc3d6cba6d1"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "qualified business income deduction",
+            "_key": "e3218c10cf8d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — the Section 199A deduction — of up to ",
+            "_key": "ddb13661a4e4"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "20%",
+            "_key": "0f21a72c9c7a"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of qualified business income, plus 20% of qualified REIT dividends and qualified publicly traded partnership income.",
+            "_key": "07d02512a4e4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "41adad45611e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "It is worth naming here rather than in a preparation article because eligibility and the amount interact with how you are structured and what you pay yourself. That makes it a planning input, not a line you discover in April. It also has limitations and thresholds that this paragraph is deliberately not summarising, because the summary version is where people go wrong.",
+            "_key": "e0fa02140a1e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "4e8d8f5e323f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Retirement contributions as a planning lever",
+            "_key": "c82e46a82a9e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "54ab3154079d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Funding a retirement plan is one of the few moves that reduces current taxable income and keeps the money. For 2026 the basic 401(k) limit is ",
+            "_key": "5157a520eed0"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$24,500",
+            "_key": "56a0399238bb"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", with an additional ",
+            "_key": "2fa983919bfa"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$8,000",
+            "_key": "67b784ff7501"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " catch-up at 50 and older, and a higher ",
+            "_key": "c4756559a082"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$11,250",
+            "_key": "aeec92575a94"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " catch-up for ages 60 through 63.",
+            "_key": "a370866a77cf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "264764eda311",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For an owner, the question is not only how much but through which plan, and plan choices have their own establishment deadlines that fall before you file. ",
+            "_key": "9bf8d3526883"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "38ba42d87ad1"
+            ],
+            "text": "The retirement side of this is worth reading in full",
+            "_key": "0a1db68140be"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "d9c0c2f9cac5"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "38ba42d87ad1",
+            "_type": "link",
+            "href": "/post/retirement-planning-and-taxes"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "21cab2143492",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What Florida does and does not change",
+            "_key": "e50cd8d155e1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "543d0c69baa6",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Florida has no personal income tax, which removes one whole layer of planning that owners in other states spend time on. It does not remove federal income tax, self-employment tax, payroll obligations, or ",
+            "_key": "bc76e86c5014"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Sales Tax",
+            "_key": "4b65f8f894ff"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " if you sell taxable goods — and sales tax has its own registration thresholds and filing calendar that catch growing businesses. That is covered in ",
+            "_key": "a9440dc5ee7b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "556562021688"
+            ],
+            "text": "our guide to Florida sales tax",
+            "_key": "b7727d9a305f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "7b922fed28c0"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "556562021688",
+            "_type": "link",
+            "href": "/post/understanding-sales-tax"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "36eb6259fd39",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What planning cannot do",
+            "_key": "eeaa2f2118e0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "bfa7f5892a01",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Planning changes the timing and structure of decisions you were going to make anyway. It does not make a purchase you did not need worth making, and a deduction is never worth more than the dollar you spent to create it. Any advice that starts with buying something in order to save tax is worth examining slowly.",
+            "_key": "2b1a6130424a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7def844422b7",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The rules above reflect IRS guidance current as of July 2026 and are general information. Whether any of it applies to your business depends on facts this article does not know.",
+            "_key": "eb5b35979020"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "050dbcd57bd9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Have the conversation in the fourth quarter, not in April",
+            "_key": "4a2850363f4f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "d8727f434afd",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring your year-to-date profit and loss, last year's return, and what you expect the rest of the year to look like. We will tell you where you stand against the estimated-payment safe harbor, what is still moveable before December 31, and what genuinely is not. Start with ",
+            "_key": "ad465375f160"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "ef39241f6fdc"
+            ],
+            "text": "corporate tax preparation",
+            "_key": "9d476d5bfa7b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "d8b620656fcc"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "ef39241f6fdc",
+            "_type": "link",
+            "href": "/services/corporate-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.navigating-business-expenses": {
+    "slug": "navigating-business-expenses",
+    "title": "Business Expenses: What You Deduct, What You Prove",
+    "excerpt": "Ordinary and necessary is the legal test. What survives a review is the record you kept, not the total on the receipt.",
+    "metaTitle": "Business Expenses: What's Deductible & How To Prove It",
+    "metaDescription": "Ordinary and necessary is the test. The 2026 mileage rate is 72.5 cents. What survives IRS review is your record, not your receipt total.",
+    "body": [
+      {
+        "_key": "da00f8fd62c4",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "To be deductible, a business expense has to be both ",
+            "_key": "cb62ad923501"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "ordinary",
+            "_key": "74c99d28e078"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " and ",
+            "_key": "cca21727e0af"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "necessary",
+            "_key": "166a53b31dfe"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". Those are not loose adjectives — they are the legal test, and each has a specific meaning. An ordinary expense is one that is common and accepted in your trade or business. A necessary expense is one that is helpful and appropriate for it.",
+            "_key": "9ea447d6d5bc"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "8491e03070d2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Notice what necessary does not mean: it does not mean indispensable. An expense can be genuinely useful without being something you could not survive without.",
+            "_key": "3707c24bfb62"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ba1976e0c578",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The line that matters most",
+            "_key": "7ce7eb0107fc"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "6ac501280732",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Personal, living and family expenses are generally not deductible. Nearly every real dispute about a business deduction is a dispute about which side of that line something falls on, not about whether the category exists.",
+            "_key": "4984ab2c51c9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "43622745e442",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The hard cases are the mixed ones — the phone used for both, the car that does both, the trip that was mostly business. Mixed-use items are not automatically disallowed, but they are the items where documentation stops being paperwork and becomes the whole argument.",
+            "_key": "9b2319df7c8a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ea3b4c972159",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two numbers worth knowing",
+            "_key": "6a6a94face8c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "b250c1ae66fc",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Mileage.",
+            "_key": "112a64c0f53a"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " The standard mileage rate for business use is ",
+            "_key": "dbd71c3fd748"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "72.5 cents per mile for 2026",
+            "_key": "e12b2a380f78"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", up 2.5 cents from the prior year. It is an alternative to tracking actual vehicle costs, and either way it requires a record of the miles.",
+            "_key": "09482448a9ed"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "0d27229f52fe",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Meals.",
+            "_key": "0a43da35f5b1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " You may generally deduct ",
+            "_key": "08014f6c8a40"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "50%",
+            "_key": "117e3f09fad5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " of the cost of a business meal, provided you or an employee is present and the food is not lavish or extravagant. The meal can be with a current or potential customer, client, consultant or similar business contact.",
+            "_key": "09aa324c33a1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "b25109d64444",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For equipment purchases, Section 179 lets a business elect to expense the cost rather than depreciate it over years. For tax years beginning in ",
+            "_key": "5f60d0265080"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "2025",
+            "_key": "d2155a4b8200"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " the aggregate limit is ",
+            "_key": "bc11320c9726"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$2,500,000",
+            "_key": "0555fa2add88"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", with a separate cap of ",
+            "_key": "83a6e8ec3617"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$31,300",
+            "_key": "da0117657386"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " on the amount that can be taken for a sport utility vehicle. Confirm the current year's figures before relying on them — these are adjusted regularly.",
+            "_key": "e53658f6e672"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "077b5beb0974",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The part that actually decides an audit",
+            "_key": "13f1b9720d44"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "9fd17b4a960e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You generally must have documentary evidence — receipts, canceled checks or bills — to support your expenses. If the IRS examines your return, you will be asked to explain the items you reported.",
+            "_key": "96028d83b74a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7e1b667e6229",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That is the whole game, and it is worth being blunt about it: ",
+            "_key": "b57c0cee2c4e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "an expense you cannot substantiate is not a deduction you took, it is a deduction you are hoping to keep.",
+            "_key": "f9ec8073ecf9"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " A bank statement showing $400 at a supplier proves you spent $400. It does not prove what you bought or why the business needed it.",
+            "_key": "af6a4eac0b79"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "0ed69bc26d23",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The IRS does not prescribe a particular system. You may choose any recordkeeping system suited to your business that clearly shows income and expenses — it can be as simple as a calendar with the day's income and expenses, or as involved as a full accounting package. What it cannot be is absent, or reconstructed in April from memory.",
+            "_key": "b86df42a39ae"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "474beffcaaf5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The home office, and the easy way to claim it",
+            "_key": "96667dde7fa4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "cd6ec49c9d33",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If part of your home qualifies for business use, there is a simplified method that avoids allocating your actual household costs. The prescribed rate is ",
+            "_key": "5f6587ae0313"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$5.00 per square foot",
+            "_key": "32da21805769"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", the allowable area is the lesser of the space used or ",
+            "_key": "1103a48a3169"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "300 square feet",
+            "_key": "23845876d731"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", and the maximum deduction under this method is therefore ",
+            "_key": "1cb7b5acdd8b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$1,500",
+            "_key": "a38920f0670b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "e3473a7726f9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "2e0456e96e46",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The trade-off is real: using the simplified method, you cannot also deduct depreciation — including additional first-year depreciation — or a Section 179 expense for that portion of the home in the same year. For a small space the simplified method usually wins on effort. For a large one it can leave money behind, and it is worth calculating both ways once rather than assuming.",
+            "_key": "6e7418eb590c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7b90b959c247",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "How long to keep the records",
+            "_key": "6fd86e3bc89c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "03a44235b0a2",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Keep records supporting income, deductions and credits until the period of limitations for that return runs out — generally ",
+            "_key": "49324094bad0"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "three years",
+            "_key": "3e1fadd8720f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", with several situations extending it. Records that establish basis in property are the exception worth flagging: keep purchase documents for equipment, vehicles and real property for as long as you own the asset, plus the limitations period after you sell it.",
+            "_key": "5416f9894841"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "cba8d2f9a97b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Why this argues for monthly, not annual, bookkeeping",
+            "_key": "00e34b20fd62"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "afdaa6f1f1c5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A record made at the time is evidence. A record made eleven months later is a recollection. The practical difference shows up in exactly the mixed-use cases above, where the question is not what you spent but what it was for — and nobody remembers the purpose of a Tuesday lunch the following March.",
+            "_key": "95540cbc6bef"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9313b3a8d9d9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "This is the honest argument for keeping books as you go rather than in a rush: not that it is tidier, but that it is the only version that survives being questioned. That is what ",
+            "_key": "f999af68234c"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "6e2de18b3b5f"
+            ],
+            "text": "monthly bookkeeping and accounting",
+            "_key": "5dcbbd3b16cd"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is for, and it feeds directly into ",
+            "_key": "486f10c09651"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "bf906e3dc6cc"
+            ],
+            "text": "corporate tax preparation",
+            "_key": "c883a8f3673c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " at year end instead of starting from a box.",
+            "_key": "9004cfd84af4"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "6e2de18b3b5f",
+            "_type": "link",
+            "href": "/services/monthly-bookkeeping-accounting"
+          },
+          {
+            "_key": "bf906e3dc6cc",
+            "_type": "link",
+            "href": "/services/corporate-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "f9968d3060d9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Where to be careful",
+            "_key": "fa6935df27e9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "904d35b92552",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Self-employed filers report business expenses on Schedule C of Form 1040, or Schedule F for farming. Beyond the mechanics, the categories that draw the most scrutiny are the ones that most resemble personal spending: vehicles, meals, travel, home office, and anything involving family members on payroll. None of them are off limits. All of them need a record that says what the business purpose was.",
+            "_key": "6b1670f38f3e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1f18855d9b0b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Figures above are the years stated and reflect IRS guidance current as of July 2026. This is general information, not advice about your business's deductions.",
+            "_key": "8ce88e332f99"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1ece3f62c435",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If your books are behind, fix that before you file",
+            "_key": "a4c5eda921bc"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "e0b226ada046",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring your bank and credit card statements, whatever mileage record you have, and your payroll reports if you have employees. We will tell you what is substantiated, what is not, and what to start capturing now so next year does not require the same excavation. Start with ",
+            "_key": "03c3791e43f9"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "6842d3d1bdd8"
+            ],
+            "text": "monthly bookkeeping",
+            "_key": "2afe65658f8e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "892dda375263"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "6842d3d1bdd8",
+            "_type": "link",
+            "href": "/services/monthly-bookkeeping-accounting"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.understanding-cryptocurrency-taxes": {
+    "slug": "understanding-cryptocurrency-taxes",
+    "title": "Crypto Taxes: What Form 1099-DA Means For You",
+    "excerpt": "Brokers now report your digital asset sales to the IRS. What the new form does not include is the number that decides your tax.",
+    "metaTitle": "Crypto Taxes 2026: Form 1099-DA, Basis, Reporting",
+    "metaDescription": "Brokers report 2025 crypto sales on the new Form 1099-DA by February 17, 2026 — usually without your cost basis. That part is left to you.",
+    "body": [
+      {
+        "_key": "4577adda04e7",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you sold or exchanged digital assets in 2025, your broker is now reporting those transactions to the IRS on a new form — ",
+            "_key": "14e699096908"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Form 1099-DA",
+            "_key": "82d7603d9106"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — and must send you a copy by ",
+            "_key": "94ea4247d7e0"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "February 17, 2026",
+            "_key": "47a1cb98dcfa"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". For most people this is the first year the IRS receives that information directly.",
+            "_key": "12280fde880a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e350df05999b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The important part is what the form is missing.",
+            "_key": "6c751fac2f99"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "c5cacc2a40bb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What changed, and when",
+            "_key": "14f90b409f6c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "11473153f178",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Broker reporting is being phased in over two years:",
+            "_key": "383d09fe606f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "f5aa65e85c70",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Brokers report ",
+            "_key": "5ac459e3eb48"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "gross proceeds",
+            "_key": "63dc888f72b1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for transactions effected on or after ",
+            "_key": "5cf8cd8a5a00"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "January 1, 2025",
+            "_key": "e860e595eca1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "fc12fb58981c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "994abac35c4f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Brokers report ",
+            "_key": "39491d107ae0"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "basis",
+            "_key": "f363bbd00dcb"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " on certain transactions effected on or after ",
+            "_key": "4e81fda1f2a1"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "January 1, 2026",
+            "_key": "851e35f2e8ba"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "8288d53b179b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "dc0be00fd4c9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Read those two dates together and the gap is obvious. For the 2025 tax year, most 1099-DA statements will show what you sold something for and ",
+            "_key": "37f546cc57b3"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "not what you paid for it",
+            "_key": "cf5286c22fec"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". Your cost basis is the number that decides whether you had a gain or a loss, and for this filing season the IRS says taxpayers will generally have to calculate it themselves.",
+            "_key": "4907f8de4c7b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "28d955a83143",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Who is covered, and who is not",
+            "_key": "a960e4c63db9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "b84df17a85eb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The final regulations apply to brokers that take possession of the digital assets being sold — custodial trading platforms, certain hosted wallet providers, digital asset kiosks, and certain processors of digital asset payments.",
+            "_key": "1a030fb484b6"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "71797bc8bac1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two consequences worth planning around:",
+            "_key": "8ebadc219db3"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "fad45054c93f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For 2025, the filing requirements generally apply to ",
+            "_key": "384a8286e57f"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "U.S. brokers",
+            "_key": "efa77f31ba37"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". If you transacted through an exchange based outside the United States, you may receive no Form 1099-DA at all.",
+            "_key": "2749ea85811f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "9d4dce1d220a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "You report regardless.",
+            "_key": "850bafb31eca"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " Every taxpayer must report related income, gains or losses whether or not a Form 1099-DA arrives. A missing form is not a missing obligation.",
+            "_key": "8df91dc88f32"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "13625a3bb03b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "There is also transitional relief on the broker's side: for 2025 transactions reported in 2026, the IRS will not impose penalties on brokers who make a good faith effort to file and furnish the forms correctly and on time. That relief is for brokers. It says nothing about your return, and it is a reason to expect some statements to be incomplete or wrong.",
+            "_key": "7a1090e34401"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "6e78986ab454",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "How crypto is taxed, in one paragraph",
+            "_key": "9346b44c05e4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "931218f0a33b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The IRS treats digital assets as property. That means selling or exchanging them produces a capital gain or loss, calculated as proceeds minus basis, and the holding period decides the rate — more than one year is long-term, one year or less is short-term and taxed at ordinary rates. The mechanics are the same ones that apply to any other property, which we cover in ",
+            "_key": "177cbb053e08"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "8723e3235851"
+            ],
+            "text": "our guide to investment taxes",
+            "_key": "0b32d3883539"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "50e02eaa27f7"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "8723e3235851",
+            "_type": "link",
+            "href": "/post/tax-implications-of-investing"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "55175a117d17",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Not everything taxable is a sale",
+            "_key": "12db19f4564f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "25353eb4624f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Selling is the obvious event. Two others catch people who never sold anything for dollars:",
+            "_key": "1511ef4bfb1c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "cfd8e2de7ffa",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Exchanging one digital asset for another",
+            "_key": "b380c1b0f9cd"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is a disposal. You have realised gain or loss on what you gave up, even though no cash moved.",
+            "_key": "e50086aa800f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "0cf5df1d3a3c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Receiving new digital assets from mining or staking",
+            "_key": "d88835cb79af"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " is a taxable event that produces ",
+            "_key": "4f7ff2c62349"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "ordinary income",
+            "_key": "f732824f41bb"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", not capital gain. The amount you recognise is the fair market value in U.S. dollars at the time you received it, and it is reported on Schedule 1 of Form 1040. That value then becomes your basis if you later sell.",
+            "_key": "538ac5e69f96"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "717505eb3daa",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "There is also a question you cannot skip. Everyone who files a Form 1040, 1040-SR, 1040-NR, 1041, 1065, 1120 or 1120-S must check either \"Yes\" or \"No\" to the digital asset question — it is answered by every filer, not only by people who transacted. Leaving it blank is not an option, and answering it carelessly on a return you signed is a bad place to be casual.",
+            "_key": "2cfb1326992d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "5fd9f20dbe33",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What to do before February",
+            "_key": "a25146777bb1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "5da2863f35bb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Export your full transaction history now",
+            "_key": "d16178babf8f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", from every platform you used, including ones you no longer use. Exchanges close, restrict accounts and lose historical data, and your basis records are the one thing nobody else is holding for you.",
+            "_key": "918bdde248fa"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "6f5b33951691",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Reconcile transfers between your own wallets.",
+            "_key": "b5aececdb738"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " A transfer is not a sale, but it can appear in records as a disposal if the trail is broken.",
+            "_key": "131a24078de0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "5072161c9605",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Expect to reconstruct basis for older holdings",
+            "_key": "d557c8974628"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", particularly anything bought before you used a custodial platform.",
+            "_key": "de1b1a2164e4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "b28e050a100a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Compare the 1099-DA against your own records when it arrives.",
+            "_key": "d792e0e9921a"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " If it disagrees with what you know happened, that difference is worth resolving before filing, not after a notice.",
+            "_key": "052a8157b87a"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "3c076291305f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If the IRS has already written to you",
+            "_key": "477ab896cbd0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "d45b66d9d74e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Because the IRS now receives this information directly, mismatches between a broker's report and a filed return will surface more often than they used to. A notice proposing changes based on gross proceeds — with no basis subtracted — can propose a tax far larger than what you actually owe, precisely because the basis was never reported.",
+            "_key": "3bf56c5b64af"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "34bae9d8c37b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That is a correctable situation, but it is corrected with records and a response, not by ignoring it. An ",
+            "_key": "1c0b13f18d67"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Enrolled Agent",
+            "_key": "e00021b4a83b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " or a ",
+            "_key": "47b51a52e7be"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "CPA",
+            "_key": "cda3599ddfc4"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " can deal with the agency on your behalf through ",
+            "_key": "3e7ca0e6af1b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "100f38592780"
+            ],
+            "text": "representation before the IRS",
+            "_key": "d94223137957"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "74b4dfcd4f56"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "100f38592780",
+            "_type": "link",
+            "href": "/services/representation-before-the-irs"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "32c82ed28d80",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The dates and rules above come from IRS guidance current as of July 2026. This is general information and not advice about your transactions.",
+            "_key": "1398c17b33bf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "615e7827ab1d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Bring your exports before the statements arrive",
+            "_key": "772fcccd9ea1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "9926f6b26b85",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The work in a crypto return is basis reconstruction, and it takes longer than the rest of the return combined. Send us your transaction history now rather than in April, and we will have the basis worked out by the time your Form 1099-DA lands. Start with ",
+            "_key": "4ff18f60dbe3"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "1f8c58d7accb"
+            ],
+            "text": "personal tax preparation",
+            "_key": "6c8f00a0db0e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "58a72f448cdd"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "1f8c58d7accb",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.tax-implications-of-investing": {
+    "slug": "tax-implications-of-investing",
+    "title": "Investment Taxes: Holding Periods, Rates, Surtax",
+    "excerpt": "Hold more than a year and the rate drops. Cross an income threshold and a 3.8% surtax starts. Florida takes none of it — the IRS still does.",
+    "metaTitle": "Investment Taxes: Capital Gains, NIIT & Florida",
+    "metaDescription": "Hold over a year and the rate drops. Past $200,000 income a 3.8% surtax begins. Florida taxes none of it; the federal side still applies.",
+    "body": [
+      {
+        "_key": "39987cef48de",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "One date decides most of your tax bill on an investment: how long you held it. Hold an asset ",
+            "_key": "e694666f7856"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "more than one year",
+            "_key": "85043162c6fd"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " before disposing of it and your gain is long-term. Hold it ",
+            "_key": "c4122f0223ee"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "one year or less",
+            "_key": "644c45773417"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " and it is short-term, taxed as ordinary income at your regular rates.",
+            "_key": "a5627e2efa5e"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "7597f451efd0",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "For 2025, the rate on most net capital gain is ",
+            "_key": "bcb7be0674a6"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "no higher than 15%",
+            "_key": "fd2cd519e478"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for most individuals, some of it can be taxed at ",
+            "_key": "dcfae5b5035f"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "0%",
+            "_key": "83d3c5f8a55c"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", and ",
+            "_key": "a841949c912e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "20%",
+            "_key": "fc014b90fa05"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " applies to the extent taxable income exceeds the thresholds set for the 15% rate. Short-term gains get none of that treatment.",
+            "_key": "941af791a82b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "2fc5a8ae4e9a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The 3.8% most people do not see coming",
+            "_key": "d91c5422336c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "4f23fb306ae1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "On top of capital gains tax, the ",
+            "_key": "45d9003ab9be"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Net Investment Income Tax",
+            "_key": "d3c43ae9b678"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " adds ",
+            "_key": "a31d4d2bbd94"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "3.8%",
+            "_key": "24367a9bd6ee"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " on investment income once your income crosses a threshold. Net investment income includes interest, dividends, capital gains, rental and royalty income, and non-qualified annuities.",
+            "_key": "9fb73bf799b9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "de7ddf8c7594",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The threshold amounts are:",
+            "_key": "7170fa193b6c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "5958b737e49d",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$250,000",
+            "_key": "bd1d8798ab3e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — married filing jointly or qualifying surviving spouse",
+            "_key": "fd2e6c12890b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "2293caa9b2b4",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$200,000",
+            "_key": "b3059dd8c8f6"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — single or head of household",
+            "_key": "fe02b1eb3572"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "8a062040872c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$125,000",
+            "_key": "95d0edc94998"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — married filing separately",
+            "_key": "4fbaf3053e52"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "5e2326a7f2f9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "These thresholds are fixed in statute and are not adjusted for inflation, which means more households cross them each year without their real income changing much. It is the most commonly missed piece of an investment tax estimate.",
+            "_key": "47ea7fc57b7d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "40f0d4dfa205",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The rates that are not 15% or 20%",
+            "_key": "b5619fb2d002"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "f06eb986c1f0",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Three categories carry their own maximums, and they surprise people who assumed all long-term gains behave the same way:",
+            "_key": "2c62bdfb30b6"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1a1f688d88e8",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Collectibles",
+            "_key": "4fc9861c731d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — such as coins or art — are taxed at a maximum of ",
+            "_key": "cbdefd4a688a"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "28%",
+            "_key": "fe61f5d81fe7"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "03942cb65c5f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "a8c213c70467",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Qualified small business stock",
+            "_key": "f1f4c11b1d3e"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " under section 1202 is taxed at a maximum of ",
+            "_key": "1ef8615f6028"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "28%",
+            "_key": "2a2f404ec169"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " on the taxable part of the gain.",
+            "_key": "c3fbbad402ee"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "2ce7a22c06c9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Unrecaptured section 1250 gain",
+            "_key": "01a56edf8d66"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " from selling section 1250 real property is taxed at a maximum of ",
+            "_key": "52ae8f63064b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "25%",
+            "_key": "25e3779fe621"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "4f94169d5813"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "ce83e31ead53",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That last one matters in South Florida more than the other two. It applies to depreciation previously taken on real property, which means a rental property sale is rarely a simple long-term capital gain calculation.",
+            "_key": "7dfd9af6b763"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "850704300a78",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Losses, and what they can offset",
+            "_key": "8ec43cf26f07"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "280122dde216",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Capital losses offset capital gains. If your net capital loss exceeds the annual limit on what can be deducted against ordinary income, you carry the excess forward to later years — it is not lost, it is deferred.",
+            "_key": "b8f566b34d03"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "b2c2bd0dc829",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "This is the mechanism behind harvesting losses to offset gains in the same year. It is a real technique with real rules attached, including restrictions on repurchasing what you just sold, and it is worth doing deliberately rather than in the last week of December.",
+            "_key": "e202a52b9909"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "479561f69439",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What Florida does not tax, and what that does not mean",
+            "_key": "07cffcdf04a7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "c5f2d6a13339",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Florida has no personal income tax, so your capital gains, dividends and interest are not taxed at the state level here. That is a genuine advantage and it is one reason people move investments and residency to Florida.",
+            "_key": "814ad480ea09"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1df6726875cc",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "It changes nothing about the federal side. The rates above, the 3.8% surtax, and the reporting obligations are federal and apply to you in Coral Springs exactly as they would anywhere else. An investor who assumes \"no state income tax\" means \"low tax\" on a large gain is in for an unpleasant April.",
+            "_key": "216c0372de3c"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "66d050290173",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If those gains sit inside a business or a partnership rather than a personal brokerage account, the reporting is a different exercise again, and it starts with clean statements — which is what ",
+            "_key": "910bb884b43b"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "8e61d9864812"
+            ],
+            "text": "financial statement preparation",
+            "_key": "08823a520339"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " produces.",
+            "_key": "9842e292119a"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "8e61d9864812",
+            "_type": "link",
+            "href": "/services/financial-statement-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "2a2ec96cbd16",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Where a general rule stops working",
+            "_key": "82d77fa9eb9d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "b9647283b995",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Holding period, rate category and threshold interact, and they interact differently depending on what else is on your return. Whether a particular sale is worth making this year or next is not a question this page can answer, because the answer depends on income you have not told anyone about yet.",
+            "_key": "2baca16f123d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "03634ea18b82",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Figures are for tax year 2025 unless stated otherwise and reflect IRS guidance current as of July 2026. General information, not investment or tax advice.",
+            "_key": "7029e06c4056"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "43c751c72fa1",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Model the sale before you make it",
+            "_key": "71ad04d869e9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "5d495e16bb73",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "If you are considering selling something with a significant gain — a stock position, a rental property, a business interest — the time to run the numbers is before the sale, while the timing is still yours to choose. Bring your basis records and last year's return and we will show you the actual after-tax figure, including whether it pushes you past the 3.8% threshold. Book ",
+            "_key": "7a26ee07d219"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "b3f1e1bcd40e"
+            ],
+            "text": "personal tax preparation",
+            "_key": "62e4742350e4"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " or call (754) 244-3993.",
+            "_key": "7f0a828ecaaf"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "b3f1e1bcd40e",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  },
+  "post.retirement-planning-and-taxes": {
+    "slug": "retirement-planning-and-taxes",
+    "title": "Retirement Taxes: Limits, Withdrawals, Florida",
+    "excerpt": "What you can put away in 2026, when withdrawals become mandatory, and what Florida does and does not tax when you retire here.",
+    "metaTitle": "Retirement And Taxes: 2026 Limits, RMDs, Florida",
+    "metaDescription": "The 2026 401(k) limit is $24,500 and required withdrawals start at 73. Florida charges no state income tax on them. The IRS still does.",
+    "body": [
+      {
+        "_key": "d2af1bf1dcd6",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Retirement accounts differ in one respect that matters more than any other: whether you pay tax on the money going in or on the money coming out. Get that right and the rest is arithmetic.",
+            "_key": "5a4240ea93c7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9bdbf716ba7f",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Here are the 2026 numbers, and the rules that decide what you owe when you start withdrawing.",
+            "_key": "82245da5fc60"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "db8edc3879eb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What you can contribute in 2026",
+            "_key": "2c0608a57495"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "5bbda9034477",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "401(k), 403(b), governmental 457 and the federal Thrift Savings Plan",
+            "_key": "0deffff739e6"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — the basic limit is ",
+            "_key": "30a6ecb55368"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$24,500",
+            "_key": "79d4267bb2df"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "4843dbaaea8f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "4735b3c36ff5",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Catch-up at 50 and older",
+            "_key": "a8177499b203"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — an additional ",
+            "_key": "8d8880a1c3c3"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$8,000",
+            "_key": "b22ec7b659b0"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", up from $7,500 in 2025, bringing the total to ",
+            "_key": "dbc2fa0ee5f5"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$32,500",
+            "_key": "2b8c636fc6f5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "ff6b1b0e8d8d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "f904e575c77c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "Catch-up at ages 60 through 63",
+            "_key": "8c8e7f1b41e5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — a higher limit of ",
+            "_key": "46aab6b6c3c2"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$11,250",
+            "_key": "8d7c0c53a6fc"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " applies instead of the $8,000.",
+            "_key": "b4af50a0a989"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "e275506588c9",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "IRA",
+            "_key": "803f62ec7b62"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " — ",
+            "_key": "588e5509efa2"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$7,500",
+            "_key": "13038befe1fc"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", with a catch-up of ",
+            "_key": "6c7a496d8abe"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$1,100",
+            "_key": "a7a26bf5fff9"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ".",
+            "_key": "b878535db9cc"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal",
+        "level": 1,
+        "listItem": "bullet"
+      },
+      {
+        "_key": "7406b8f4026b",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Roth IRA contributions phase out by income. For 2026 the range is ",
+            "_key": "ac45a364195e"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$153,000 to $168,000",
+            "_key": "54929f636a6d"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for single filers and heads of household, and ",
+            "_key": "4604de25ed20"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "$242,000 to $252,000",
+            "_key": "a118f9f0a8c1"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " for married couples filing jointly.",
+            "_key": "ba96ffc4eef4"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "9fd1f4048465",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The 60-through-63 catch-up is the one people miss, because it is a narrow window and it is larger than the ordinary one. If you are in it, it is worth acting on this year rather than discovering it at 64.",
+            "_key": "567e105fc6bd"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "446554b7c1ba",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Note that the Roth figures describe a ",
+            "_key": "87922921e0c9"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "range",
+            "_key": "de3fc034487f"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", not a cliff. Below it you can contribute the full amount; above it you cannot contribute directly at all; inside it your allowable contribution is reduced rather than eliminated. People at the top of that band often assume they are excluded when a partial contribution was still available to them.",
+            "_key": "f09976220b93"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "1b21d32cbe50",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Tax now or tax later",
+            "_key": "1d58cfc6fbff"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "2010f3ce6a1e",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "A traditional account generally gives you a deduction or pre-tax treatment when you contribute, and the withdrawal is taxable later. A Roth account is funded with money you have already paid tax on, and qualified withdrawals come out untaxed.",
+            "_key": "783380be4f4b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "f156abc92b00",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Which is better depends on a comparison nobody can make with certainty: your rate now against your rate later. What can be said plainly is that the decision is not permanent-looking from the inside — most people end up holding both types, and the useful question is usually which one to fund ",
+            "_key": "37fc46d1f078"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "em"
+            ],
+            "text": "this",
+            "_key": "d33ea705388b"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " year, not which one is right forever.",
+            "_key": "336f4749ab24"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "e2c434c9dee4",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "When withdrawals stop being optional",
+            "_key": "89ac0eb6a33f"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "51c8c3ce3298",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "You generally have to begin taking withdrawals from your IRA, SIMPLE IRA, SEP IRA or retirement plan account when you reach ",
+            "_key": "ea4fc0365136"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "age 73",
+            "_key": "189f825360a8"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ". These are required minimum distributions, and missing one carries its own penalty.",
+            "_key": "adf9a78e21d1"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "81a67b72a3f0",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Two exceptions worth knowing: you are ",
+            "_key": "0b977927831a"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "strong"
+            ],
+            "text": "not",
+            "_key": "31a5d0dac1d5"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": " required to take withdrawals from a Roth IRA, or from a designated Roth account in a 401(k) or 403(b), while the account owner is alive.",
+            "_key": "4e7b5805f8d9"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "c3d76722f0fe",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "That difference is doing real work in a long retirement. An account with no required distribution can be left alone while other money is spent first, which is a planning lever rather than a rule to follow.",
+            "_key": "9859445d2e32"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "78c528684ab3",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What Florida taxes, and what it does not",
+            "_key": "d487208d0654"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "51ba1904062c",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Florida has no personal income tax. Distributions from a traditional 401(k) or IRA, pension income and Social Security are not taxed at the state level here.",
+            "_key": "d96b5048ee5b"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "969de54e9b33",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "They are still federal income. A retiree who moves to Coral Springs from a high-tax state removes a real cost, and removes exactly one of the two layers. The federal treatment of a distribution is identical here to what it was there, and a large withdrawal in a single year can push you into a higher federal bracket and interact with how your Social Security is taxed. The state saving is genuine; it is not a reason to stop planning the timing of withdrawals.",
+            "_key": "4b1adf4062f0"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "ffb1cbc16971",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Residency itself is also a question of fact rather than intention — where you actually live, not where you would like to be taxed. If you are splitting the year between two states, that is worth sorting out properly before the first withdrawal, not after.",
+            "_key": "f95bd3c92207"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "6889d180a794",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "What this article cannot tell you",
+            "_key": "9d2b40bb219d"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "90fbeb7cdb72",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Whether to contribute to a traditional or a Roth account, when to convert, and what order to draw accounts down in are decisions that depend on your income, your other assets, your age and your plans. This page describes rules. It does not know your situation and it is not advice.",
+            "_key": "2a560002d6cf"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "cfd6138be95a",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "All figures are for tax year 2026 unless stated otherwise, and reflect IRS guidance current as of July 2026.",
+            "_key": "3a211b790d99"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "normal"
+      },
+      {
+        "_key": "c5df1ab6beeb",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "Get the withdrawal order right before the first one",
+            "_key": "33428d5b07b7"
+          }
+        ],
+        "markDefs": [],
+        "_type": "block",
+        "style": "h2"
+      },
+      {
+        "_key": "3e8d0d678eab",
+        "children": [
+          {
+            "_type": "span",
+            "marks": [],
+            "text": "The year you start drawing down is the year the planning stops being theoretical. If you are approaching 73, thinking about a Roth conversion, or about to take a large distribution, bring your account statements and last year's return — we will show you what each option costs in federal tax before you commit to one. Start with ",
+            "_key": "437669d5c3e0"
+          },
+          {
+            "_type": "span",
+            "marks": [
+              "bf21a717c9b1"
+            ],
+            "text": "personal tax preparation",
+            "_key": "a27c70f988dc"
+          },
+          {
+            "_type": "span",
+            "marks": [],
+            "text": ", or call (754) 244-3993.",
+            "_key": "feb6e7e57785"
+          }
+        ],
+        "markDefs": [
+          {
+            "_key": "bf21a717c9b1",
+            "_type": "link",
+            "href": "/services/personal-tax-preparation"
+          }
+        ],
+        "_type": "block",
+        "style": "normal"
+      }
+    ]
+  }
+}

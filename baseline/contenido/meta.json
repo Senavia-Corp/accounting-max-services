@@ -1,0 +1,123 @@
+{
+  "_nota": "Campos de texto cortos de los 10 posts, EN y ES. Los cuerpos viven en posts/<slug>.{en,es}.html y los compila tools/blog-build.mjs. `publishedAt` NO esta aqui a proposito: lo estampa tools/push-en.mjs en el momento del empuje y solo si el documento aun no tiene fecha (politica decidida por Sebastian el 28-jul-2026). El slug NO se traduce y NO se toca (R4). Los `title` estan escritos para leerse bien bajo el `text-transform: capitalize` que .h1 aplica en site.css.",
+
+  "understanding-sales-tax": {
+    "title": "Florida Sales Tax: What You Collect, When You File",
+    "excerpt": "What Broward County businesses collect, when they have to register, and the day a Florida sales tax return becomes late.",
+    "metaTitle": "Florida Sales Tax 2026: Rates, Filing & Due Dates",
+    "metaDescription": "Broward businesses collect 7% — Florida's 6% plus a 1% county surtax. What to collect, how often to file, and the day your return turns late.",
+
+    "titleEs": "Sales Tax en Florida: qué cobra usted y cuándo presenta",
+    "excerptEs": "Qué cobra un negocio del condado de Broward, cuándo tiene que registrarse y a partir de qué día su declaración de Sales Tax se considera tardía.",
+    "metaTitleEs": "Sales Tax en Florida 2026: tasas, plazos y frecuencia",
+    "metaDescriptionEs": "En Broward se cobra un 7%: 6% estatal más 1% del condado. Qué cobrar, con qué frecuencia presentar y desde qué día la declaración es tardía."
+  },
+
+  "understanding-tax-deductions": {
+    "title": "Standard Deduction Or Itemized: How To Choose",
+    "excerpt": "The 2025 standard deduction amounts, when itemizing is worth the paperwork, and why living in Florida changes that answer.",
+    "metaTitle": "Standard Deduction vs. Itemizing: 2025 Amounts",
+    "metaDescription": "The 2025 standard deduction is $15,750 single, $31,500 joint. When itemizing beats it, and why Florida residents clear that bar less often.",
+
+    "titleEs": "Deducción estándar o detallada: cómo elegir",
+    "excerptEs": "Los montos de la deducción estándar de 2025, cuándo compensa detallar y por qué vivir en Florida cambia esa respuesta.",
+    "metaTitleEs": "Deducción estándar o detallada: montos de 2025",
+    "metaDescriptionEs": "En 2025 la deducción estándar es de $15,750 soltero y $31,500 conjunta. Cuándo conviene detallar y por qué en Florida cuesta más llegar."
+  },
+
+  "tax-credits-explained": {
+    "title": "Tax Credits: Refundable, Nonrefundable, Who Qualifies",
+    "excerpt": "A credit cuts your tax dollar for dollar. Which ones pay you back even when you owe nothing, and what they were worth in 2025.",
+    "metaTitle": "Tax Credits 2025: Refundable vs. Nonrefundable",
+    "metaDescription": "A credit cuts tax dollar for dollar; a deduction only cuts income. Which 2025 credits still pay you back when your tax bill is already zero.",
+
+    "titleEs": "Créditos fiscales: reembolsables, no reembolsables, quién califica",
+    "excerptEs": "Un crédito reduce el impuesto dólar por dólar. Cuáles le devuelven dinero aunque no deba nada, y cuánto valían en 2025.",
+    "metaTitleEs": "Créditos fiscales 2025: reembolsables y no reembolsables",
+    "metaDescriptionEs": "Un crédito baja el impuesto dólar por dólar; una deducción solo baja el ingreso. Cuáles le devuelven dinero aunque su impuesto ya sea cero."
+  },
+
+  "common-tax-mistakes": {
+    "title": "Common Tax Return Mistakes: What To Do Next",
+    "excerpt": "The errors the IRS sees most, the two that hit bilingual and ITIN filers hardest, and how to fix a return you already sent.",
+    "metaTitle": "Common Tax Return Mistakes & How To Fix Them",
+    "metaDescription": "Wrong SSN, unsigned return, wrong filing status, expired ITIN. The errors the IRS sees most and what to do once you have already filed one.",
+
+    "titleEs": "Errores comunes en la declaración: qué hacer después",
+    "excerptEs": "Los errores que más ve el IRS, los dos que más golpean a quien presenta con ITIN, y cómo corregir una declaración ya enviada.",
+    "metaTitleEs": "Errores comunes en la declaración y cómo corregirlos",
+    "metaDescriptionEs": "Número equivocado, declaración sin firmar, estado civil incorrecto, ITIN vencido. Los errores más frecuentes y cómo corregir lo ya presentado."
+  },
+
+  "preparing-for-tax-season": {
+    "title": "Tax Season Checklist: Documents You Need First",
+    "excerpt": "What to gather before your appointment so your return is not sitting half-finished while February goes by.",
+    "metaTitle": "Tax Season Checklist: What Documents To Gather",
+    "metaDescription": "W-2s, 1099s, ITIN status, last year's return. What to collect before your appointment so nothing holds your filing up in February.",
+
+    "titleEs": "Lista para la temporada de impuestos: qué documentos reunir",
+    "excerptEs": "Qué reunir antes de su cita para que su declaración no se quede a medias mientras pasa febrero.",
+    "metaTitleEs": "Temporada de impuestos: qué documentos hay que reunir",
+    "metaDescriptionEs": "W-2, 1099, estado del ITIN y la declaración del año pasado. Qué llevar a su cita para que nada retrase la presentación en febrero."
+  },
+
+  "tax-planning-strategies": {
+    "title": "Tax Planning: What To Decide Before December 31",
+    "excerpt": "Planning happens before the year closes; preparation happens after. What a Florida business owner actually decides in the fourth quarter.",
+    "metaTitle": "Tax Planning Strategies For Florida Businesses",
+    "metaDescription": "Preparation reports the year you had. Planning changes it. Estimated payments, timing and entity choice — the calls a Florida owner makes by Q4.",
+
+    "titleEs": "Planificación fiscal: qué decidir antes del 31 de diciembre",
+    "excerptEs": "La planificación ocurre antes de cerrar el año; la preparación, después. Qué decide de verdad un dueño de negocio en Florida en el último trimestre.",
+    "metaTitleEs": "Planificación fiscal para negocios en Florida",
+    "metaDescriptionEs": "La preparación reporta el año que tuvo. La planificación lo cambia. Pagos estimados, momento y tipo de entidad: lo que se decide antes de cerrar."
+  },
+
+  "navigating-business-expenses": {
+    "title": "Business Expenses: What You Deduct, What You Prove",
+    "excerpt": "Ordinary and necessary is the legal test. What survives a review is the record you kept, not the total on the receipt.",
+    "metaTitle": "Business Expenses: What's Deductible & How To Prove It",
+    "metaDescription": "Ordinary and necessary is the test. The 2026 mileage rate is 72.5 cents. What survives IRS review is your record, not your receipt total.",
+
+    "titleEs": "Gastos del negocio: qué se deduce y qué hay que probar",
+    "excerptEs": "«Ordinario y necesario» es la prueba legal. Lo que sobrevive a una revisión es el registro que usted llevó, no el total del recibo.",
+    "metaTitleEs": "Gastos del negocio: qué se deduce y cómo se comprueba",
+    "metaDescriptionEs": "«Ordinario y necesario» es la prueba. En 2026 la tarifa por milla es de 72,5 centavos. Ante el IRS vale su registro, no el total del recibo."
+  },
+
+  "understanding-cryptocurrency-taxes": {
+    "title": "Crypto Taxes: What Form 1099-DA Means For You",
+    "excerpt": "Brokers now report your digital asset sales to the IRS. What the new form does not include is the number that decides your tax.",
+    "metaTitle": "Crypto Taxes 2026: Form 1099-DA, Basis, Reporting",
+    "metaDescription": "Brokers report 2025 crypto sales on the new Form 1099-DA by February 17, 2026 — usually without your cost basis. That part is left to you.",
+
+    "titleEs": "Impuestos sobre cripto: qué significa el Form 1099-DA",
+    "excerptEs": "Los brokers ya reportan sus ventas de activos digitales al IRS. Lo que el formulario nuevo no trae es justo la cifra que decide su impuesto.",
+    "metaTitleEs": "Cripto e impuestos 2026: Form 1099-DA y costo base",
+    "metaDescriptionEs": "Los brokers reportan las ventas de cripto de 2025 en el nuevo Form 1099-DA antes del 17 de febrero de 2026, casi siempre sin su costo base."
+  },
+
+  "tax-implications-of-investing": {
+    "title": "Investment Taxes: Holding Periods, Rates, Surtax",
+    "excerpt": "Hold more than a year and the rate drops. Cross an income threshold and a 3.8% surtax starts. Florida takes none of it — the IRS still does.",
+    "metaTitle": "Investment Taxes: Capital Gains, NIIT & Florida",
+    "metaDescription": "Hold over a year and the rate drops. Past $200,000 income a 3.8% surtax begins. Florida taxes none of it; the federal side still applies.",
+
+    "titleEs": "Impuestos al invertir: tenencia, tasas y recargo",
+    "excerptEs": "Si mantiene más de un año, la tasa baja. Si cruza cierto ingreso, empieza un recargo del 3,8%. Florida no cobra nada de eso; el IRS sí.",
+    "metaTitleEs": "Impuestos al invertir: ganancias de capital y NIIT",
+    "metaDescriptionEs": "Más de un año de tenencia y la tasa baja. Pasados los $200,000 de ingreso empieza un recargo del 3,8%. Florida no cobra; el IRS sí."
+  },
+
+  "retirement-planning-and-taxes": {
+    "title": "Retirement Taxes: Limits, Withdrawals, Florida",
+    "excerpt": "What you can put away in 2026, when withdrawals become mandatory, and what Florida does and does not tax when you retire here.",
+    "metaTitle": "Retirement And Taxes: 2026 Limits, RMDs, Florida",
+    "metaDescription": "The 2026 401(k) limit is $24,500 and required withdrawals start at 73. Florida charges no state income tax on them. The IRS still does.",
+
+    "titleEs": "Impuestos y jubilación: límites, retiros y Florida",
+    "excerptEs": "Cuánto puede aportar en 2026, cuándo los retiros pasan a ser obligatorios, y qué grava y qué no grava Florida cuando usted se jubila aquí.",
+    "metaTitleEs": "Jubilación e impuestos: límites 2026, RMD y Florida",
+    "metaDescriptionEs": "En 2026 el límite del 401(k) es $24,500 y los retiros obligatorios empiezan a los 73. Florida no cobra impuesto estatal sobre ellos; el IRS sí."
+  }
+}
