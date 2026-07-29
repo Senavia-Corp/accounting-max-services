@@ -37,6 +37,7 @@
 import { servicios, sanity, NEGOCIO } from "../lib/sanity";
 import { t, idiomaDeRuta, interpola, type Lang } from "../lib/i18n";
 import { requiereEs, inicio, enlace } from "../lib/es";
+import SelectorIdioma from "./SelectorIdioma.astro";
 
 interface Props {
   lang?: Lang;
@@ -111,7 +112,26 @@ const titulo = (s: (typeof servs)[number]) =>
     : s.title.trim();
 ---
 
-<header class="menu">
+{/* Centinelas del header condensado (B). Van FUERA de .menu a proposito: .menu es
+    sticky, o sea que su caja acompana al scroll y desde dentro no se puede saber
+    cuanto se ha bajado. Estos dos se quedan clavados en la y24 y la y88 del
+    documento, y un IntersectionObserver mira si siguen dentro del viewport.
+
+    NO se usa `rootMargin` con un solo centinela en y0, que es lo que pide el
+    cuerpo: un rootMargin NEGATIVO encoge el root, y como el centinela vive en la
+    y0 su rect en viewport es [-scrollY, -scrollY+1] — arranca ya por encima de la
+    banda y al bajar solo se aleja, asi que isIntersecting seria false en TODA
+    posicion de scroll y el observador no volveria a disparar nunca. Colocarlos
+    con `top` no depende del signo de ese parametro y el fallo se ve en DevTools.
+
+    Son absolute y de 1px: fuera de flujo, cero CLS. Los pinta el servidor, no el
+    JS, para que no haya un frame sin ellos. */}
+<div class="cromo-centinela" data-cromo-umbral="24" aria-hidden="true"></div>
+<div class="cromo-centinela" data-cromo-umbral="88" aria-hidden="true"></div>
+
+{/* data-cromo se emite en servidor y no lo pone el JS: si faltara al arrancar, el
+    «mantener el estado actual» de la histeresis leeria undefined. */}
+<header class="menu" data-cromo="expandido">
   <div class="top-bar">
     <div class="w-layout-blockcontainer container-menu w-container">
       <div class="wrapper-top-bar">
@@ -301,6 +321,13 @@ const titulo = (s: (typeof servs)[number]) =>
               class={`button top-menu-click w-button${marca(RUTA.contact)}`}
               aria-current={activo(RUTA.contact)}>{c.nav.cta}</a
             >
+            {/* Va aqui, al final del nav derecho, y NO en la .top-bar: (B)
+                esconde la barra verde al bajar y el selector desapareceria en
+                cuanto el usuario hace scroll. Este .nav-menu vive dentro de
+                .block-items-menu, que por debajo de 992 ES el cajon, asi que
+                una sola instancia sirve escritorio y movil.
+                Con ES_PUBLICO=false no pinta nada (gate D3). */}
+            <SelectorIdioma lang={lang} />
           </nav>
         </div>
 

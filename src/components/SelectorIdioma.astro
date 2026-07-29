@@ -1,0 +1,100 @@
+---
+// Selector de idioma EN/ES. Vive en .navbar y NO en .top-bar: la mejora (B)
+// esconde la barra verde al bajar, y un selector metido alli desaparece en
+// cuanto el usuario hace scroll. En Coral Springs el espanol no es una
+// preferencia marginal.
+//
+// GATE D3: con ES_PUBLICO en false este componente no pinta NADA. Ver la nota
+// larga en i18n.ts. La constante no se invierte sin el cliente.
+//
+// El markup es un <button aria-expanded> mas una lista de <a> REALES: ni
+// <select> ni divs con onclick, para que se puedan abrir en pestana nueva y
+// sean rastreables el dia que D3 se levante. Sin JS el panel no despliega, pero
+// los enlaces siguen ahi y funcionan — la misma mejora progresiva que ui.ts.
+//
+// El teclado no se implementa aqui: el boton lleva `selector-idioma`, que es la
+// clase que ui.ts anade a su selector de disparadores, asi que hereda click,
+// ArrowDown, Escape con devolucion de foco, exclusion mutua con el desplegable
+// de Services, click fuera, focusout y la trampa de Tab. No se le pone la clase
+// `w-dropdown-toggle` de Webflow porque es un elemento NUEVO y la convencion
+// del repo es clases propias para lo nuevo.
+import { t, idiomaDeRuta, ES_PUBLICO, type Lang } from "../lib/i18n";
+import { otroIdioma } from "../lib/es";
+
+// Las banderas se insertan EN LINEA y no con <img src>: cero peticiones HTTP en
+// 54 rutas, y el fichero sigue siendo la fuente unica (criterio 7 se verifica
+// abriendolo solo en el navegador). Venian rotas — sin un solo fill, apoyadas
+// en clases .st0-.st17 inexistentes, o sea negro solido — y pesaban 127 856 B
+// entre las dos; reescritas suman 973 B.
+import banderaEn from "../../public/images/En.svg?raw";
+import banderaEs from "../../public/images/Sp.svg?raw";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname) } = Astro.props;
+const c = t(lang);
+
+const otro = otroIdioma(Astro.url.pathname);
+
+// Los nombres salen de i18n.ts, donde ya estaban preparados y sin usar desde la
+// FASE 5 esperando justo a esto. Van SIEMPRE en su propio idioma — «English» y
+// «Español», identicos en las dos lenguas — porque quien no entiende la pagina
+// en la que esta tiene que poder leer su propia opcion. `idiomaLabel` si se
+// traduce: esa la lee quien ya entiende la pagina actual.
+const NOMBRE = { en: c.common.idiomaEn, es: c.common.idiomaEs } as const;
+const BANDERA = { en: banderaEn, es: banderaEs } as const;
+
+// Cada fila: el idioma actual (activo) y, si existe, el otro. En /privacy-policy
+// y /terms `otro` es null y solo se ofrece el actual — ni enlace muerto ni
+// redireccion al home.
+const OPCIONES = [
+  { lang, href: null as string | null },
+  ...(otro ? [{ lang: otro.lang, href: otro.href }] : []),
+];
+---
+
+{
+  ES_PUBLICO && (
+    <div class="selector-idioma-caja">
+      <button
+        type="button"
+        id="selector-idioma"
+        class="selector-idioma"
+        aria-expanded="false"
+        aria-controls="selector-idioma-lista"
+        aria-label={c.common.idiomaLabel}
+      >
+        {/* La bandera es DECORATIVA. Una bandera no es un idioma: el espanol no
+            es de Espana y esto se sirve a un publico de Florida. Quien nombra el
+            idioma es el texto de al lado; la bandera nunca es el unico
+            identificador. */}
+        <span class="selector-idioma-bandera" aria-hidden="true" set:html={BANDERA[lang]} />
+        <span class="selector-idioma-codigo">{lang.toUpperCase()}</span>
+        <span class="selector-idioma-chevron" aria-hidden="true" />
+      </button>
+
+      <div id="selector-idioma-lista" class="selector-idioma-lista" aria-labelledby="selector-idioma">
+        {OPCIONES.map((o) =>
+          o.href === null ? (
+            <span class="selector-idioma-opcion" aria-current="true" lang={o.lang}>
+              <span class="selector-idioma-bandera" aria-hidden="true" set:html={BANDERA[o.lang]} />
+              <span>{NOMBRE[o.lang]}</span>
+              <span class="selector-idioma-check" aria-hidden="true" />
+            </span>
+          ) : (
+            <a
+              class="selector-idioma-opcion"
+              href={o.href}
+              hreflang={o.lang}
+              lang={o.lang}
+            >
+              <span class="selector-idioma-bandera" aria-hidden="true" set:html={BANDERA[o.lang]} />
+              <span>{NOMBRE[o.lang]}</span>
+            </a>
+          ),
+        )}
+      </div>
+    </div>
+  )
+}
