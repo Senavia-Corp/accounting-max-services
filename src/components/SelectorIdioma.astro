@@ -63,8 +63,13 @@ const OPCIONES = [
         class="selector-idioma"
         aria-expanded="false"
         aria-controls="selector-idioma-lista"
-        aria-label={c.common.idiomaLabel}
+        aria-label={`${c.common.idiomaLabel}: ${lang.toUpperCase()}`}
       >
+        {/* El codigo visible va DENTRO del nombre accesible, y no solo "Language".
+            WCAG 2.5.3 (Label in Name, nivel A) pide que el nombre accesible
+            contenga el texto visible: con `aria-label="Language"` a secas, quien
+            usa control por voz dice "click EN" —lo que ve— y no pasa nada, porque
+            el nombre no contiene "EN". Queda "Language: EN" / "Idioma: ES". */}
         {/* La bandera es DECORATIVA. Una bandera no es un idioma: el espanol no
             es de Espana y esto se sirve a un publico de Florida. Quien nombra el
             idioma es el texto de al lado; la bandera nunca es el unico
