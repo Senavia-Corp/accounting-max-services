@@ -1,5 +1,11 @@
 # Verificación del release — 31 de julio de 2026
 
+> ⚠️ **Medido el 31-jul-2026 por la mañana, sobre la URL `*.vercel.app`.** Esa misma
+> tarde cambiaron tres cosas: se conectó el dominio, se firmó D3 (el sitemap pasa de 26
+> a 52 URLs y el `noindex` baja de 28 a 2) y se abrió el repositorio. Los criterios 3,
+> 6, 8 y 12 de abajo describen el estado de esa mañana, no el de hoy. Para el estado
+> real, ver [`release-dominio-conectado.md`](release-dominio-conectado.md).
+
 **URL de producción:** <https://accounting-max-services.vercel.app>
 **Commit desplegado:** `6fcd18c` · **Proyecto Vercel:** `prj_D755iZtk3M0g1wCylmYs6CA9JWtI`
 **Dominio del cliente:** NO tocado. `accountingmaxservices.com` sigue sirviendo el Webflow antiguo.

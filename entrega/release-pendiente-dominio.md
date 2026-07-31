@@ -1,5 +1,10 @@
 # Pendiente para conectar el dominio
 
+> ⚠️ **DOCUMENTO SUPERADO — 31-jul-2026.** El corte se ejecutó: el dominio está
+> conectado y sirviendo el sitio nuevo. Lo de abajo describe el estado ANTERIOR y se
+> conserva como registro de lo planificado. Para el estado real, ver
+> [`release-dominio-conectado.md`](release-dominio-conectado.md).
+
 **Escrito, no ejecutado.** Nada de este documento se ha aplicado. A 31 de julio de
 2026, `accountingmaxservices.com` sigue sirviendo el sitio de Webflow y en Vercel
 **no hay ningún dominio personalizado**.
