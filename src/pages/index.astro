@@ -114,24 +114,23 @@ const VIDEO = {
   miniatura: "https://i.ytimg.com/vi/Nx4HDJ-TZn4/maxresdefault.jpg",
 };
 
-// Entradilla del hero: texto real de produccion, migrado verbatim. Vive en una
-// constante porque lo usan DOS sitios — el <div> bajo el H1 y la meta
-// description — y no puede divergir entre ellos.
+// Entradilla del hero. Vive en una constante porque lo usan DOS sitios — el
+// <div> bajo el H1 y la meta description — y no puede divergir entre ellos. Por
+// eso se queda en 155 caracteres o menos: es tambien la meta description.
+//
+// La version de produccion decia "serving clients in Tamarac, FL". Era un
+// conflicto de NAP contra la direccion, el H2 de esta misma pagina y NEGOCIO:
+// la sede es Coral Springs. Tamarac es zona atendida, no sede.
 const ENTRADA =
-  "Simplify your international and domestic tax needs with our expert CPA team. " +
-  "At Accounting Max Services, we specialize in global tax solutions, business " +
-  "accounting, and IRS representation—serving clients in Tamarac, FL and across the U.S.";
+  "Bilingual tax and accounting in Coral Springs, FL for individuals and " +
+  "business owners across Broward County — and for clients filing from abroad.";
+
+// El <title> ya no es "Home": era el unico de las 26 rutas que no decia nada de
+// lo que hay en la pagina. 60 caracteres con el sufijo de marca incluido.
+const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
 ---
 
-{/*
-  Titulo: en produccion es literalmente "Home", sin marca. Se le anade el nombre
-  real del negocio para seguir la convencion que ya usan las otras 25 rutas
-  ("<pagina> | Accounting Max Services"). No es contenido inventado: es el NAP.
-
-  Description: produccion no tiene ni una en las 26 rutas. NO se redacta aqui
-  (R3); se sirve la propia entradilla del hero, texto real del cliente.
-*/}
-<BaseLayout title={`Home | ${NEGOCIO.nombre}`} description={ENTRADA}>
+<BaseLayout title={TITULO} description={ENTRADA}>
   <Nav />
 
   <main id="main">
@@ -142,7 +141,7 @@ const ENTRADA =
           {/* Sin style="opacity:0": era una interaccion de webflow.js y sin el
               dejaba el H1 invisible de forma permanente. */}
           <div class="block-header">
-            <h1 class="h1"><strong>Global Tax &amp; Accounting Services &amp; Bilingual CPA Firm</strong></h1>
+            <h1 class="h1"><strong>Enrolled Agents &amp; CPAs in Coral Springs, FL &mdash; Tax, Accounting &amp; IRS Representation</strong></h1>
             <div>{ENTRADA}</div>
             <a href="/contact-us" class="button w-button">Book a consultation</a>
           </div>
@@ -258,7 +257,7 @@ const ENTRADA =
                 <strong>IRS Enrolled Agents &amp; Certified Public Accountants In Coral Springs, FL </strong>
               </h2>
               <div>
-                At Accounting Max Services, our team includes IRS Certified Enrolled Agents (EAs)
+                At Accounting Max Services, our team includes Enrolled Agents licensed to practice before the IRS (EAs)
                 and Certified Public Accountants (CPAs), offering the highest level of tax
                 expertise and compliance support.<br />We provide a full range of <strong
                   >global tax and accounting solutions</strong
@@ -571,7 +570,7 @@ const ENTRADA =
                 },
                 {
                   q: "4. Can you help with IRS audits or letters?",
-                  a: "Absolutely. Our team includes IRS Certified Enrolled Agents who represent you directly before the IRS to resolve audits, letters, or disputes.",
+                  a: "Absolutely. Our team includes Enrolled Agents licensed to practice before the IRS who represent you directly before the IRS to resolve audits, letters, or disputes.",
                 },
                 {
                   q: "5. Do you only serve clients in Coral Springs?",

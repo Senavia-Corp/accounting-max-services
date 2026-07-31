@@ -59,25 +59,25 @@ const EN = {
   // de post se componen con `plantillaTitulo` a partir del dato del CMS.
   meta: {
     plantillaTitulo: "{pagina} | {negocio}",
-    homeTitle: "Home",
+    homeTitle: "Tax & Accounting, Coral Springs FL",
     homeDescription:
-      "Simplify your international and domestic tax needs with our expert CPA team. At Accounting Max Services, we specialize in global tax solutions, business accounting, and IRS representation—serving clients in Tamarac, FL and across the U.S.",
-    aboutTitle: "About Us",
+      "Bilingual tax and accounting in Coral Springs, FL for individuals and business owners across Broward County — and for clients filing from abroad.",
+    aboutTitle: "About Our Coral Springs Tax Firm",
     aboutDescription:
-      "At Accounting Max Services, we provide expert tax and accounting solutions for individuals and businesses across the U.S. and abroad.",
-    contactTitle: "Contact Us",
+      "Bilingual Enrolled Agents and CPAs in Coral Springs, FL, licensed to practice before the IRS. Founded in 2019, with over 17 years of combined experience.",
+    contactTitle: "Contact Our Coral Springs Office",
     contactDescription:
-      "Have questions about your taxes, business, or finances? Our expert team is ready to assist you—bilingual, responsive, and always just a message away.",
-    blogTitle: "Blog & News",
+      "Talk to a bilingual Enrolled Agent in Coral Springs, FL. We are at 1700 N University Dr STE 210, Monday to Friday, and the first consultation is free.",
+    blogTitle: "Tax Blog & News",
     blogDescription:
-      "Stay informed with expert articles on taxes, accounting, and financial strategy. From IRS updates to small business tips, our blog helps you make smarter decisions all year round.",
+      "Articles on taxes, accounting and financial strategy — IRS updates, Florida deadlines and small-business guidance from our Coral Springs, FL office.",
   },
 
   nav: {
     // Las dos credenciales de la barra superior. Van literales en ES: son la
     // credencial, no una descripcion (ver glosario).
     topCpa: "Certified Public Accounting",
-    topEa: "IRS Certified Enrolled Agent",
+    topEa: "Enrolled Agent (EA)",
     redes: "Follow us on our social networks:",
     logoAlt: "Accounting Max Services",
     home: "Home",
@@ -111,7 +111,7 @@ const EN = {
     promoCta: "Book a free Consultation",
     logoAlt: "Accounting Max Services",
     tagline:
-      "IRS Certified EAs & CPAs offering bilingual tax and accounting services for individuals & businesses.",
+      "Enrolled Agents (EAs) & CPAs offering bilingual tax and accounting services for individuals & businesses.",
     contactTitle: "Contact Information",
     servicesTitle: "Services",
     // El ano y la razon social NO se tocan (R3): solo se traduce la formula.
@@ -191,9 +191,9 @@ const EN = {
   },
 
   home: {
-    heroTitle: "Global Tax & Accounting Services & Bilingual CPA Firm",
+    heroTitle: "Enrolled Agents & CPAs in Coral Springs, FL — Tax, Accounting & IRS Representation",
     heroIntro:
-      "Simplify your international and domestic tax needs with our expert CPA team. At Accounting Max Services, we specialize in global tax solutions, business accounting, and IRS representation—serving clients in Tamarac, FL and across the U.S.",
+      "Bilingual tax and accounting in Coral Springs, FL for individuals and business owners across Broward County — and for clients filing from abroad.",
     heroCta: "Book a consultation",
     heroAlt:
       "Blank IRS Form 1040 and Form 1120 tax returns on a white desk with a pen, reading glasses and a calculator.",
@@ -201,7 +201,7 @@ const EN = {
     // Lleva <strong> y <br>: se pinta con set:html, igual que los parrafos de
     // .features en /services/[slug].
     aboutHtml:
-      "At Accounting Max Services, our team includes IRS Certified Enrolled Agents (EAs) and Certified Public Accountants (CPAs), offering the highest level of tax expertise and compliance support.<br />We provide a full range of <strong>global tax and accounting solutions</strong>—serving both individuals and businesses in Coral Springs, FL, and internationally. Whether you’re managing cross-border finances, running a U.S. business, or dealing with complex international tax matters, our specialists deliver accurate, personalized guidance every step of the way.",
+      "At Accounting Max Services, our team includes Enrolled Agents (EAs) licensed to practice before the IRS and Certified Public Accountants (CPAs), offering the highest level of tax expertise and compliance support.<br />We provide a full range of <strong>global tax and accounting solutions</strong>—serving both individuals and businesses in Coral Springs, FL, and internationally. Whether you’re managing cross-border finances, running a U.S. business, or dealing with complex international tax matters, our specialists deliver accurate, personalized guidance every step of the way.",
     aboutCta: "More About Us",
     // Titulo real del video de YouTube incrustado: es el nombre de una obra de
     // un tercero y esta en ingles. No se traduce en ninguna de las dos rutas.
@@ -280,7 +280,7 @@ const EN = {
       },
       {
         q: "4. Can you help with IRS audits or letters?",
-        a: "Absolutely. Our team includes IRS Certified Enrolled Agents who represent you directly before the IRS to resolve audits, letters, or disputes.",
+        a: "Absolutely. Our team includes Enrolled Agents licensed to practice before the IRS who represent you directly before the IRS to resolve audits, letters, or disputes.",
       },
       {
         q: "5. Do you only serve clients in Coral Springs?",
@@ -295,7 +295,7 @@ const EN = {
       "Aerial view of the three-story office building with a tile roof and teal awnings at 1700 N University Drive, Coral Springs, Florida",
     // Lleva <strong>: se pinta con set:html.
     introHtml:
-      "At Accounting Max Services, we provide expert tax and accounting solutions for individuals and businesses across the U.S. and abroad. As IRS Certified Enrolled Agents and CPAs, our mission is to deliver accurate, timely, and personalized financial services to help you stay compliant and grow with confidence. Based in <strong>Coral Springs, Florida</strong>, we’ve proudly supported our clients since 2009 with everything from tax preparation and business incorporation to bookkeeping, IRS representation, and audit assistance. All our services are available in <strong>English and Spanish</strong>, making financial clarity accessible to everyone. Whether you’re a business owner, freelancer, or international client, we’re here to help you navigate complex tax laws and achieve financial peace of mind.",
+      "At Accounting Max Services, we provide expert tax and accounting solutions for individuals and businesses across the U.S. and abroad. As Enrolled Agents licensed to practice before the IRS, and CPAs, our mission is to deliver accurate, timely, and personalized financial services to help you stay compliant and grow with confidence. Founded in 2019 and based in <strong>Coral Springs, Florida</strong>, our team brings over 17 years of combined professional experience to everything from tax preparation and business incorporation to bookkeeping, IRS representation, and audit assistance. All our services are available in <strong>English and Spanish</strong>, making financial clarity accessible to everyone. Whether you’re a business owner, freelancer, or international client, we’re here to help you navigate complex tax laws and achieve financial peace of mind.",
     // bar-features: `destacado` va en <em> y `texto` pegado detras.
     // OJO (R3): en los items 2, 3 y 4 el original NO tiene espacio entre el
     // </em> y la frase siguiente ("your choice.We proudly serve"). Es una
@@ -325,7 +325,7 @@ const EN = {
     ],
     missionTitle: "Our Mission",
     missionText:
-      "At Accounting Max Services, our mission is to empower individuals and businesses with reliable, accurate, and accessible tax and accounting solutions. We are committed to delivering expert guidance with integrity, professionalism, and personalized attention—ensuring our clients stay compliant, make informed decisions, and achieve financial peace of mind. As IRS Certified Enrolled Agents and CPAs, we proudly serve a diverse community with bilingual support, building long-term relationships based on trust, transparency, and results.",
+      "At Accounting Max Services, our mission is to empower individuals and businesses with reliable, accurate, and accessible tax and accounting solutions. We are committed to delivering expert guidance with integrity, professionalism, and personalized attention—ensuring our clients stay compliant, make informed decisions, and achieve financial peace of mind. As Enrolled Agents licensed to practice before the IRS, and CPAs, we proudly serve a diverse community with bilingual support, building long-term relationships based on trust, transparency, and results.",
     missionAlt:
       "A hand places a dart in the bullseye of a target resting on printed charts, beside a laptop",
     // El espacio final es del HTML de produccion; se conserva en EN.
@@ -363,7 +363,7 @@ const EN = {
   post: {
     promoTitle: "📅 Schedule Your Free Consultation Today!",
     promoText:
-      "Get a free consultation with our IRS Certified Enrolled Agents and CPAs. We’ll review your needs and provide expert guidance with a personalized estimate—no commitment required.",
+      "Get a free consultation with our Enrolled Agents licensed to practice before the IRS, and CPAs. We’ll review your needs and provide expert guidance with a personalized estimate—no commitment required.",
     promoCta: "Book A Consultation",
     destacadosTitle: "Featured Blogs",
     asideLabel: "More from Accounting Max Services",
@@ -406,25 +406,25 @@ export type Cadenas = Igual<typeof EN>;
 const ES: Cadenas = {
   meta: {
     plantillaTitulo: "{pagina} | {negocio}",
-    homeTitle: "Inicio",
+    homeTitle: "Contador bilingüe en Coral Springs",
     homeDescription:
-      "Simplifique sus obligaciones fiscales internacionales y nacionales con nuestro equipo experto de CPAs. En Accounting Max Services nos especializamos en soluciones fiscales globales, contabilidad empresarial y representación ante el IRS, y atendemos a clientes en Tamarac, FL y en todo EE. UU.",
-    aboutTitle: "Sobre nosotros",
+      "Impuestos y contabilidad en inglés y español en Coral Springs, FL, para personas y dueños de negocio de Broward y para quienes declaran desde fuera.",
+    aboutTitle: "Quiénes somos en Coral Springs",
     aboutDescription:
-      "En Accounting Max Services ofrecemos soluciones expertas de impuestos y contabilidad para personas y empresas de todo EE. UU. y del extranjero.",
-    contactTitle: "Contáctenos",
+      "Enrolled Agents autorizados a ejercer ante el IRS y CPAs en Coral Springs, FL. Fundada en 2019, con más de 17 años de experiencia profesional acumulada.",
+    contactTitle: "Contáctenos en Coral Springs",
     contactDescription:
-      "¿Tiene preguntas sobre sus impuestos, su negocio o sus finanzas? Nuestro equipo experto está listo para ayudarle: bilingüe, atento y siempre a un mensaje de distancia.",
-    blogTitle: "Blog y noticias",
+      "Hable con un Enrolled Agent bilingüe en Coral Springs, FL. Estamos en 1700 N University Dr STE 210, de lunes a viernes, y la primera consulta es gratis.",
+    blogTitle: "Blog de impuestos y noticias",
     blogDescription:
-      "Manténgase informado con artículos expertos sobre impuestos, contabilidad y estrategia financiera. Desde novedades del IRS hasta consejos para pequeños negocios, nuestro blog le ayuda a tomar mejores decisiones durante todo el año.",
+      "Artículos sobre impuestos, contabilidad y estrategia financiera: novedades del IRS, plazos de Florida y consejos para pequeños negocios en Broward.",
   },
 
   nav: {
     // Credenciales: literales. "Contaduría pública certificada" no es lo mismo
     // que "Certified Public Accounting" y afirmarlo es riesgo legal.
     topCpa: "Certified Public Accounting",
-    topEa: "IRS Certified Enrolled Agent",
+    topEa: "Enrolled Agent (EA)",
     redes: "Síganos en nuestras redes sociales:",
     logoAlt: "Accounting Max Services",
     home: "Inicio",
@@ -453,7 +453,7 @@ const ES: Cadenas = {
     promoCta: "Reserve una consulta gratuita",
     logoAlt: "Accounting Max Services",
     tagline:
-      "EAs y CPAs certificados por el IRS que ofrecen servicios bilingües de impuestos y contabilidad para personas y empresas.",
+      "EAs autorizados a ejercer ante el IRS y CPAs que ofrecen servicios bilingües de impuestos y contabilidad para personas y empresas.",
     contactTitle: "Información de contacto",
     servicesTitle: "Servicios",
     copyright: "Copyright 2025 Accounting Max Services Inc. Todos los derechos reservados.",
@@ -522,15 +522,15 @@ const ES: Cadenas = {
   },
 
   home: {
-    heroTitle: "Servicios globales de impuestos y contabilidad · Despacho bilingüe de CPAs",
+    heroTitle: "Enrolled Agents y CPAs en Coral Springs, FL — Impuestos, contabilidad y representación ante el IRS",
     heroIntro:
-      "Simplifique sus obligaciones fiscales internacionales y nacionales con nuestro equipo experto de CPAs. En Accounting Max Services nos especializamos en soluciones fiscales globales, contabilidad empresarial y representación ante el IRS, y atendemos a clientes en Tamarac, FL y en todo EE. UU.",
+      "Impuestos y contabilidad en inglés y español en Coral Springs, FL, para personas y dueños de negocio de Broward y para quienes declaran desde el extranjero.",
     heroCta: "Reserve una consulta",
     heroAlt:
       "Declaraciones de impuestos en blanco Form 1040 y Form 1120 del IRS sobre un escritorio blanco, junto a un bolígrafo, unas gafas de lectura y una calculadora.",
     aboutTitle: "Enrolled Agents del IRS y Certified Public Accountants en Coral Springs, FL",
     aboutHtml:
-      "En Accounting Max Services, nuestro equipo está formado por Enrolled Agents certificados por el IRS (EAs) y Certified Public Accountants (CPAs), con el máximo nivel de experiencia fiscal y de apoyo en el cumplimiento de sus obligaciones.<br />Ofrecemos una gama completa de <strong>soluciones globales de impuestos y contabilidad</strong>, para personas y empresas de Coral Springs, FL, y de todo el mundo. Ya sea que maneje finanzas transfronterizas, dirija un negocio en EE. UU. o enfrente asuntos fiscales internacionales complejos, nuestros especialistas le dan orientación precisa y personalizada en cada paso.",
+      "En Accounting Max Services, nuestro equipo está formado por Enrolled Agents (EAs) autorizados a ejercer ante el IRS y Certified Public Accountants (CPAs), con el máximo nivel de experiencia fiscal y de apoyo en el cumplimiento de sus obligaciones.<br />Ofrecemos una gama completa de <strong>soluciones globales de impuestos y contabilidad</strong>, para personas y empresas de Coral Springs, FL, y de todo el mundo. Ya sea que maneje finanzas transfronterizas, dirija un negocio en EE. UU. o enfrente asuntos fiscales internacionales complejos, nuestros especialistas le dan orientación precisa y personalizada en cada paso.",
     aboutCta: "Conozca más sobre nosotros",
     // Titulo real del video en YouTube: obra de un tercero, no se traduce.
     videoTitulo: "What Is a Financial Advisor?",
@@ -598,7 +598,7 @@ const ES: Cadenas = {
       },
       {
         q: "4. ¿Pueden ayudarme con auditorías o cartas del IRS?",
-        a: "Por supuesto. Nuestro equipo cuenta con Enrolled Agents certificados por el IRS, que le representan directamente ante el IRS para resolver auditorías, cartas o disputas.",
+        a: "Por supuesto. Nuestro equipo cuenta con Enrolled Agents autorizados a ejercer ante el IRS, que le representan directamente ante el IRS para resolver auditorías, cartas o disputas.",
       },
       {
         q: "5. ¿Solo atienden a clientes en Coral Springs?",
@@ -612,7 +612,7 @@ const ES: Cadenas = {
     heroAlt:
       "Vista aérea del edificio de oficinas de tres plantas, con tejado de teja y toldos color verde azulado, en 1700 N University Drive, Coral Springs, Florida",
     introHtml:
-      "En Accounting Max Services ofrecemos soluciones expertas de impuestos y contabilidad para personas y empresas de todo EE. UU. y del extranjero. Como Enrolled Agents certificados por el IRS y CPAs, nuestra misión es prestar servicios financieros precisos, puntuales y personalizados para ayudarle a cumplir con sus obligaciones y a crecer con confianza. Con sede en <strong>Coral Springs, Florida</strong>, acompañamos con orgullo a nuestros clientes desde 2009, desde la preparación de impuestos y la constitución de empresas hasta la contabilidad, la representación ante el IRS y la asistencia en auditorías. Todos nuestros servicios están disponibles en <strong>inglés y español</strong>, para que la claridad financiera esté al alcance de todos. Ya sea empresario, trabajador independiente o cliente internacional, estamos aquí para ayudarle a entender leyes fiscales complejas y a alcanzar tranquilidad financiera.",
+      "En Accounting Max Services ofrecemos soluciones expertas de impuestos y contabilidad para personas y empresas de todo EE. UU. y del extranjero. Como Enrolled Agents autorizados a ejercer ante el IRS y CPAs, nuestra misión es prestar servicios financieros precisos, puntuales y personalizados para ayudarle a cumplir con sus obligaciones y a crecer con confianza. Fundada en 2019 y con sede en <strong>Coral Springs, Florida</strong>, nuestro equipo aporta más de 17 años de experiencia profesional acumulada, desde la preparación de impuestos y la constitución de empresas hasta la contabilidad, la representación ante el IRS y la asistencia en auditorías. Todos nuestros servicios están disponibles en <strong>inglés y español</strong>, para que la claridad financiera esté al alcance de todos. Ya sea empresario, trabajador independiente o cliente internacional, estamos aquí para ayudarle a entender leyes fiscales complejas y a alcanzar tranquilidad financiera.",
     features: [
       {
         title: "Experiencia certificada",
@@ -637,7 +637,7 @@ const ES: Cadenas = {
     ],
     missionTitle: "Nuestra misión",
     missionText:
-      "En Accounting Max Services, nuestra misión es dar a las personas y a las empresas soluciones de impuestos y contabilidad fiables, precisas y accesibles. Nos comprometemos a ofrecer orientación experta con integridad, profesionalidad y atención personalizada, para que nuestros clientes cumplan con sus obligaciones, tomen decisiones informadas y alcancen tranquilidad financiera. Como Enrolled Agents certificados por el IRS y CPAs, atendemos con orgullo a una comunidad diversa con apoyo bilingüe, y construimos relaciones a largo plazo basadas en la confianza, la transparencia y los resultados.",
+      "En Accounting Max Services, nuestra misión es dar a las personas y a las empresas soluciones de impuestos y contabilidad fiables, precisas y accesibles. Nos comprometemos a ofrecer orientación experta con integridad, profesionalidad y atención personalizada, para que nuestros clientes cumplan con sus obligaciones, tomen decisiones informadas y alcancen tranquilidad financiera. Como Enrolled Agents autorizados a ejercer ante el IRS y CPAs, atendemos con orgullo a una comunidad diversa con apoyo bilingüe, y construimos relaciones a largo plazo basadas en la confianza, la transparencia y los resultados.",
     missionAlt:
       "Una mano coloca un dardo en el centro de una diana apoyada sobre gráficas impresas, junto a una computadora portátil",
     visionTitle: "Nuestra visión",
@@ -670,7 +670,7 @@ const ES: Cadenas = {
   post: {
     promoTitle: "📅 ¡Agende hoy su consulta gratuita!",
     promoText:
-      "Reciba una consulta gratuita con nuestros Enrolled Agents certificados por el IRS y nuestros CPAs. Revisaremos sus necesidades y le daremos orientación experta con un presupuesto personalizado, sin ningún compromiso.",
+      "Reciba una consulta gratuita con nuestros Enrolled Agents autorizados a ejercer ante el IRS y nuestros CPAs. Revisaremos sus necesidades y le daremos orientación experta con un presupuesto personalizado, sin ningún compromiso.",
     promoCta: "Reserve una consulta",
     destacadosTitle: "Artículos destacados",
     asideLabel: "Más de Accounting Max Services",
