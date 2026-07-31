@@ -131,6 +131,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       : null,
     ip,
   );
+  // Igual que en /api/lead: se registra siempre, para tener el denominador.
+  console.warn(`[newsletter] captcha ${captcha.motivo} (ip ${ip})`);
   if (!captcha.ok) return json({ ok: false, error: T.captcha[lang] }, 403);
 
   // R7 — guardar primero.

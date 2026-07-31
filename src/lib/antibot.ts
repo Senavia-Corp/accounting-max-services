@@ -166,16 +166,21 @@ if (!CLAVE_CAPTCHA) {
 }
 
 /**
- * FAIL-OPEN a proposito: solo rechaza si el proveedor dice explicitamente que
- * el token es invalido. Sin clave, sin token, con la red caida o con un 500 de
- * Cloudflare -> pasa. Un captcha caido no puede dejar al despacho sin leads.
+ * FAIL-OPEN ante una AVERIA, fail-closed ante un RECHAZO EXPLICITO. Sin clave,
+ * con la red caida o con un 500 de Cloudflare -> pasa: un captcha caido no
+ * puede dejar al despacho sin leads. Si Cloudflare contesta y dice que no, o
+ * si no hay token habiendo widget -> 403.
  */
 export async function verificarCaptcha(
   token: string | null,
   ip: string,
 ): Promise<{ ok: boolean; verificado: boolean; motivo: string }> {
   if (!CLAVE_CAPTCHA) return { ok: true, verificado: false, motivo: "sin-clave" };
-  if (!token) return { ok: true, verificado: false, motivo: "sin-token" };
+  // Que haya clave significa que el widget esta desplegado. A partir de ahi un
+  // envio sin token no es una integracion a medias, es un cliente que no lo
+  // ejecuto — y dejarlo pasar convertia el captcha en un adorno: a un bot le
+  // bastaba con OMITIR el campo para entrar por la puerta del fail-open.
+  if (!token) return { ok: false, verificado: true, motivo: "sin-token" };
   try {
     const cuerpo = new URLSearchParams({ secret: CLAVE_CAPTCHA, response: token, remoteip: ip });
     const res = await fetch(URL_CAPTCHA, {
@@ -188,8 +193,13 @@ export async function verificarCaptcha(
       return { ok: true, verificado: false, motivo: `http-${res.status}` };
     }
     const datos = (await res.json()) as { success?: boolean };
+    if (datos.success === true) return { ok: true, verificado: true, motivo: "ok" };
     if (datos.success === false) return { ok: false, verificado: true, motivo: "token-invalido" };
-    return { ok: true, verificado: true, motivo: "ok" };
+    // Un 200 sin veredicto es una AVERIA del proveedor, no un rechazo: se deja
+    // pasar. Pero no se firma como verificado, que es lo que hacia antes y
+    // convertia una respuesta rota en un lead "comprobado" que nadie comprobo.
+    console.warn("[antibot] captcha respondio 200 sin `success`: se deja pasar (fail-open)");
+    return { ok: true, verificado: false, motivo: "respuesta-rara" };
   } catch (e) {
     console.warn(`[antibot] captcha inalcanzable, se deja pasar (fail-open): ${(e as Error).message}`);
     return { ok: true, verificado: false, motivo: "error-red" };

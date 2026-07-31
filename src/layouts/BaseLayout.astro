@@ -152,6 +152,25 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
       - Swiper desde unpkg SIN version fijada.
       Analitica: ninguna todavia, a proposito (D7).
     */}
+    {/*
+      Con Turnstile obligatorio, un envio sin JS no lleva token y el servidor lo
+      rechaza con 403: el navegador se iria a una pagina de JSON en crudo. Un
+      formulario que no puede funcionar es peor que ningun formulario, asi que
+      sin JS se oculta y queda el aviso de <noscript> con el telefono.
+
+      Vive aqui y no en cada pagina porque #newsletter-form esta en las 54
+      rutas. Y va en el <head>: ahi <noscript> SI admite <style>; en el <body>
+      no lo admite y el HTML dejaria de ser valido.
+    */}
+    <noscript>
+      <style>
+        #lead-form,
+        #newsletter-form {
+          display: none;
+        }
+      </style>
+    </noscript>
+
     <slot name="head" />
   </head>
   <body>
