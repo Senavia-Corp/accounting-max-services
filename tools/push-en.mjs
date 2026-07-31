@@ -44,8 +44,10 @@ const AUTOPRUEBA = process.argv.includes("--autoprueba");
  * `slug`, `order`, `heroImage` y `webflowItemId` tampoco estan: son identidad y
  * los fija el import, no una pasada de contenido.
  */
+// `intro` es el equivalente de `excerpt` en los 12 `service`: se pinta bajo el
+// H1 y ademas hace de meta description de reserva (services/[slug].astro:110).
 const EN_KEYS = new Set([
-  "title", "excerpt", "body", "metaTitle", "metaDescription", "publishedAt",
+  "title", "excerpt", "intro", "body", "metaTitle", "metaDescription", "publishedAt",
 ]);
 const MUTACIONES_PROHIBIDAS = ["createOrReplace", "createOrReplaceIfNotExists", "delete", "replace"];
 
@@ -153,11 +155,24 @@ const sanity = createClient({
 // ---------------------------------------------------------------------------
 
 const raiz = new URL("../", import.meta.url).pathname;
-const posts = JSON.parse(readFileSync(raiz + "baseline/contenido/posts-en.json", "utf8"));
-const entradas = Object.entries(posts).map(([_id, v]) => ({ _id, _type: "post", ...v }));
+const lee = (p) => JSON.parse(readFileSync(raiz + p, "utf8"));
 
-if (entradas.length !== 10) {
-  throw new Error(`Entrada incompleta: ${entradas.length} posts (10). Ejecuta antes: node tools/blog-build.mjs`);
+// Los dos encargos escriben el mismo lado (EN) de documentos distintos y con el
+// mismo formato de fichero, asi que comparten empujador: duplicarlo seria
+// duplicar tambien la lista blanca y el cordon anti-Webflow, que es justo lo que
+// no conviene tener por partida doble.
+const FUENTES = [
+  { fichero: "baseline/contenido/posts-en.json", tipo: "post", n: 10, build: "node tools/blog-build.mjs" },
+  { fichero: "baseline/contenido/servicios-en.json", tipo: "service", n: 12, build: "node tools/services-build.mjs" },
+];
+
+const entradas = [];
+for (const f of FUENTES) {
+  const docs = Object.entries(lee(f.fichero)).map(([_id, v]) => ({ _id, _type: f.tipo, ...v }));
+  if (docs.length !== f.n) {
+    throw new Error(`Entrada incompleta: ${docs.length} ${f.tipo} (${f.n}) en ${f.fichero}. Ejecuta antes: ${f.build}`);
+  }
+  entradas.push(...docs);
 }
 
 // ---------------------------------------------------------------------------
@@ -173,14 +188,16 @@ const porId = new Map(vivos.map((d) => [d._id, d]));
 for (const e of entradas) {
   const d = porId.get(e._id);
   if (!d) throw new Error(`ABORTA: ${e._id} no existe en ${PROJECT}/${DATASET}.`);
-  if (d._type !== e._type) throw new Error(`ABORTA: ${e._id} es ${d._type}, se esperaba post.`);
+  if (d._type !== e._type) throw new Error(`ABORTA: ${e._id} es ${d._type}, se esperaba ${e._type}.`);
   // El slug no se escribe y por eso sirve de huella: si no coincide, el _id
   // apunta a otro documento del que cree quien genero el JSON.
   if (d.slug !== e.slug) {
     throw new Error(`ABORTA: ${e._id} tiene slug "${d.slug}" y el JSON dice "${e.slug}".`);
   }
 }
-console.log(`identidad OK -> ${PROJECT}/${DATASET}  (${vivos.length}/10 documentos)${DRY ? "  (simulacion)" : ""}`);
+console.log(
+  `identidad OK -> ${PROJECT}/${DATASET}  (${vivos.length}/${entradas.length} documentos)${DRY ? "  (simulacion)" : ""}`,
+);
 
 // ---------------------------------------------------------------------------
 // Mutaciones.
@@ -205,7 +222,8 @@ for (const e of entradas) {
     if (Array.isArray(v) && !v.length) continue;
     set[k] = v;
   }
-  if (!porId.get(_id).publishedAt) {
+  // Solo los `post` llevan fecha: el esquema de `service` no tiene publishedAt.
+  if (_type === "post" && !porId.get(_id).publishedAt) {
     set.publishedAt = AHORA;
     estampados.push(_id);
   }
@@ -248,30 +266,42 @@ if (DRY) {
 // que se teme no es "no escribio", es "escribio encima".
 // ---------------------------------------------------------------------------
 
-const REQ_EN = ["title", "excerpt", "metaTitle", "metaDescription"];
+// Los dos tipos NO tienen la misma forma, y darlo por sentado convertia la
+// verificacion en ruido: un `service` no lleva `excerpt` (su equivalente es
+// `intro`, services/[slug].astro:110) ni `publishedAt` (solo lo tienen los 10
+// post, como dice el resumen que imprime este mismo script). Con la lista de
+// post aplicada a los 12 service salian 36 falsos positivos por pasada — y ahi
+// dentro, una perdida REAL de excerptEs en un post era indistinguible del ruido.
+// Eso es exactamente lo que esta verificacion existe para detectar.
+const FORMA = {
+  post:    { req: ["title", "excerpt", "metaTitle", "metaDescription"], es: "excerptEs", fecha: true },
+  service: { req: ["title", "intro",   "metaTitle", "metaDescription"], es: "introEs",   fecha: false },
+};
 
 const despues = await sanity.fetch(
   `*[_id in $ids]{
-     _id, title, excerpt, metaTitle, metaDescription, publishedAt, authorName,
+     _id, _type, title, excerpt, intro, metaTitle, metaDescription, publishedAt, authorName,
      "bodyENn": count(body),
-     titleEs, excerptEs, "bodyESn": count(bodyEs)
+     titleEs, excerptEs, introEs, "bodyESn": count(bodyEs)
    }`,
   { ids: entradas.map((e) => e._id) },
 );
 
 const problemas = [];
 for (const d of despues) {
-  for (const campo of REQ_EN) {
+  const forma = FORMA[d._type];
+  if (!forma) { problemas.push(`${d._id}: _type inesperado "${d._type}"`); continue; }
+  for (const campo of forma.req) {
     if (!(typeof d[campo] === "string" && d[campo].trim())) problemas.push(`${d._id}: falta ${campo}`);
   }
   if (!(d.bodyENn > 0)) problemas.push(`${d._id}: body (EN) vacio`);
-  if (!d.publishedAt) problemas.push(`${d._id}: sin publishedAt`);
+  if (forma.fecha && !d.publishedAt) problemas.push(`${d._id}: sin publishedAt`);
   // Longitudes del esquema: metaTitle max 60, metaDescription max 160.
   if (d.metaTitle && d.metaTitle.length > 60) problemas.push(`${d._id}: metaTitle ${d.metaTitle.length} car.`);
   if (d.metaDescription && d.metaDescription.length > 160) problemas.push(`${d._id}: metaDescription ${d.metaDescription.length} car.`);
   // El espanol tiene que seguir ahi. Es la mitad que este script no puede tocar.
   if (!d.titleEs?.trim()) problemas.push(`${d._id}: SE PERDIO el titleEs`);
-  if (!d.excerptEs?.trim()) problemas.push(`${d._id}: SE PERDIO el excerptEs`);
+  if (!d[forma.es]?.trim()) problemas.push(`${d._id}: SE PERDIO el ${forma.es}`);
   if (!(d.bodyESn > 0)) problemas.push(`${d._id}: SE PERDIO el bodyEs`);
 }
 
@@ -282,10 +312,13 @@ if (DRY) {
   for (const p of problemas) console.error("  " + p);
   process.exit(1);
 } else {
-  console.log(`\nverificado: ${despues.length}/10 posts con cuerpo EN, meta y fecha; espanol intacto`);
-  const sinAutor = despues.filter((d) => !d.authorName?.trim()).length;
+  const porTipo = FUENTES.map((f) => `${despues.filter((d) => d._type === f.tipo).length} ${f.tipo}`).join(" + ");
+  console.log(`\nverificado: ${despues.length}/${entradas.length} documentos (${porTipo}) con cuerpo EN y meta; espanol intacto`);
+  // authorName solo aplica a los post: un `service` no lleva firma.
+  const posts = despues.filter((d) => d._type === "post");
+  const sinAutor = posts.filter((d) => !d.authorName?.trim()).length;
   if (sinAutor) {
-    console.log(`\n${sinAutor}/10 siguen SIN authorName. Es correcto y esta documentado:`);
+    console.log(`\n${sinAutor}/${posts.length} post siguen SIN authorName. Es correcto y esta documentado:`);
     console.log("  entrega/blog-revision-fiscal.md — necesita una firma real con credencial (EA o CPA).");
   }
 }

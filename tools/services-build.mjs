@@ -106,17 +106,24 @@ const CALCOS = [
 ];
 
 /**
- * Regla de hecho innegociable: la firma existe desde 2019. Los 17+ anos son
- * EXPERIENCIA ACUMULADA del equipo, no antiguedad de la firma. Estas cadenas ya
- * estaban vivas en el sitio (i18n.ts:298, :615, about-us.astro:186 y el cuerpo de
- * personal-tax-preparation), asi que el aserto existe para que no vuelvan.
+ * INVERTIDO 2026-07-31, resuelto el gate de copy-revision-fiscal.md §1.
+ *
+ * La regla anterior daba por hecho que la firma era de 2019 y rechazaba «2009».
+ * El registro de Florida dice lo contrario y Sebastian lo confirmo: ACCOUNTING
+ * MAX SERVICES, INC., documento P09000081031, Date Filed 30/09/2009, activa sin
+ * interrupcion y en el mismo domicilio (el cambio de nombre es de 26/04/2023).
+ * 2009 -> 2026 son 17 anos, que es justo la cifra de «experiencia acumulada».
+ *
+ * Asi que el aserto ahora vigila lo contrario: que no vuelva el «2019», que era
+ * el dato equivocado y estuvo vivo en i18n.ts, about-us.astro y 5 cuerpos de
+ * servicio.
  */
 const ANTIGUEDAD_FALSA = [
-  [/\bsince 2009\b/i, "«since 2009» implica 17 años de firma; la firma es de 2019"],
-  [/\bdesde 2009\b/i, "«desde 2009» implica 17 años de firma; la firma es de 2019"],
-  [/\b1[5-9]\+?\s*(years|años)\s+(serving|in business|atendiendo|sirviendo)/i,
-    "antigüedad de firma; lo correcto es «experiencia profesional acumulada»"],
-  [/\b1[5-9]\s*(years|años)\s+(serving|in business)/i, "antigüedad de firma"],
+  [/\b(founded in|fundada en|since|desde el a[nñ]o|desde) 2019\b/i,
+    "la firma es de 2009 (Sunbiz P09000081031); «2019» era el dato equivocado"],
+  // 2026 - 2009 = 17. Reclamar 18+ anos de firma pasa a ser una exageracion.
+  [/\b(1[89]|2\d)\+?\s*(years|años)\s+(serving|in business|atendiendo|sirviendo)/i,
+    "antigüedad de firma superior a la real (fundada en 2009)"],
 ];
 
 /** La sede es Coral Springs. Tamarac solo puede aparecer como zona atendida. */

@@ -64,7 +64,7 @@ const EN = {
       "Bilingual tax and accounting in Coral Springs, FL for individuals and business owners across Broward County — and for clients filing from abroad.",
     aboutTitle: "About Our Coral Springs Tax Firm",
     aboutDescription:
-      "Bilingual Enrolled Agents and CPAs in Coral Springs, FL, licensed to practice before the IRS. Founded in 2019, with over 17 years of combined experience.",
+      "Bilingual Enrolled Agents and CPAs in Coral Springs, FL, licensed to practice before the IRS. Founded in 2009, with over 17 years of combined experience.",
     contactTitle: "Contact Our Coral Springs Office",
     contactDescription:
       "Talk to a bilingual Enrolled Agent in Coral Springs, FL. We are at 1700 N University Dr STE 210, Monday to Friday, and the first consultation is free.",
@@ -295,7 +295,7 @@ const EN = {
       "Aerial view of the three-story office building with a tile roof and teal awnings at 1700 N University Drive, Coral Springs, Florida",
     // Lleva <strong>: se pinta con set:html.
     introHtml:
-      "At Accounting Max Services, we provide expert tax and accounting solutions for individuals and businesses across the U.S. and abroad. As Enrolled Agents licensed to practice before the IRS, and CPAs, our mission is to deliver accurate, timely, and personalized financial services to help you stay compliant and grow with confidence. Founded in 2019 and based in <strong>Coral Springs, Florida</strong>, our team brings over 17 years of combined professional experience to everything from tax preparation and business incorporation to bookkeeping, IRS representation, and audit assistance. All our services are available in <strong>English and Spanish</strong>, making financial clarity accessible to everyone. Whether you’re a business owner, freelancer, or international client, we’re here to help you navigate complex tax laws and achieve financial peace of mind.",
+      "At Accounting Max Services, we provide expert tax and accounting solutions for individuals and businesses across the U.S. and abroad. As Enrolled Agents licensed to practice before the IRS, and CPAs, our mission is to deliver accurate, timely, and personalized financial services to help you stay compliant and grow with confidence. Founded in 2009 and based in <strong>Coral Springs, Florida</strong>, our team brings over 17 years of combined professional experience to everything from tax preparation and business incorporation to bookkeeping, IRS representation, and audit assistance. All our services are available in <strong>English and Spanish</strong>, making financial clarity accessible to everyone. Whether you’re a business owner, freelancer, or international client, we’re here to help you navigate complex tax laws and achieve financial peace of mind.",
     // bar-features: `destacado` va en <em> y `texto` pegado detras.
     // OJO (R3): en los items 2, 3 y 4 el original NO tiene espacio entre el
     // </em> y la frase siguiente ("your choice.We proudly serve"). Es una
@@ -411,7 +411,7 @@ const ES: Cadenas = {
       "Impuestos y contabilidad en inglés y español en Coral Springs, FL, para personas y dueños de negocio de Broward y para quienes declaran desde fuera.",
     aboutTitle: "Quiénes somos en Coral Springs",
     aboutDescription:
-      "Enrolled Agents autorizados a ejercer ante el IRS y CPAs en Coral Springs, FL. Fundada en 2019, con más de 17 años de experiencia profesional acumulada.",
+      "Enrolled Agents autorizados a ejercer ante el IRS y CPAs en Coral Springs, FL. Fundada en 2009, con más de 17 años de experiencia profesional acumulada.",
     contactTitle: "Contáctenos en Coral Springs",
     contactDescription:
       "Hable con un Enrolled Agent bilingüe en Coral Springs, FL. Estamos en 1700 N University Dr STE 210, de lunes a viernes, y la primera consulta es gratis.",
@@ -612,7 +612,7 @@ const ES: Cadenas = {
     heroAlt:
       "Vista aérea del edificio de oficinas de tres plantas, con tejado de teja y toldos color verde azulado, en 1700 N University Drive, Coral Springs, Florida",
     introHtml:
-      "En Accounting Max Services ofrecemos soluciones expertas de impuestos y contabilidad para personas y empresas de todo EE. UU. y del extranjero. Como Enrolled Agents autorizados a ejercer ante el IRS y CPAs, nuestra misión es prestar servicios financieros precisos, puntuales y personalizados para ayudarle a cumplir con sus obligaciones y a crecer con confianza. Fundada en 2019 y con sede en <strong>Coral Springs, Florida</strong>, nuestro equipo aporta más de 17 años de experiencia profesional acumulada, desde la preparación de impuestos y la constitución de empresas hasta la contabilidad, la representación ante el IRS y la asistencia en auditorías. Todos nuestros servicios están disponibles en <strong>inglés y español</strong>, para que la claridad financiera esté al alcance de todos. Ya sea empresario, trabajador independiente o cliente internacional, estamos aquí para ayudarle a entender leyes fiscales complejas y a alcanzar tranquilidad financiera.",
+      "En Accounting Max Services ofrecemos soluciones expertas de impuestos y contabilidad para personas y empresas de todo EE. UU. y del extranjero. Como Enrolled Agents autorizados a ejercer ante el IRS y CPAs, nuestra misión es prestar servicios financieros precisos, puntuales y personalizados para ayudarle a cumplir con sus obligaciones y a crecer con confianza. Fundada en 2009 y con sede en <strong>Coral Springs, Florida</strong>, nuestro equipo aporta más de 17 años de experiencia profesional acumulada, desde la preparación de impuestos y la constitución de empresas hasta la contabilidad, la representación ante el IRS y la asistencia en auditorías. Todos nuestros servicios están disponibles en <strong>inglés y español</strong>, para que la claridad financiera esté al alcance de todos. Ya sea empresario, trabajador independiente o cliente internacional, estamos aquí para ayudarle a entender leyes fiscales complejas y a alcanzar tranquilidad financiera.",
     features: [
       {
         title: "Experiencia certificada",
