@@ -66,6 +66,20 @@ Boletín (ES)                   : "No pudimos guardar su suscripción. Llámenos
 Ese 500 **es la prueba de que el captcha pasó**: si hubiera fallado, la respuesta sería
 403 con «Verification failed», y no lo es.
 
+Medido en **producción**, formulario de contacto en español, en una sola tanda:
+
+```
+scripts de Cloudflare antes del foco : 0
+scripts de Cloudflare después        : 1
+token                                : 21 caracteres
+¿el error es del captcha?            : NO
+¿el error es el de Sanity?           : SÍ
+texto                                : "No pudimos guardar su solicitud. Llámenos al +1 (754) 244-3993."
+```
+
+Es decir: fachada, token real y pipeline avanzando hasta el paso 9, los tres en la misma
+medición y sobre el despliegue de producción.
+
 **Por qué no se cierra.** El fallo del paso 9 es anterior a este encargo y está puesto
 adrede (`entrega/release-verificacion.md` §5):
 
