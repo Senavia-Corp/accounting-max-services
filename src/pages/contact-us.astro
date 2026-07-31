@@ -17,6 +17,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import { NEGOCIO } from "../lib/sanity";
+import { SITE_KEY } from "../lib/turnstile";
 
 // El horario vive en NEGOCIO como una sola cadena; aqui va en dos lineas, igual
 // que en produccion. Se parte, no se reescribe (mismo criterio que Footer).
@@ -212,7 +213,27 @@ const DESCRIPCION =
                       ref_id -> honeypot: si viene con algo, descartar en silencio
                       ts     -> ver TS_BUILD arriba
                   */}
-                  <form id="lead-form" class="form" method="post" action="/api/lead">
+                  {/* Sin JS el formulario se OCULTA (ver el <noscript> de
+                      BaseLayout): sin token de captcha el endpoint responde 403.
+                      La columna de la izquierda ya lleva telefono y direccion,
+                      asi que nadie se queda sin via de contacto. */}
+                  <noscript>
+                    <p class="small-text lead-note">
+                      This form needs JavaScript for its anti-spam check, so it is hidden
+                      right now — please call us at {NEGOCIO.telefono} or email {NEGOCIO.email}.
+                    </p>
+                  </noscript>
+                  {/* data-captcha-error: el <script> se compila aparte y no ve el
+                      frontmatter, igual que pasa con data-wait. El literal es
+                      COPIA EXACTA de t("en").errores.captcha y de T.captcha de
+                      /api/lead: si se toca uno hay que tocar los tres. */}
+                  <form
+                    id="lead-form"
+                    class="form"
+                    method="post"
+                    action="/api/lead"
+                    data-captcha-error="Verification failed. Please try again."
+                  >
                     {/* El diseno de la tarjeta no admite etiquetas visibles sin
                         rehacerlo, asi que van en .visually-hidden. Lo que no es
                         admisible es dejarlas sin poner. */}
@@ -350,6 +371,32 @@ const DESCRIPCION =
 
                     <input id="lead-ts" type="hidden" name="ts" value={TS_BUILD} />
 
+                    {/* `lang` explicito: idiomaDe() de /api/lead lo prefiere al
+                        Referer, y de el depende el idioma del error que se pinta
+                        abajo. El Referer se puede perder; esto no. */}
+                    <input type="hidden" name="lang" value="en" />
+
+                    {/*
+                      Turnstile. La caja va JUSTO antes del boton: el orden de
+                      tabulacion queda campos -> casillas -> enlace de privacidad
+                      -> reto -> enviar, que es el unico orden en el que el reto
+                      se ve antes de intentar enviarlo.
+
+                      Sale VACIA del build a proposito: no hay ni un <script> de
+                      terceros en el HTML. El widget lo pinta scripts/turnstile.ts
+                      en el primer foco del formulario.
+                    */}
+                    {SITE_KEY && (
+                      <div
+                        class="lead-captcha"
+                        data-turnstile
+                        data-sitekey={SITE_KEY}
+                        data-lang="en"
+                        data-theme="light"
+                      >
+                      </div>
+                    )}
+
                     <input
                       type="submit"
                       class="button w-button"
@@ -405,8 +452,11 @@ const DESCRIPCION =
       </html>. Los navegadores lo ejecutan igual por recuperacion de errores,
       pero el HTML deja de ser valido. */}
   <script>
-    // Mejora progresiva del envio: sin este script el formulario sigue haciendo
-    // POST a /api/lead, solo que navegando fuera de la pagina.
+    import { armarCaptcha, tokenCaptcha, reiniciarCaptcha } from "../scripts/turnstile";
+
+    // Mejora progresiva del envio. Con Turnstile obligatorio este script ya no
+    // es solo cosmetico: sin el no hay token, asi que sin JS el formulario se
+    // oculta (ver el <noscript> de BaseLayout) y queda el aviso con el telefono.
     const form = document.getElementById("lead-form") as HTMLFormElement | null;
     const bloque = form?.closest(".form-block-contact") as HTMLElement | null;
     const hecho = bloque?.querySelector<HTMLElement>("[data-lead-done]");
@@ -424,13 +474,22 @@ const DESCRIPCION =
 
       // .w-form-done/.w-form-fail son display:none en el CSS portado; Webflow
       // los mostraba con estilo en linea y aqui se hace igual (no hay CSS nuevo).
-      const mostrar = (el: HTMLElement) => {
+      //
+      // El texto se escribe ANTES de mostrar y enfocar: role="alert" + focus()
+      // anuncia lo que hay en ese instante, y escribirlo despues hace que el
+      // lector lea el mensaje viejo. textContent y NUNCA innerHTML: viene de una
+      // respuesta HTTP.
+      const mostrar = (el: HTMLElement, texto = "") => {
+        if (texto) (el.firstElementChild ?? el).textContent = texto;
         el.style.display = "block";
         el.focus();
       };
       const ocultar = (el: HTMLElement) => {
         el.style.display = "";
       };
+
+      // Fachada: nada de challenges.cloudflare.com hasta el primer foco.
+      armarCaptcha(form);
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -439,17 +498,38 @@ const DESCRIPCION =
         enviar.disabled = true;
         enviar.value = espera;
 
+        // Vacio = se queda el texto que ya trae el HTML. Solo lo pisa quien
+        // tenga algo mejor y en el idioma correcto que decir.
+        let motivo = "";
         try {
+          // El servidor responde 403 a un envio sin token, asi que se espera al
+          // reto ANTES de gastar un intento del limite por IP.
+          const cf = await tokenCaptcha(form).catch(() => {
+            motivo = form.dataset.captchaError ?? "";
+            throw new Error("captcha");
+          });
+          const datos = new FormData(form);
+          if (cf) datos.set("cf-turnstile-response", cf);
+
           const res = await fetch(form.action, {
             method: "POST",
             headers: { Accept: "application/json" },
-            body: new FormData(form),
+            body: datos,
           });
-          if (!res.ok) throw new Error(String(res.status));
+          if (!res.ok) {
+            // El JSON trae el error YA en el idioma de la pagina (campo `lang`).
+            // Si la respuesta no es JSON se queda el texto del HTML.
+            const cuerpo = await res.json().catch(() => null);
+            if (typeof cuerpo?.error === "string" && cuerpo.error) motivo = cuerpo.error;
+            throw new Error(String(res.status));
+          }
           form.style.display = "none";
           mostrar(hecho);
         } catch {
-          mostrar(fallo);
+          // El token es de un solo uso: si el servidor llego a verificarlo, el
+          // siguiente envio con el mismo token da "timeout-or-duplicate".
+          reiniciarCaptcha(form);
+          mostrar(fallo, motivo);
         } finally {
           enviar.disabled = false;
           enviar.value = etiqueta;
@@ -522,5 +602,14 @@ const DESCRIPCION =
     .block-info-contact {
       align-self: stretch;
     }
+  }
+
+  /* La caja del reto sale VACIA del build (fachada) y se llena en el primer
+   * foco. Reservar los 65px del widget evita que el boton de enviar salte hacia
+   * abajo justo cuando la persona va a pulsarlo. Aqui el hueco se puede pagar
+   * porque la tarjeta ya es alta; en el pie NO, y por eso alli no se reserva. */
+  .lead-captcha {
+    min-height: 65px;
+    margin-bottom: 10px;
   }
 </style>

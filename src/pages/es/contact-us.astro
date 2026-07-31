@@ -22,6 +22,7 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import { NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
+import { SITE_KEY } from "../../lib/turnstile";
 
 const lang = "es" as const;
 const c = t(lang);
@@ -208,7 +209,20 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                       ref_id -> honeypot
                       ts     -> ver TS_BUILD arriba
                   */}
-                  <form id="lead-form" class="form" method="post" action="/api/lead">
+                  {/* Sin JS el formulario se OCULTA (ver el <noscript> de
+                      BaseLayout): sin token de captcha el endpoint responde 403. */}
+                  <noscript>
+                    <p class="small-text lead-note">
+                      {interpola(c.form.sinJs, { telefono: NEGOCIO.telefono, email: NEGOCIO.email })}
+                    </p>
+                  </noscript>
+                  <form
+                    id="lead-form"
+                    class="form"
+                    method="post"
+                    action="/api/lead"
+                    data-captcha-error={c.errores.captcha}
+                  >
                     <label class="visually-hidden" for="lead-full-name">
                       {c.form.fullNameLabel}
                     </label>
@@ -324,6 +338,25 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 
                     <input id="lead-ts" type="hidden" name="ts" value={TS_BUILD} />
 
+                    {/* `lang` explicito: idiomaDe() de /api/lead lo prefiere al
+                        Referer, y de el depende que el error salga en espanol. */}
+                    <input type="hidden" name="lang" value="es" />
+
+                    {/* Turnstile, justo antes del boton para que el reto quede
+                        antes que enviar en el orden de tabulacion. La caja sale
+                        VACIA del build: la pinta scripts/turnstile.ts al primer
+                        foco (fachada). */}
+                    {SITE_KEY && (
+                      <div
+                        class="lead-captcha"
+                        data-turnstile
+                        data-sitekey={SITE_KEY}
+                        data-lang="es"
+                        data-theme="light"
+                      >
+                      </div>
+                    )}
+
                     <input
                       type="submit"
                       class="button w-button"
@@ -375,6 +408,8 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
   {/* Dentro de <BaseLayout> a proposito: fuera, Astro lo emite despues de
       </html> y el HTML deja de ser valido. */}
   <script>
+    import { armarCaptcha, tokenCaptcha, reiniciarCaptcha } from "../../scripts/turnstile";
+
     // Mejora progresiva del envio. Identico al de la ruta EN salvo que el
     // rotulo de espera sale de data-wait: el <script> se compila aparte y no ve
     // el frontmatter, asi que sin ese atributo diria "Please wait..." en /es/.
@@ -392,13 +427,19 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
       const etiqueta = enviar.value;
       const espera = enviar.dataset.wait ?? etiqueta;
 
-      const mostrar = (el: HTMLElement) => {
+      // El texto se escribe ANTES de mostrar y enfocar: role="alert" + focus()
+      // anuncia lo que hay en ese instante. textContent y NUNCA innerHTML.
+      const mostrar = (el: HTMLElement, texto = "") => {
+        if (texto) (el.firstElementChild ?? el).textContent = texto;
         el.style.display = "block";
         el.focus();
       };
       const ocultar = (el: HTMLElement) => {
         el.style.display = "";
       };
+
+      // Fachada: nada de challenges.cloudflare.com hasta el primer foco.
+      armarCaptcha(form);
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -407,17 +448,34 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         enviar.disabled = true;
         enviar.value = espera;
 
+        let motivo = "";
         try {
+          // El servidor responde 403 sin token: se espera al reto ANTES de
+          // gastar un intento del limite por IP.
+          const cf = await tokenCaptcha(form).catch(() => {
+            motivo = form.dataset.captchaError ?? "";
+            throw new Error("captcha");
+          });
+          const datos = new FormData(form);
+          if (cf) datos.set("cf-turnstile-response", cf);
+
           const res = await fetch(form.action, {
             method: "POST",
             headers: { Accept: "application/json" },
-            body: new FormData(form),
+            body: datos,
           });
-          if (!res.ok) throw new Error(String(res.status));
+          if (!res.ok) {
+            const cuerpo = await res.json().catch(() => null);
+            if (typeof cuerpo?.error === "string" && cuerpo.error) motivo = cuerpo.error;
+            throw new Error(String(res.status));
+          }
           form.style.display = "none";
           mostrar(hecho);
         } catch {
-          mostrar(fallo);
+          // El token es de un solo uso: si el servidor llego a verificarlo, el
+          // siguiente envio con el mismo token da "timeout-or-duplicate".
+          reiniciarCaptcha(form);
+          mostrar(fallo, motivo);
         } finally {
           enviar.disabled = false;
           enviar.value = etiqueta;
@@ -476,5 +534,12 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     .block-info-contact {
       align-self: stretch;
     }
+  }
+
+  /* La caja del reto sale VACIA del build (fachada) y se llena al primer foco.
+   * Reservar los 65px evita que el boton salte cuando se va a pulsar. */
+  .lead-captcha {
+    min-height: 65px;
+    margin-bottom: 10px;
   }
 </style>

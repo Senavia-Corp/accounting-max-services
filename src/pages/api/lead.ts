@@ -426,6 +426,10 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       : null,
     ip,
   );
+  // Se registra SIEMPRE, pase o no. Si manana caen los leads hay que poder
+  // distinguir "menos spam" de "estamos bloqueando gente", y para eso no basta
+  // con contar rechazos: hace falta el denominador.
+  console.warn(`[lead] captcha ${captcha.motivo} (ip ${ip})`);
   if (!captcha.ok) return json({ ok: false, error: T.captcha[lang] }, 403);
 
   // 9. R7 — GUARDAR ANTES DE ENVIAR.

@@ -128,6 +128,9 @@ const EN = {
     honeypot: "Leave this field empty",
     done: "Thank you! Your submission has been received!",
     fail: "Oops! Something went wrong while submitting the form.",
+    // Sin JS no hay token de captcha y el servidor rechaza el envio, asi que el
+    // formulario se oculta (ver BaseLayout) y queda este aviso. {email} = NEGOCIO.email.
+    sinJs: "Subscribing needs JavaScript for its anti-spam check — email us at {email} and we will add you.",
   },
 
   form: {
@@ -160,6 +163,9 @@ const EN = {
     wait: "Please wait...",
     done: "Thank you! Your submission has been received!",
     fail: "Oops! Something went wrong while submitting the form.",
+    // {telefono} y {email} = NEGOCIO, que no pasan por el traductor.
+    sinJs:
+      "This form needs JavaScript for its anti-spam check, so it is hidden right now — please call us at {telefono} or email {email}.",
   },
 
   // Mensajes de error. Son copia EXACTA de los que ya emiten /api/lead y
@@ -469,6 +475,7 @@ const ES: Cadenas = {
     honeypot: "Deje este campo vacío",
     done: "¡Gracias! Hemos recibido su envío.",
     fail: "Vaya, algo salió mal al enviar el formulario.",
+    sinJs: "Suscribirse necesita JavaScript para la comprobación antispam: escríbanos a {email} y le damos de alta.",
   },
 
   form: {
@@ -498,6 +505,8 @@ const ES: Cadenas = {
     wait: "Espere un momento...",
     done: "¡Gracias! Hemos recibido su envío.",
     fail: "Vaya, algo salió mal al enviar el formulario.",
+    sinJs:
+      "Este formulario necesita JavaScript para su comprobación antispam, así que ahora está oculto: llámenos al {telefono} o escríbanos a {email}.",
   },
 
   errores: {
