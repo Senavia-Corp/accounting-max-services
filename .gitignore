@@ -35,3 +35,11 @@ DECISIONS.md
 
 # salida del adapter de Vercel
 .vercel/
+
+# Originales de las portadas del blog (20 MB en 10 JPG).
+# NO se sirven: post.heroImage sale del CDN de Sanity, y ninguna pagina
+# construida referencia /blog/*.jpg — comprobado con grep sobre dist/. Son el
+# material fuente que tools/upload-blog-covers.mjs ya subio al CMS, asi que
+# tenerlos aqui serian 20 MB muertos en git y otros 20 MB desplegados sin uso.
+# Si hay que regenerarlos: tools/gen-blog-images.mjs.
+public/blog/
