@@ -43,3 +43,16 @@ DECISIONS.md
 # tenerlos aqui serian 20 MB muertos en git y otros 20 MB desplegados sin uso.
 # Si hay que regenerarlos: tools/gen-blog-images.mjs.
 public/blog/
+
+# Capturas de PAGINA COMPLETA de la auditoria y de la paridad: 25 MB en PNG, de
+# hasta 2,2 MB cada una. Los informes .md no las incrustan (comprobado con grep)
+# y lo que citan son los .json de medidas, que si entran. Se regeneran con
+# `node tools/capturas.mjs`, asi que versionarlas es pagar 25 MB para siempre por
+# algo reproducible.
+#
+# Ojo, el patron es de un solo nivel a proposito. Los RECORTES DE SECCION de
+# baseline/diseno/densidad/ SI entran (5,3 MB, 360 KB la mayor): son la prueba
+# antes-despues en los 5 breakpoints de que el alto baja y el ancho no se mueve,
+# que es justo la afirmacion del commit de densidad. Igual con entrega/nav/.
+baseline/diseno/*.png
+auditoria/capturas/*.png
