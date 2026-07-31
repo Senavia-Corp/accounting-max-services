@@ -111,21 +111,79 @@ export type Testimonio = { _id: string; author: string; quote: string };
 // decoracion: mientras el campo este vacio en Sanity, GROQ ordenaria por nada y
 // devolveria las 12 fichas en un orden arbitrario. Con el desempate, un dataset
 // sin `order` se comporta exactamente como antes.
+/**
+ * ponytail: overlay de revision. Con CONTENIDO_LOCAL=1 se fusionan los ficheros
+ * de baseline/ SOBRE lo que devuelve Sanity, para poder construir y leer el
+ * contenido nuevo sin escribir una linea en el CMS del cliente.
+ *
+ * Apagado por defecto: sin la variable, esta funcion no existe para el build de
+ * produccion. Es deliberado que no haya un `.env` que lo active — se pasa a mano
+ * en la linea de comandos, para que nadie lo herede sin querer.
+ *
+ * Cubre `post` y `service`. Cada uno con su clave: los posts van por slug y los
+ * servicios por `_id`, porque asi estaban ya keyed los dos ficheros ES que
+ * consume tools/push-i18n.mjs. Unificarlos obligaria a regenerar traducciones ya
+ * revisadas, que es mas caro que pasar la funcion de clave aqui.
+ */
+async function overlayLocal<T extends Record<string, any>>(
+  docs: T[],
+  fEn: string,
+  fEs: string,
+  clave: (d: T) => string,
+  que: string,
+): Promise<T[]> {
+  if (!env("CONTENIDO_LOCAL")) return docs;
+  const { readFileSync, existsSync } = await import("node:fs");
+  const lee = (p: string) => (existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : {});
+  const en = lee(fEn);
+  const es = lee(fEs);
+  const n = docs.filter((d) => en[clave(d)]).length;
+  console.log(`[CONTENIDO_LOCAL] overlay activo: ${n}/${docs.length} ${que} con cuerpo EN nuevo`);
+  return docs.map((d) => {
+    const { slug: _s, ...camposEn } = en[clave(d)] ?? {};
+    const { slug: _t, ...camposEs } = es[clave(d)] ?? {};
+    // Los nulos del JSON no pisan lo que ya haya en Sanity.
+    const limpio = (o: Record<string, any>) =>
+      Object.fromEntries(Object.entries(o).filter(([, v]) => v !== null && v !== undefined));
+    return { ...d, ...limpio(camposEs), ...limpio(camposEn) };
+  });
+}
+
 export const servicios = (): Promise<Servicio[]> =>
-  sanity.fetch(`*[_type == "service"] | order(order asc, title asc){
+  sanity
+    .fetch<Servicio[]>(`*[_type == "service"] | order(order asc, title asc){
     _id, title, "slug": slug.current, intro, body,
     titleEs, introEs, bodyEs, feature, order,
     icon ${IMAGEN}, picture ${IMAGEN},
     metaTitle, metaDescription, metaTitleEs, metaDescriptionEs
-  }`);
+  }`)
+    .then((d) =>
+      overlayLocal(
+        d,
+        "baseline/contenido/servicios-en.json",
+        "baseline/i18n/servicios-es.json",
+        (s) => s._id,
+        "servicios",
+      ),
+    );
 
 export const posts = (): Promise<Post[]> =>
-  sanity.fetch(`*[_type == "post"] | order(order asc, title asc){
+  sanity
+    .fetch<Post[]>(`*[_type == "post"] | order(order asc, title asc){
     _id, title, "slug": slug.current, excerpt, body,
     titleEs, excerptEs, bodyEs, publishedAt, authorName, order,
     heroImage ${IMAGEN},
     metaTitle, metaDescription, metaTitleEs, metaDescriptionEs
-  }`);
+  }`)
+    .then((d) =>
+      overlayLocal(
+        d,
+        "baseline/contenido/posts-en.json",
+        "baseline/i18n/posts-es.json",
+        (p) => `post.${p.slug}`,
+        "posts",
+      ),
+    );
 
 export const testimonios = (): Promise<Testimonio[]> =>
   sanity.fetch(`*[_type == "review"]{ _id, author, quote }`);

@@ -1,0 +1,171 @@
+{
+  "_nota": "Campos de texto cortos de las 12 paginas de servicio, EN y ES. Los cuerpos viven en servicios/<slug>.{en,es}.html y los compila tools/services-build.mjs. El slug NO se traduce y NO se toca (R4). `title` alimenta el <h1> Y la etiqueta del nav/sidebar a la vez (services/[slug].astro:198 y :311): por eso se queda corto y la keyword local completa va en metaTitle, en la intro y en un H2 del cuerpo. `keyword` es la keyword objetivo de la pagina y es HIPOTESIS: no hay dato de Search Console (ver entrega/copy-investigacion.md §1).",
+
+  "itin-application-irs-tax-id": {
+    "keyword": "ITIN application Coral Springs FL",
+
+    "title": "ITIN Application (IRS Tax ID)",
+    "intro": "Apply for or renew your IRS ITIN with a bilingual Enrolled Agent in Coral Springs, FL. As a Certifying Acceptance Agent we verify your passport here — you never mail the original.",
+    "metaTitle": "ITIN Application Coral Springs FL | Keep Your Passport",
+    "metaDescription": "Apply for or renew your IRS ITIN in Coral Springs, FL. As a Certifying Acceptance Agent we verify your passport in person — no mailing originals.",
+
+    "titleEs": "Solicitud de ITIN",
+    "introEs": "Solicite o renueve su ITIN del IRS con un Enrolled Agent bilingüe en Coral Springs, FL. Somos Certifying Acceptance Agent: verificamos su pasaporte aquí y usted no lo envía por correo.",
+    "metaTitleEs": "Solicitud de ITIN Coral Springs FL | Conserve su pasaporte",
+    "metaDescriptionEs": "Solicite o renueve su ITIN del IRS en Coral Springs, FL. Somos Certifying Acceptance Agent: verificamos su pasaporte en persona, sin enviarlo por correo."
+  },
+
+  "personal-tax-preparation": {
+    "keyword": "tax preparation Coral Springs FL",
+
+    "title": "Personal Tax Preparation",
+    "intro": "Personal tax preparation in Coral Springs, FL by IRS Enrolled Agents and CPAs, in English or Spanish. Bring what you have; we tell you what is missing while there is still time.",
+    "metaTitle": "Tax Preparation Coral Springs FL | Form 1040",
+    "metaDescription": "Your Form 1040 prepared by IRS Enrolled Agents and CPAs in Coral Springs, FL, in English or Spanish. We find what is missing before it costs you.",
+
+    "titleEs": "Impuestos Personales",
+    "introEs": "Preparación de impuestos personales en Coral Springs, FL con Enrolled Agents y CPAs del IRS, en inglés o español. Traiga lo que tenga y le decimos qué falta a tiempo.",
+    "metaTitleEs": "Preparación de Impuestos Coral Springs FL",
+    "metaDescriptionEs": "Su Form 1040 preparado por Enrolled Agents y CPAs en Coral Springs, FL, en inglés o español. Detectamos lo que falta antes de que le cueste dinero."
+  },
+
+  "corporate-tax-preparation": {
+    "keyword": "corporate tax preparation Coral Springs FL",
+
+    "title": "Corporate Tax Preparation",
+    "intro": "Corporate tax preparation in Coral Springs, FL for corporations, S-Corps and multi-member LLCs across Broward County, filed by IRS Enrolled Agents and CPAs.",
+    "metaTitle": "Corporate Tax Preparation Coral Springs FL",
+    "metaDescription": "The right federal return for how your company is actually organized, filed on time, with the Florida side handled too. Coral Springs, FL.",
+
+    "titleEs": "Impuestos Corporativos",
+    "introEs": "Preparación de impuestos corporativos en Coral Springs, FL para corporations, S-Corps y LLC de varios socios de todo Broward, con Enrolled Agents y CPAs.",
+    "metaTitleEs": "Impuestos Corporativos Coral Springs FL",
+    "metaDescriptionEs": "La declaración federal que corresponde a su estructura real, presentada a tiempo y con la parte de Florida resuelta. Coral Springs, FL."
+  },
+
+  "business-incorporation-in-florida": {
+    "keyword": "form an LLC in Florida Coral Springs",
+
+    "title": "Business Incorporation in FL",
+    "intro": "Form an LLC in Florida from our Coral Springs office. We handle both halves: the state registration, and the federal tax election that decides how you are taxed.",
+    "metaTitle": "Form an LLC in Florida | Coral Springs FL",
+    "metaDescription": "Register your Florida LLC or corporation and get the federal tax election right the first time. Coral Springs, FL, in English or Spanish.",
+
+    "titleEs": "Constitución de Empresas en FL",
+    "introEs": "Abra su LLC en Florida desde nuestra oficina de Coral Springs. Nos ocupamos de las dos mitades: el registro estatal y la elección fiscal federal que decide cómo tributa.",
+    "metaTitleEs": "Abrir una LLC en Florida | Coral Springs FL",
+    "metaDescriptionEs": "Registre su LLC o corporación en Florida y acierte con la elección fiscal federal desde el principio. Coral Springs, FL, en inglés o español."
+  },
+
+  "employer-identification-number-application": {
+    "keyword": "EIN application Florida",
+
+    "title": "EIN Application",
+    "intro": "EIN application for Florida businesses, prepared from our Coral Springs office in English or Spanish: Form SS-4, the entity classification, and the line that decides it.",
+    "metaTitle": "EIN Application Florida | Coral Springs Office",
+    "metaDescription": "The EIN itself is free — the IRS says so. What you pay for is getting the entity type and responsible party right the first time. Coral Springs.",
+
+    "titleEs": "Solicitud de EIN",
+    "introEs": "Solicitud de EIN para negocios de Florida desde nuestra oficina de Coral Springs, en inglés o español: el Form SS-4, la clasificación de entidad y la línea que decide.",
+    "metaTitleEs": "Cómo Sacar un EIN en Florida | Coral Springs",
+    "metaDescriptionEs": "El EIN es gratis y el IRS lo dice. Lo que se paga es acertar con el tipo de entidad y el responsible party a la primera. Coral Springs, FL."
+  },
+
+  "sales-tax-filing-7k40q": {
+    "keyword": "Florida sales tax filing service",
+
+    "title": "Sales Tax Filing",
+    "intro": "Florida Sales Tax filing run on the schedule the state assigned you, from our Coral Springs office: Form DR-15, the county surtax breakdown and the electronic payment.",
+    "metaTitle": "Florida Sales Tax Filing Service | Coral Springs",
+    "metaDescription": "Form DR-15 filed on the schedule the Department of Revenue actually has you on — the detail that costs owners money. Coral Springs, FL.",
+
+    "titleEs": "Presentación del Sales Tax",
+    "introEs": "Presentación del Sales Tax de Florida en la frecuencia que le asignaron, desde Coral Springs: el Form DR-15, el desglose del surtax del condado y el pago electrónico.",
+    "metaTitleEs": "Presentación de Sales Tax en Florida | Coral Springs",
+    "metaDescriptionEs": "El Form DR-15 presentado en la frecuencia que el Department of Revenue tiene registrada para usted. Ahí es donde se pierde dinero. Coral Springs."
+  },
+
+  "monthly-bookkeeping-accounting": {
+    "keyword": "bookkeeping services Coral Springs FL",
+
+    "title": "Monthly Bookkeeping & Accounting",
+    "intro": "Monthly bookkeeping services in Coral Springs, FL that keep your numbers current all year — kept by the same Enrolled Agents and CPAs who file your return.",
+    "metaTitle": "Bookkeeping Services Coral Springs FL | Monthly",
+    "metaDescription": "Books kept current every month, not rebuilt every April, by the same Enrolled Agents and CPAs who file your return. Coral Springs, FL.",
+
+    "titleEs": "Contabilidad Mensual",
+    "introEs": "Contabilidad mensual en Coral Springs, FL que mantiene sus números al día todo el año, llevada por los mismos Enrolled Agents y CPAs que presentan su declaración.",
+    "metaTitleEs": "Contabilidad Mensual Coral Springs FL",
+    "metaDescriptionEs": "Libros al día cada mes, no reconstruidos cada abril, por los mismos Enrolled Agents y CPAs que presentan su declaración. Coral Springs, FL."
+  },
+
+  "financial-statement-preparation": {
+    "keyword": "financial statement preparation Florida",
+
+    "title": "Financial Statement Preparation",
+    "intro": "A bank, investor or licensing board asked you for financial statements and set a deadline. We build them from your books in Coral Springs, FL, in English or Spanish.",
+    "metaTitle": "Financial Statement Preparation | Coral Springs FL",
+    "metaDescription": "Balance sheet, income statement and cash flow, built from your books for the bank, investor or board that asked. Coral Springs, FL.",
+
+    "titleEs": "Estados Financieros",
+    "introEs": "Un banco, un inversionista o una junta le pidió estados financieros y le puso plazo. Los preparamos a partir de sus libros en Coral Springs, FL, en inglés o español.",
+    "metaTitleEs": "Estados Financieros para Préstamos | Coral Springs",
+    "metaDescriptionEs": "Balance general, estado de resultados y flujo de efectivo, hechos desde sus libros para quien se los pidió. Coral Springs, FL."
+  },
+
+  "representation-before-the-irs": {
+    "keyword": "IRS representation Coral Springs FL",
+
+    "title": "Representation Before The IRS",
+    "intro": "IRS representation from our Coral Springs, FL office: a person licensed to practice before the IRS reads the notice, writes the response and takes the calls for you.",
+    "metaTitle": "IRS Representation Coral Springs FL | EA & CPA",
+    "metaDescription": "When the IRS writes, who answers matters. Enrolled Agents and CPAs deal with the agency in your place, in English or Spanish. Coral Springs, FL.",
+
+    "titleEs": "Representación ante el IRS",
+    "introEs": "Representación ante el IRS desde Coral Springs, FL: una persona autorizada a ejercer ante el IRS lee la carta, redacta la respuesta y atiende las llamadas por usted.",
+    "metaTitleEs": "Representación ante el IRS en Español | Coral Springs",
+    "metaDescriptionEs": "Cuando el IRS escribe, importa quién responde. Enrolled Agents y CPAs tratan con la agencia en su lugar, en inglés o español. Coral Springs, FL."
+  },
+
+  "audit-assistance": {
+    "keyword": "IRS audit help Coral Springs FL",
+
+    "title": "Audit Assistance",
+    "intro": "IRS audit help in Coral Springs, FL from Enrolled Agents and CPAs. We read the notice, assemble the records that answer it, and deal with the examiner for you.",
+    "metaTitle": "IRS Audit Help Coral Springs FL | Audit Assistance",
+    "metaDescription": "Selected for examination? Enrolled Agents in Coral Springs, FL read the notice, gather the proof and handle the examiner. English and Spanish.",
+
+    "titleEs": "Asistencia en Auditorías",
+    "introEs": "Ayuda con auditorías del IRS en Coral Springs, FL con Enrolled Agents y CPAs. Leemos la carta, reunimos los registros que la responden y tratamos con el examinador.",
+    "metaTitleEs": "Ayuda con Auditoría del IRS | Coral Springs FL",
+    "metaDescriptionEs": "¿Le seleccionaron para examen? Enrolled Agents en Coral Springs, FL leen la carta, reúnen las pruebas y tratan con el examinador. En inglés y español."
+  },
+
+  "notary-public-services": {
+    "keyword": "Notary Public Coral Springs FL",
+
+    "title": "Notary Public Services",
+    "intro": "A Notary Public in Coral Springs, FL at 1700 N University Dr STE 210, in English or Spanish — often in the same visit as a tax return, an EIN or a new company.",
+    "metaTitle": "Notary Public Coral Springs FL | English & Spanish",
+    "metaDescription": "Documents notarized in Coral Springs, FL, in English or Spanish, often in the same visit as your tax return, EIN or new company filing.",
+
+    "titleEs": "Servicios de Notary Public",
+    "introEs": "Notary Public bilingüe en Coral Springs, FL, en 1700 N University Dr STE 210, muchas veces en la misma visita que su declaración, su EIN o su empresa nueva.",
+    "metaTitleEs": "Notary Public Bilingüe | Coral Springs FL",
+    "metaDescriptionEs": "Documentos notarizados en Coral Springs, FL, en inglés o español, a menudo en la misma visita que su declaración, su EIN o su empresa nueva."
+  },
+
+  "bilingual-services-english-spanish": {
+    "keyword": "bilingual accountant Coral Springs FL",
+
+    "title": "Bilingual Services (English & Spanish)",
+    "intro": "A bilingual accountant in Coral Springs, FL: every service in English or Spanish, start to finish, with the same Enrolled Agent who does the work explaining it to you.",
+    "metaTitle": "Bilingual Accountant Coral Springs FL | EN & ES",
+    "metaDescription": "Every service in English or Spanish, end to end. The Enrolled Agent who prepares your return explains it in your language. Coral Springs, FL.",
+
+    "titleEs": "Servicios Bilingües",
+    "introEs": "Contador en español en Coral Springs, FL: todos los servicios en inglés o español, de principio a fin, explicados por el mismo Enrolled Agent que hace el trabajo.",
+    "metaTitleEs": "Contador en Español Coral Springs FL",
+    "metaDescriptionEs": "Todos los servicios en inglés o español, de principio a fin. El Enrolled Agent que prepara su declaración se la explica en su idioma. Coral Springs."
+  }
+}
