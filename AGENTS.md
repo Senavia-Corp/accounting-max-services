@@ -12,18 +12,14 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 Vigente desde 2026-07-31 (D15 en DECISIONS.md).
 
-> 🚨 **Roto ahora mismo (D16, 2026-07-31): el auto-deploy vía Git NO funciona.** Vercel
-> Hobby rechaza construir desde un repo privado propiedad de una organizacion de GitHub
-> (`Senavia-Corp` lo es), y el repo es privado desde D14. Cualquier push a `main` desde
-> ahora falla en Vercel con "Cannot deploy from a private GitHub organization repository
-> on the Hobby plan" — produccion queda congelada en el ultimo commit que si desplego
-> (`ae9ccde`). Comprobar el estado del commit (`gh api repos/Senavia-Corp/accounting-max-services/commits/<sha>/status`)
-> despues de CADA push hasta que D16 se resuelva. No asumir que "sube solo" de la regla
-> de abajo sigue siendo cierto.
+> ✅ **D16 RESUELTO el 2026-07-31: el auto-deploy vía Git vuelve a funcionar.** Se
+> resolvio haciendo el repositorio **PUBLICO**, por decision expresa de Sebastian tras
+> exponerle las dos consecuencias. Verificado: `dd3eb91` construyo y desplegó a
+> produccion, y con el salieron los tres commits que estaban atascados (`3dc05cf`,
+> `cb3dbf7`, `f1621f6`).
 
-- Cuando D16 este resuelto: cualquier sesion puede commitear, fusionar, subir a `main` y
-  confiar en que Vercel despliega solo a produccion via integracion Git, sin pedir
-  permiso cada vez.
+- Cualquier sesion puede commitear, fusionar, subir a `main` y confiar en que Vercel
+  despliega solo a produccion via integracion Git, sin pedir permiso cada vez.
 - El proyecto Vercel YA existe (`prj_D755iZtk3M0g1wCylmYs6CA9JWtI`, plan Hobby, ver D6 en
   DECISIONS.md) y despliega `accounting-max-services.vercel.app`. **No crear un proyecto
   nuevo.**
@@ -40,14 +36,14 @@ Vigente desde 2026-07-31 (D15 en DECISIONS.md).
 
 ## Lo que sigue necesitando permiso expreso, y por que
 
-- **El repositorio de GitHub debe permanecer PRIVADO siempre.** Ya se filtro a publico una
-  vez por una transferencia de cuenta (D8, 2026-07-28) y ha vuelto a ocurrir desde
-  entonces. Verificar la visibilidad (`gh api repos/Senavia-Corp/accounting-max-services
-  --jq .visibility`; sin sesion iniciada debe dar 404) tras cualquier transferencia,
-  cambio de plan de organizacion o reconexion de la Vercel GitHub App (D14 tiene el
-  procedimiento exacto de arreglo). Nota: los metadatos de deployment de Vercel
-  (`githubRepoVisibility`) quedan cacheados del momento en que se conecto la integracion
-  — no son una senal en vivo, no usarlos solos.
+- ⚠️ **El repositorio es PUBLICO a proposito desde el 2026-07-31, y asi se queda.**
+  Deroga la regla anterior («debe permanecer PRIVADO siempre», D8/D14). **NO lo vuelvas
+  privado**: es lo unico que sostiene el auto-deploy en plan Hobby, y cerrarlo lo rompe
+  otra vez (D16). Lo que antes era una filtracion a corregir es ahora el estado deseado —
+  si una sesion futura encuentra el repo publico, NO es el incidente de D8.
+  Consecuencias inventariadas en `entrega/repo-publico-exposicion.md`; lo que urge cerrar
+  a raiz de esto es **B3**, porque el historial publico lo describe sin resolver.
+  Si algun dia se vuelve privado, hay que subir a Pro **en el mismo movimiento**.
 - **Subir `SANITY_WRITE_TOKEN` a Vercel.** Hoy solo vive `SANITY_READ_TOKEN` en los tres
   targets, a proposito: el dataset `production` de Sanity es publico (B3), y sin un
   dataset de leads aparte y privado, el token de escritura convertiria cada envio de
