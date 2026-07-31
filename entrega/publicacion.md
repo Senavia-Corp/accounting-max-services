@@ -38,9 +38,13 @@ por integración Git; ver sección 0.
   accounting-max-services`, nunca CLI ni MCP genérico de Vercel. Cubre commit/merge/push
   y la verificación post-deploy. **No cubre** el corte de dominio (sigue bloqueado por
   D6), ni subir `SANITY_WRITE_TOKEN`, ni escribir en Sanity más allá del token Editor.
-- **Integración Git reconfirmada con un push real hecho por esta sesión**, ya con el repo
-  privado: el commit que trae estos mismos cambios de documentación se empujó a `main` y
-  Vercel lo desplegó solo, sin intervención manual. Detalle en DECISIONS.md D15.
+- **🚨 Integración Git ROTA con el repo privado — descubierto por el push real de esta
+  sesión.** El commit `3dc05cf` se empujó a `main` y Vercel lo rechazó de inmediato:
+  `"Cannot deploy from a private GitHub organization repository on the Hobby plan"`.
+  **La producción sigue sirviendo `ae9ccde`** (el último commit que se desplegó mientras
+  el repo aún era público) y **ningún push futuro se publicará solo** hasta resolver
+  esto. Detalle completo y las tres salidas posibles, ninguna elegida, en DECISIONS.md
+  **D16**.
 
 ## Bloqueos que van ANTES del corte
 

@@ -12,8 +12,18 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 Vigente desde 2026-07-31 (D15 en DECISIONS.md).
 
-- Cualquier sesion puede commitear, fusionar, subir a `main` y confiar en que Vercel
-  despliega solo a produccion via integracion Git, sin pedir permiso cada vez.
+> 🚨 **Roto ahora mismo (D16, 2026-07-31): el auto-deploy vía Git NO funciona.** Vercel
+> Hobby rechaza construir desde un repo privado propiedad de una organizacion de GitHub
+> (`Senavia-Corp` lo es), y el repo es privado desde D14. Cualquier push a `main` desde
+> ahora falla en Vercel con "Cannot deploy from a private GitHub organization repository
+> on the Hobby plan" — produccion queda congelada en el ultimo commit que si desplego
+> (`ae9ccde`). Comprobar el estado del commit (`gh api repos/Senavia-Corp/accounting-max-services/commits/<sha>/status`)
+> despues de CADA push hasta que D16 se resuelva. No asumir que "sube solo" de la regla
+> de abajo sigue siendo cierto.
+
+- Cuando D16 este resuelto: cualquier sesion puede commitear, fusionar, subir a `main` y
+  confiar en que Vercel despliega solo a produccion via integracion Git, sin pedir
+  permiso cada vez.
 - El proyecto Vercel YA existe (`prj_D755iZtk3M0g1wCylmYs6CA9JWtI`, plan Hobby, ver D6 en
   DECISIONS.md) y despliega `accounting-max-services.vercel.app`. **No crear un proyecto
   nuevo.**
