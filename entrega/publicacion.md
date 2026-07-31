@@ -1,13 +1,46 @@
 # Publicación — pasos, sin ejecutar
 
-**Nada de esto se ha ejecutado.** Ni vínculo, ni despliegue, ni cambio de DNS, ni commit.
-Es el guion para cuando se decida cortar, con los bloqueos vivos señalados.
+**El corte de dominio sigue sin ejecutarse.** Ni cambio de DNS, ni Team Pro, ni dominio
+propio en Vercel. Todo lo de abajo (bloqueos 1-8) sigue siendo el guion para cuando se
+decida cortar. Lo que **sí** cambió — la previsualización en la cuenta Hobby que D6 ya
+autorizó — está en la sección 0.
 
-`.vercel/project.json` **no existe** — lo que hay en `.vercel/` es solo `output/`, la
-salida del adapter, que se regenera en cada `npm run build`. El proyecto **no está
-vinculado**.
+`.vercel/project.json` **no existe en este checkout** — lo que hay en `.vercel/` es solo
+`output/`, la salida del adapter, que se regenera en cada `npm run build`. Este checkout
+**no está vinculado** por CLI (y no debe estarlo — ver AGENTS.md/D15: instalar la CLI de
+Vercel crearía una octava identidad conflictiva). El proyecto en sí ya existe y despliega
+por integración Git; ver sección 0.
 
 ---
+
+## 0 · Estado del despliegue Hobby ya autorizado (no es el corte) — verificado 2026-07-31
+
+- **Repo GitHub privado**, reconfirmado por esta sesión con tres métodos independientes
+  antes de tocar nada: `gh api .../accounting-max-services --jq .visibility` → `private`;
+  API sin autenticar → 404; web sin autenticar → 404. El repo había vuelto a quedar
+  público (recaída de D8) y otra sesión lo corrigió el mismo día — ver **D14** en
+  `DECISIONS.md` para el procedimiento exacto y **D15** para esta reconfirmación
+  independiente y por qué los metadatos de despliegue de Vercel (`githubRepoVisibility`)
+  no sirven para detectar esto por sí solos.
+- **Producción sigue Ready:** `accounting-max-services.vercel.app` responde 200 en
+  portada y en `/es`, 404 en ruta inexistente (comprobado ahora, no solo por el informe de
+  `release-verificacion.md` de más temprano hoy).
+- **Un solo proyecto Vercel**, confirmado por `VERCEL_GET_PROJECTS` vía Composio (nunca
+  CLI ni el MCP de Vercel genérico, que resuelve a la cuenta de GQM): `prj_D755iZtk3M0g1wCylmYs6CA9JWtI`.
+  No se creó ningún proyecto nuevo.
+- **Variables de entorno confirmadas por API**, no solo por archivo: `SANITY_READ_TOKEN`
+  en los tres targets. **`SANITY_WRITE_TOKEN` sigue sin subir, a propósito** — subirlo
+  antes de resolver B3 armaría el fallo de formularios en vez de arreglarlo (ver
+  `release-verificacion.md` §5). No se subió en este encargo tampoco, pese a que el
+  encargo original lo pedía.
+- **`AGENTS.md` ya tiene la autorización permanente de publicación** (D15): push/merge a
+  `main` sin pedir permiso cada vez, siempre vía Composio `--account
+  accounting-max-services`, nunca CLI ni MCP genérico de Vercel. Cubre commit/merge/push
+  y la verificación post-deploy. **No cubre** el corte de dominio (sigue bloqueado por
+  D6), ni subir `SANITY_WRITE_TOKEN`, ni escribir en Sanity más allá del token Editor.
+- **Integración Git reconfirmada con un push real hecho por esta sesión**, ya con el repo
+  privado: el commit que trae estos mismos cambios de documentación se empujó a `main` y
+  Vercel lo desplegó solo, sin intervención manual. Detalle en DECISIONS.md D15.
 
 ## Bloqueos que van ANTES del corte
 
