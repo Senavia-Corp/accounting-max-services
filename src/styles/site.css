@@ -1007,9 +1007,9 @@
 }
 
 /* --- (D) Selector de idioma ---------------------------------------------- */
-/* Con ES_PUBLICO=false nada de esto llega a pintarse: el componente no emite
- * markup. Se deja escrito para que levantar el gate D3 sea cambiar una
- * constante y no reabrir la hoja de estilos. */
+/* Solo se pinta con ES_PUBLICO en true (i18n.ts), que es el estado desde que se
+ * firmo D3 el 2026-07-31. Con la constante en false el componente no emite
+ * markup y estas reglas quedan inertes, sin tener que reabrir la hoja. */
 .selector-idioma-caja {
   position: relative;
   display: flex;

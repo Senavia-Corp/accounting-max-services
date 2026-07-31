@@ -1,8 +1,8 @@
 ---
 // Contacto en espanol — /es/contact-us
 //
-// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
-// firmado. La explicacion completa esta en src/pages/es/index.astro.
+// D3 firmado el 2026-07-31: esta ruta se indexa, entra en el sitemap y lleva
+// hreflang reciproco. La explicacion completa esta en src/pages/es/index.astro.
 //
 // Espejo de src/pages/contact-us.astro: mismo marcado, mismos SVG, mismo
 // contrato de campos contra /api/lead. Solo cambia el idioma de los rotulos.
@@ -47,7 +47,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 });
 ---
 
-<BaseLayout title={TITULO} description={c.meta.contactDescription} lang={lang} noindex>
+<BaseLayout title={TITULO} description={c.meta.contactDescription} lang={lang}>
   <Nav lang={lang} />
 
   <main id="main">
@@ -302,7 +302,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                       {/* Enlaza a la version EN a proposito: no existe
                           /es/privacy-policy y traducir un aviso GLBA sin un
                           revisor cualificado que lo firme es exactamente el
-                          riesgo que D3 y D4 impiden asumir. Mejor un enlace
+                          riesgo que D4 impide asumir. Mejor un enlace
                           honesto en ingles que un documento legal traducido a
                           ojo. Se marca con hreflang="en". */}
                       <p class="small-text lead-note">

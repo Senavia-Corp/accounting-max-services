@@ -2,22 +2,26 @@
 // Portada en espanol — /es
 //
 // ============================================================================
-// R6 — ESTA RUTA, COMO LAS OTRAS 25 DE /es/, NACE CON noindex.
+// ESTA RUTA, COMO LAS OTRAS 25 DE /es/, ESTA PUBLICADA. D3 se firmo el
+// 2026-07-31 y con el se levantaron las CUATRO cosas, que iban juntas o
+// ninguna:
 //
-//   <meta name="robots" content="noindex">   (prop `noindex` de BaseLayout)
-//   fuera del sitemap                        (filtro en astro.config.mjs)
-//   SIN hreflang reciproco                   (ni aqui ni en la ruta EN)
+//   sin <meta name="robots" content="noindex">   (se quito la prop `noindex`)
+//   dentro del sitemap                           (filtro en astro.config.mjs)
+//   hreflang reciproco en las dos direcciones    (BaseLayout.astro)
+//   sin `Disallow: /es/`                         (public/robots.txt)
 //
-// No es una precaucion generica: D3 —revisor nativo con criterio fiscal para el
-// espanol— sigue PENDIENTE. Todo el espanol del sitio es traduccion nueva sin
-// revisar, y esto es un despacho fiscal. Indexar consejo fiscal mal traducido
-// es el riesgo que D3 existe para cerrar. Las tres cosas se levantan JUNTAS y
-// solo cuando D3 este firmado.
+// Y el selector de idioma se pinta en las 54 rutas (ES_PUBLICO en i18n.ts).
 //
-// Por lo mismo NO hay selector de idioma en el cromo EN: enlazar desde las 26
-// rutas indexadas a traducciones sin revisar las publica de facto, y el noindex
-// no impide que una persona las lea. Las claves common.idioma* de i18n.ts
-// quedan preparadas y sin usar hasta que D3 se firme.
+// Por que iban juntas: publicar el selector sin hreflang es el error que Search
+// Console reporta como «alternativa sin etiqueta de retorno», y un selector
+// visible con noindex publica el espanol de facto igual — el noindex impide que
+// Google lo indexe, no que una persona lo lea.
+//
+// LO QUE NO CAMBIO: el glosario de D3 sigue siendo la regla del contenido. IRS,
+// Enrolled Agent, CPA, ITIN, EIN, LLC, S-Corp, W-2, 1099 y Notary Public NO se
+// traducen nunca. «Enrolled Agent» o «CPA» traducidos son credenciales falsas y
+// en Florida es infraccion que un notary se anuncie como «notario» en espanol.
 // ============================================================================
 //
 // Espejo de src/pages/index.astro: misma estructura, mismas clases, mismo orden
@@ -116,7 +120,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 });
 ---
 
-<BaseLayout title={TITULO} description={c.meta.homeDescription} lang={lang} noindex>
+<BaseLayout title={TITULO} description={c.meta.homeDescription} lang={lang}>
   <Nav lang={lang} />
 
   <main id="main">

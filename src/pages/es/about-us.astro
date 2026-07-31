@@ -1,8 +1,8 @@
 ---
 // Sobre nosotros en espanol — /es/about-us
 //
-// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
-// firmado. La explicacion completa esta en src/pages/es/index.astro.
+// D3 firmado el 2026-07-31: esta ruta se indexa, entra en el sitemap y lleva
+// hreflang reciproco. La explicacion completa esta en src/pages/es/index.astro.
 //
 // Espejo de src/pages/about-us.astro. Mismas secciones, mismas clases, mismos
 // assets. R2 sigue vigente: LA SECCION DE EQUIPO NO SE CONSTRUYE — las seis
@@ -86,7 +86,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 });
 ---
 
-<BaseLayout title={TITULO} description={c.meta.aboutDescription} lang={lang} noindex>
+<BaseLayout title={TITULO} description={c.meta.aboutDescription} lang={lang}>
   <Nav lang={lang} />
 
   <main id="main">

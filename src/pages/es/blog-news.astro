@@ -1,8 +1,8 @@
 ---
 // Listado del blog en espanol — /es/blog-news
 //
-// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
-// firmado. La explicacion completa esta en src/pages/es/index.astro.
+// D3 firmado el 2026-07-31: esta ruta se indexa, entra en el sitemap y lleva
+// hreflang reciproco. La explicacion completa esta en src/pages/es/index.astro.
 //
 // Espejo de src/pages/blog-news.astro. Mismas clases, mismos recortes de
 // imagen, mismos anchos de columna. Sigue SIN fecha ni autor (R3): la plantilla
@@ -39,7 +39,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 });
 ---
 
-<BaseLayout title={TITULO} description={c.meta.blogDescription} lang={lang} noindex>
+<BaseLayout title={TITULO} description={c.meta.blogDescription} lang={lang}>
   <Nav lang={lang} />
 
   <main id="main">

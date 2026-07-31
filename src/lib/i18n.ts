@@ -707,26 +707,19 @@ export type Lang = keyof typeof T;
 export const IDIOMAS = ["en", "es"] as const;
 
 /**
- * GATE DE D3 — EL ESPANOL NO SE PUBLICA TODAVIA.
+ * El espanol esta publicado: el selector de idioma se pinta en las 54 rutas.
  *
- * En `false` el selector de idioma NO SE RENDERIZA en ninguna de las 54 rutas:
- * el componente esta construido y probado entero, pero apagado.
+ * D3 quedo firmado el 2026-07-31 y con el las CUATRO cosas que iban juntas o
+ * ninguna: sin noindex, dentro del sitemap, hreflang reciproco en las dos
+ * direcciones (BaseLayout.astro) y `Disallow: /es/` borrado de robots.txt. El
+ * detalle esta en DECISIONS.md D3 y D13.
  *
- * POR QUE. D3 sigue PENDIENTE: no hay revisor nativo con criterio fiscal que
- * firme la traduccion, y las 26 rutas /es nacen con noindex, fuera del sitemap
- * y sin hreflang reciproco justamente por eso. Un selector visible en las 54
- * rutas PUBLICA el espanol de facto — el noindex evita que Google lo indexe,
- * pero no evita que una persona lo lea, y «Enrolled Agent» o «Notary Public»
- * mal traducidos son una credencial falsa (en Florida, una infraccion).
- *
- * NO SE INVIERTE ESTA CONSTANTE SIN EL CLIENTE. Lo que hay que hacer el dia que
- * se ponga en `true` esta enumerado en DECISIONS.md D13, y son CUATRO cosas que
- * van juntas o ninguna: quitar el noindex, entrar en el sitemap, anadir
- * hreflang reciproco en las dos direcciones y borrar `Disallow: /es/` de
- * robots.txt. Publicar el selector sin hreflang es un error que Search Console
- * reporta como «alternativa sin etiqueta de retorno».
+ * La constante se conserva porque sigue siendo el interruptor: ponerla en
+ * `false` esconde el selector, pero YA NO despublica nada — las 26 rutas /es
+ * quedan indexables y en el sitemap. Dar marcha atras de verdad son las cuatro
+ * cosas al reves, otra vez juntas.
  */
-export const ES_PUBLICO = false;
+export const ES_PUBLICO = true;
 
 /** `es` solo si la ruta empieza por /es; todo lo demas es `en`. */
 export const idiomaDeRuta = (pathname: string): Lang =>

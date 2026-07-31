@@ -1,8 +1,8 @@
 ---
 // Entrada de blog en espanol — 10 rutas /es/post/<slug>
 //
-// R6: noindex + fuera del sitemap + sin hreflang reciproco, hasta que D3 este
-// firmado. La explicacion completa esta en src/pages/es/index.astro.
+// D3 firmado el 2026-07-31: estas rutas se indexan, entran en el sitemap y
+// llevan hreflang reciproco. La explicacion esta en src/pages/es/index.astro.
 //
 // Espejo de src/pages/post/[slug].astro: mismas clases, mismos landmarks
 // (<article>/<aside>), misma barra lateral. Sigue SIN fecha y SIN autor (R3), y
@@ -90,7 +90,6 @@ const tituloDe = (p: Post) =>
   title={metaTitulo}
   description={metaDesc}
   lang={lang}
-  noindex
   ogType="article"
   ogImage={ogUrl(hero)}
   ogImageAlt={altHero}

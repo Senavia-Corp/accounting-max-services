@@ -1,13 +1,17 @@
 ---
 import "../styles/main.css";
 import { t } from "../lib/i18n";
+import { otroIdioma } from "../lib/es";
 // El nombre del negocio es NAP y va literal en las dos lenguas (ver i18n.ts:17).
 import { NEGOCIO } from "../lib/sanity";
 
 interface Props {
   title: string;
   description?: string;
-  /** R6: las rutas /es/ nacen con noindex hasta que D3 este firmado. */
+  /**
+   * D4: solo /privacy-policy y /terms. Son borradores de aviso GLBA a la espera
+   * de abogado. Las 26 rutas /es dejaron de usarla al firmarse D3 (2026-07-31).
+   */
   noindex?: boolean;
   lang?: "en" | "es";
   /** Imagen de la tarjeta al compartir. Absoluta o de raiz; cae a /og-default.png. */
@@ -24,6 +28,23 @@ const {
 // Canonical absoluto. En produccion hoy no hay ni un solo rel=canonical en
 // ninguna de las 26 rutas, y el staging .webflow.io es un duplicado completo.
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+// hreflang reciproco (D3, firmado 2026-07-31). Va aqui y no en las plantillas
+// porque este layout envuelve las 54 rutas: una sola definicion, imposible que
+// una pagina se quede sin su etiqueta de retorno.
+//
+// `otro` es null en /privacy-policy y /terms, que no tienen gemela espanola
+// (D4). Ahi no se emite NADA: una alternativa sin retorno es justo el error que
+// Search Console reporta como «alternativa sin etiqueta de retorno».
+//
+// Las dos URLs del par salen del mismo `new URL(..., site)` en las dos
+// direcciones — el propio canonical de un lado y `otroIdioma()` del otro — asi
+// que la pagina EN y su gemela ES emiten el par identico. Eso ES la
+// reciprocidad: no hay que confiar en ella, se comprueba sobre dist.
+const otro = otroIdioma(Astro.url.pathname);
+const hrefOtro = otro ? new URL(otro.href, Astro.site).href : "";
+const hrefEn = otro?.lang === "en" ? hrefOtro : canonical;
+const hrefEs = otro?.lang === "es" ? hrefOtro : canonical;
 
 // Open Graph. Antes de esto, NINGUNA de las 54 rutas emitia og:image: compartir
 // cualquier pagina en WhatsApp o LinkedIn daba una tarjeta sin imagen.
@@ -56,6 +77,14 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
+
+    {otro && (
+      <>
+        <link rel="alternate" hreflang="en" href={hrefEn} />
+        <link rel="alternate" hreflang="es" href={hrefEs} />
+        <link rel="alternate" hreflang="x-default" href={hrefEn} />
+      </>
+    )}
 
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonical} />

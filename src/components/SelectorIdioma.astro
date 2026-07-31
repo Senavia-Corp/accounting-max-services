@@ -4,12 +4,12 @@
 // cuanto el usuario hace scroll. En Coral Springs el espanol no es una
 // preferencia marginal.
 //
-// GATE D3: con ES_PUBLICO en false este componente no pinta NADA. Ver la nota
-// larga en i18n.ts. La constante no se invierte sin el cliente.
+// ES_PUBLICO (i18n.ts) es el interruptor: en false este componente no pinta
+// NADA. Esta en true desde que se firmo D3 el 2026-07-31.
 //
 // El markup es un <button aria-expanded> mas una lista de <a> REALES: ni
 // <select> ni divs con onclick, para que se puedan abrir en pestana nueva y
-// sean rastreables el dia que D3 se levante. Sin JS el panel no despliega, pero
+// sean rastreables. Sin JS el panel no despliega, pero
 // los enlaces siguen ahi y funcionan — la misma mejora progresiva que ui.ts.
 //
 // El teclado no se implementa aqui: el boton lleva `selector-idioma`, que es la

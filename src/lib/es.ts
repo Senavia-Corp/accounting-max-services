@@ -86,7 +86,7 @@ export function requiereTodoEs(doc: Doc, tipo: keyof typeof REQUERIDOS, ruta?: s
  *   1. `sales-tax-filing-7k40q` es una URL viva e indexada y su sufijo es el
  *      desempate de Webflow (R4). Traducir el resto y no ese seria incoherente.
  *   2. Un slug por idioma duplica el numero de URLs que hay que redirigir,
- *      vigilar y canonicalizar el dia que D3 se firme y /es/ salga de noindex.
+ *      vigilar y canonicalizar — y desde D3 las 26 rutas /es estan indexadas.
  *   3. Los slugs contienen terminos del glosario que no se traducen nunca
  *      (itin-application-irs-tax-id, notary-public-services): traducir el resto
  *      del slug dejaria mitad y mitad.
@@ -104,8 +104,8 @@ export const enlace = (lang: Lang, ruta: string): string => raiz(lang) + ruta;
  * RUTAS SIN GEMELA EN ESPANOL. No es una lista de pendientes: es la decision de
  * D4 llevada hasta el final. /privacy-policy y /terms son borradores de aviso
  * GLBA a la espera de abogado, y traducir un documento legal a ojo es
- * exactamente el riesgo que D3 y D4 existen para no correr — el mismo criterio
- * que ya aplica es/contact-us.astro:302-307 al enlazar la version inglesa.
+ * exactamente el riesgo que D4 existe para no correr — el mismo criterio que ya
+ * aplica es/contact-us.astro al enlazar la version inglesa.
  */
 const SIN_ES = ["/privacy-policy", "/terms"];
 
@@ -130,6 +130,12 @@ export function otroIdioma(pathname: string): { lang: Lang; href: string } | nul
   const esES = ruta === "/es" || ruta.startsWith("/es/");
   // "/" <-> "/es" son el caso especial: sin esto saldria "" y "/es/".
   const equivalente = esES ? ruta.slice(3) || "/" : ruta === "/" ? "/es" : `/es${ruta}`;
-  if (!esES && SIN_ES.includes(ruta)) return null;
+  // Se comprueban las DOS rutas del par, no solo la de entrada: "sin gemela" es
+  // una propiedad del par. Desde el lado ingles solo puede coincidir `ruta`;
+  // desde el espanol, solo `equivalente`. Hoy la segunda mitad no puede
+  // dispararse —no existe /es/terms— pero D4 es justo lo que la crearia, y
+  // desde D3 esto alimenta el hreflang de paginas indexadas: una gemela que
+  // enlaza a una pagina que no le devuelve el enlace es el fallo que se evita.
+  if (SIN_ES.includes(ruta) || SIN_ES.includes(equivalente)) return null;
   return { lang: esES ? "en" : "es", href: equivalente };
 }
