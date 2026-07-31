@@ -53,7 +53,7 @@ Ninguno es opcional. Están razonados en `DECISIONS.md`; aquí solo el efecto.
 | | Bloqueo | Si se ignora |
 |---|---|---|
 | **D8** | La Vercel GitHub App no está instalada en la org `Senavia-Corp` con acceso al repo | `Failed to create project (status 400)`. **Es lo primero, sin esto no hay nada** |
-| **D6** | La cuenta está en **Hobby**, facturada a `ananavia746@gmail.com` (Gmail personal) | Hobby **prohíbe uso comercial**; un sitio que capta leads para un despacho fiscal lo es. Sanción: suspensión. Y en el traspaso el cliente no recupera la cuenta sin ese buzón |
+| **D6** | La cuenta está en **Hobby**, facturada a un Gmail personal (dirección en `ACCOUNTS.md`, fuera del repo) | Hobby **prohíbe uso comercial**; un sitio que capta leads para un despacho fiscal lo es. Sanción: suspensión. Y en el traspaso el cliente no recupera la cuenta sin ese buzón |
 | **B3** | El dataset `production` es **público** (`aclMode: "public"`) | El primer lead que entre es **PII de contribuyentes expuesta en internet**. Bloquea los formularios, no el sitio estático |
 | **D9** | El kit Typekit `blq3zch` está restringido por dominio | Sin añadir el dominio, **todos los titulares caen a `sans-serif`**. Parecerá un port de CSS mal hecho. No lo es |
 | **D4** | Sin política de privacidad ni aviso GLBA revisados | Un preparador de impuestos está obligado a publicarlo antes de recoger un dato |

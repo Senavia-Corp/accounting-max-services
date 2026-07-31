@@ -13,7 +13,7 @@ El sitio nuevo vive en <https://accounting-max-services.vercel.app> y nada más.
 Ninguna es de DNS, y las dos son anteriores a mover un registro.
 
 1. **D6 — la cuenta de Vercel.** El proyecto está en plan **Hobby**, con facturación
-   en `ananavia746@gmail.com`, un Gmail personal. Hobby **prohíbe el uso comercial**, y
+   en un Gmail personal (dirección en `ACCOUNTS.md`, fuera del repo). Hobby **prohíbe el uso comercial**, y
    un sitio que capta leads para un despacho fiscal lo es; la sanción es suspensión.
    Además, en el traspaso el cliente no recupera la cuenta sin ese buzón. Ya está
    decidido que el corte espera a que exista un Team en Pro con propietario en el

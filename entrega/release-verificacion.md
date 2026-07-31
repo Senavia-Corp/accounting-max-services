@@ -38,7 +38,7 @@ Desplegado por la **integración Git de Vercel**, disparada por el push a `main`
 No se instaló la CLI de Vercel: `ACCOUNTS.md:18` lo prohíbe porque `vercel login`
 crearía una octava identidad y `vercel link` escribiría `.vercel/project.json` bajo
 ella. El control se hizo por la conexión Composio `accounting-max-services`
-(usuario `38vIWRaJFIpicVCxmY5UXZna`, `ananavia746@gmail.com`).
+(usuario `38vIWRaJFIpicVCxmY5UXZna`; correo de facturación en `ACCOUNTS.md`, fuera del repo).
 
 No se usó el MCP de Vercel: está autenticado contra `team_rtKW2Pw4fLvbavehX9tF3W9Q`,
 que es **Manuel Ramirez / GQM** — identidad de otro cliente.
