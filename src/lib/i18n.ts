@@ -706,6 +706,28 @@ export type Lang = keyof typeof T;
 /** Las dos lenguas del sitio, en orden. Util para hreflang y para el selector. */
 export const IDIOMAS = ["en", "es"] as const;
 
+/**
+ * GATE DE D3 — EL ESPANOL NO SE PUBLICA TODAVIA.
+ *
+ * En `false` el selector de idioma NO SE RENDERIZA en ninguna de las 54 rutas:
+ * el componente esta construido y probado entero, pero apagado.
+ *
+ * POR QUE. D3 sigue PENDIENTE: no hay revisor nativo con criterio fiscal que
+ * firme la traduccion, y las 26 rutas /es nacen con noindex, fuera del sitemap
+ * y sin hreflang reciproco justamente por eso. Un selector visible en las 54
+ * rutas PUBLICA el espanol de facto — el noindex evita que Google lo indexe,
+ * pero no evita que una persona lo lea, y «Enrolled Agent» o «Notary Public»
+ * mal traducidos son una credencial falsa (en Florida, una infraccion).
+ *
+ * NO SE INVIERTE ESTA CONSTANTE SIN EL CLIENTE. Lo que hay que hacer el dia que
+ * se ponga en `true` esta enumerado en DECISIONS.md D13, y son CUATRO cosas que
+ * van juntas o ninguna: quitar el noindex, entrar en el sitemap, anadir
+ * hreflang reciproco en las dos direcciones y borrar `Disallow: /es/` de
+ * robots.txt. Publicar el selector sin hreflang es un error que Search Console
+ * reporta como «alternativa sin etiqueta de retorno».
+ */
+export const ES_PUBLICO = false;
+
 /** `es` solo si la ruta empieza por /es; todo lo demas es `en`. */
 export const idiomaDeRuta = (pathname: string): Lang =>
   pathname === "/es" || pathname.startsWith("/es/") ? "es" : "en";

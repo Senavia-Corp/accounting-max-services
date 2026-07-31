@@ -292,6 +292,37 @@
   .nav-volver {
     display: none;
   }
+
+  /* --- El escudo del logo se comia la esquina de la portada del blog -------
+   * DESVIACION DEL BASELINE, +16px. Consta en entrega/mejoras.md.
+   *
+   * .brand cuelga 69px por debajo del .menu de 125px y va centrado al 50% del
+   * viewport; .picture-blog-page empieza al 45% del contenedor. Los dos estan
+   * anclados al mismo centro, asi que el solape es CONSTANTE a cualquier ancho
+   * de escritorio: medido 144x5px lo mismo a 1600 que a 2000.
+   *
+   * Estaba asi en produccion y no se veia, porque el escudo caia sobre una
+   * FOTO y su silueta se recortaba sola. Las portadas nuevas son ilustraciones
+   * con fondo #243137 — el MISMO color que .brand (verificado: los dos son
+   * rgb(36,49,55)) — y el escudo se funde con la imagen: parece un borron, no
+   * un solape intencionado.
+   *
+   * Se despeja subiendo el aire de la cabecera de 4em a 5em: 11px de holgura
+   * entre el pie del escudo y el techo de la imagen. Solo crece la banda verde,
+   * de 382 a 398px, y solo en las 20 rutas de post.
+   *
+   * Va aqui y no por debajo de 992: ahi .brand ya se reubica a la izquierda por
+   * el redisenyo movil de este mismo fichero y sobran 218px de holgura.
+   *
+   * El :has() NO es adorno. .header-page-blog lo usan 22 rutas, no 20: tambien
+   * /privacy-policy y /terms, que reaprovechan la cabecera del blog pero NO
+   * llevan .picture-blog-page. Sin el filtro, esas dos crecian 16px sin que
+   * hubiera nada que despejar. Soportado desde Chrome 105 / Safari 15.4 /
+   * Firefox 121; un navegador que no lo entienda descarta la regla entera y se
+   * queda exactamente en el baseline, que es la degradacion correcta. */
+  .header-page-blog:has(.picture-blog-page) {
+    padding-top: 5em;
+  }
 }
 
 @media screen and (max-width: 991px) {
@@ -834,3 +865,271 @@
  * riesgo aqui no era recortar, era ANADIR un `object-fit:cover` "para que
  * cuadre" — eso si cortaria la mano. Lo que rodea a la mano no son franjas
  * vacias: es el panel gris de .block-pic, que es el diseno. */
+/* ===========================================================================
+ * NAVEGACION — cuatro divergencias autorizadas (DECISIONS.md D13)
+ *   (A) el desplegable de Services deja de tapar la cupula del logo
+ *   (B) header condensado al bajar, en escritorio
+ *   (C) header direccional en movil
+ *   (D) selector de idioma
+ * Nada de esto es paridad con baseline/html/: es rediseno acotado y aprobado.
+ * ======================================================================== */
+
+/* Centinelas de (B). Fuera de flujo: no ocupan hueco, no desplazan nada y por
+ * tanto no pueden introducir CLS. Los coloca `top` y no `rootMargin` — ver el
+ * comentario largo en Nav.astro. */
+.cromo-centinela {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  visibility: hidden;
+}
+.cromo-centinela[data-cromo-umbral="24"] { top: 24px; }
+.cromo-centinela[data-cromo-umbral="88"] { top: 88px; }
+
+/* --- (B) Header condensado, SOLO escritorio ------------------------------ */
+@media screen and (min-width: 992px) {
+  /* La sombra deja de estar siempre encendida (accounting-max:164): en el tope
+   * el header no flota sobre nada, y es justo la elevacion lo que comunica que
+   * al bajar SI lo hace. */
+  .menu {
+    box-shadow: none;
+    /* `none` y NO `translateY(0)`. Un transform distinto de none convierte a
+     * .menu en el bloque contenedor de todo position:fixed que cuelgue de ella
+     * — y el cajon movil lo es (top:var(--menu-alto); bottom:0), asi que
+     * quedaria de altura 0 y desapareceria entero. `none` interpola como
+     * identidad, o sea que la transicion funciona igual.
+     * Por lo mismo NO se pone will-change:transform: crea el bloque contenedor
+     * aunque no haya ningun transform aplicado. */
+    transform: none;
+  }
+
+  .menu[data-cromo="condensado"] {
+    /* Se sube exactamente la altura de la barra verde, medida en ejecucion por
+     * ui.ts. No se anima height/top/padding: provocan layout en cada frame. Y
+     * no vale animar el alto de .menu, porque .top-bar y .navbar son
+     * PORCENTAJES de ella y encogerian las dos a la vez. */
+    transform: translateY(calc(-1 * var(--barra-verde, 43.75px)));
+    box-shadow: 0 2px 5px #0003;
+  }
+
+  .menu[data-cromo="condensado"] .brand {
+    /* --brand-escala = --menu-alto / alto real de .brand = 125/150 = 0,8333.
+     * Con eso la cupula mide 125 y cuelga 125-81,25 = 43,75px bajo la barra
+     * condensada: exactamente la altura de la barra verde que acaba de
+     * desaparecer. El cromo condensado entero ocupa la misma banda de 125px que
+     * ocupaba el header expandido solo. */
+    transform: scale(var(--brand-escala, 0.8333));
+  }
+
+  /* La transicion se habilita TARDE, cuando ui.ts confirma que el estado
+   * inicial ya esta asentado. El primer callback del IntersectionObserver llega
+   * DESPUES del primer pintado: al volver por bfcache o aterrizar en un #ancla
+   * con la pagina ya desplazada, sin esto se veria una animacion de 220ms al
+   * llegar, en cada navegacion hacia atras. */
+  .menu[data-cromo-listo] ,
+  .menu[data-cromo-listo] .brand {
+    transition:
+      transform 220ms cubic-bezier(0.32, 0.72, 0, 1),
+      box-shadow 220ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+}
+
+/* --- (C) Header direccional, SOLO movil ---------------------------------- */
+@media screen and (max-width: 991px) {
+  .menu {
+    transform: none; /* nunca translateY(0): ver la nota de (B) */
+  }
+  .menu[data-cromo-listo] {
+    transition: transform 180ms ease-out; /* mostrar: mas rapido que ocultar */
+  }
+  .menu[data-direccion="oculto"] {
+    transform: translateY(-100%);
+    transition: transform 200ms ease-in;
+  }
+
+  /* Cinturon y tirantes del bloque contenedor: con el cajon abierto, .menu no
+   * puede tener transform bajo ningun concepto o el cajon (position:fixed,
+   * top:var(--menu-alto), bottom:0) colapsa a altura 0. La clase la pone ya
+   * ui.ts:71, asi que esto no cuesta ni una linea de JS. */
+  html.nav-abierto .menu {
+    transform: none;
+  }
+}
+
+/* --- (A) Desplegable de Services, SOLO escritorio ------------------------ */
+@media screen and (min-width: 992px) {
+  /* El panel media 750px fijos (min-width, accounting-max:1185) anclado en el
+   * disparador, e invadia la cupula en las 8 combinaciones de ancho x idioma:
+   * de 19 600 a 28 811 px2 de solape medidos. Ahora el ancho lo acota ui.ts en
+   * --panel-ancho a partir de rects reales, porque el hueco depende del ancho
+   * del contenedor Y del idioma (el disparador arranca en 83,45px en EN y en
+   * 78,47 en ES: «Home» e «Inicio» no miden lo mismo).
+   *
+   * Subir el z-index de .brand no valia: cambiaba un solapamiento por otro, con
+   * el logo tapando dos enlaces del panel. */
+  .dropdown-list.w--open {
+    min-width: 0;
+    width: var(--panel-ancho, 460px);
+    max-width: var(--panel-ancho, 460px);
+    left: 0;
+    right: auto;
+    padding: 16px;
+    /* A una columna. A dos no cabe el espanol sin invadir el centro, y el
+     * encargo es explicito: antes una columna con scroll que invadir o cortar. */
+    flex-direction: column;
+    align-items: stretch;
+    max-height: calc(100vh - var(--menu-alto) - 16px);
+    overflow-y: auto;
+    /* Sin esto, llegar al final del panel encadena el scroll a la pagina y el
+     * cierre-al-scroll cerraria el desplegable en la cara del usuario. */
+    overscroll-behavior: contain;
+  }
+
+  .dropdown-list.w--open .collection-list-submenu {
+    column-count: 1;
+    padding: 8px;
+  }
+
+  /* 150ms, opacidad + 4px. Sin escalados ni rebotes: es una firma contable. El
+   * @media prefers-reduced-motion de la cabecera de este fichero ya lo
+   * neutraliza donde toca. */
+  .dropdown-list {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 150ms ease-out, transform 150ms ease-out;
+  }
+  .dropdown-list.w--open {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- (D) Selector de idioma ---------------------------------------------- */
+/* Con ES_PUBLICO=false nada de esto llega a pintarse: el componente no emite
+ * markup. Se deja escrito para que levantar el gate D3 sea cambiar una
+ * constante y no reabrir la hoja de estilos. */
+.selector-idioma-caja {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
+.selector-idioma {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px; /* SC 2.5.8 */
+  padding: 0 10px;
+  border: 1px solid #ffffff40;
+  border-radius: 4px;
+  background-color: transparent;
+  color: var(--white);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.selector-idioma:hover {
+  border-color: var(--green-1);
+}
+.selector-idioma-codigo {
+  font-weight: 500;
+  letter-spacing: 0;
+}
+/* La bandera se recorta en circulo AQUI y no dentro del SVG: asi el fichero
+ * sigue siendo una bandera rectangular correcta al abrirlo solo (criterio 7). */
+.selector-idioma-bandera {
+  flex: none;
+  display: block;
+  overflow: hidden;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+.selector-idioma-bandera svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.selector-idioma-chevron {
+  width: 7px;
+  height: 7px;
+  margin-bottom: 2px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 150ms ease-out;
+}
+.selector-idioma[aria-expanded="true"] .selector-idioma-chevron {
+  transform: rotate(-135deg);
+  margin-bottom: -2px;
+}
+
+/* Mismo movimiento EXACTO que el desplegable de Services: 150ms, opacidad y
+ * 4px. Dos desplegables en la misma barra con animaciones distintas se leen
+ * como un error, no como dos componentes. */
+.selector-idioma-lista {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  display: none;
+  min-width: 190px;
+  padding: 6px;
+  border-radius: 10px;
+  background-color: var(--bllue);
+  box-shadow: 0 8px 20px #0000004d;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+.selector-idioma-lista.w--open {
+  display: block;
+  opacity: 1;
+  transform: none;
+}
+.selector-idioma-opcion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 15px;
+  text-decoration: none;
+}
+.selector-idioma-opcion:hover {
+  background-color: #ffffff14;
+}
+/* El activo con acento verde y check, como pide el encargo. */
+.selector-idioma-opcion[aria-current="true"] {
+  color: var(--green-1);
+}
+.selector-idioma-check {
+  width: 6px;
+  height: 11px;
+  margin-left: auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+@media screen and (max-width: 991px) {
+  /* Dentro del cajon, nunca flotando. .nav-menu es flex column con
+   * align-items:stretch, asi que el margen lateral se quita como en el resto
+   * de filas del cajon (ver la nota de .nav-link mas arriba). */
+  .selector-idioma-caja {
+    margin: 12px 0 0;
+  }
+  .selector-idioma {
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .selector-idioma-lista {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
+}

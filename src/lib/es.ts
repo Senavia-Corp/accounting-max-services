@@ -99,3 +99,37 @@ export const inicio = (lang: Lang): string => (lang === "es" ? "/es" : "/");
 
 /** Enlace interno con el prefijo de idioma. `ruta` empieza siempre por "/". */
 export const enlace = (lang: Lang, ruta: string): string => raiz(lang) + ruta;
+
+/**
+ * RUTAS SIN GEMELA EN ESPANOL. No es una lista de pendientes: es la decision de
+ * D4 llevada hasta el final. /privacy-policy y /terms son borradores de aviso
+ * GLBA a la espera de abogado, y traducir un documento legal a ojo es
+ * exactamente el riesgo que D3 y D4 existen para no correr — el mismo criterio
+ * que ya aplica es/contact-us.astro:302-307 al enlazar la version inglesa.
+ */
+const SIN_ES = ["/privacy-policy", "/terms"];
+
+/**
+ * La inversa de `enlace()`: dada la ruta actual, la MISMA pagina en el otro
+ * idioma. Devuelve null cuando esa pagina no existe.
+ *
+ *   otroIdioma("/es/services/audit-assistance") -> { lang:"en", href:"/services/audit-assistance" }
+ *   otroIdioma("/terms")                        -> null
+ *
+ * Vive aqui y no en el componente porque es la contrapartida exacta de
+ * inicio()/enlace() y comparte con ellas la politica de slugs: lo unico que
+ * cambia entre las dos lenguas es el prefijo /es.
+ *
+ * Devolver null y no el home es deliberado. Mandar a todos a la portada es el
+ * fallo clasico de este componente: perder el sitio donde estabas es peor que
+ * no tener la opcion.
+ */
+export function otroIdioma(pathname: string): { lang: Lang; href: string } | null {
+  // trailingSlash:"never", pero Astro puede servir "/about-us/": se normaliza.
+  const ruta = pathname.replace(/\/+$/, "") || "/";
+  const esES = ruta === "/es" || ruta.startsWith("/es/");
+  // "/" <-> "/es" son el caso especial: sin esto saldria "" y "/es/".
+  const equivalente = esES ? ruta.slice(3) || "/" : ruta === "/" ? "/es" : `/es${ruta}`;
+  if (!esES && SIN_ES.includes(ruta)) return null;
+  return { lang: esES ? "en" : "es", href: equivalente };
+}

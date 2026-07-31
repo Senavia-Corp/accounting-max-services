@@ -38,8 +38,12 @@ function iniciarMenu() {
   if (!navbar) return;
 
   const hamburguesa = navbar.querySelector<HTMLButtonElement>("button.menu-button");
+  // El selector de idioma entra por aqui: ensanchar este selector es TODO lo que
+  // cuesta darle click, ArrowDown, Escape con devolucion de foco, exclusion mutua
+  // con el desplegable de Services, click fuera, focusout y la trampa de Tab.
+  // Reusar en vez de duplicar; el resto de la funcion no distingue cual es cual.
   const toggles = Array.from(
-    navbar.querySelectorAll<HTMLButtonElement>("button.w-dropdown-toggle"),
+    navbar.querySelectorAll<HTMLButtonElement>("button.w-dropdown-toggle, button.selector-idioma"),
   );
 
   const cajon = navbar.querySelector<HTMLElement>(".block-items-menu");
@@ -55,7 +59,15 @@ function iniciarMenu() {
     // En movil el desplegable no se anida: ocupa el cajon entero como segundo
     // nivel. Doce enlaces planos son una lista, no una navegacion. En
     // escritorio data-nivel no lo lee nadie, asi que se deja siempre en 1.
-    if (cajon) cajon.dataset.nivel = abierto && MOVIL.matches ? "2" : "1";
+    // El selector de idioma comparte toda esta maquinaria, pero NO es el submenu
+    // de servicios: si pusiera nivel 2 secuestraria el segundo nivel del cajon.
+    if (cajon && !t.classList.contains("selector-idioma"))
+      cajon.dataset.nivel = abierto && MOVIL.matches ? "2" : "1";
+    // Cerrar al hacer scroll, sin dejar ningun listener puesto en reposo: se
+    // registra al abrir y `once` lo retira solo al primer evento. Desplazar
+    // DENTRO del panel no lo dispara (los eventos de scroll de un elemento no
+    // burbujean, y overscroll-behavior:contain corta el encadenado).
+    if (abierto) addEventListener("scroll", () => cerrarDesplegables(), { passive: true, once: true });
   };
   const cerrarDesplegables = () => toggles.forEach((t) => desplegar(t, false));
 
@@ -69,6 +81,11 @@ function iniciarMenu() {
     // escritorio ni aunque la clase se quede pegada. Sin el, la pagina de
     // detras (11 613px en la portada) se desplaza bajo el dedo.
     document.documentElement.classList.toggle("nav-abierto", abierto);
+    // El cajon es fixed y cuelga del cromo (top:var(--menu-alto)): ese top solo
+    // es exacto porque .menu esta siempre en y0. Si el header estuviera oculto
+    // por (C) al abrirlo, quedaria un hueco por encima. No basta con la guarda
+    // de "no ocultar mientras esta abierto": hay que devolverlo a la vista.
+    if (abierto) navbar.closest<HTMLElement>(".menu")?.setAttribute("data-direccion", "visible");
     if (!abierto) cerrarDesplegables();
   };
 
@@ -156,8 +173,39 @@ function iniciarMenu() {
     }, 0);
   });
 
-  // Al pasar a escritorio el panel movil deja de tener sentido.
+  toggles.forEach((t) => {
+    // Hover-intent, solo escritorio: ~100ms al abrir y ~250ms al cerrar, para
+    // que no parpadee cuando el puntero solo pasa de camino a otro sitio.
+    let reloj = 0;
+    const tras = (ms: number, abrir: boolean) => {
+      clearTimeout(reloj);
+      reloj = window.setTimeout(() => {
+        if (MOVIL.matches) return;
+        cerrarDesplegables();
+        if (abrir) desplegar(t, true);
+      }, ms);
+    };
+    t.parentElement?.addEventListener("pointerenter", () => tras(100, true));
+    t.parentElement?.addEventListener("pointerleave", () => tras(250, false));
+
+    // Flechas y Home/End dentro del panel. Escape, Tab y el ArrowDown que entra
+    // desde el disparador ya estan resueltos mas arriba.
+    lista(t)?.addEventListener("keydown", (e) => {
+      const f = focos(lista(t)!).filter((x) => x.tagName === "A");
+      const i = f.indexOf(document.activeElement as HTMLElement);
+      const salto: Record<string, number> = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: f.length - 1 };
+      if (!(e.key in salto) || !f.length) return;
+      e.preventDefault();
+      f[Math.max(0, Math.min(f.length - 1, salto[e.key]))]?.focus();
+    });
+  });
+
+  // Antes esto solo contemplaba movil->escritorio: yendo a MOVIL con el
+  // desplegable abierto se quedaban aria-expanded y w--open puestos con
+  // data-nivel en "1", o sea la lista plana de 12 enlaces dentro del cajon —
+  // justo lo que el nivel 2 existe para evitar. Se cierra en las dos.
   MOVIL.addEventListener("change", (e) => {
+    cerrarDesplegables();
     if (!e.matches) abrirMenu(false);
   });
 }
@@ -304,10 +352,117 @@ function iniciarCarrusel() {
   });
 }
 
+/* ---------------------------------------------------------------------- 5 --
+ * El cromo reacciona al scroll (DECISIONS.md D13).
+ *   (A) ancho del desplegable, para que no llegue nunca a la cupula
+ *   (B) >=992: se condensa al bajar. Sin un solo listener de scroll.
+ *   (C) <992: se oculta al bajar y vuelve al subir.
+ * El JS solo conmuta atributos y publica medidas; TODO el aspecto es CSS.
+ * -------------------------------------------------------------------------*/
+function iniciarCromo() {
+  const menu = document.querySelector<HTMLElement>(".menu");
+  const navbar = menu?.querySelector<HTMLElement>(".navbar");
+  const barra = menu?.querySelector<HTMLElement>(".top-bar");
+  const marca = menu?.querySelector<HTMLElement>(".brand");
+  if (!menu || !navbar || !barra || !marca) return;
+
+  // Todo con offset* y NUNCA con getBoundingClientRect(): el rect devuelve la
+  // caja YA transformada, y aqui .menu se traslada y .brand se escala, asi que
+  // daria un hueco mas ancho del real y el panel volveria a invadir la cupula.
+  const medir = () => {
+    // No se escribe 43,75 como constante: .top-bar es el 35% de .menu y alguien
+    // puede tocar ese 35% sin que salte nada.
+    // Aqui SI vale el rect y no offsetHeight, que redondea a entero y dejaba una
+    // astilla de 0,25px: a .menu solo se le aplica translate, y trasladar no
+    // cambia la ALTURA de un descendiente. Lo que no vale es el rect para el
+    // calculo horizontal de mas abajo, donde .brand si esta escalada.
+    menu.style.setProperty("--barra-verde", `${barra.getBoundingClientRect().height}px`);
+    if (MOVIL.matches) return;
+    // 125/150: la cupula condensada cuelga justo la altura de la barra que
+    // acaba de desaparecer.
+    if (marca.offsetHeight)
+      menu.style.setProperty("--brand-escala", String(menu.offsetHeight / marca.offsetHeight));
+    // El hueco hasta la cupula depende del contenedor Y del idioma: el
+    // disparador arranca en 83,45 en EN y 78,47 en ES ("Home" != "Inicio").
+    const caja = navbar.querySelector<HTMLElement>(".dropdown");
+    if (caja)
+      menu.style.setProperty(
+        "--panel-ancho",
+        `${Math.max(260, Math.round(marca.offsetLeft - caja.offsetLeft - 16))}px`,
+      );
+  };
+  medir();
+  addEventListener("resize", medir, { passive: true });
+
+  // (B) HISTERESIS: condensa por encima de 88, expande solo por debajo de 24.
+  // Con un umbral unico, pararse justo en el limite hace parpadear el header.
+  let dentro24 = true;
+  let dentro88 = true;
+  let estado = menu.dataset.cromo || "expandido";
+  let listo = false;
+  const io = new IntersectionObserver((entradas) => {
+    for (const e of entradas) {
+      if ((e.target as HTMLElement).dataset.cromoUmbral === "24") dentro24 = e.isIntersecting;
+      else dentro88 = e.isIntersecting;
+    }
+    // En la banda muerta se mantiene lo que habia, leido de esta variable y no
+    // del DOM: un atributo ausente escribiria la cadena "undefined".
+    const nuevo = !dentro88 ? "condensado" : dentro24 ? "expandido" : estado;
+    if (nuevo !== estado) menu.dataset.cromo = estado = nuevo;
+    // La transicion se habilita cuando el estado inicial ya esta asentado: el
+    // primer callback llega DESPUES del primer pintado, asi que volver por
+    // bfcache con la pagina desplazada animaria 220ms al aterrizar.
+    if (!listo) {
+      listo = true;
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => menu.setAttribute("data-cromo-listo", "")),
+      );
+    }
+  });
+  // No se desconectan en movil: no cuestan nada si nada cruza, y reconectarlos
+  // obligaria a esperar un callback asincrono al volver a escritorio.
+  document.querySelectorAll(".cromo-centinela").forEach((c) => io.observe(c));
+
+  // (C) Direccional en movil.
+  let ultimoY = 0;
+  let pedido = false;
+  const direccion = () => {
+    pedido = false;
+    if (!MOVIL.matches) return;
+    // Clamp de los dos extremos: el rubber-band de iOS da scrollY negativo
+    // arriba y sobredesplazamiento abajo, y ambos fabrican deltas falsos.
+    const tope = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    const y = Math.min(Math.max(0, scrollY), tope);
+    const delta = y - ultimoY;
+    if (Math.abs(delta) < 8) return; // sin umbral, el pulso del dedo lo hace vibrar
+    ultimoY = y;
+    // Las tres condiciones en las que no se oculta jamas.
+    const fijo =
+      navbar.dataset.navOpen === "true" ||
+      menu.contains(document.activeElement) ||
+      y <= menu.offsetHeight;
+    menu.dataset.direccion = !fijo && delta > 0 ? "oculto" : "visible";
+  };
+  addEventListener("scroll", () => {
+    if (pedido) return;
+    pedido = true;
+    requestAnimationFrame(direccion);
+  }, { passive: true });
+
+  // Cruzar los 992 o girar limpia el modo anterior. `data-cromo` no se toca: en
+  // movil no lo lee nadie y al volver ya esta en su valor correcto.
+  MOVIL.addEventListener("change", () => {
+    menu.dataset.direccion = "visible";
+    ultimoY = Math.max(0, scrollY);
+    medir();
+  });
+}
+
 const iniciar = () => {
   iniciarMenu();
   iniciarFaq();
   iniciarCarrusel();
+  iniciarCromo();
 };
 
 if (document.readyState === "loading") {
