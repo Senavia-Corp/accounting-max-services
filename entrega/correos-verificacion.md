@@ -63,11 +63,21 @@ de producción del 1-ago:
 3. **Modo oscuro** en Gmail móvil y Apple Mail.
 4. Pulsar el botón verde en un móvil de verdad: tiene que abrir el marcador.
 
+## Limpieza — hecha
+
+Los **7** documentos de prueba borrados el 1-ago-2026 con autorización expresa de
+Sebastian: los 6 de esta sesión y el de las 16:07 (`J8e1BGaYR6YZtHxrPrah0O`, nombre
+«sebastian», mensaje `test`), que era la prueba tras conectar el SMTP a las 11:49.
+
+**Método, y es el que hay que repetir siempre:** borrado **por `_id` exacto**, con una
+comprobación documento a documento antes de cada `delete`. Nunca por consulta — un
+`*[_type=="lead"]` contra un dataset vivo es como se pierden leads de verdad.
+
+> **El dataset `leads` queda a 0 documentos.** A partir de aquí, todo lo que aparezca
+> ahí es un lead real de un contribuyente.
+
 ## Pendiente de decisión
 
-- **5 leads de prueba** (`ZZ PRUEBA…`) + 1 del boletín en el dataset `leads`. Borrarlos
-  es un cambio de estado y **no lo hago sin luz verde**; cuando la haya, **por `_id`
-  exacto, nunca por consulta**. Hay además 1 documento anterior que no es mío: no tocarlo.
 - El asunto del aviso se deja igual que hoy (`Nuevo lead: {nombre}`) por si hay un filtro
   de Gmail montado encima. Cambiarlo a bilingüe es una línea.
 
