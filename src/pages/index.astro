@@ -25,7 +25,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import JsonLd from "../components/JsonLd.astro";
 import { servicios, testimonios, sanity, NEGOCIO } from "../lib/sanity";
+import { agrupar } from "../lib/familias";
+import { t, interpola } from "../lib/i18n";
+
+// FASE 2: el texto de las secciones nuevas sale de i18n.ts, no de literales
+// en la pagina. Es lo que impide que /es se quede atras: el tipo `Cadenas`
+// obliga a que la clave exista en las dos lenguas o el build falla.
+const c = t("en");
 
 // Assets sueltos en Sanity (sin documento que los referencie). Se piden por
 // nombre original en una sola consulta, igual que hacen Nav y Footer.
@@ -98,7 +106,10 @@ const servs = await (g.__amsServicios ??= servicios());
 if (servs.length !== 12) {
   throw new Error(`Se esperaban 12 servicios, hay ${servs.length}.`);
 }
-const destacados = [...servs].sort((a, b) => Number(b.feature) - Number(a.feature));
+// FASE 2: los 12 se reparten en 3 familias (src/lib/familias.ts). El orden por
+// `feature` que reproducia la reticula plana de Webflow ya no aplica: esa
+// reticula era la causa de que la portada midiera 24 pantallas en movil.
+const familias = agrupar(servs);
 
 // Los 20 testimonios se muestran TAL CUAL: ni se traducen ni se editan, y no
 // se reordenan (no hay campo por el que reproducir el orden de produccion).
@@ -131,481 +142,300 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
 ---
 
 <BaseLayout title={TITULO} description={ENTRADA}>
+  {/* FASE 2: el sitio emitia CERO datos estructurados en las 54 rutas, pese a
+      que JsonLd.astro existia entero (252 lineas) y no lo importaba NADIE.
+      `tipo="home"` emite el negocio (AccountingService), el WebPage y el
+      FAQPage con las 5 preguntas de esta pagina. */}
+  <JsonLd tipo="home" nombre={TITULO} descripcion={ENTRADA} faq={c.faq.items} />
   <Nav />
 
   <main id="main">
     {/* ================================================================ HERO */}
-    <section class="header">
-      <div class="wrapper-header">
-        <div class="w-layout-blockcontainer container w-container">
-          {/* Sin style="opacity:0": era una interaccion de webflow.js y sin el
-              dejaba el H1 invisible de forma permanente. */}
-          <div class="block-header">
-            <h1 class="h1"><strong>Enrolled Agents &amp; CPAs in Coral Springs, FL &mdash; Tax, Accounting &amp; IRS Representation</strong></h1>
-            <div>{ENTRADA}</div>
-            <a href="/contact-us" class="button w-button">Book a consultation</a>
+    {/* FASE 2. Una promesa, una prueba, una accion — mas el telefono, que en el
+        diseno viejo estaba en display:none a partir de 992px: invisible justo
+        en escritorio, y llamar es LA conversion de un despacho contable.
+
+        El H1 NO se reescribe. Es el que sostiene el posicionamiento local y la
+        campana de Ads apunta aqui; cambiarlo seria pagar el rediseno con
+        trafico. Lo que cambia es todo lo que lo rodea. */}
+    <section class="hero">
+      <div class="contenido">
+        <div class="hero__rejilla">
+          <div>
+            <ul class="hero__credenciales">
+              {c.home.confianza.map((x) => <li>{x.fuerte}</li>)}
+            </ul>
+            <h1 class="hero__titulo">
+              <strong>Enrolled Agents &amp; CPAs in Coral Springs, FL &mdash; Tax, Accounting &amp; IRS Representation</strong>
+            </h1>
+            <p class="hero__entrada">{ENTRADA}</p>
+            <div class="hero__acciones">
+              <a href="/contact-us" class="boton boton--principal">{c.home.heroCta}</a>
+              <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
+                {interpola(c.home.cierreLlamar, { telefono: NEGOCIO.telefono })}
+              </a>
+            </div>
           </div>
+          {/* La foto ya no va en display:none en movil. Antes se pedia con
+              fetchpriority=high y se pintaba a 0x0 (barrido de la fase 0): se
+              pagaba la descarga y no se veia. Ahora se ve, y el `sizes` hace
+              que en movil baje el candidato pequeno. El LCP sigue siendo el
+              H1, que esta encima. */}
+          <img
+            src={src(hero, 1080)}
+            srcset={srcset(hero, [500, 800, 1080, 1600])}
+            sizes="(max-width: 62rem) 100vw, 45vw"
+            width={hero.w}
+            height={hero.h}
+            alt={c.home.heroAlt}
+            loading="eager"
+            decoding="async"
+            class="hero__foto"
+          />
         </div>
       </div>
-      {/* Imagen principal. Es el LCP en escritorio (.background-header va a
-          inset:0 con object-fit:cover detras del titular) y esta en
-          display:none por debajo de 992px, de ahi el sizes="100vw": en movil el
-          navegador elige el candidato pequeno y no se descarga la de 2000px. */}
-      <img
-        src={src(hero, 2000)}
-        srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
-        sizes="100vw"
-        width={hero.w}
-        height={hero.h}
-        alt="Blank IRS Form 1040 and Form 1120 tax returns on a white desk with a pen, reading glasses and a calculator."
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        class="background-header"
-      />
     </section>
 
-    {/* ====================================================== BAR-SERVICES */}
-    {/* role=list/listitem sobre <div>, como en produccion: .collection-list es
-        un grid y meter <ul>/<li> arrastraria el padding del agente de usuario. */}
-    <section class="bar-services">
-      <div class="wrapper-bar-services">
-        <div class="collection-list-wrapper w-dyn-list">
-          <div role="list" class="collection-list w-dyn-items">
-            {
-              destacados.map((s) => (
-                <div role="listitem" class="collection-item w-dyn-item">
-                  <a href={`/services/${s.slug}`} class="block-bar-services w-inline-block">
-                    <div class="block-title-services">
-                      {s.icon && (
-                        <img
-                          src={s.icon.url}
-                          width={s.icon.w}
-                          height={s.icon.h}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          class="icon-bar-services"
-                        />
-                      )}
-                      {/* Icono decorativo: el nombre del servicio va justo al
-                          lado y es el nombre accesible del enlace. */}
-                      <h2 class="title-bar-services">{s.title.trim()}</h2>
-                    </div>
-                  </a>
-                </div>
-              ))
-            }
-          </div>
+    {/* ========================================================== CONFIANZA */}
+    {/* Las credenciales estaban a 12px en la barra verde de arriba, en blanco
+        sobre verde (3,07:1). Son lo mejor que tiene este negocio. */}
+    <section class="seccion seccion--corta" aria-label="Credentials">
+      <div class="contenido">
+        <ul class="confianza revelar">
+          {
+            c.home.confianza.map((x) => (
+              <li class="confianza__item">
+                <span class="confianza__fuerte">{x.fuerte}</span>
+                <span class="confianza__suave">{x.suave}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    {/* =========================================================== SERVICIOS */}
+    {/* Los 12 en 3 familias. Doce tarjetas identicas no son doce opciones: son
+        ninguna. Los 12 enlaces se conservan enteros — el enlazado interno no
+        pierde ni un destino. */}
+    <section class="seccion seccion--alterna" aria-labelledby="servicios-titulo">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="servicios-titulo">{c.home.familiasTitulo}</h2>
+          <p>{c.home.familiasIntro}</p>
+        </div>
+        <div class="familias">
+          {
+            familias.map((grupo, i) => (
+              <article class="familia revelar">
+                <span class="familia__numero">{String(i + 1).padStart(2, "0")}</span>
+                <h3 class="familia__nombre">{c.home.familias[i].nombre}</h3>
+                <p class="familia__resumen">{c.home.familias[i].resumen}</p>
+                <ul class="familia__lista">
+                  {grupo.map((s) => (
+                    <li>
+                      <a href={`/services/${s.slug}`} class="familia__enlace">
+                        {s.title.trim()}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))
+          }
         </div>
       </div>
     </section>
 
     {/* ============================================================ ABOUT-US */}
-    <section class="about-us" aria-labelledby="about-title">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="wrapper-about">
-          <div class="block-video">
-            {/* Facade click-to-load. En produccion aqui habia un <iframe> de
-                youtube.com que se cargaba siempre: ~700 KB y cookies de Google
-                en la primera visita, sin que nadie le diera al play. El iframe
-                se inyecta al pulsar el boton (ver el <script> del final).
-                El padding-top en linea es el del HTML original: crea la caja de
-                proporcion 16:9 sobre la que .w-embed-youtubevideo se apoya. */}
-            <div
-              class="w-embed-youtubevideo youtube"
-              style="padding-top:56.17021276595745%"
-              data-yt-caja
+    {/* FASE 2: mismas piezas (video + credenciales), clases propias. La caja
+        16:9 la da `aspect-ratio` en vez del padding-top en linea que heredaba
+        de .w-embed-youtubevideo — un truco de cuando aspect-ratio no existia.
+        La fachada click-to-load NO se toca: sigue evitando ~700 KB y las
+        cookies de Google en la primera visita. */}
+    <section class="seccion" aria-labelledby="about-titulo">
+      <div class="contenido">
+        <div class="sobre">
+          <div class="sobre__video" data-yt-caja>
+            <button
+              type="button"
+              class="yt-facade"
+              data-yt-id={VIDEO.id}
+              data-yt-titulo={VIDEO.titulo}
+              aria-label={interpola(c.home.videoCta, { titulo: VIDEO.titulo })}
             >
-              <button
-                type="button"
-                class="yt-facade"
-                data-yt-id={VIDEO.id}
-                data-yt-titulo={VIDEO.titulo}
-                aria-label={`Play the video: ${VIDEO.titulo}`}
-              >
-                {/* alt="": el nombre accesible ya lo da el aria-label del boton;
-                    describir ademas la miniatura lo diria todo dos veces. */}
-                <img
-                  src={VIDEO.miniatura}
-                  width="1280"
-                  height="720"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                  referrerpolicy="no-referrer"
-                />
-                <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
-                  <path
-                    d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
-                    fill="#212121"
-                    fill-opacity="0.8"></path>
-                  <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
-                </svg>
-              </button>
-            </div>
-            {/* Adornos: cuadros de color detras del video. Vacios en origen. */}
-            <div class="block-deco-1"><div class="block-deco-2"></div></div>
-            <div class="block-deco-1-copy"><div class="block-deco-2"></div></div>
-          </div>
-
-          {/* El id lo usa el CSS portado (#w-node-_42cc5f49-… en el @media de
-              991px, accounting-max.webflow.css:3021). No se puede quitar. */}
-          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
-            <div class="block-info-content">
-              <h2 class="h2" id="about-title">
-                <strong>IRS Enrolled Agents &amp; Certified Public Accountants In Coral Springs, FL </strong>
-              </h2>
-              <div>
-                At Accounting Max Services, our team includes Enrolled Agents licensed to practice before the IRS (EAs)
-                and Certified Public Accountants (CPAs), offering the highest level of tax
-                expertise and compliance support.<br />We provide a full range of <strong
-                  >global tax and accounting solutions</strong
-                >—serving both individuals and businesses in Coral Springs, FL, and
-                internationally. Whether you’re managing cross-border finances, running a U.S.
-                business, or dealing with complex international tax matters, our specialists
-                deliver accurate, personalized guidance every step of the way.
-              </div>
-              <a href="/about-us" class="button blue w-button">More About Us</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ============================================================= REVIEWS */}
-    <section class="reviews">
-      <div class="w-layout-blockcontainer container w-container">
-        <section class="wrapper-reviews" aria-labelledby="reviews-title">
-          <div class="w-layout-blockcontainer container w-container">
-            <div class="wrapper-header-slider">
-              <div class="box-title-review">
-                <h2 class="h2" id="reviews-title">What Our Customers Are Saying About Us</h2>
-                <div>
-                  Trusted by small business owners nationwide, Accounting Max Services is known
-                  for delivering results. Discover how we’ve helped businesses succeed—read our
-                  customer success stories.
-                </div>
-              </div>
-              {/* Las flechas eran <div> sin rol, sin foco y sin teclado. Ahora
-                  son <button> reales; ui.ts les engancha el desplazamiento y
-                  las inhabilita en los extremos. */}
-              <div class="block-button-slider">
-                <button
-                  type="button"
-                  class="button-slider-cms prev-splide"
-                  aria-label="Previous testimonials"
-                  aria-controls="reviews-track"
-                >
-                  {/* Flechas decorativas: el nombre lo da el aria-label. */}
-                  <img
-                    src={flecha.url}
-                    width={flecha.w}
-                    height={flecha.h}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    class="flecha back"
-                  />
-                </button>
-                <button
-                  type="button"
-                  class="button-slider-cms next-splide"
-                  aria-label="Next testimonials"
-                  aria-controls="reviews-track"
-                >
-                  <img
-                    src={flecha.url}
-                    width={flecha.w}
-                    height={flecha.h}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    class="flecha"
-                  />
-                </button>
-              </div>
-            </div>
-
-            <div class="block-services-animation">
-              <div class="splide">
-                {/* ui.ts hace la pista alcanzable con teclado (2.1.1) y le pone
-                    role=group; el nombre lo damos aqui con el h2 de arriba. */}
-                <div
-                  id="reviews-track"
-                  class="splide-track w-dyn-list"
-                  aria-labelledby="reviews-title"
-                >
-                  <div role="list" class="splide-list w-dyn-items">
-                    {
-                      opiniones.map((o) => (
-                        <div role="listitem" class="splide-slide w-dyn-item">
-                          <div class="block-review">
-                            <div class="block-header-review">
-                              <div>
-                                <div>
-                                  <img
-                                    src={iconGoogle.url}
-                                    width={iconGoogle.w}
-                                    height={iconGoogle.h}
-                                    alt="Google reviews icon"
-                                    loading="lazy"
-                                    decoding="async"
-                                    class="icon-google"
-                                  />
-                                  {/* Las estrellas son decorativas: el texto de
-                                      al lado ya dice "5.0 Ranking on Google
-                                      reviews". */}
-                                  <img
-                                    src={iconEstrellas.url}
-                                    width={iconEstrellas.w}
-                                    height={iconEstrellas.h}
-                                    alt=""
-                                    loading="lazy"
-                                    decoding="async"
-                                    class="icon-start"
-                                  />
-                                </div>
-                                <div class="mini-text-reviews">5.0 Ranking on Google reviews</div>
-                              </div>
-                            </div>
-                            <p class="paragraph">{o.quote}</p>
-                            <div>
-                              <div class="name-customer">{o.author}</div>
-                              <div class="block-city">
-                                <div class="text-mini-reviews">Published on Google</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-      {/* Esquinas decorativas del bloque azul. Vacias en origen. */}
-      <div class="corner-top-1"></div>
-      <div class="corner-bottom-1"></div>
-      <div class="corner-top-2"></div>
-      <div class="corner-bottom-2"></div>
-    </section>
-
-    {/* ============================================================ FEATURES */}
-    <section class="features" aria-labelledby="features-title">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
-          {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
-          <h2 class="h2" id="features-title">What to expect from accounting Max Services?<br /></h2>
-          <div>
-            At Accounting Max Services, we prioritize delivering exceptional service to our
-            clients by offering personalized financial and tax solutions. When you work with us,
-            you can expect expert guidance, transparent communication, and a commitment to your
-            financial success.
-          </div>
-        </div>
-        <div class="div-block-5">
-          {/* Los <div> sin clase que envuelven imagen y texto son las CELDAS del
-              grid de .div-block-4 (1fr 1fr). Quitarlos rompe la maqueta. */}
-          <div class="div-block-4">
-            <div>
               <img
-                src={src(feat1, 1080)}
-                srcset={srcset(feat1, [500, 800, 1080, feat1.w])}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
-                width={feat1.w}
-                height={feat1.h}
-                alt="Messaging app with a customer conversation, insets of two advisors on headset calls and a Book a call button."
-                loading="lazy"
-                decoding="async"
-                class="image-2"
-              />
-            </div>
-            <div>
-              <h3 class="h3">One-on-one expert support</h3>
-              <div>
-                We believe in building strong, lasting relationships with our clients. With <strong
-                  >one-on-one expert support</strong
-                >, you'll have direct access to knowledgeable professionals who understand your
-                unique financial needs. Whether you're a business owner or an individual, we'll
-                work closely with you to ensure all your questions are answered and your goals are
-                met with precision. Our personalized approach ensures you never feel lost in the
-                process—you're always in capable hands.
-              </div>
-            </div>
-          </div>
-
-          <div class="div-block-4 rotate">
-            <div>
-              <h3 class="h3">Powerful financial reporting</h3>
-              <div>
-                Our <strong>financial reporting</strong> services provide you with detailed, accurate
-                insights into the health of your business or personal finances. We prepare <strong
-                  >customized financial statements</strong
-                > such as income statements, balance sheets, and cash flow reports to help you make
-                informed decisions. With our <strong>powerful financial reporting</strong>, you’ll
-                gain a clear understanding of your financial position, giving you the tools to plan
-                effectively, secure funding, and grow your business with confidence.
-              </div>
-            </div>
-            <div>
-              <img
-                src={src(feat3, 1080)}
-                srcset={srcset(feat3, [500, 800, 1080, feat3.w])}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
-                width={feat3.w}
-                height={feat3.h}
-                alt="Accounting dashboard showing sales revenue and a Top Expenses breakdown by category, reviewed by an advisor on a tablet."
-                loading="lazy"
-                decoding="async"
-                class="image-2"
-              />
-            </div>
-          </div>
-
-          <div class="div-block-4">
-            <div>
-              <img
-                src={src(feat2, 1080)}
-                srcset={srcset(feat2, [500, 800, 1080, feat2.w])}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
-                width={feat2.w}
-                height={feat2.h}
-                alt="Accounting dashboard with total revenue, total expenses and net profit next to a monthly revenue and profit chart."
-                loading="lazy"
-                decoding="async"
-                class="image-2"
-              />
-            </div>
-            <div>
-              <h3 class="h3">Tax season, minus the stress</h3>
-              <div>
-                Tax season can be overwhelming, but with Accounting Max Services, it doesn’t have
-                to be. We handle every aspect of <strong>tax preparation</strong>—from gathering
-                your documents to filing your returns—so you can relax. Our goal is to make the
-                process as seamless and stress-free as possible, ensuring that your taxes are filed
-                accurately, on time, and with maximum refunds or minimized liabilities. With our
-                team by your side, you’ll never have to worry about tax season again.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* ========================================================= CALL-ACTION */}
-    {/* OJO: esta <section class="footer-subscribe"> NO es la newsletter del pie
-        (esa la pone <Footer /> via FooterSubscribe.astro). Comparte clase por
-        reutilizacion de estilos en Webflow, pero es contenido de la portada. */}
-    <section class="call-action" aria-labelledby="cta-title">
-      <div class="w-layout-blockcontainer container w-container">
-        <section class="footer-subscribe">
-          <div class="wrapper-call-action">
-            <div class="block-content-call-to-action">
-              <img
-                src={iconCta.url}
-                width={iconCta.w}
-                height={iconCta.h}
+                src={VIDEO.miniatura}
+                width="1280"
+                height="720"
                 alt=""
                 loading="lazy"
                 decoding="async"
-                class="icon-news"
+                referrerpolicy="no-referrer"
               />
-              <div class="div-block-10">
-                <h2 class="h2" id="cta-title">Schedule a free consultation call Today!</h2>
-                <div>
-                  Take the first step towards stress-free accounting! Schedule your free 30-minute
-                  consultation call now and get tailored advice for your small business.
-                </div>
-              </div>
-            </div>
-            <div>
-              <a href="/contact-us" class="button padding w-button">Book A Consultation</a>
-            </div>
+              <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
+                <path
+                  d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
+                  fill="#212121"
+                  fill-opacity="0.8"></path>
+                <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
+              </svg>
+            </button>
           </div>
-        </section>
+          <div class="sobre__texto">
+            <h2 id="about-titulo">{c.home.aboutTitle}</h2>
+            <p set:html={c.home.aboutHtml} />
+            <a href={"/about-us"} class="boton boton--secundario">{c.home.aboutCta}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    {/* ============================================================= PROCESO */}
+    {/* Seccion nueva. Quita la friccion de «no se que me van a pedir», que en
+        servicios fiscales es la objecion numero uno.
+
+        R3: ni una afirmacion nueva. Paso 1 sale del CTA que ya estaba
+        publicado («free 30-minute consultation call»), 2 del FAQ 1 y 2 («we'll
+        guide you through the checklist», «we handle the paperwork») y 3 del
+        FAQ 4. Deliberadamente NO se apoya en «document portals»: el barrido de
+        la fase 0 lo marco como promesa sin nada detras. */}
+    <section class="seccion" aria-labelledby="proceso-titulo">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="proceso-titulo">{c.home.procesoTitulo}</h2>
+        </div>
+        <ol class="proceso">
+          {
+            c.home.procesoPasos.map((paso) => (
+              <li class="proceso__paso revelar">
+                <h3 class="proceso__titulo">{paso.titulo}</h3>
+                <p class="proceso__texto">{paso.texto}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    {/* ========================================================= TESTIMONIOS */}
+    {/* Carrusel de scroll-snap nativo: cero JavaScript de libreria. Los dos
+        botones solo llaman a scrollBy(), y si no hay JS la zona sigue siendo
+        desplazable con el dedo, con la rueda y con el teclado.
+
+        D5 SIGUE VIGENTE: se muestran como testimonios y nada mas. Prohibido
+        JSON-LD Review o aggregateRating — no hay valoracion, ni fecha, ni
+        fuente verificable. */}
+    <section class="seccion seccion--alterna" aria-labelledby="reviews-titulo">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="reviews-titulo">{c.reviews.title}</h2>
+          <p>{c.reviews.text}</p>
+        </div>
+        <div
+          class="testimonios"
+          data-carrusel
+          tabindex="0"
+          role="group"
+          aria-labelledby="reviews-titulo"
+        >
+          {
+            opiniones.map((o) => (
+              <figure class="testimonio">
+                <blockquote class="testimonio__texto">{o.quote}</blockquote>
+                <figcaption>
+                  <div class="testimonio__autor">{o.author}</div>
+                  <div class="testimonio__fuente">{c.reviews.publicado}</div>
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+        <div class="carrusel__mandos">
+          <button type="button" class="carrusel__boton" data-carrusel-prev aria-label={c.reviews.prev}>
+            &#8592;
+          </button>
+          <button type="button" class="carrusel__boton" data-carrusel-next aria-label={c.reviews.next}>
+            &#8594;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================ FEATURES */}
+    {/* Mismo contenido que antes, en 3 tarjetas compactas en vez de 3 bandas
+        alternas a todo lo ancho. El texto del cliente no se toca. */}
+    <section class="seccion" aria-labelledby="features-titulo">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="features-titulo">{c.features.title}</h2>
+          <p>{c.features.text}</p>
+        </div>
+        <div class="familias">
+          {
+            [feat1, feat3, feat2].map((im, i) => (
+              <article class="familia revelar">
+                <img
+                  src={src(im, 800)}
+                  srcset={srcset(im, [500, 800, im.w])}
+                  sizes="(max-width: 62rem) 100vw, 30vw"
+                  width={im.w}
+                  height={im.h}
+                  alt={c.home.featuresAlt[i]}
+                  loading="lazy"
+                  decoding="async"
+                  style="width:100%;height:auto;border-radius:var(--radio-control)"
+                />
+                <h3 class="familia__nombre">{c.features.items[i].title}</h3>
+                <p class="familia__resumen" set:html={c.features.items[i].html} />
+              </article>
+            ))
+          }
+        </div>
       </div>
     </section>
 
     {/* ================================================================= FAQ */}
-    <section class="faq" aria-labelledby="faq-title">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="container-faq">
-          <div class="block-title-faq">
-            <h2 class="h2" id="faq-title">Frequently Asked Questions</h2>
-            {/* R3: en produccion aqui hay texto de relleno de Webflow ("This is
-                some text inside of a div block."). Ni se copia ni se inventa un
-                sustituto: el hueco queda a la vista. */}
-            {/* Sin entradilla bajo el titulo del FAQ. En produccion ese <div>
-                contiene literalmente "This is some text inside of a div block.",
-                el placeholder por defecto de Webflow — igual que el equipo demo,
-                es relleno de plantilla que lleva vivo en el sitio del cliente.
-                Migrarlo seria propagar un defecto; inventar una entradilla en el
-                sitio de un despacho fiscal esta prohibido (R3). Se omite y se
-                reporta como D12. */}
-          </div>
+    {/* <details>/<summary> nativo. Antes eran <button> + panel con `hidden`
+        gestionados por iniciarFaq() en ui.ts; ese codigo se borra en este mismo
+        commit porque el acordeon SOLO existia en las dos portadas.
 
-          {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
-              aria-expanded/aria-controls y esconde los paneles al arrancar.
-              Sin JS los cinco quedan abiertos y legibles: .faq-answer es
-              height:auto en el CSS portado. Por eso no se emite el
-              style="height:0px" del original. */}
-          <div class="block-faq">
-            {
-              [
-                {
-                  q: "1. What documents do I need to file my personal taxes?",
-                  a: "To file your personal taxes, you’ll typically need your W-2 or 1099 forms, ID, Social Security number, and any records of deductions, credits, or income. We’ll guide you through the checklist.",
-                },
-                {
-                  q: "2. How long does it take to get my EIN or ITIN?",
-                  a: "EINs can often be processed within 1–2 business days. ITINs may take a few weeks depending on IRS processing times. We handle the paperwork to avoid delays.",
-                },
-                {
-                  q: "3. Do you offer services in Spanish?",
-                  a: "Yes! All of our services are available in both English and Spanish. We’re proud to serve the Hispanic community with bilingual support.",
-                },
-                {
-                  q: "4. Can you help with IRS audits or letters?",
-                  a: "Absolutely. Our team includes Enrolled Agents licensed to practice before the IRS who represent you directly before the IRS to resolve audits, letters, or disputes.",
-                },
-                {
-                  q: "5. Do you only serve clients in Coral Springs?",
-                  a: "No. While we’re based in Coral Springs, FL, we serve clients nationwide through secure online consultations and document portals.",
-                },
-              ].map((item, i) => (
-                <div class="faq-item">
-                  <button
-                    type="button"
-                    id={`faq-question-${i + 1}`}
-                    class="faq-question w-inline-block"
-                    aria-expanded="false"
-                    aria-controls={`faq-answer-${i + 1}`}
-                  >
-                    <h3 class="h3 title-faq">{item.q}</h3>
-                    {/* Aspa decorativa. site.css la gira con
-                        .faq-item[data-open="true"] .plus */}
-                    <span class="p-m-wrap" aria-hidden="true">
-                      <span class="minus" />
-                      <span class="plus" />
-                    </span>
-                  </button>
-                  <div
-                    id={`faq-answer-${i + 1}`}
-                    class="faq-answer"
-                    role="region"
-                    aria-labelledby={`faq-question-${i + 1}`}
-                  >
-                    <div class="faq-answer-inner">
-                      <p>{item.a}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            }
+        Lo nativo gana en tres cosas que el JS no daba: se abre sin JavaScript,
+        Ctrl+F encuentra texto dentro de un panel cerrado y lo abre, y al
+        imprimir sale todo. */}
+    <section class="seccion seccion--alterna" aria-labelledby="faq-titulo">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="faq-titulo">{c.faq.title}</h2>
+        </div>
+        <div class="faq-lista">
+          {
+            c.faq.items.map((item) => (
+              <details class="faq-item">
+                <summary class="faq-item__titulo">{item.q}</summary>
+                <p class="faq-item__cuerpo">{item.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* ============================================================== CIERRE */}
+    {/* El telefono, visible y pulsable, en todos los anchos. */}
+    <section class="seccion seccion--oscura" aria-labelledby="cierre-titulo">
+      <div class="contenido">
+        <div class="cierre">
+          <div class="cierre__texto">
+            <h2 id="cierre-titulo">{c.home.cierreTitulo}</h2>
+            <p>{c.home.cierreTexto}</p>
+          </div>
+          <div class="cierre__acciones">
+            <a href="/contact-us" class="boton boton--principal">{c.home.heroCta}</a>
+            <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
+              {interpola(c.home.cierreLlamar, { telefono: NEGOCIO.telefono })}
+            </a>
           </div>
         </div>
       </div>

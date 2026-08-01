@@ -1,0 +1,617 @@
+/* Componentes del sistema nuevo — FASE 2 del rediseño.
+ *
+ * Todo lo de aquí consume tokens.css y no declara ni un valor a mano. Va sin
+ * capa, como tokens.css y site.css, así que gana al vendor sin especificidad.
+ *
+ * ALCANCE DE LA FASE 2: las secciones propias de la portada. El cromo (Nav y
+ * Footer, presentes en las 54 rutas) sigue siendo del vendor hasta la FASE 4 —
+ * reconstruirlo aquí cambiaría las 54 rutas de golpe, que es justo lo que el
+ * plan por fases evita.
+ *
+ * REGLA DE CONTRASTE, la que hace falta recordar: sobre el verde de marca no
+ * vale ni el blanco (3,07:1) ni el navy de marca (4,36:1). Texto normal sobre
+ * verde SIEMPRE con var(--sobre-verde) — 4,73:1. Ver tokens.css.
+ */
+
+/* ===========================================================================
+ * ESQUELETO
+ * =========================================================================== */
+
+.seccion {
+  padding-block: var(--seccion-y);
+}
+
+.seccion--corta {
+  padding-block: var(--seccion-y-corta);
+}
+
+.seccion--oscura {
+  background: var(--superficie-oscura);
+  color: var(--blanco);
+}
+
+.seccion--alterna {
+  background: var(--superficie-2);
+}
+
+.contenido {
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+}
+
+.cabecera-seccion {
+  max-width: var(--medida);
+  margin-block-end: var(--e-7);
+}
+
+.cabecera-seccion > h2 {
+  font-size: var(--fs-2xl);
+  margin: 0 0 var(--e-3);
+}
+
+.cabecera-seccion > p {
+  font-size: var(--fs-md);
+  color: var(--tinta-media);
+  margin: 0;
+}
+
+.seccion--oscura .cabecera-seccion > p {
+  color: color-mix(in srgb, var(--blanco) 78%, transparent);
+}
+
+/* ===========================================================================
+ * BOTONES
+ *
+ * Dos, y se distinguen por jerarquía real, no por color: uno es la acción y el
+ * otro es la alternativa. El barrido de la fase 0 encontró la misma CTA escrita
+ * de 4 formas y en 2 colores, repetida 182 veces sobre 204 botones del sitio.
+ * =========================================================================== */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 3rem; /* 48px: objetivo táctil holgado (SC 2.5.8 pide 24) */
+  padding: var(--e-3) var(--e-6);
+  border: 2px solid transparent;
+  border-radius: var(--radio-control);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  font-weight: var(--peso-fuerte);
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--dur-micro) var(--ease-estandar),
+    box-shadow var(--dur-micro) var(--ease-estandar),
+    background-color var(--dur-micro) var(--ease-estandar);
+}
+
+/* PRINCIPAL. Verde de marca intacto con texto --sobre-verde: 4,73:1.
+ * Antes era blanco sobre el mismo verde, 3,07:1, y fallaba AA en los 182. */
+.boton--principal {
+  background: var(--verde);
+  color: var(--sobre-verde);
+  box-shadow: var(--sombra-1);
+}
+
+.boton--principal:hover {
+  box-shadow: var(--sombra-2);
+  transform: translateY(-1px);
+}
+
+.boton--principal:active {
+  transform: scale(0.98);
+  transition-duration: var(--dur-corta);
+  transition-timing-function: var(--ease-muelle);
+}
+
+/* SECUNDARIO. Contorno, para que la jerarquía se vea sin inventar otro color. */
+.boton--secundario {
+  background: transparent;
+  color: var(--tinta);
+  border-color: var(--borde-control);
+}
+
+.boton--secundario:hover {
+  border-color: var(--tinta);
+  background: var(--superficie-2);
+}
+
+.seccion--oscura .boton--secundario {
+  color: var(--blanco);
+  border-color: color-mix(in srgb, var(--blanco) 45%, transparent);
+}
+
+.seccion--oscura .boton--secundario:hover {
+  border-color: var(--blanco);
+  background: color-mix(in srgb, var(--blanco) 10%, transparent);
+}
+
+/* ===========================================================================
+ * HERO
+ * =========================================================================== */
+
+.hero {
+  padding-block: clamp(var(--e-7), 6vw, var(--e-9));
+  background: var(--superficie-2);
+}
+
+.hero__rejilla {
+  display: grid;
+  gap: var(--e-7);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .hero__rejilla {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: var(--e-8);
+  }
+}
+
+.hero__credenciales {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2) var(--e-4);
+  margin: 0 0 var(--e-4);
+  padding: 0;
+  list-style: none;
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medio);
+  color: var(--tinta-media);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hero__credenciales li + li {
+  border-inline-start: 1px solid var(--borde-fuerte);
+  padding-inline-start: var(--e-4);
+}
+
+/* --fs-3xl y no --fs-4xl: este titular tiene 11 palabras y no se puede acortar
+ * porque es el que sostiene el posicionamiento local. A 68px partia en 6 lineas
+ * en la columna de escritorio; a 52px cabe en 4 y sigue siendo, de largo, lo
+ * mas grande de la pagina. El tamano se elige contra el texto real, no contra
+ * una escala en abstracto. */
+.hero__titulo {
+  font-size: var(--fs-3xl);
+  margin: 0 0 var(--e-5);
+  text-wrap: balance;
+}
+
+/* El <strong> del H1 viene del marcado de producción y no aporta énfasis:
+ * el titular entero ya es el elemento más fuerte de la página. */
+.hero__titulo strong {
+  font-weight: inherit;
+}
+
+.hero__entrada {
+  font-size: var(--fs-md);
+  color: var(--tinta-media);
+  max-width: var(--medida);
+  margin: 0 0 var(--e-6);
+}
+
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+.hero__foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-2);
+}
+
+/* ===========================================================================
+ * BARRA DE CONFIANZA
+ *
+ * Las credenciales estaban a 12 px en una barra superior verde, arriba del
+ * todo, en blanco sobre verde a 3,07:1 — o sea escondidas y además ilegibles.
+ * =========================================================================== */
+
+.confianza {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--e-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.confianza__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  padding-inline-start: var(--e-4);
+  border-inline-start: 3px solid var(--verde);
+}
+
+.confianza__fuerte {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+}
+
+.confianza__suave {
+  font-size: var(--fs-sm);
+  color: var(--tinta-media);
+}
+
+/* ===========================================================================
+ * FAMILIAS DE SERVICIOS — 3 tarjetas en lugar de 12 cajas iguales
+ * =========================================================================== */
+
+.familias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: var(--e-5);
+}
+
+.familia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+  padding: var(--e-6);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-1);
+  transition: box-shadow var(--dur-corta) var(--ease-estandar);
+}
+
+.familia:hover {
+  box-shadow: var(--sombra-2);
+}
+
+.familia__numero {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-titular);
+  color: var(--verde-texto);
+  letter-spacing: 0.1em;
+}
+
+.familia__nombre {
+  font-size: var(--fs-xl);
+  margin: 0;
+}
+
+.familia__resumen {
+  font-size: var(--fs-base);
+  color: var(--tinta-media);
+  margin: 0;
+}
+
+.familia__lista {
+  display: flex;
+  flex-direction: column;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--borde);
+}
+
+.familia__lista li {
+  border-bottom: 1px solid var(--borde);
+}
+
+/* Cada servicio sigue siendo un enlace propio: los 12 destinos y su enlazado
+ * interno se conservan enteros, solo cambia cómo se presentan. */
+.familia__enlace {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-3);
+  min-height: 2.75rem;
+  padding-block: var(--e-2);
+  color: var(--tinta);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+}
+
+.familia__enlace::after {
+  content: "→";
+  color: var(--verde-texto);
+  transition: transform var(--dur-micro) var(--ease-estandar);
+}
+
+.familia__enlace:hover {
+  color: var(--verde-texto);
+}
+
+.familia__enlace:hover::after {
+  transform: translateX(3px);
+}
+
+/* ===========================================================================
+ * PROCESO
+ * =========================================================================== */
+
+.proceso {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--e-6);
+  margin: 0;
+  padding: 0;
+  counter-reset: paso;
+}
+
+.proceso__paso {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  counter-increment: paso;
+}
+
+.proceso__paso::before {
+  content: counter(paso);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--verde);
+  color: var(--sobre-verde);
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+}
+
+.proceso__titulo {
+  font-size: var(--fs-lg);
+  margin: 0;
+}
+
+.proceso__texto {
+  margin: 0;
+  color: var(--tinta-media);
+}
+
+.seccion--oscura .proceso__texto {
+  color: color-mix(in srgb, var(--blanco) 78%, transparent);
+}
+
+/* ===========================================================================
+ * TESTIMONIOS — scroll-snap nativo, cero librería
+ *
+ * Sustituye al carrusel de .splide de la portada. Las fichas de servicio siguen
+ * con el viejo hasta la FASE 3, por eso iniciarCarrusel() sigue en ui.ts.
+ * =========================================================================== */
+
+.testimonios {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(85%, 22rem);
+  gap: var(--e-5);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--margen-lateral);
+  padding-block-end: var(--e-4);
+  /* Sangra hasta el borde de la pantalla para que se vea que hay más. */
+  margin-inline: calc(var(--margen-lateral) * -1);
+  padding-inline: var(--margen-lateral);
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+
+.testimonio {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+  padding: var(--e-6);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+}
+
+.testimonio__texto {
+  margin: 0;
+  font-size: var(--fs-base);
+  color: var(--tinta);
+}
+
+.testimonio__autor {
+  margin-block-start: auto;
+  font-weight: var(--peso-fuerte);
+}
+
+.testimonio__fuente {
+  font-size: var(--fs-xs);
+  color: var(--tinta-suave);
+}
+
+.carrusel__mandos {
+  display: flex;
+  gap: var(--e-2);
+  margin-block-start: var(--e-5);
+}
+
+.carrusel__boton {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--borde-control);
+  border-radius: 50%;
+  background: var(--superficie);
+  color: var(--tinta);
+  font-size: var(--fs-lg);
+  cursor: pointer;
+}
+
+.carrusel__boton:hover {
+  border-color: var(--tinta);
+}
+
+/* ===========================================================================
+ * FAQ — <details> nativo, cero JavaScript
+ *
+ * Antes eran <button> + panel con hidden gestionados por iniciarFaq() en
+ * ui.ts. <details>/<summary> da lo mismo con semántica del navegador: se abre
+ * sin JS, se puede buscar dentro con Ctrl+F y sale bien impreso.
+ * =========================================================================== */
+
+.faq-lista {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--borde);
+  max-width: 52rem;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--borde);
+}
+
+.faq-item__titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-4);
+  min-height: 3.5rem;
+  padding-block: var(--e-4);
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item__titulo::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item__titulo::after {
+  content: "+";
+  flex: none;
+  font-size: var(--fs-xl);
+  color: var(--verde-texto);
+  transition: transform var(--dur-corta) var(--ease-estandar);
+}
+
+.faq-item[open] .faq-item__titulo::after {
+  transform: rotate(45deg);
+}
+
+.faq-item__cuerpo {
+  margin: 0 0 var(--e-5);
+  max-width: var(--medida);
+  color: var(--tinta-media);
+}
+
+/* ===========================================================================
+ * CIERRE
+ * =========================================================================== */
+
+.cierre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-6);
+}
+
+.cierre__texto {
+  max-width: var(--medida);
+}
+
+.cierre__texto h2 {
+  font-size: var(--fs-2xl);
+  margin: 0 0 var(--e-3);
+}
+
+.cierre__texto p {
+  margin: 0;
+  color: color-mix(in srgb, var(--blanco) 82%, transparent);
+}
+
+.cierre__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-3);
+}
+
+/* ===========================================================================
+ * ENTRADAS AL HACER SCROLL
+ *
+ * Adelanto acotado de la FASE 5: solo las secciones nuevas, y con la regla que
+ * manda ahí — el hero NUNCA arranca en opacity:0, porque su H1 es el elemento
+ * LCP en 3 de las 5 plantillas y medirlo al final de una animación empeoraría
+ * el LCP que la fase 1 acaba de bajar.
+ *
+ * animation-timeline: view() no necesita JavaScript. Donde no exista, el
+ * @supports deja el contenido visible y quieto, que es un estado perfectamente
+ * bueno — no hay respaldo con IntersectionObserver porque no hace falta uno
+ * para que se lea la página.
+ * =========================================================================== */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .revelar {
+      animation: aparecer both var(--ease-salida);
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+
+/* ===========================================================================
+ * SOBRE NOSOTROS — video + credenciales
+ *
+ * La caja 16:9 la da `aspect-ratio`, no el padding-top en linea que traia
+ * .w-embed-youtubevideo (un truco de cuando aspect-ratio no existia). El
+ * `overflow:hidden` sigue siendo necesario: el anillo de foco de la fachada se
+ * pinta hacia dentro justo por eso, y esta documentado en index.astro.
+ * =========================================================================== */
+
+.sobre {
+  display: grid;
+  gap: var(--e-7);
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .sobre {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--e-8);
+  }
+}
+
+.sobre__video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-2);
+  background: var(--navy);
+}
+
+.sobre__texto > h2 {
+  font-size: var(--fs-2xl);
+  margin: 0 0 var(--e-4);
+}
+
+.sobre__texto > p {
+  margin: 0 0 var(--e-6);
+  color: var(--tinta-media);
+  max-width: var(--medida);
+}

@@ -101,6 +101,15 @@
    */
   --sobre-verde: #1f2b30;
 
+  /* TERCERA REGLA, y la descubrió medir la portada ya construida: el verde no
+   * sirve como TEXTO sobre claro. Ni `--verde` (3,07:1) ni `--verde-oscuro`
+   * (2,57:1 — es el más claro de los tres, el nombre engaña) llegan al 4,5.
+   * Este da 5,41:1 sobre blanco y 5,01:1 sobre --superficie-2.
+   *
+   * Los tres verdes de marca siguen intactos para FONDOS y adornos; este es el
+   * único que puede llevar una letra encima sobre superficie clara. */
+  --verde-texto: #4e751c;
+
   /* SEGUNDA REGLA DE COLOR, y tampoco es intuitiva: sobre el NAVY el verde de
    * marca da 4,36:1 — el mismo par que falla al revés. O sea que `--verde` no
    * vale como texto pequeño ni sobre blanco ni sobre navy.

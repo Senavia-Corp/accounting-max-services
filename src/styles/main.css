@@ -20,4 +20,5 @@
  * site.css para que se lea en el orden en que se usa. Es el fichero que
  * sobrevive a la FASE 4, cuando las tres lineas de arriba desaparezcan. */
 @import url("./tokens.css");
+@import url("./componentes.css");
 @import url("./site.css");
