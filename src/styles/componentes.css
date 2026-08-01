@@ -845,3 +845,163 @@
   font-size: var(--fs-sm);
   color: var(--tinta-media);
 }
+
+/* ===========================================================================
+ * SISTEMA DE MOVIMIENTO — FASE 5
+ *
+ * PRESUPUESTO: 0 KB de JavaScript de libreria. Ni GSAP (~70 KB), ni Framer
+ * (~40 KB + React), ni AOS. El LCP movil estaba en 3,1 s antes de la fase 1 y
+ * meter una libreria para que unas tarjetas aparezcan seria cambiar la metrica
+ * que importa por un efecto. Todo lo de aqui es CSS nativo.
+ *
+ * LAS TRES REGLAS QUE NO SE NEGOCIAN:
+ *
+ *   1. El hero NUNCA arranca en opacity:0. No es opinion: el port ya tuvo que
+ *      quitar los data-w-id con style="opacity:0" que metia Webflow. Si el
+ *      elemento LCP empieza invisible, el navegador mide el LCP al FINAL de la
+ *      animacion. Por eso `.revelar` no se pone jamas en la primera pantalla.
+ *   2. prefers-reduced-motion conserva el FUNDIDO y elimina el MOVIMIENTO. El
+ *      reset estandar a 0,01 ms es demasiado bruto: deja las cosas apareciendo
+ *      de golpe. Quien pide menos movimiento no pide ningun cambio de estado.
+ *   3. Nada se mueve solo. Sin bucles infinitos, sin carruseles automaticos,
+ *      sin parallax. Toda animacion responde a una accion: entrar en pantalla,
+ *      pasar el raton, pulsar, navegar. WCAG 2.2 SC 2.2.2.
+ *
+ * Solo se animan transform, opacity, filter y clip-path. Nunca top/left/width/
+ * height/margin: provocan layout y traen de vuelta el CLS que esta en 0,000.
+ * =========================================================================== */
+
+/* --- Cascada -------------------------------------------------------------
+ * 70 ms entre hermanos, y se CONGELA al sexto. Nadie espera 840 ms a que
+ * aparezca la ultima tarjeta de una rejilla de doce. */
+.familias > .revelar:nth-child(2),
+.proceso > .revelar:nth-child(2),
+.relacionados > li:nth-child(2) { --retardo: var(--stagger); }
+
+.familias > .revelar:nth-child(3),
+.proceso > .revelar:nth-child(3),
+.relacionados > li:nth-child(3) { --retardo: calc(var(--stagger) * 2); }
+
+.familias > .revelar:nth-child(4),
+.relacionados > li:nth-child(4) { --retardo: calc(var(--stagger) * 3); }
+
+.familias > .revelar:nth-child(5) { --retardo: calc(var(--stagger) * 4); }
+
+.familias > .revelar:nth-child(n + 6) { --retardo: calc(var(--stagger) * 5); }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .revelar {
+      animation-delay: var(--retardo, 0ms);
+    }
+  }
+}
+
+/* --- Entrada de elementos que aparecen en el DOM --------------------------
+ * @starting-style define el estado DESDE el que se anima cuando el elemento
+ * empieza a pintarse. Con transition-behavior: allow-discrete se anima ademas
+ * `display`, que es justo lo que antes obligaba a usar JavaScript. */
+@media (prefers-reduced-motion: no-preference) {
+  .lead__aviso {
+    transition:
+      opacity var(--dur-corta) var(--ease-salida),
+      transform var(--dur-corta) var(--ease-salida),
+      content-visibility var(--dur-corta) allow-discrete;
+  }
+
+  @starting-style {
+    .lead__aviso {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+}
+
+/* --- Acordeon del FAQ ----------------------------------------------------
+ * El cuerpo de un <details> no se puede animar con height:auto, pero
+ * grid-template-rows 0fr -> 1fr si, y es barato porque no toca el layout de
+ * alrededor hasta que termina. */
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dur-corta) var(--ease-estandar),
+      content-visibility var(--dur-corta) allow-discrete;
+    transition-behavior: allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* --- Transicion entre paginas --------------------------------------------
+ * Astro lo trae de serie y esto son dos declaraciones. Al ir de la portada a
+ * una ficha de servicio, el titular se transforma en vez de parpadear: es lo
+ * que mas «producto caro» aporta por menos codigo de todo el sistema.
+ *
+ * Los nombres tienen que ser UNICOS por documento, asi que solo se marcan
+ * elementos de los que hay uno: el H1 y el cromo. */
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero__titulo,
+  .servicio__titulo {
+    view-transition-name: titular;
+  }
+}
+
+::view-transition-old(titular),
+::view-transition-new(titular) {
+  animation-duration: var(--dur-pagina);
+  animation-timing-function: var(--ease-salida);
+}
+
+/* --- Enlaces y tarjetas: microinteracciones ------------------------------- */
+.relacionado,
+.familia__enlace,
+.testimonio {
+  transition:
+    transform var(--dur-micro) var(--ease-estandar),
+    box-shadow var(--dur-micro) var(--ease-estandar),
+    color var(--dur-micro) var(--ease-estandar);
+}
+
+.relacionado:hover {
+  transform: translateY(-2px);
+}
+
+/* --- MENOS MOVIMIENTO ----------------------------------------------------
+ * Regla 2. Se conserva el fundido y se elimina el desplazamiento: quien activa
+ * esto no esta pidiendo que la interfaz deje de responder, esta pidiendo que
+ * no se mueva. El reset global de site.css:78 sigue cubriendo todo lo demas. */
+@media (prefers-reduced-motion: reduce) {
+  @supports (animation-timeline: view()) {
+    @keyframes aparecer-sin-movimiento {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .revelar {
+      animation: aparecer-sin-movimiento both linear;
+      animation-timeline: view();
+      animation-range: entry 0% cover 25%;
+      animation-delay: 0ms;
+    }
+  }
+
+  .relacionado:hover,
+  .boton--principal:hover,
+  .boton--principal:active {
+    transform: none;
+  }
+
+  /* Sin transicion de vista: es un movimiento de pantalla completa. */
+  .hero__titulo,
+  .servicio__titulo {
+    view-transition-name: none;
+  }
+}
