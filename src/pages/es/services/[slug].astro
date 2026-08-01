@@ -24,11 +24,14 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
 import PortableText from "../../../components/PortableText.astro";
+import LeadForm from "../../../components/LeadForm.astro";
+import JsonLd from "../../../components/JsonLd.astro";
 import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../../lib/sanity";
 import type { Servicio, Testimonio } from "../../../lib/sanity";
 import { t } from "../../../lib/i18n";
 import { requiereEs, requiereTodoEs, enlace } from "../../../lib/es";
 import type { GetStaticPaths } from "astro";
+import { relacionados } from "../../../lib/familias";
 
 type Asset = { originalFilename: string; url: string; w: number; h: number };
 
@@ -93,6 +96,9 @@ const intro = requiereEs<string>(servicio, "introEs", aqui).trim();
 const cuerpo = requiereEs<any[]>(servicio, "bodyEs", aqui);
 const metaTitle = requiereEs<string>(servicio, "metaTitleEs", aqui).trim();
 const metaDescription = requiereEs<string>(servicio, "metaDescriptionEs", aqui).trim();
+
+// FASE 3: 2-3 hermanos de la misma familia en vez de la caja con los DOCE.
+const hermanos = relacionados(todos, servicio.slug);
 
 /** Falla en voz alta: un asset roto se ve en las 12 rutas. */
 const img = (nombre: string): Asset => {
@@ -182,277 +188,123 @@ const tituloDe = (s: Servicio) =>
   ogImage={ogUrl(foto)}
   ogImageAlt={altFoto || undefined}
 >
+  <JsonLd tipo="service" nombre={titulo} descripcion={metaDescription} imagen={foto?.url} />
   <Nav lang={lang} />
 
   <main id="main">
-    <section class="header-page">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="block-header-page">
-          <h1 class="h1">{titulo}</h1>
-          <div>{intro}</div>
-          <a href={CONTACTO} class="button w-button">{c.service.heroCta}</a>
+    {/* =============================================================== HERO */}
+    {/* FASE 3 — espejo de src/pages/services/[slug].astro. */}
+    <section class="servicio__hero">
+      <div class="contenido">
+        <p class="servicio__eyebrow">{c.nav.services}</p>
+        <h1 class="servicio__titulo">{titulo}</h1>
+        {intro && <p class="servicio__intro">{intro}</p>}
+        <div class="hero__acciones">
+          <a href="#lead-titulo" class="boton boton--principal">{c.form.submit}</a>
+          <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
+            {`Llamar al ${NEGOCIO.telefono}`}
+          </a>
         </div>
       </div>
-
-      {/* LCP de la ruta: eager + fetchpriority, nunca lazy. */}
-      {
-        foto && (
-          <img
-            src={src(foto.url, 1250)}
-            srcset={`${src(foto.url, 500)} 500w, ${src(foto.url, 800)} 800w, ${src(foto.url, 1080)} 1080w, ${src(foto.url, 1250)} 1250w`}
-            sizes="(max-width: 991px) 100vw, 50vw"
-            width={foto.w}
-            height={foto.h}
-            alt={altFoto}
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            style={foto.lqip ? `background-image:url(${foto.lqip})` : undefined}
-            class="background-services"
-          />
-        )
-      }
     </section>
 
-    <section class="call-action">
-      <div class="w-layout-blockcontainer container w-container">
-        {/* En produccion era un <section class="footer-subscribe"> anidado: un
-            landmark de region sin nombre. Baja a <div>, igual que en EN. */}
-        <div class="footer-subscribe">
-          <div class="wrapper-call-action">
-            <div class="block-content-call-to-action">
+    {/* ============================================================= CUERPO */}
+    <section class="seccion">
+      <div class="contenido">
+        <div class="servicio__cuerpo">
+          <div class="w-richtext">
+            {foto && (
               <img
-                src={iconoCta.url}
-                width={iconoCta.w}
-                height={iconoCta.h}
-                alt=""
-                loading="lazy"
+                src={src(foto.url, 1080)}
+                srcset={[500, 800, 1080].map((w) => `${src(foto.url, w)} ${w}w`).join(", ")}
+                sizes="(max-width: 62rem) 100vw, 55vw"
+                width={foto.w}
+                height={foto.h}
+                alt={altFoto}
+                loading="eager"
+                fetchpriority="high"
                 decoding="async"
-                class="icon-news"
+                style="width:100%;height:auto;border-radius:var(--radio-caja);margin-bottom:var(--e-6)"
               />
-              <div class="div-block-10">
-                <h2 class="h2">{c.cta.title}</h2>
-                <div>{c.cta.text}</div>
-              </div>
-            </div>
-            <div>
-              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
-            </div>
+            )}
+            <PortableText value={cuerpo} />
           </div>
+          <aside class="servicio__aparte">
+            <LeadForm lang={lang} servicio={servicio.slug} />
+          </aside>
         </div>
       </div>
     </section>
 
-    <section class="body-service">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="wrapper-service">
-          <div class="block-left">
-            {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio.
-                El cuerpo es bodyEs: PortableText es el MISMO componente que usa
-                la ruta EN, solo cambia el campo del que sale el dato. */}
-            <div class="w-richtext">
-              <PortableText value={cuerpo} />
+    {/* ======================================================= RELACIONADOS */}
+    {
+      hermanos.length > 0 && (
+        <section class="seccion seccion--alterna" aria-labelledby="relacionados-titulo">
+          <div class="contenido">
+            <div class="cabecera-seccion">
+              <h2 id="relacionados-titulo">{c.service.relacionados}</h2>
             </div>
+            <ul class="relacionados">
+              {hermanos.map((h) => (
+                <li>
+                  <a href={enlace(lang, `/services/${h.slug}`)} class="relacionado">
+                    <span class="relacionado__nombre">{(h.titleEs || h.title).trim()}</span>
+                    {(h.introEs || h.intro) && (
+                      <span class="relacionado__intro">{(h.introEs || h.intro)!.trim()}</span>
+                    )}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
+        </section>
+      )
+    }
 
-          <div class="block-right">
-            {/* En produccion era un SEGUNDO <h1 class="h2">. Baja a <h2>; la
-                clase .h2 es la que pinta. Minusculas como en el original. */}
-            <h2 class="h2">{c.service.sidebarTitle}</h2>
-            <div class="collection-list-wrapper-2 w-dyn-list">
-              <div role="list" class="collection-list-2 w-dyn-items">
-                {/* Invertida, como la EN y como el pie. Ver services/[slug].astro. */}
-                {
-                  [...todos].reverse().map((s) => {
-                    const href = enlace(lang, `/services/${s.slug}`);
-                    const actual = href === aqui;
-                    return (
-                      <div role="listitem" class="collection-item-2 w-dyn-item">
-                        <a
-                          href={href}
-                          class={`link-block w-inline-block${actual ? " w--current" : ""}`}
-                          aria-current={actual ? "page" : undefined}
-                        >
-                          {s.icon && (
-                            <img
-                              src={s.icon.url}
-                              width={s.icon.w}
-                              height={s.icon.h}
-                              alt=""
-                              loading="lazy"
-                              decoding="async"
-                              class="icon-services"
-                            />
-                          )}
-                          <div class="title-cms-services">{tituloDe(s)}</div>
-                        </a>
-                      </div>
-                    );
-                  })
-                }
-              </div>
-            </div>
-          </div>
+    {/* ========================================================= TESTIMONIOS */}
+    <section class="seccion" aria-labelledby="titulo-resenas">
+      <div class="contenido">
+        <div class="cabecera-seccion">
+          <h2 id="titulo-resenas">{c.reviews.title}</h2>
         </div>
-      </div>
-    </section>
-
-    {/* D5 sigue vigente en espanol: se muestran como testimonios y NADA MAS.
-        Prohibido JSON-LD Review o aggregateRating. Los 20 no se traducen. */}
-    <section class="reviews" aria-labelledby="titulo-resenas">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="wrapper-reviews">
-          <div class="w-layout-blockcontainer container w-container">
-            <div class="wrapper-header-slider">
-              <div class="box-title-review">
-                <h2 id="titulo-resenas" class="h2">{c.reviews.title}</h2>
-                <div>{c.reviews.text}</div>
-              </div>
-              <div class="block-button-slider">
-                <button
-                  type="button"
-                  class="button-slider-cms prev-splide"
-                  aria-label={c.reviews.prev}
-                  aria-controls="pista-resenas"
-                >
-                  <img
-                    src={flecha.url}
-                    width={flecha.w}
-                    height={flecha.h}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    class="flecha back"
-                  />
-                </button>
-                <button
-                  type="button"
-                  class="button-slider-cms next-splide"
-                  aria-label={c.reviews.next}
-                  aria-controls="pista-resenas"
-                >
-                  <img
-                    src={flecha.url}
-                    width={flecha.w}
-                    height={flecha.h}
-                    alt=""
-                    loading="lazy"
-                    decoding="async"
-                    class="flecha"
-                  />
-                </button>
-              </div>
-            </div>
-
-            <div class="block-services-animation">
-              <div class="splide">
-                <div
-                  id="pista-resenas"
-                  class="splide-track w-dyn-list"
-                  tabindex="0"
-                  role="group"
-                  aria-label={c.reviews.grupo}
-                >
-                  <div role="list" class="splide-list w-dyn-items">
-                    {
-                      resenas.map((r) => (
-                        <div role="listitem" class="splide-slide w-dyn-item">
-                          <div class="block-review">
-                            <div class="block-header-review">
-                              <div>
-                                <div>
-                                  <img
-                                    src={logoGoogle.url}
-                                    width={logoGoogle.w}
-                                    height={logoGoogle.h}
-                                    alt={c.reviews.googleAltServicio}
-                                    loading="lazy"
-                                    decoding="async"
-                                    class="icon-google"
-                                  />
-                                  <img
-                                    src={estrellas.url}
-                                    width={estrellas.w}
-                                    height={estrellas.h}
-                                    alt=""
-                                    loading="lazy"
-                                    decoding="async"
-                                    class="icon-start"
-                                  />
-                                </div>
-                                <div class="mini-text-reviews">{c.reviews.ranking}</div>
-                              </div>
-                            </div>
-                            {/* NO SE TRADUCE: palabras de clientes reales. */}
-                            <p class="paragraph">{r.quote}</p>
-                            <div>
-                              <div class="name-customer">{r.author}</div>
-                              <div class="block-city">
-                                <div class="text-mini-reviews">{c.reviews.publicado}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="corner-top-1"></div>
-      <div class="corner-bottom-1"></div>
-      <div class="corner-top-2"></div>
-      <div class="corner-bottom-2"></div>
-    </section>
-
-    <section class="features" aria-labelledby="titulo-features">
-      <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
-          {/* El <br> final es del HTML en produccion: se conserva por paridad. */}
-          <h2 id="titulo-features" class="h2">{c.features.title}<br /></h2>
-          <div>{c.features.text}</div>
-        </div>
-
-        <div class="div-block-5">
+        <div class="testimonios" data-carrusel tabindex="0" role="group" aria-labelledby="titulo-resenas">
           {
-            FEATURES.map((f) => {
-              const imagen = (
-                <div>
-                  <img
-                    src={src(f.imagen.url, 940)}
-                    srcset={`${src(f.imagen.url, 500)} 500w, ${src(f.imagen.url, 800)} 800w, ${src(f.imagen.url, 940)} 940w`}
-                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
-                    width={f.imagen.w}
-                    height={f.imagen.h}
-                    alt={f.alt}
-                    loading="lazy"
-                    decoding="async"
-                    class="image-2"
-                  />
-                </div>
-              );
-              const texto = (
-                <div>
-                  <h3 class="h3">{f.titulo}</h3>
-                  <div set:html={f.parrafo} />
-                </div>
-              );
-              // .rotate invierte el orden en el DOM, igual que en el baseline.
-              return (
-                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
-                  {f.invertido ? texto : imagen}
-                  {f.invertido ? imagen : texto}
-                </div>
-              );
-            })
+            resenas.map((o) => (
+              <figure class="testimonio">
+                <blockquote class="testimonio__texto">{o.quote}</blockquote>
+                <figcaption>
+                  <div class="testimonio__autor">{o.author}</div>
+                  <div class="testimonio__fuente">{c.reviews.publicado}</div>
+                </figcaption>
+              </figure>
+            ))
           }
         </div>
+        <div class="carrusel__mandos">
+          <button type="button" class="carrusel__boton" data-carrusel-prev aria-label={c.reviews.prev}>&#8592;</button>
+          <button type="button" class="carrusel__boton" data-carrusel-next aria-label={c.reviews.next}>&#8594;</button>
+        </div>
       </div>
     </section>
+
+    {/* ============================================================== CIERRE */}
+    <section class="seccion seccion--oscura" aria-labelledby="cierre-titulo">
+      <div class="contenido">
+        <div class="cierre">
+          <div class="cierre__texto">
+            <h2 id="cierre-titulo">{c.home.cierreTitulo}</h2>
+            <p>{c.home.cierreTexto}</p>
+          </div>
+          <div class="cierre__acciones">
+            <a href="#lead-titulo" class="boton boton--principal">{c.form.submit}</a>
+            <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
+              {`Llamar al ${NEGOCIO.telefono}`}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <Footer lang={lang} />

@@ -1,0 +1,246 @@
+---
+// Formulario de lead — una sola fuente para las 24 fichas de servicio.
+//
+// POR QUE EXISTE. El barrido de la fase 0 midio que 182 de los 204 botones del
+// sitio (89 %) apuntan a /contact-us, la unica pagina con formulario. Quien
+// llega desde un anuncio buscando "EIN" tiene que saltar de pagina para pedir
+// presupuesto, y ese salto es donde se pierde el lead que se acaba de pagar.
+//
+// EL CONTRATO DE TURNSTILE ES INTOCABLE. Esta escrito en
+// ~/prompts/ams-rediseno-10k.md §6 y lo implementan tres ficheros que este
+// encargo NO puede modificar (zona prohibida por concurrencia):
+// src/lib/antibot.ts, src/lib/turnstile.ts y src/scripts/turnstile.ts.
+// Lo que este componente hace es CONSUMIRLO, y por eso replica exactamente:
+//
+//   - el <div data-turnstile data-sitekey data-lang data-theme>, cuyos cuatro
+//     `data-` son la API y no decoracion;
+//   - el honeypot llamado `ref_id` y NUNCA `company_url`: con ese nombre los
+//     gestores de contrasenas lo autocompletaban y se descartaban leads de
+//     PERSONAS REALES, en silencio;
+//   - el campo `ts` del time-trap, que el script pisa con la hora real de carga
+//     porque la pagina es estatica y el value del HTML es la hora del build;
+//   - la carga en FACHADA: nada de challenges.cloudflare.com hasta el primer
+//     foco. Es lo que protege el LCP y no se puede convertir en carga directa.
+//
+// ALTURA RESERVADA. La caja del reto mide ~65 px y se le reserva sitio ANTES de
+// que se pinte. Sin eso reaparece el CLS que hoy esta en 0,000, que es
+// exactamente lo que le pasa hoy al formulario del boletin del pie.
+//
+// D4 SIGUE ABIERTO: la politica de privacidad y el aviso GLBA son borradores a
+// la espera de abogado. El enlace apunta a /privacy-policy igual que en
+// /contact-us — este componente no cambia esa situacion ni la empeora, solo la
+// replica. Cuando D4 se resuelva, se arregla en un solo sitio.
+import { SITE_KEY } from "../lib/turnstile";
+import { NEGOCIO } from "../lib/sanity";
+import { t, interpola, type Lang } from "../lib/i18n";
+
+interface Props {
+  lang?: Lang;
+  /** Nombre del servicio desde el que se envia. Viaja como campo oculto. */
+  servicio?: string;
+  /** Titulo de la seccion. Por defecto el generico de i18n. */
+  titulo?: string;
+}
+
+const { lang = "en", servicio, titulo } = Astro.props;
+const c = t(lang);
+
+// La pagina es estatica: esto es la hora del BUILD y el script de abajo la pisa
+// con la de carga. Ver la nota larga en src/lib/antibot.ts.
+const TS_BUILD = Date.now();
+
+const rutaPrivacidad = "/privacy-policy";
+---
+
+<section class="lead" aria-labelledby="lead-titulo">
+  <div class="lead__caja">
+    <h2 id="lead-titulo" class="lead__titulo">{titulo || c.form.title}</h2>
+    <p class="lead__texto">{c.form.text}</p>
+
+    <form id="lead-form" class="lead__form" method="post" action="/api/lead" data-captcha-error={c.errores.captcha}>
+      <label class="visually-hidden" for="lead-full-name">{c.form.fullNameLabel}</label>
+      <input
+        id="lead-full-name"
+        class="lead__campo"
+        type="text"
+        name="full_name"
+        maxlength="256"
+        placeholder={c.form.fullNamePlaceholder}
+        autocomplete="name"
+        required
+      />
+
+      <label class="visually-hidden" for="lead-email">{c.form.emailLabel}</label>
+      <input
+        id="lead-email"
+        class="lead__campo"
+        type="email"
+        name="email"
+        maxlength="256"
+        placeholder={c.form.emailPlaceholder}
+        autocomplete="email"
+        required
+      />
+
+      <label class="visually-hidden" for="lead-phone">{c.form.phoneLabel}</label>
+      <input
+        id="lead-phone"
+        class="lead__campo"
+        type="tel"
+        name="phone"
+        maxlength="256"
+        placeholder={c.form.phonePlaceholder}
+        autocomplete="tel"
+        required
+      />
+
+      <label class="visually-hidden" for="lead-message">{c.form.messageLabel}</label>
+      <textarea
+        id="lead-message"
+        class="lead__campo lead__campo--area"
+        name="message"
+        maxlength="5000"
+        rows="3"
+        placeholder={c.form.messagePlaceholder}></textarea>
+
+      {/* FTSA + TCPA: consentimiento SEPARADO por canal, opcional y sin marcar.
+          Una casilla premarcada o una sola casilla para llamadas y SMS invalida
+          el consentimiento. Se copia tal cual de /contact-us. */}
+      <fieldset class="lead__consent">
+        <legend class="visually-hidden">{c.form.consentLegend}</legend>
+        <div class="lead__consent-fila">
+          <input id="lead-consent-calls" type="checkbox" name="consent_calls" value="yes" />
+          <label class="lead__consent-texto" for="lead-consent-calls">
+            {interpola(c.form.consentCalls, { negocio: NEGOCIO.nombre })}
+          </label>
+        </div>
+        <div class="lead__consent-fila">
+          <input id="lead-consent-sms" type="checkbox" name="consent_sms" value="yes" />
+          <label class="lead__consent-texto" for="lead-consent-sms">
+            {interpola(c.form.consentSms, { negocio: NEGOCIO.nombre })}
+          </label>
+        </div>
+        <p class="lead__consent-nota">{c.form.consentNote}</p>
+      </fieldset>
+
+      <p class="lead__legal">
+        {c.form.privacyBefore}<a href={rutaPrivacidad}>{c.form.privacyLink}</a>{c.form.privacyAfter}
+      </p>
+
+      {/* Trampa anti-bots. `ref_id` y NUNCA `company_url`: ver la cabecera. */}
+      <div class="visually-hidden" aria-hidden="true">
+        <label for="lead-ref-id">{c.form.honeypot}</label>
+        <input id="lead-ref-id" type="text" name="ref_id" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <input id="lead-ts" type="hidden" name="ts" value={TS_BUILD} />
+      <input type="hidden" name="lang" value={lang} />
+      {servicio && <input type="hidden" name="service" value={servicio} />}
+
+      {/* Reto de Turnstile. Va ANTES del boton de enviar a proposito: el orden
+          de tabulacion tiene que llevar al reto antes que a la accion que ese
+          reto autoriza (SC 2.4.3). El del boletin del pie lo tiene al reves y
+          esta anotado como pendiente de la fase 4. */}
+      {
+        SITE_KEY && (
+          <div
+            class="lead__captcha"
+            data-turnstile
+            data-sitekey={SITE_KEY}
+            data-lang={lang}
+            data-theme="light"
+          />
+        )
+      }
+
+      <input
+        type="submit"
+        class="boton boton--principal lead__enviar"
+        value={c.form.submit}
+        data-wait={c.form.wait}
+      />
+    </form>
+
+    <div class="lead__aviso lead__aviso--ok" role="status" tabindex="-1" data-lead-done hidden>
+      <p>{c.form.done}</p>
+    </div>
+    <div class="lead__aviso lead__aviso--error" role="alert" tabindex="-1" data-lead-fail hidden>
+      <p>{c.form.fail}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { armarCaptcha, tokenCaptcha, reiniciarCaptcha } from "../scripts/turnstile";
+
+  // Copia funcional del script de /contact-us. Sin JS no hay token y el
+  // servidor responde 403, por eso BaseLayout esconde el formulario y deja el
+  // aviso con el telefono: el <noscript> ya cubre ese caso.
+  const form = document.getElementById("lead-form") as HTMLFormElement | null;
+  const caja = form?.closest(".lead__caja") as HTMLElement | null;
+  const hecho = caja?.querySelector<HTMLElement>("[data-lead-done]");
+  const fallo = caja?.querySelector<HTMLElement>("[data-lead-fail]");
+  const enviar = form?.querySelector<HTMLInputElement>('input[type="submit"]');
+  const marca = form?.querySelector<HTMLInputElement>("#lead-ts");
+
+  // La hora del build pasa a ser la hora real de carga, que es lo que mide el
+  // time-trap de src/lib/antibot.ts.
+  if (marca) marca.value = String(Date.now());
+
+  if (form && hecho && fallo && enviar) {
+    const etiqueta = enviar.value;
+    const espera = enviar.dataset.wait ?? "Please wait...";
+
+    // El texto se escribe ANTES de mostrar y enfocar: role="alert" + focus()
+    // anuncia lo que hay en ese instante, y escribirlo despues hace que el
+    // lector lea el mensaje viejo. textContent y NUNCA innerHTML: viene de una
+    // respuesta HTTP.
+    const mostrar = (el: HTMLElement, texto = "") => {
+      if (texto) (el.firstElementChild ?? el).textContent = texto;
+      el.hidden = false;
+      el.focus();
+    };
+
+    armarCaptcha(form);
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      fallo.hidden = true;
+      enviar.disabled = true;
+      enviar.value = espera;
+
+      let motivo = "";
+      try {
+        // El servidor responde 403 a un envio sin token, asi que se espera al
+        // reto ANTES de gastar un intento del limite por IP.
+        const cf = await tokenCaptcha(form).catch(() => {
+          motivo = form.dataset.captchaError ?? "";
+          throw new Error("captcha");
+        });
+        const datos = new FormData(form);
+        if (cf) datos.set("cf-turnstile-response", cf);
+
+        const res = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: datos,
+        });
+        if (!res.ok) {
+          const cuerpo = await res.json().catch(() => null);
+          if (typeof cuerpo?.error === "string" && cuerpo.error) motivo = cuerpo.error;
+          throw new Error(String(res.status));
+        }
+        form.style.display = "none";
+        mostrar(hecho);
+      } catch {
+        // El token es de un solo uso: si el servidor llego a verificarlo, el
+        // siguiente envio con el mismo token da "timeout-or-duplicate".
+        reiniciarCaptcha(form);
+        mostrar(fallo, motivo);
+      } finally {
+        enviar.disabled = false;
+        enviar.value = etiqueta;
+      }
+    });
+  }
+</script>

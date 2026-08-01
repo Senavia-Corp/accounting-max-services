@@ -72,3 +72,32 @@ export function agrupar<T extends { slug: string }>(servicios: T[]): T[][] {
 
   return grupos;
 }
+
+/**
+ * Los 2-3 servicios hermanos de uno dado, dentro de su misma familia.
+ *
+ * SUSTITUYE A la caja «Global Financial Solutions», que repetia los DOCE
+ * servicios en cada una de las 24 fichas y ocupaba —medido en el barrido de la
+ * fase 0— la mitad exacta del cuerpo. Devolver al menu completo a quien ya
+ * eligio es el patron que mata la conversion en una landing de campana: quien
+ * llega buscando EIN quiere despues incorporacion y contabilidad, no la lista
+ * entera otra vez.
+ *
+ * Si el servicio no estuviera en ninguna familia devuelve [] en vez de fallar:
+ * aqui un hueco es una seccion que no se pinta, no una pagina rota. El aserto
+ * duro vive en agrupar(), que es donde se construye la portada.
+ */
+export function relacionados<T extends { slug: string }>(
+  servicios: T[],
+  slug: string,
+  cuantos = 3,
+): T[] {
+  const familia = FAMILIAS.find((f) => f.includes(slug));
+  if (!familia) return [];
+  const porSlug = new Map(servicios.map((s) => [s.slug, s]));
+  return familia
+    .filter((s) => s !== slug)
+    .map((s) => porSlug.get(s))
+    .filter((s): s is T => Boolean(s))
+    .slice(0, cuantos);
+}

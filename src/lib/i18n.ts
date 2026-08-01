@@ -449,6 +449,8 @@ const EN = {
   },
 
   service: {
+    // FASE 3: sustituye al titulo de la caja con los 12 servicios.
+    relacionados: "Related services",
     heroCta: "Book A consultation",
     // En produccion es un <h1 class="h2"> en minusculas. Se conserva la caja.
     sidebarTitle: "global financial solutions",
@@ -815,6 +817,8 @@ const ES: Cadenas = {
   },
 
   service: {
+    // FASE 3.
+    relacionados: "Servicios relacionados",
     heroCta: "Reserve una consulta",
     sidebarTitle: "soluciones financieras globales",
     pendienteIntro: "{{PENDIENTE}} intro del servicio",

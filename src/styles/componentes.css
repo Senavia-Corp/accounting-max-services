@@ -615,3 +615,233 @@
   color: var(--tinta-media);
   max-width: var(--medida);
 }
+
+/* ===========================================================================
+ * FORMULARIO DE LEAD — src/components/LeadForm.astro
+ *
+ * ALTURA RESERVADA PARA TURNSTILE. La caja del reto mide ~65x300 px y se pinta
+ * cuando el script de Cloudflare llega, no antes. Sin `min-height` el boton de
+ * enviar salta hacia abajo al aparecer, y eso es CLS — el mismo defecto que
+ * hoy tiene el formulario del boletin del pie, anotado para la fase 4.
+ * =========================================================================== */
+
+.lead__caja {
+  padding: var(--e-6);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-2);
+}
+
+@media (min-width: 48rem) {
+  .lead__caja {
+    padding: var(--e-7);
+  }
+}
+
+.lead__titulo {
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--e-2);
+}
+
+.lead__texto {
+  margin: 0 0 var(--e-6);
+  color: var(--tinta-media);
+  max-width: var(--medida);
+}
+
+.lead__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+
+.lead__campo {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--e-3) var(--e-4);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  color: var(--tinta);
+  background: var(--superficie);
+  /* --borde-control y no --borde: aqui el borde es lo UNICO que delimita el
+   * campo, y entonces SC 1.4.11 pide 3:1. El decorativo da 1,30:1. */
+  border: 1px solid var(--borde-control);
+  border-radius: var(--radio-control);
+}
+
+.lead__campo--area {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.lead__campo::placeholder {
+  color: var(--tinta-suave);
+}
+
+.lead__consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  margin: 0;
+  padding: var(--e-4);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: var(--superficie-2);
+}
+
+.lead__consent-fila {
+  display: flex;
+  gap: var(--e-3);
+  align-items: start;
+}
+
+/* 24x24 CSS px: SC 2.5.8. El barrido de la fase 0 encontro las casillas de
+ * /contact-us a 18x18, por debajo del minimo. */
+.lead__consent-fila input[type="checkbox"] {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  accent-color: var(--verde-texto);
+}
+
+.lead__consent-texto,
+.lead__consent-nota,
+.lead__legal {
+  font-size: var(--fs-xs);
+  line-height: var(--lh-corto);
+  color: var(--tinta-media);
+  margin: 0;
+}
+
+.lead__legal a {
+  color: var(--tinta);
+  text-decoration-color: var(--verde-texto);
+}
+
+.lead__captcha {
+  /* El hueco exacto del widget, reservado antes de que se pinte. */
+  min-height: 65px;
+}
+
+.lead__enviar {
+  align-self: start;
+}
+
+.lead__aviso {
+  margin-block-start: var(--e-4);
+  padding: var(--e-4);
+  border-radius: var(--radio-control);
+  font-weight: var(--peso-medio);
+}
+
+.lead__aviso p {
+  margin: 0;
+}
+
+.lead__aviso--ok {
+  background: color-mix(in srgb, var(--exito) 12%, var(--superficie));
+  color: var(--exito);
+}
+
+.lead__aviso--error {
+  background: color-mix(in srgb, var(--error) 10%, var(--superficie));
+  color: var(--error);
+}
+
+/* ===========================================================================
+ * FICHA DE SERVICIO
+ * =========================================================================== */
+
+.servicio__hero {
+  padding-block: clamp(var(--e-7), 6vw, var(--e-9));
+  background: var(--superficie-2);
+}
+
+.servicio__eyebrow {
+  display: inline-block;
+  margin: 0 0 var(--e-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--verde-texto);
+}
+
+.servicio__titulo {
+  font-size: var(--fs-3xl);
+  margin: 0 0 var(--e-4);
+  text-wrap: balance;
+}
+
+.servicio__intro {
+  font-size: var(--fs-md);
+  color: var(--tinta-media);
+  max-width: var(--medida);
+  margin: 0 0 var(--e-6);
+}
+
+/* Cuerpo a dos columnas: la prosa manda y el formulario acompana. En movil el
+ * formulario baja debajo, que es donde tiene que estar: primero se entiende el
+ * servicio y luego se pide presupuesto. */
+.servicio__cuerpo {
+  display: grid;
+  gap: var(--e-8);
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .servicio__cuerpo {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+  .servicio__aparte {
+    position: sticky;
+    top: var(--e-6);
+  }
+}
+
+/* ===========================================================================
+ * SERVICIOS RELACIONADOS
+ *
+ * Sustituye a la caja «Global Financial Solutions», que repetia los 12
+ * servicios en las 24 fichas y ocupaba la mitad exacta del cuerpo. Devolver al
+ * menu a quien ya eligio es el patron que mata la conversion en una landing.
+ * =========================================================================== */
+
+.relacionados {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--e-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.relacionado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  padding: var(--e-5);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  color: var(--tinta);
+  text-decoration: none;
+  transition: box-shadow var(--dur-corta) var(--ease-estandar);
+}
+
+.relacionado:hover {
+  box-shadow: var(--sombra-2);
+}
+
+.relacionado__nombre {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+}
+
+.relacionado__intro {
+  font-size: var(--fs-sm);
+  color: var(--tinta-media);
+}
