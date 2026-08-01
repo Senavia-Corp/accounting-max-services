@@ -1750,10 +1750,23 @@
  * un respaldo valido y no queda huerfano en public/.
  *
  * Solo el peso 300. Es el UNICO que algun selector pide (.button-news, el boton
- * del boletin del pie, accounting-max:1013). Los otros cinco .ttf de Campton
- * que hay en public/fonts/ estan declarados pero ningun selector los usa, asi
- * que el navegador no los descarga jamas: son ~540 KB muertos en el despliegue.
- * No se borran aqui porque es una limpieza aparte y con su propia decision.
+ * del boletin del pie, accounting-max:1013).
+ *
+ * LOS OTROS CINCO .ttf DE CAMPTON YA NO ESTAN (-645 KB del despliegue). Se
+ * borraron tras comprobarlo en produccion sobre 9 tipos de ruta, EN y ES: el
+ * unico elemento de todo el sitio con Campton es ese <input type="submit">, que
+ * ademas no tiene hijos que puedan heredar la familia y pedir otro peso, y sus
+ * tres variantes (.mini, .white, .top-menu-click) no tocan font-weight.
+ *
+ * CONSECUENCIA QUE HAY QUE SABER: en accounting-max.webflow.css quedan CUATRO
+ * @font-face huerfanos —pesos 500, 600, 700 y 900— apuntando a ficheros que ya
+ * no existen. No se tocan porque el vendor no se edita, y hoy no molestan: el
+ * navegador solo pide una cara cuando algun selector la hace falta, y ninguno
+ * lo hace. Si alguna vez alguien escribe `font-family: Campton` con otro peso,
+ * el fallo sera un 404 y la caida a sans-serif — visible y facil de rastrear,
+ * que es mejor modo de fallo que sustituirlos aqui por la Light y renderizar en
+ * silencio una negrita como fina. El arreglo entonces es convertir a woff2 el
+ * peso que haga falta y declararlo en este mismo bloque.
  * ======================================================================== */
 @font-face {
   font-family: Campton;
