@@ -11,6 +11,12 @@
  *
  * Los @import tienen que ir antes que cualquier otra regla del fichero.
  */
+
+/* Va PRIMERO a proposito: son solo @font-face, y cuanto antes los conozca el
+ * navegador antes empieza a pedir las caras. Sin capa porque @font-face no
+ * participa en la cascada por capas — se recopilan aparte. */
+@import url("./fuentes.css");
+
 @import url("./vendor/normalize.css") layer(webflow);
 @import url("./vendor/webflow.css") layer(webflow);
 @import url("./vendor/accounting-max.webflow.css") layer(webflow);

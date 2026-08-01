@@ -112,7 +112,20 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
       alguien anada *.vercel.app al kit, los titulares caeran a sans-serif en
       las previews. Es esperado, NO es un port de CSS mal hecho.
     */}
+    {/*
+      p.typekit.net NO es un descuido: la hoja de Typekit de abajo lleva dentro
+      un `@import` al pixel de uso de Adobe, que vive en OTRO dominio. Medido en
+      produccion con Lighthouse, esa es la cadena critica mas larga de la pagina:
+
+          HTML -> use.typekit.net/blq3zch.css -> p.typekit.net/p.css
+
+      El tercer salto son 175 bytes, pero al ser un origen nuevo cuesta DNS +
+      TCP + TLS enteros, y no se descubre hasta que la hoja de Typekit ha
+      llegado y se ha parseado. El preconnect adelanta ese handshake en
+      paralelo. No se puede quitar el @import: lo emite Adobe, no nosotros.
+    */}
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
     <link rel="stylesheet" href="https://use.typekit.net/blq3zch.css" />
 
     {/*
@@ -135,12 +148,33 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
 
       Ni una variante mas: el unico 600 de Ubuntu seria `.h2-2`, y esa clase no
       aparece en ninguno de los 26 HTML del baseline ni en `src/`.
+
+      ESAS SEIS CARAS YA NO VIENEN DE GOOGLE: estan auto-alojadas en
+      /fonts/google/ y declaradas en src/styles/fuentes.css, que entra por
+      main.css. Se quitaron de aqui el <link> a fonts.googleapis.com y sus dos
+      preconnect porque eran DOS origenes en el camino critico y en cadena: el
+      CSS de googleapis bloquea el render, y hasta que no llegaba y se parseaba
+      no se descubrian los .woff2, que ademas viven en gstatic.com — un tercer
+      origen con su propio handshake. Auto-alojadas, los ficheros salen del
+      mismo origen que ya esta conectado y las declaraciones viajan dentro del
+      CSS del sitio.
+
+      Ubuntu (OFL) y Open Sans (Apache 2.0) lo permiten. stix-two-text no: es de
+      Adobe y sus Terms of Use prohiben servirla uno mismo, por eso el <link> de
+      Typekit de arriba se queda.
+
+      Se precarga UNA sola cara, Ubuntu 400 latin: es la del <body>, la que hace
+      falta para pintar el primer texto. Precargar las demas competiria por
+      ancho de banda con esa y con el LCP. `crossorigin` es obligatorio aunque
+      sea del mismo origen — las fuentes se piden en modo CORS y sin el atributo
+      el navegador descarga el fichero DOS veces.
     */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
+      rel="preload"
+      href="/fonts/google/ubuntu-400-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     {/*

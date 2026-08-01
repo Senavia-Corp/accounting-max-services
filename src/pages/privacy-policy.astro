@@ -12,7 +12,8 @@
 //   - Hecho: el NAP, que sale de NEGOCIO; los campos que recogen los dos
 //     formularios del sitio (verificados en contact-us.astro y
 //     FooterSubscribe.astro); los terceros a los que el navegador pide fuentes
-//     (use.typekit.net, fonts.googleapis.com, fonts.gstatic.com — ver
+//     (hoy solo use.typekit.net y el p.typekit.net que este importa; Ubuntu y
+//     Open Sans se auto-alojan desde 2026-08-01 y ya no salen a Google — ver
 //     BaseLayout.astro); que hoy no hay analitica ni cookies de publicidad (D7).
 //   - Marcador: TODO lo que depende de una decision del despacho o de un dato
 //     que solo ellos tienen — con quien comparten, cuanto conservan, que
@@ -368,11 +369,12 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
             cookies, and it runs no tracking or advertising scripts.
           </p>
           <p>
-            Your browser does contact three outside services to load the fonts the site is
-            designed in: Adobe Typekit (<code>use.typekit.net</code>) and Google Fonts
-            (<code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>). Those
-            requests tell Adobe and Google your IP address and general browser information. We
-            do not receive that data and we do not use it.
+            Your browser does contact one outside service to load the headline typeface the site
+            is designed in: Adobe Typekit (<code>use.typekit.net</code>, which in turn loads
+            <code>p.typekit.net</code>). Those requests tell Adobe your IP address and general
+            browser information. We do not receive that data and we do not use it. Every other
+            typeface on this site is served from this website itself, so loading it tells no one
+            else anything.
           </p>
           <p>
             <mark class="pendiente">

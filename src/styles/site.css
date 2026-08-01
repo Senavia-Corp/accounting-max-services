@@ -1731,3 +1731,36 @@
     width: 100%;
   }
 }
+
+/* ===========================================================================
+ * Campton en WOFF2 — 117 KB -> 29 KB
+ *
+ * accounting-max.webflow.css:17 declara esta cara apuntando a un .ttf, que es
+ * el formato SIN comprimir: 117 KB en las 54 rutas. La misma cara en woff2 son
+ * 29 KB, un 75% menos, y woff2 lo entiende todo lo que se usa desde 2016.
+ *
+ * Va AQUI y no en el vendor por la razon de siempre (el vendor no se toca),
+ * pero ademas TIENE que ir despues: cuando dos @font-face declaran la misma
+ * familia, peso y estilo, gana la ULTIMA, y site.css se importa al final. Si
+ * esto viviera en fuentes.css —que se importa antes que el vendor— la del .ttf
+ * ganaria y el woff2 no se pediria nunca.
+ *
+ * Se deja el .ttf como segunda fuente: el navegador coge el primer formato que
+ * entiende, asi que en la practica nunca lo pide, pero el fichero sigue siendo
+ * un respaldo valido y no queda huerfano en public/.
+ *
+ * Solo el peso 300. Es el UNICO que algun selector pide (.button-news, el boton
+ * del boletin del pie, accounting-max:1013). Los otros cinco .ttf de Campton
+ * que hay en public/fonts/ estan declarados pero ningun selector los usa, asi
+ * que el navegador no los descarga jamas: son ~540 KB muertos en el despliegue.
+ * No se borran aqui porque es una limpieza aparte y con su propia decision.
+ * ======================================================================== */
+@font-face {
+  font-family: Campton;
+  src:
+    url("/fonts/Campton-Light.woff2") format("woff2"),
+    url("/fonts/Campton-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
