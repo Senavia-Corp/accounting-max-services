@@ -187,14 +187,26 @@ function iniciarMenu() {
     abrirMenu(false);
   });
 
-  // Tabular fuera del menu tambien lo cierra. El foco tarda un tick en
-  // asentarse, de ahi el setTimeout.
-  navbar.addEventListener("focusout", () => {
-    setTimeout(() => {
-      if (navbar.contains(document.activeElement)) return;
-      cerrarDesplegables();
-      abrirMenu(false);
-    }, 0);
+  // Tabular fuera del menu tambien lo cierra. Se mira relatedTarget — A DONDE VA
+  // el foco — y no document.activeElement tras un tick.
+  //
+  // relatedTarget null significa que el foco no va a ninguna parte, y eso NO es
+  // "salir del menu": es justo lo que hace iOS Safari al tocar un <button>, que
+  // no lo enfoca y ademas desenfoca lo que hubiera. Leyendo activeElement daba
+  // <body>, o sea "fuera de la navbar", y el cajon entero se cerraba en el mismo
+  // toque que abria Services; el submenu abria despues, ya oculto. Se veia como
+  // "toco Services y no pasa nada". Reproducido en navegador con el foco del
+  // sistema puesto: sin foco real el evento ni siquiera se emite, que es por lo
+  // que un emulador no lo enseña.
+  //
+  // Salir con el raton a una zona no enfocable tambien da null; ese caso ya lo
+  // cierra el listener de click de aqui arriba. Y llevarse el foco a otra
+  // ventana deja el menu como estaba, que al volver es lo que se espera.
+  navbar.addEventListener("focusout", (e) => {
+    const destino = e.relatedTarget as Node | null;
+    if (!destino || navbar.contains(destino)) return;
+    cerrarDesplegables();
+    abrirMenu(false);
   });
 
   toggles.forEach((t) => {

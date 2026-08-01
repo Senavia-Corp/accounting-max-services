@@ -134,5 +134,45 @@ ok(abierto(servicios), "cruce: abre en movil despues de haber abierto en escrito
 scroll();
 ok(abierto(servicios), "cruce: ningun listener de escritorio sobrevive al cambio de ancho");
 
+// 6. El toque de iOS. Al tocar un <button>, iOS Safari NO lo enfoca y ademas
+//    desenfoca lo que hubiera: sale un focusout con relatedTarget null. Eso NO
+//    es salir del menu, y tratarlo como tal cerraba el cajon entero en el mismo
+//    toque que abria Services. Se emite el evento a mano porque el foco de jsdom
+//    no reproduce el de un movil (y en un navegador automatizado sin foco del
+//    sistema los eventos de foco ni se emiten, que es por lo que esto se escapo).
+//
+// Se espera un tick tras cada evento a proposito: asi la comprobacion vale
+// igual si el cierre es sincrono (mirar relatedTarget) que si pasa por un
+// setTimeout(0) (mirar activeElement). Sin la espera, la version con timeout
+// saldria verde sin haber llegado a decidir nada.
+const tick = () => new Promise((r) => setTimeout(r, 0));
+const focusout = async (relatedTarget) => {
+  servicios.dispatchEvent(new window.FocusEvent("focusout", { bubbles: true, relatedTarget }));
+  await tick();
+};
+
+cerrarTodo();
+MOVIL.matches = true;
+hamburguesa.click();
+servicios.click();
+await focusout(null);
+ok(abierto(servicios), "iOS: focusout sin destino NO cierra el submenu  <-- el bug reportado");
+ok(abierto(hamburguesa), "iOS: focusout sin destino NO cierra el cajon");
+
+// 7. Regresion: tabular DE VERDAD fuera del menu si tiene que cerrarlo.
+const fuera = window.document.createElement("a");
+fuera.href = "/";
+window.document.body.append(fuera);
+await focusout(fuera);
+ok(!abierto(servicios), "teclado: tabular a un destino fuera de la navbar SI cierra el submenu");
+ok(!abierto(hamburguesa), "teclado: y tambien el cajon");
+
+// 8. Mover el foco DENTRO del menu no puede cerrarlo.
+cerrarTodo();
+hamburguesa.click();
+servicios.click();
+await focusout($("#nav-servicios-lista a"));
+ok(abierto(servicios), "teclado: mover el foco dentro del menu no lo cierra");
+
 console.log(fallos ? `\n${fallos} FALLO(S)` : "\nTodo en verde.");
 process.exit(fallos ? 1 : 0);
