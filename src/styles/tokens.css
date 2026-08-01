@@ -137,31 +137,6 @@
   --error: #b3261e;
   --aviso: #8a5a00;
 
-  /* ---------------------------------------------------------------------
-   * ALIAS DE COMPATIBILIDAD — transitorios, y con fecha de caducidad.
-   *
-   * Estos cinco nombres los definía el `:root` del CSS de Webflow, que
-   * desapareció en la FASE 4. `site.css` los usa en 25 declaraciones, y entre
-   * ellas está el anillo de foco de dos tonos, que es la pieza de
-   * accesibilidad mejor documentada del proyecto: sin `--white` ni `--bllue`
-   * el `box-shadow` se vuelve inválido y los 15 controles del sitio se quedan
-   * sin indicador de foco visible.
-   *
-   * Un `var()` que apunta a una variable inexistente NO es un error visible:
-   * la declaración se descarta y el valor se hereda. Por eso esto no rompió el
-   * build ni saltó en consola — apareció como texto blanco sobre fondo claro
-   * en el pie, a 1,07:1, en las 54 rutas.
-   *
-   * Se borran cuando `site.css` se reescriba con los nombres nuevos. Mientras
-   * tanto apuntan al token equivalente, así que hay un único valor por color.
-   * ------------------------------------------------------------------- */
-  --white: var(--blanco);
-  --bllue: var(--navy);
-  --green-1: var(--verde-claro);
-  --green-2: var(--verde);
-  --green-3: var(--verde-oscuro);
-  --black: var(--tinta);
-  --gray: var(--borde-fuerte);
 
   /* -------------------------------------------------------------------------
    * TIPOGRAFÍA
