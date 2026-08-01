@@ -2011,29 +2011,40 @@
  * por linea, mas del doble de lo legible, y centrada se leeria como un bloque
  * suelto en vez de como bajada del titular.
  *
- * `ch` NO es "un caracter": mide el ancho del glifo «0», mas ancho que la media
- * del texto corrido. MEDIDO EN ESTA MISMA PAGINA a 1440, con la Ubuntu del
- * cuerpo (accounting-max:90) y la entradilla real de 156 caracteres:
- *   48ch = 433px -> 3 lineas de ~52 caracteres  (corto, se queda por debajo)
- *   60ch = 541px -> 3 lineas de ~65 caracteres  <- dentro de la horquilla
- * O sea ~1,08 caracteres por `ch`, no los ~1,41 que se dan por supuestos. Si se
- * cambia el copy de la entradilla hay que volver a contar: el numero de aqui
- * depende del largo del texto, no solo de la fuente.
- * El max-width va AQUI y no en el contenedor porque la medida se calcula con la
- * fuente del propio elemento.
+ * DOS LINEAS EN ESCRITORIO, decidido por como se ve: tres lineas cortas debajo
+ * de un titular de una sola linea se leen como un bloque estrecho y apretado.
+ * El max-width no es aqui una "medida de linea" ideal sino EL INTERRUPTOR del
+ * numero de lineas. Medido a 1440 con las dos entradillas reales (EN 156
+ * caracteres, ES 159), `ch` = ancho del glifo «0» de la Ubuntu del cuerpo
+ * (accounting-max:90):
+ *     60ch = 541px -> 3 lineas
+ *     66ch = 596px -> 2 lineas   <- el umbral, en las DOS lenguas
+ *     74ch = 668px -> 2 lineas
+ * Se usa 74ch y no 66ch para tener holgura: 66 esta justo en el filo y bastarian
+ * unos pocos caracteres mas de copy —que sigue sin aprobar— para devolverlo a
+ * tres lineas.
  *
- * `balance` Y NO `pretty`, y esto se decidio MIDIENDO, no por gusto. En un
- * parrafo CENTRADO la ultima linea corta es justo lo que mas canta, y `pretty`
- * la deja en las dos anchuras (anchos de linea en px, a 1440):
- *     48ch pretty  -> 422 / 410 / 248
+ * OJO, LO IMPORTANTE: pasado el umbral, ensanchar MAS no ensancha las lineas.
+ * `balance` minimiza la linea mas larga para el numero de lineas que toca, asi
+ * que de 66ch en adelante pinta siempre lo mismo (EN 546/538, ES 504/563). El
+ * max-width solo elige 2 o 3 lineas; el ancho visible lo fija `balance`.
+ *
+ * `balance` Y NO `pretty`, tambien medido. En un parrafo CENTRADO la ultima
+ * linea corta es lo que mas canta y `pretty` la dejaba:
  *     60ch pretty  -> 486 / 494 / 100   <- un muñon de dos palabras
- *     60ch balance -> 378 / 355 / 347   <- tres lineas parejas
- * `pretty` solo retoca el final del parrafo; `balance` reparte, que es lo que
- * pide un bloque centrado de tres lineas. Y el tope de 60ch sigue haciendo
- * falta con `balance`: a 66ch el parrafo cae a DOS lineas de 78 caracteres, por
- * encima del techo de 75. */
+ *     60ch balance -> 378 / 355 / 347
+ * `pretty` solo retoca el final del parrafo; `balance` reparte.
+ *
+ * Lo que esto cuesta, dicho claro: dos lineas de 156 caracteres son ~78 por
+ * linea, un pelo por encima del techo clasico de 75. En una entradilla de dos
+ * lineas centrada es asumible; en texto corrido no lo seria.
+ *
+ * SIN MEDIA QUERY a proposito: por debajo de ~768px manda el ancho del
+ * contenedor y este tope deja de tocar, asi que en movil cae solo a las lineas
+ * que hagan falta. El max-width va AQUI y no en el contenedor porque la medida
+ * se calcula con la fuente del propio elemento. */
 .servicios-intro {
-  max-width: 60ch;
+  max-width: 74ch;
   margin: 0 auto;
   text-wrap: balance;
 }
