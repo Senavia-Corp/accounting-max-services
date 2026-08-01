@@ -145,7 +145,7 @@ concurrencia; este encargo no lo ha tocado.
 
 ## Cierre — `/contact-us` y limpieza de `site.css`
 
-**1 de agosto de 2026.** Commits `a3b8e4d` (formulario) y `52f8229` (limpieza).
+**1 de agosto de 2026.** Commits `e504308` (formulario) y `52f8229` (limpieza).
 
 ### El formulario, con una sola fuente
 
