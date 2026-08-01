@@ -236,6 +236,11 @@ const EN = {
       "Accounting dashboard showing sales revenue and a Top Expenses breakdown by category, reviewed by an advisor on a tablet.",
       "Accounting dashboard with total revenue, total expenses and net profit next to a monthly revenue and profit chart.",
     ],
+    // Alt de la ilustracion del FAQ. En EN esta duplicado en el markup de
+    // index.astro, que no importa `t` — igual que featuresAlt. La copia de
+    // aqui NO sobra: es lo unico que obliga a ES a tener la suya.
+    faqAlt:
+      "Help center screen with a search box and a list of expandable questions, next to a chat reply, a confirmation card and an Ask us anything button, with two support advisors.",
   },
 
   // Carrusel de testimonios. Lo comparten la portada y las 12 rutas de servicio.
@@ -603,6 +608,12 @@ const ES: Cadenas = {
       "Panel de contabilidad que muestra los ingresos por ventas y un desglose de los principales gastos por categoría, revisado por un asesor en una tableta.",
       "Panel de contabilidad con ingresos totales, gastos totales y utilidad neta junto a una gráfica mensual de ingresos y utilidad.",
     ],
+    // El rotulo "ASK US ANYTHING" y la cabecera "Help Center" van en ingles
+    // dentro del bitmap y la imagen se reutiliza en /es. Se describe la FUNCION
+    // en espanol y no se cita el literal ingles, igual que featuresAlt[0] hace
+    // con "Book a call" ("un boton para reservar una llamada").
+    faqAlt:
+      "Pantalla de centro de ayuda con un buscador y una lista de preguntas desplegables, junto a una respuesta de chat, una tarjeta de confirmación y un botón para preguntar cualquier duda, con dos asesoras.",
   },
 
   reviews: {

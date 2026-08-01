@@ -713,6 +713,52 @@
   transform: rotate(90deg);
 }
 
+/* Maqueta del FAQ de la portada: ilustracion a la izquierda, acordeon a la
+ * derecha. En el port de Webflow .container-faq es una columna y el acordeon
+ * quedaba solo en medio de 1250px.
+ *
+ * `.block-faq{width:auto}` NO es decorativo: el port le pone width:60%
+ * (accounting-max:610) y ese porcentaje, como item de rejilla, se resuelve
+ * contra SU PISTA — o sea 60% de 593px, con 237px muertos al lado. El
+ * width:100% del vendor solo existe dentro del @media de 991.
+ *
+ * align-items:start y no center: al abrir una respuesta la fila crece, y
+ * centrado la ilustracion se DESLIZA hacia abajo la mitad de lo que crece —
+ * un salto de maqueta justo al lado de lo que el usuario acaba de pulsar.
+ *
+ * width:100% en .image-faq gana al `img{width:auto;height:auto}` de la linea
+ * 152 porque aquel esta dentro de layer(webflow). Los atributos width/height
+ * siguen dando el aspect-ratio, o sea que el hueco se reserva y no hay CLS. */
+.faq-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4em;
+  align-items: start;
+  width: 100%;
+}
+.faq-row .block-faq {
+  width: auto;
+}
+.image-faq {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 991 es el breakpoint del port, no uno nuevo: ahi .container-faq ya baja su
+ * gap a 2em (accounting-max:2289). Las preguntas van ARRIBA, asi que la
+ * imagen pasa a order:2 — el DOM la trae primera porque en escritorio es la
+ * columna izquierda. */
+@media screen and (max-width: 991px) {
+  .faq-row {
+    grid-template-columns: 1fr;
+    gap: 2em;
+  }
+  .image-faq {
+    order: 2;
+  }
+}
+
 /* Carrusel de testimonios: tiene que moverse SIN JS. Webflow dejaba la pista en
  * overflow:hidden porque Splide (desde unpkg, sin version fijada) la desplazaba
  * por transform; sin Splide, eso es un carrusel congelado. */

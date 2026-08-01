@@ -543,64 +543,93 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
                 reporta como D12. */}
           </div>
 
-          {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
-              aria-expanded/aria-controls y esconde los paneles al arrancar.
-              Sin JS los cinco quedan abiertos y legibles: .faq-answer es
-              height:auto en el CSS portado. Por eso no se emite el
-              style="height:0px" del original. */}
-          <div class="block-faq">
-            {
-              [
-                {
-                  q: "1. What documents do I need to file my personal taxes?",
-                  a: "To file your personal taxes, you’ll typically need your W-2 or 1099 forms, ID, Social Security number, and any records of deductions, credits, or income. We’ll guide you through the checklist.",
-                },
-                {
-                  q: "2. How long does it take to get my EIN or ITIN?",
-                  a: "EINs can often be processed within 1–2 business days. ITINs may take a few weeks depending on IRS processing times. We handle the paperwork to avoid delays.",
-                },
-                {
-                  q: "3. Do you offer services in Spanish?",
-                  a: "Yes! All of our services are available in both English and Spanish. We’re proud to serve the Hispanic community with bilingual support.",
-                },
-                {
-                  q: "4. Can you help with IRS audits or letters?",
-                  a: "Absolutely. Our team includes Enrolled Agents licensed to practice before the IRS who represent you directly before the IRS to resolve audits, letters, or disputes.",
-                },
-                {
-                  q: "5. Do you only serve clients in Coral Springs?",
-                  a: "No. While we’re based in Coral Springs, FL, we serve clients nationwide through secure online consultations and document portals.",
-                },
-              ].map((item, i) => (
-                <div class="faq-item">
-                  <button
-                    type="button"
-                    id={`faq-question-${i + 1}`}
-                    class="faq-question w-inline-block"
-                    aria-expanded="false"
-                    aria-controls={`faq-answer-${i + 1}`}
-                  >
-                    <h3 class="h3 title-faq">{item.q}</h3>
-                    {/* Aspa decorativa. site.css la gira con
-                        .faq-item[data-open="true"] .plus */}
-                    <span class="p-m-wrap" aria-hidden="true">
-                      <span class="minus" />
-                      <span class="plus" />
-                    </span>
-                  </button>
-                  <div
-                    id={`faq-answer-${i + 1}`}
-                    class="faq-answer"
-                    role="region"
-                    aria-labelledby={`faq-question-${i + 1}`}
-                  >
-                    <div class="faq-answer-inner">
-                      <p>{item.a}</p>
+          {/* Fila de dos columnas: ilustracion a la izquierda, acordeon a la
+              derecha. Por debajo de 992 cae a una sola columna con las
+              preguntas ARRIBA (site.css le da order:2 a la imagen). */}
+          <div class="faq-row">
+            {/* En public/ y no en Sanity: es la unica imagen de contenido que
+                no viene del CMS. Evita necesitar token de escritura y deja
+                controlar el nombre de fichero, que aqui es SEO. Sin AVIF
+                (mismo motivo que el `fm=webp` de arriba) y sin lqip: el PNG
+                tiene alfa y un fondo de baja resolucion se seguiria viendo por
+                las zonas transparentes despues de cargar.
+                `sizes` sale de medir el contenedor: .container gana a
+                .w-container en los cuatro breakpoints (1250/668/538/375) y
+                .faq aporta 2em de padding por lado = 64px. En escritorio la
+                columna es (1250-64)/2 = 593px, no 45vw. Y va en px, no en em:
+                en `sizes` las unidades de tipo se resuelven contra la RAIZ,
+                mientras que el padding lo hace contra los 16px fijos de body. */}
+            <img
+              src="/images/accounting-max-services-help-center-faq-support-1200.webp"
+              srcset="/images/accounting-max-services-help-center-faq-support-800.webp 800w, /images/accounting-max-services-help-center-faq-support-1200.webp 1200w, /images/accounting-max-services-help-center-faq-support-1600.webp 1600w"
+              sizes="(min-width: 992px) calc((min(1250px, 100vw - 64px) - 64px) / 2), (min-width: 768px) min(668px, 100vw - 64px), min(538px, 100vw - 64px)"
+              width="1200"
+              height="896"
+              alt="Help center screen with a search box and a list of expandable questions, next to a chat reply, a confirmation card and an Ask us anything button, with two support advisors."
+              loading="lazy"
+              decoding="async"
+              class="image-faq"
+            />
+
+            {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
+                aria-expanded/aria-controls y esconde los paneles al arrancar.
+                Sin JS los cinco quedan abiertos y legibles: .faq-answer es
+                height:auto en el CSS portado. Por eso no se emite el
+                style="height:0px" del original. */}
+            <div class="block-faq">
+              {
+                [
+                  {
+                    q: "1. What documents do I need to file my personal taxes?",
+                    a: "To file your personal taxes, you’ll typically need your W-2 or 1099 forms, ID, Social Security number, and any records of deductions, credits, or income. We’ll guide you through the checklist.",
+                  },
+                  {
+                    q: "2. How long does it take to get my EIN or ITIN?",
+                    a: "EINs can often be processed within 1–2 business days. ITINs may take a few weeks depending on IRS processing times. We handle the paperwork to avoid delays.",
+                  },
+                  {
+                    q: "3. Do you offer services in Spanish?",
+                    a: "Yes! All of our services are available in both English and Spanish. We’re proud to serve the Hispanic community with bilingual support.",
+                  },
+                  {
+                    q: "4. Can you help with IRS audits or letters?",
+                    a: "Absolutely. Our team includes Enrolled Agents licensed to practice before the IRS who represent you directly before the IRS to resolve audits, letters, or disputes.",
+                  },
+                  {
+                    q: "5. Do you only serve clients in Coral Springs?",
+                    a: "No. While we’re based in Coral Springs, FL, we serve clients nationwide through secure online consultations and document portals.",
+                  },
+                ].map((item, i) => (
+                  <div class="faq-item">
+                    <button
+                      type="button"
+                      id={`faq-question-${i + 1}`}
+                      class="faq-question w-inline-block"
+                      aria-expanded="false"
+                      aria-controls={`faq-answer-${i + 1}`}
+                    >
+                      <h3 class="h3 title-faq">{item.q}</h3>
+                      {/* Aspa decorativa. site.css la gira con
+                          .faq-item[data-open="true"] .plus */}
+                      <span class="p-m-wrap" aria-hidden="true">
+                        <span class="minus" />
+                        <span class="plus" />
+                      </span>
+                    </button>
+                    <div
+                      id={`faq-answer-${i + 1}`}
+                      class="faq-answer"
+                      role="region"
+                      aria-labelledby={`faq-question-${i + 1}`}
+                    >
+                      <div class="faq-answer-inner">
+                        <p>{item.a}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            }
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>

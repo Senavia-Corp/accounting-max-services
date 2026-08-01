@@ -455,39 +455,57 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                 un sustituto (R3, D12). */}
           </div>
 
-          {/* Mismo marcado de acordeon que la ruta EN: lo mueve scripts/ui.ts,
-              que carga Nav. Las preguntas van en primera persona porque son la
-              voz del visitante, igual que en el original. */}
-          <div class="block-faq">
-            {
-              c.faq.items.map((item, i) => (
-                <div class="faq-item">
-                  <button
-                    type="button"
-                    id={`faq-question-${i + 1}`}
-                    class="faq-question w-inline-block"
-                    aria-expanded="false"
-                    aria-controls={`faq-answer-${i + 1}`}
-                  >
-                    <h3 class="h3 title-faq">{item.q}</h3>
-                    <span class="p-m-wrap" aria-hidden="true">
-                      <span class="minus" />
-                      <span class="plus" />
-                    </span>
-                  </button>
-                  <div
-                    id={`faq-answer-${i + 1}`}
-                    class="faq-answer"
-                    role="region"
-                    aria-labelledby={`faq-question-${i + 1}`}
-                  >
-                    <div class="faq-answer-inner">
-                      <p>{item.a}</p>
+          {/* Misma fila de dos columnas que la ruta EN. El alt sale de i18n
+              (R5: nunca cae al ingles); la ilustracion es el mismo fichero —
+              el rotulo "ASK US ANYTHING" va en el bitmap y no se traduce, se
+              describe. */}
+          <div class="faq-row">
+            <img
+              src="/images/accounting-max-services-help-center-faq-support-1200.webp"
+              srcset="/images/accounting-max-services-help-center-faq-support-800.webp 800w, /images/accounting-max-services-help-center-faq-support-1200.webp 1200w, /images/accounting-max-services-help-center-faq-support-1600.webp 1600w"
+              sizes="(min-width: 992px) calc((min(1250px, 100vw - 64px) - 64px) / 2), (min-width: 768px) min(668px, 100vw - 64px), min(538px, 100vw - 64px)"
+              width="1200"
+              height="896"
+              alt={c.home.faqAlt}
+              loading="lazy"
+              decoding="async"
+              class="image-faq"
+            />
+
+            {/* Mismo marcado de acordeon que la ruta EN: lo mueve scripts/ui.ts,
+                que carga Nav. Las preguntas van en primera persona porque son la
+                voz del visitante, igual que en el original. */}
+            <div class="block-faq">
+              {
+                c.faq.items.map((item, i) => (
+                  <div class="faq-item">
+                    <button
+                      type="button"
+                      id={`faq-question-${i + 1}`}
+                      class="faq-question w-inline-block"
+                      aria-expanded="false"
+                      aria-controls={`faq-answer-${i + 1}`}
+                    >
+                      <h3 class="h3 title-faq">{item.q}</h3>
+                      <span class="p-m-wrap" aria-hidden="true">
+                        <span class="minus" />
+                        <span class="plus" />
+                      </span>
+                    </button>
+                    <div
+                      id={`faq-answer-${i + 1}`}
+                      class="faq-answer"
+                      role="region"
+                      aria-labelledby={`faq-question-${i + 1}`}
+                    >
+                      <div class="faq-answer-inner">
+                        <p>{item.a}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            }
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
