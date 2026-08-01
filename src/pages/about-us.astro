@@ -237,6 +237,17 @@ const DESCRIPCION =
       </div>
     </section>
 
+    {/* La barra de consulta va AQUI, entre las caracteristicas y mision/vision,
+        y no al final como en el resto de rutas.
+        Motivo: en esta pagina el ultimo bloque de <main> queda pegado al
+        .wrapper-promo verde con el que ARRANCA el pie, que es otra llamada a la
+        accion con el mismo boton. Dos identicas seguidas se anulan: la segunda
+        no aporta y resta a la primera. Aqui parte el texto por la mitad y ofrece
+        la consulta justo cuando el lector ya sabe que hace el despacho.
+        En la portada y en las 12 fichas de servicio NO hay que moverla: alli no
+        es el ultimo bloque (la siguen el FAQ y el cuerpo del servicio). */}
+    <CtaConsulta />
+
     <section class="mission-vision">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-mission">
@@ -298,8 +309,6 @@ const DESCRIPCION =
         </div>
       </div>
     </section>
-
-    <CtaConsulta />
   </main>
 
   <Footer />

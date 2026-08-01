@@ -163,6 +163,11 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
       </div>
     </section>
 
+    {/* Va aqui y no al final: el ultimo bloque de <main> queda pegado al
+        .wrapper-promo verde del pie, que es otra llamada a la accion con el
+        mismo boton. Explicado a fondo en el gemelo ingles (about-us.astro). */}
+    <CtaConsulta lang={lang} />
+
     <section class="mission-vision">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-mission">
@@ -212,8 +217,6 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         </div>
       </div>
     </section>
-
-    <CtaConsulta lang={lang} />
   </main>
 
   <Footer lang={lang} />
