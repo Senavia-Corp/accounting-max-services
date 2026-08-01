@@ -677,3 +677,20 @@ html.nav-abierto body {
 .w-embed:after {
   clear: both;
 }
+
+/* Va al FINAL a propósito. `.h2.white` de la sección de restos vale 0,2,0 igual
+ * que `.wrapper-form-email .white`, así que ganaba por orden y dejaba el
+ * titular del boletín en blanco sobre fondo claro: 1,07:1. Con el contenedor
+ * delante son 0,3,0 y no hay empate que resolver.
+ *
+ * Es la tercera vez en esta fase que el mismo patrón muerde: un bloque que era
+ * verde con texto blanco pasa a fondo claro y el blanco viaja con él. Cuando
+ * `site.css` se reescriba, `.white` desaparece y esto sobra. */
+.wrapper-form-email .h2.white,
+.wrapper-form-email .h3.white,
+.block-promo .h2.white,
+.block-promo .h3.white,
+.footer-subscribe .h2.white,
+.footer-subscribe .h3.white {
+  color: var(--tinta);
+}
