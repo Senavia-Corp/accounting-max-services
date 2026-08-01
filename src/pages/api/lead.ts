@@ -290,8 +290,16 @@ export async function enviarAviso(aviso: Aviso): Promise<{ enviado: boolean; mot
   }
 
   try {
-    const modulo = "nodemailer";
-    const { default: nodemailer } = await import(/* @vite-ignore */ modulo);
+    // Especificador LITERAL, no una variable. El original usaba
+    // `await import(modulo)` con @vite-ignore porque nodemailer NO estaba
+    // instalado y una importacion literal habria roto el build. Ya lo esta,
+    // y ahora el literal es lo correcto: con la variable, el rastreador de
+    // dependencias del adaptador de Vercel no ve el paquete y NO lo empaqueta
+    // en la funcion — el envio fallaria en produccion con "Cannot find module
+    // nodemailer", y como enviarAviso() traga sus errores, el sintoma seria un
+    // lead guardado del que nunca llega aviso. Sigue siendo dinamico para no
+    // pagar ~1 MB de arranque en frio en las peticiones que no envian correo.
+    const { default: nodemailer } = await import("nodemailer");
     const transporte = nodemailer.createTransport({
       host: cfg.host,
       port: cfg.port,

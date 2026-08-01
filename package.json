@@ -15,7 +15,8 @@
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^11.0.3",
     "@sanity/client": "^7.25.0",
-    "astro": "^7.1.4"
+    "astro": "^7.1.4",
+    "nodemailer": "^9.0.3"
   },
   "devDependencies": {
     "@portabletext/block-tools": "^5.1.12",
