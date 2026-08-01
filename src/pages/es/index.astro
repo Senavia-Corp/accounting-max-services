@@ -37,9 +37,10 @@ import Footer from "../../components/Footer.astro";
 import JsonLd from "../../components/JsonLd.astro";
 import CtaConsulta from "../../components/CtaConsulta.astro";
 import PuntosConfianza from "../../components/PuntosConfianza.astro";
-import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
+import ServiciosPorCategoria from "../../components/ServiciosPorCategoria.astro";
+import { testimonios, sanity, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
-import { requiereEsTexto, enlace } from "../../lib/es";
+import { enlace } from "../../lib/es";
 
 const lang = "es" as const;
 const c = t(lang);
@@ -89,13 +90,9 @@ const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg")
 const src = (a: Asset, w: number) => `${a.url}?w=${w}&q=75&fm=webp`;
 const srcset = (a: Asset, ws: number[]) => ws.map((w) => `${src(a, w)} ${w}w`).join(", ");
 
-// Los DOCE y con el mismo criterio de orden que la portada EN (destacados
-// primero, luego el orden de la coleccion). Ver el porque alli.
-const servs = await (g.__amsServicios ??= servicios());
-if (servs.length !== 12) {
-  throw new Error(`Se esperaban 12 servicios, hay ${servs.length}.`);
-}
-const destacados = [...servs].sort((a, b) => Number(b.feature) - Number(a.feature));
+// Los DOCE servicios ya NO se piden aqui: se los trae ServiciosPorCategoria.astro,
+// que ademas resuelve alli el titleEs de cada uno (R5). Ver el porque en el
+// propio componente.
 
 // Los 20 testimonios se muestran TAL CUAL: son palabras de clientes reales, no
 // se traducen ni se editan (regla de FASE 5). El unico texto que cambia a su
@@ -163,42 +160,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     </section>
 
     {/* ====================================================== BAR-SERVICES */}
-    <section class="bar-services">
-      <div class="wrapper-bar-services">
-        <div class="collection-list-wrapper w-dyn-list">
-          <div role="list" class="collection-list w-dyn-items">
-            {
-              destacados.map((s) => (
-                <div role="listitem" class="collection-item w-dyn-item">
-                  <a
-                    href={enlace(lang, `/services/${s.slug}`)}
-                    class="block-bar-services w-inline-block"
-                  >
-                    <div class="block-title-services">
-                      {s.icon && (
-                        <img
-                          src={s.icon.url}
-                          width={s.icon.w}
-                          height={s.icon.h}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          class="icon-bar-services"
-                        />
-                      )}
-                      {/* R5: titleEs o el build cae. Nunca el titulo ingles. */}
-                      <h2 class="title-bar-services">
-                        {requiereEsTexto(s, "titleEs", `/es/services/${s.slug}`).trim()}
-                      </h2>
-                    </div>
-                  </a>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
+    <ServiciosPorCategoria lang={lang} />
 
     {/* ============================================================ ABOUT-US */}
     <section class="about-us" aria-labelledby="about-title">

@@ -21,9 +21,11 @@
  *
  * `box-shadow` SUSTITUYE la propiedad entera, o sea que a todo control que ya
  * tuviera sombra se la llevaba por delante mientras estaba enfocado. Medido en
- * las 12 tarjetas de .block-bar-services: la sombra de reposo desaparecia y el
- * fondo de seccion salia liso a 4px del borde. Por eso el anillo se CONCATENA
- * con --sombra-reposo en vez de pisar la lista.
+ * su dia en las 12 tarjetas de .block-bar-services de la portada: la sombra de
+ * reposo desaparecia y el fondo de seccion salia liso a 4px del borde. Por eso
+ * el anillo se CONCATENA con --sombra-reposo en vez de pisar la lista.
+ * Aquellas tarjetas ya no existen (ver mas abajo); el caso vivo hoy es
+ * .text-field-form, con el mismo comportamiento.
  *
  * El anillo va PRIMERO en la lista a proposito: en `box-shadow` la primera
  * sombra se pinta encima, asi que las dos bandas conservan su color exacto —
@@ -43,16 +45,21 @@
   box-shadow: 0 0 0 4px var(--bllue), var(--sombra-reposo, 0 0 #0000);
 }
 
-/* Los unicos controles focalizables con sombra propia en todo el port. El valor
- * se repite aqui porque CSS no sabe leer la sombra que ya tiene un elemento:
- * la variable es la lista que hay que RE-ANADIR bajo el anillo, no la que lo
- * pinta en reposo — eso lo sigue haciendo el vendor y no se toca.
- * La herencia de las custom properties no molesta: ninguno de los tres tiene
- * descendientes focalizables (.block-bar-services lleva un <img> decorativo y
- * los campos no llevan nada). */
-.block-bar-services {
-  --sombra-reposo: 0 2px 5px 3px #0003; /* accounting-max:420 */
-}
+/* Los DOS controles focalizables con sombra propia que quedan en el port. El
+ * valor se repite aqui porque CSS no sabe leer la sombra que ya tiene un
+ * elemento: la variable es la lista que hay que RE-ANADIR bajo el anillo, no la
+ * que lo pinta en reposo — eso lo sigue haciendo el vendor y no se toca.
+ * La herencia de las custom properties no molesta: ninguno de los dos tiene
+ * descendientes focalizables (los campos no llevan nada dentro).
+ *
+ * ERAN TRES. .block-bar-services (accounting-max:420) declaraba aqui la suya
+ * mientras la portada pintaba 12 tarjetas-enlace. Con el rediseno de la seccion
+ * de servicios ese selector ya no aparece en ninguna ruta y la regla se ha
+ * quitado. NO es limpieza cosmetica, y por eso queda anotado: la tarjeta nueva
+ * (.servicios-tarjeta) SI tiene descendientes focalizables —un enlace por
+ * servicio— y, como las custom properties se heredan, mantener aquella
+ * declaracion habria pintado la sombra de la TARJETA alrededor de la FILA
+ * enfocada. Es justo la suposicion que este comentario daba por buena. */
 .text-field-form {
   --sombra-reposo: 0 2px 5px #0003; /* accounting-max:1853 */
 }
@@ -1843,11 +1850,14 @@
  * ======================================================================== */
 @media screen and (min-width: 992px) {
   :root {
-    /* Aire por encima del bloque de texto. El de abajo NO es el mismo numero a
-     * proposito: .bar-services sube 100px con margin-top:-100px
-     * (accounting-max:383) y tapa el ultimo tramo del hero, asi que para que el
-     * bloque SE VEA centrado hay que devolverle esos 100px por abajo. Simetria
-     * optica, no aritmetica. */
+    /* Aire por encima y por debajo del bloque de texto, EL MISMO numero.
+     * Hasta el rediseno de la seccion de servicios el de abajo llevaba +100px:
+     * .bar-services subia esos 100px con margin-top:-100px (accounting-max:386)
+     * y tapaba el ultimo tramo del hero, asi que habia que devolverselos para
+     * que el bloque SE VIERA centrado — simetria optica, no aritmetica.
+     * Ese solape ya no existe (ver "SECCION DE SERVICIOS POR CATEGORIA" al final
+     * de este fichero), asi que la compensacion sobra y la simetria optica vuelve
+     * a coincidir con la aritmetica. */
     --hero-esc-pt: 7rem;
   }
 
@@ -1857,7 +1867,7 @@
     height: auto;
     min-height: 620px;
     padding-top: var(--hero-esc-pt);
-    padding-bottom: calc(var(--hero-esc-pt) + 100px);
+    padding-bottom: var(--hero-esc-pt);
   }
 
   /* El ancho es la unica palanca real sobre el numero de lineas del titular:
@@ -1923,5 +1933,280 @@
   .header .wrapper-header {
     position: relative;
     z-index: 1;
+  }
+}
+
+/* ===========================================================================
+ * SECCION DE SERVICIOS POR CATEGORIA (ServiciosPorCategoria.astro)
+ *
+ * Sustituye la reticula de 12 tarjetas 4x3 por TRES tarjetas de categoria, cada
+ * una con sus servicios como filas enlazables. Los 12 servicios se siguen
+ * pintando y enlazando: cambia el agrupamiento, no el inventario — el propio
+ * componente rompe el build si algun slug se quedara fuera del mapa.
+ *
+ * ESTO NO ES UNA CORRECCION DE PARIDAD, ES UN REDISENO. `capturas.mjs diff`
+ * contra baseline/html/ va a reportar como FALTA .block-bar-services,
+ * .collection-* y las 12 .title-bar-services. Es lo esperado y NO hay que
+ * "restaurarlo".
+ *
+ * EL NOMBRE .block-bar-services NO SE REUTILIZA, y no es cosmetica: esa clase
+ * llevaba --sombra-reposo (arriba en este fichero) y las custom properties SE
+ * HEREDAN. La tarjeta nueva no es un enlace pero SI contiene enlaces, asi que al
+ * enfocar una fila habria heredado la sombra de la tarjeta y se habria pintado
+ * alrededor de la fila. Prefijo `servicios-` en todo lo nuevo: el vendor es
+ * Webflow en ingles, asi que la colision es imposible por construccion.
+ * ======================================================================== */
+
+/* NEUTRALIZA accounting-max:383-391.
+ *
+ * `margin-top: -100px` FUERA: es EL arreglo del encargo. Existia para que la
+ * barra de tarjetas cabalgara sobre el hero; ahora esto es una seccion con
+ * titulo, entradilla y tres tarjetas altas, y solaparla taparia la foto.
+ * Quitarlo OBLIGA a tocar el padding-bottom de .header (seccion "HERO DE LA
+ * PORTADA — ESCRITORIO", mas arriba): aquel `+100px` existia solo para dejarle
+ * sitio a este solape. Los dos numeros son el mismo y se mueven juntos.
+ *
+ * `display: block` (era flex, :388) para que cabecera y reticula se apilen. De
+ * paso deja inertes `justify-content` y `align-items` de la misma regla: una
+ * declaracion neutraliza las tres.
+ *
+ * 6em/6em es el paso PEQUENO del vocabulario del sitio (.reviews lleva 6em,
+ * accounting-max:506; .about-us y .features llevan 8em). Se usa el pequeno
+ * porque los dos vecinos ya ponen aire por su cuenta: el hero cierra con 7rem
+ * por debajo de su texto y .about-us abre con 8em por encima del suyo. Con 8em
+ * aqui, el hueco hasta "about" serian 256px de blanco seguido.
+ * `padding-left/right: 2em` del vendor se conserva: es el canal lateral comun. */
+.bar-services {
+  display: block;
+  margin-top: 0;
+  padding-top: 6em;
+  padding-bottom: 6em;
+}
+
+/* NEUTRALIZA el `display: flex` de accounting-max:406. Se conserva la regla del
+ * vendor entera por su `max-width: 1250px` + `margin: auto`: ese 1250 es el
+ * ancho de columna del sitio y esta cableado ademas en el calc del scrim del
+ * hero (--txt-fin). Una sola fuente para ese numero vale mas que reescribirlo.
+ * Sus `grid-template-*` ya eran letra muerta con display:flex y lo siguen
+ * siendo con display:block. */
+.wrapper-bar-services {
+  display: block;
+}
+
+/* --- Cabecera de seccion --------------------------------------------------- */
+
+.servicios-cabecera {
+  margin-bottom: 45px;
+  text-align: center;
+}
+
+/* El titular es largo y centrado: sin `balance` parte donde le cabe y deja una
+ * segunda linea muy corta debajo de una muy larga. A 1440 entra en una sola
+ * linea; esto es para 1280 y hacia abajo. */
+.servicios-cabecera > .h2 {
+  text-wrap: balance;
+}
+
+/* La entradilla NO ocupa el ancho del contenedor: 1250px serian ~150 caracteres
+ * por linea, mas del doble de lo legible, y centrada se leeria como un bloque
+ * suelto en vez de como bajada del titular.
+ *
+ * `ch` NO es "un caracter": mide el ancho del glifo «0», mas ancho que la media
+ * del texto corrido. MEDIDO EN ESTA MISMA PAGINA a 1440, con la Ubuntu del
+ * cuerpo (accounting-max:90) y la entradilla real de 156 caracteres:
+ *   48ch = 433px -> 3 lineas de ~52 caracteres  (corto, se queda por debajo)
+ *   60ch = 541px -> 3 lineas de ~65 caracteres  <- dentro de la horquilla
+ * O sea ~1,08 caracteres por `ch`, no los ~1,41 que se dan por supuestos. Si se
+ * cambia el copy de la entradilla hay que volver a contar: el numero de aqui
+ * depende del largo del texto, no solo de la fuente.
+ * El max-width va AQUI y no en el contenedor porque la medida se calcula con la
+ * fuente del propio elemento.
+ *
+ * `balance` Y NO `pretty`, y esto se decidio MIDIENDO, no por gusto. En un
+ * parrafo CENTRADO la ultima linea corta es justo lo que mas canta, y `pretty`
+ * la deja en las dos anchuras (anchos de linea en px, a 1440):
+ *     48ch pretty  -> 422 / 410 / 248
+ *     60ch pretty  -> 486 / 494 / 100   <- un muñon de dos palabras
+ *     60ch balance -> 378 / 355 / 347   <- tres lineas parejas
+ * `pretty` solo retoca el final del parrafo; `balance` reparte, que es lo que
+ * pide un bloque centrado de tres lineas. Y el tope de 60ch sigue haciendo
+ * falta con `balance`: a 66ch el parrafo cae a DOS lineas de 78 caracteres, por
+ * encima del techo de 75. */
+.servicios-intro {
+  max-width: 60ch;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+/* --- Reticula -------------------------------------------------------------- */
+
+/* TRES columnas iguales. El alto igual NO necesita `height: 100%` (que es lo que
+ * el vendor le ponia a .block-bar-services, :411): en un grid los items estiran
+ * a la altura de la fila por defecto, y las tres tarjetas estan en la misma
+ * fila. El reparto 5/3/4 deja aire abajo en la columna de personas; es
+ * deliberado y se lee como caja dimensionada a proposito porque el fondo navy y
+ * el canto verde corren a la MISMA altura en las tres.
+ * 25px es el gap del vendor (:394): mismo ritmo horizontal que antes.
+ *
+ * DOS FILAS + SUBGRID para que las TRES listas empiecen a la misma altura. Sin
+ * esto, un titulo de categoria que ocupe dos lineas hunde su lista: medido aqui,
+ * "IRS Representation and Tax IDs" mide 60px frente a los 30px de los otros dos
+ * y su lista arrancaba 30px mas abajo. Justo el "baile" entre tarjetas que este
+ * rediseno venia a quitar.
+ * Se usa `subgrid` y NO un `min-height` en el .h3 porque el copy de las tres
+ * categorias esta PENDIENTE DE APROBACION del cliente: cualquier numero magico
+ * de aqui se rompe en cuanto reescriban un nombre o alguien mida el espanol
+ * ("Representación ante el IRS y números fiscales" ya va a dos lineas). Asi la
+ * fila la dimensiona el titulo mas alto, sea cual sea.
+ * Si algun navegador no soportara subgrid, la declaracion se ignora y la tarjeta
+ * vuelve a ser una grid normal: se desalinean las listas, que es exactamente el
+ * estado de antes. Degrada, no rompe. */
+.servicios-rejilla {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: 25px;
+}
+
+/* --- Tarjeta --------------------------------------------------------------- */
+
+/* CANTO VERDE con `border-left`, no con un pseudo-elemento: el `border-radius`
+ * curva TAMBIEN el borde, asi que las esquinas siguen redondas sin repetir el
+ * radio en un segundo sitio, y sobre todo no hace falta `position: relative` ni
+ * —esto es lo importante— `overflow: hidden`, que RECORTARIA el
+ * `outline-offset: 2px` del anillo de foco de las filas. Con `box-sizing:
+ * border-box` global (webflow.css:41) los 6px salen de la caja de padding y no
+ * del ancho de columna, asi que las tres siguen midiendo igual.
+ *
+ * VERDE SOLO COMO CANTO. #6da228 sobre #243137 da 4,36:1, por debajo del 4,5:1
+ * que SC 1.4.3 pide para texto normal. Como elemento no textual le basta 3:1
+ * (SC 1.4.11), asi que vale de canto y vale en los iconos — NUNCA en texto.
+ *
+ * SOMBRA EN DOS CAPAS. Una sombra negra bajo un bloque casi negro sobre fondo
+ * blanco no se ve: hace falta mas desenfoque y mas desplazamiento vertical del
+ * que pide el instinto. Se tinta con el navy de la marca (#243137 = --bllue; en
+ * `box-shadow` no se puede meter una var dentro de rgba(), de ahi el hex con
+ * alfa).
+ *   0 2px 6px #2431371f        -> contacto, ~12% de alfa: fija la tarjeta.
+ *   0 18px 40px -12px #24313759 -> ambiente, ~35%: es la que se ve. El spread
+ *     negativo la encoge para que no invada los 25px de canal entre tarjetas y
+ *     se lea como sombra de una caja y no como niebla.
+ * Criterio: despacho contable, no app de consumo. Si se nota antes la sombra que
+ * la tarjeta, sobra alfa. */
+.servicios-tarjeta {
+  /* subgrid: las filas las manda .servicios-rejilla (titulo / lista), asi que
+   * las tres tarjetas comparten la altura del titulo. `row-gap: 0` porque la
+   * subgrid hereda los 25px del padre y la separacion titulo-lista ya la pone el
+   * `margin-bottom: 15px` de .h3 (accounting-max:720). */
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  row-gap: 0;
+  background-color: var(--bllue);
+  color: var(--white);
+  border-radius: 10px;
+  border-left: 6px solid var(--green-2);
+  padding: 30px;
+  box-shadow:
+    0 2px 6px #2431371f,
+    0 18px 40px -12px #24313759;
+}
+
+/* El titulo de tarjeta usa .h3 del vendor TAL CUAL (accounting-max:717): 25px,
+ * stix-two-text, margin-top 0 —que ya neutraliza el `margin-top: 20px` de
+ * webflow.css:220— y margin-bottom 15px. Cero CSS nuevo. `color` lo hereda de la
+ * tarjeta, o sea --white sobre --bllue = 13,4:1. */
+
+/* --- Lista de servicios ---------------------------------------------------- */
+
+/* `align-content: start` NO es opcional: la lista ocupa la fila `1fr` de la
+ * subgrid, asi que por defecto sus filas ESTIRAN para rellenar el alto de la
+ * tarjeta mas alta. Medido: la columna de personas (3 servicios) repartia sus
+ * filas cada 42px mientras la de negocios (5) las ponia cada 26px, o sea dos
+ * ritmos distintos en la misma seccion. Empaquetadas arriba, el sobrante de la
+ * columna corta se junta ABAJO y se lee como el respiro que es. */
+.servicios-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  align-content: start;
+  gap: 2px;
+}
+
+/* FILA = ENLACE, con 44px de alto minimo. Antes toda la tarjeta era un <a>;
+ * ahora lo es cada fila, y una fila de 20px es intocable en movil. El area
+ * pulsable crece hacia los lados con `padding` y se recupera con `margin-inline`
+ * negativo, asi que el texto sigue alineado con el titulo de la tarjeta.
+ * `gap: 15px` es el de .block-title-services (:1219): misma separacion
+ * icono-texto que antes.
+ *
+ * NI `outline` NI `box-shadow` AQUI. El anillo global de :focus-visible (arriba
+ * en este fichero) va con `:where(...)`, o sea especificidad CERO: cualquier
+ * declaracion nuestra lo pisaria entero. Sobre el navy de la tarjeta la banda
+ * navy del anillo es invisible pero la blanca del `outline` da 13,4:1, que es lo
+ * que cumple SC 1.4.11. */
+.servicios-enlace {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 44px;
+  padding: 6px 10px;
+  margin-inline: -10px;
+  border-radius: 6px;
+  color: var(--white);
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+/* Realce sobrio: un velo de blanco al 8% sobre el navy, sin mover la fila. El
+ * subrayado es lo que confirma que es un enlace y no una vineta. */
+.servicios-enlace:hover,
+.servicios-enlace:focus-visible {
+  background-color: #ffffff14;
+  text-decoration: underline;
+}
+
+/* Los iconos son SVG de 50x50 en Sanity y se sirven CRUDOS (nada de `src()`:
+ * `fm=webp` los rasterizaria). Los width/height del <img> siguen siendo 50/50
+ * para que el navegador reserve caja sin CLS; aqui se bajan a 28 porque junto a
+ * texto de 16px un icono de 50 domina la fila. `flex: none` para que no lo
+ * aplaste el flex cuando el titulo se va a dos lineas (p. ej. "Employer
+ * Identification Number Application"). */
+.servicios-icono {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
+
+/* --- Responsive ------------------------------------------------------------ */
+
+/* DE 3 COLUMNAS A 1, sin escala intermedia de 2: con dos columnas la tercera
+ * tarjeta queda huerfana y se lee como error, no como diseno. 991px es ademas el
+ * punto donde el sitio entero cambia de ritmo, y a ese ancho tres columnas
+ * darian ~200px utiles cada una, donde "Employer Identification Number
+ * Application" caeria a cuatro lineas.
+ * 4em es el mismo par que .about-us adopta en este breakpoint.
+ * El canto verde son 6px fijos y `border-box` es global: a ancho completo en
+ * movil se ve exactamente igual de grueso. */
+@media screen and (max-width: 991px) {
+  .bar-services {
+    padding-top: 4em;
+    padding-bottom: 4em;
+  }
+
+  .servicios-rejilla {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* A 390px quedan 326px utiles (2em de canal a cada lado, del vendor). Se afloja
+ * el padding interior para que los titulos largos no partan en tres lineas. */
+@media screen and (max-width: 479px) {
+  .servicios-tarjeta {
+    padding: 24px 22px;
   }
 }

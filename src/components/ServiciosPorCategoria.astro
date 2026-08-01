@@ -1,0 +1,197 @@
+---
+// Seccion de servicios de la portada: los 12 servicios de Sanity agrupados en
+// TRES tarjetas por categoria, cada una con sus servicios como filas
+// enlazables. Sustituye a la reticula suelta de 12 tarjetas 4x3 que subia 100px
+// dentro del hero. Un solo sitio para las dos portadas (/ y /es).
+//
+// EL CMS NO TIENE CAMPO DE CATEGORIA. El tipo `service` de Sanity
+// (sanity.ts:90-96) no lo trae y no se le anade: obligaria a tocar el esquema
+// del Studio del cliente y etiquetar 12 documentos para una decision de
+// maquetacion de UNA seccion de UNA ruta. La agrupacion vive en el mapa
+// CATEGORIAS de aqui abajo. El coste, dicho claro: deja de ser editable por el
+// cliente, y por eso el mapa se valida contra Sanity en las tres direcciones.
+//
+// SE TRAE LOS SERVICIOS EL SOLO, sin prop de datos. Es lo que ya hacen
+// Nav.astro:74 y Footer.astro:58 con el mismo memo de globalThis, asi que la
+// consulta se hace UNA vez por build y la comparten las cuatro llamadas. De
+// paso las dos portadas se quedan sin el trio servs/throw/destacados que tenian
+// copiado y pegado.
+import { t, idiomaDeRuta, type Lang, type Cadenas } from "../lib/i18n";
+import { enlace, requiereEsTexto } from "../lib/es";
+import { servicios, type Servicio } from "../lib/sanity";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname) } = Astro.props;
+const c = t(lang);
+
+const g = globalThis as any;
+const servs: Servicio[] = await (g.__amsServicios ??= servicios());
+if (servs.length !== 12) {
+  throw new Error(`Se esperaban 12 servicios, hay ${servs.length}.`);
+}
+
+// `feature` primero y, dentro de cada grupo, el orden de la coleccion. `sort` es
+// estable en JS y `servicios()` ya viene ordenado por `order asc, title asc`
+// (sanity.ts:152), asi que el resultado es exactamente `feature desc, order asc`.
+const destacados = [...servs].sort((a, b) => Number(b.feature) - Number(a.feature));
+
+// EL TIPO SALE DE i18n, NO SE ESCRIBE A MANO. Asi, anadir una categoria al mapa
+// sin su copia en EN **y** en ES es un error de compilacion que caza
+// `astro check` — la de ES la exige ademas el tipo Igual<T> de i18n.ts:54.
+type CategoriaId = keyof Cadenas["home"]["serviciosCategorias"];
+
+// UN ARRAY Y NO UN OBJETO: fija dos cosas a la vez, la pertenencia y EL ORDEN EN
+// QUE SE PINTAN LAS TRES TARJETAS. Con un objeto el orden dependeria del orden
+// de insercion de las claves, que es un detalle de implementacion y no una
+// decision escrita.
+//
+// EL REPARTO ES 5/3/4 A PROPOSITO Y NO SE EQUILIBRA. Mover un servicio a la
+// columna que no le toca para que salgan 4/4/4 seria mentirle al lector sobre
+// lo que ese servicio es. El aire que le sobra abajo a la columna de personas
+// se resuelve en CSS —las tres tarjetas al mismo alto— y no aqui.
+//
+// TAXONOMIA PENDIENTE DE VALIDAR CON EL CLIENTE: es una decision de contenido,
+// no tecnica. Los dos puntos flojos, dichos sin esconderlos: "Bilingual
+// Services" no es un servicio sino un atributo del despacho (ya sale como punto
+// de confianza en el hero) y Notary Public es un servicio real pero no fiscal.
+// Los dos estan en `personas` porque es lo menos malo, no porque sea lo exacto.
+const CATEGORIAS: readonly { id: CategoriaId; slugs: readonly string[] }[] = [
+  {
+    id: "negocios",
+    slugs: [
+      "corporate-tax-preparation",
+      "business-incorporation-in-florida",
+      "monthly-bookkeeping-accounting",
+      "sales-tax-filing-7k40q", // el sufijo -7k40q es una URL viva e indexada (R4)
+      "financial-statement-preparation",
+    ],
+  },
+  {
+    id: "personas",
+    slugs: [
+      "personal-tax-preparation",
+      "notary-public-services",
+      "bilingual-services-english-spanish",
+    ],
+  },
+  {
+    id: "irs",
+    slugs: [
+      "representation-before-the-irs",
+      "audit-assistance",
+      "employer-identification-number-application",
+      "itin-application-irs-tax-id",
+    ],
+  },
+];
+
+// NINGUN SERVICIO DESAPARECE EN SILENCIO — y son TRES direcciones, no una:
+//   1. En Sanity y en ningun grupo  -> se caeria de la portada sin avisar.
+//   2. En un grupo y no en Sanity   -> slug mal escrito o servicio retirado; no
+//      pinta nada y no se queja nadie. Es lo que senala DONDE esta la errata.
+//   3. En DOS grupos                -> se pintaria dos veces. El Set deduplica,
+//      asi que este caso pasa los otros dos controles sin enterarse nadie.
+//
+// Se elige romper el build y no una categoria por defecto, por coherencia con lo
+// que el repo ya hace: index.astro y assertContenido() (sanity.ts:48) ya lanzan
+// con los conteos, y el motivo esta escrito en sanity.ts:33-36 — un sitio que se
+// construye "bien" con contenido que falta es el fallo silencioso que se quiere
+// evitar. Ademas una categoria por defecto solo cubriria la direccion 1, y
+// meteria un servicio nuevo bajo una etiqueta que decide un script y no el
+// cliente. Produccion no se cae: queda el ultimo despliegue bueno.
+const TODOS = CATEGORIAS.flatMap((cat) => cat.slugs);
+const MAPEADOS = new Set(TODOS);
+const huerfanos = destacados.filter((s) => !MAPEADOS.has(s.slug)).map((s) => s.slug);
+const fantasmas = [...MAPEADOS].filter((sl) => !destacados.some((s) => s.slug === sl));
+
+if (huerfanos.length || fantasmas.length || TODOS.length !== MAPEADOS.size) {
+  throw new Error(
+    "El mapa CATEGORIAS de ServiciosPorCategoria.astro no cuadra con Sanity.\n" +
+      (huerfanos.length
+        ? `  Sin categoria — DESAPARECERIAN de la portada: ${huerfanos.join(", ")}\n`
+        : "") +
+      (fantasmas.length
+        ? `  En el mapa pero no en Sanity (slug mal escrito o servicio retirado): ${fantasmas.join(", ")}\n`
+        : "") +
+      (TODOS.length !== MAPEADOS.size ? "  Hay al menos un slug repetido en dos listas.\n" : "") +
+      "Anada o quite el slug en una de las tres listas de CATEGORIAS.",
+  );
+}
+
+// `filter` sobre `destacados` y NUNCA `map` sobre cat.slugs: filter conserva el
+// orden de su entrada, asi que la ordenacion de dentro de cada columna se hereda
+// gratis y el servicio insignia queda el primero (Corporate Tax en negocios,
+// Personal Tax en personas, Representation Before The IRS en irs). Mapeando
+// sobre cat.slugs mandaria el orden escrito a mano aqui, `feature` dejaria de
+// tener efecto y no fallaria nada.
+const grupos = CATEGORIAS.map((cat) => ({
+  id: cat.id,
+  items: destacados.filter((s) => cat.slugs.includes(s.slug)),
+}));
+
+// R5: bajo /es el titulo sale de titleEs o el BUILD CAE. Nunca el titulo ingles.
+// La ruta que se le pasa es SOLO para el mensaje de error, no es un href — el
+// href va por enlace(). `.trim()` en las dos ramas: 'monthly-bookkeeping-
+// accounting' arrastra un espacio final en `title` desde Webflow.
+const titulo = (s: Servicio): string =>
+  lang === "es"
+    ? requiereEsTexto(s, "titleEs", `/es/services/${s.slug}`).trim()
+    : s.title.trim();
+---
+
+{/* Se conserva la clase `bar-services` del vendor: tools/densidad.mjs:98 recorre
+    los nombres de seccion literales y perderia esta fila si se renombra. Y
+    `wrapper-bar-services` por su max-width:1250px + margin auto, que es el
+    carril del sitio y esta cableado ademas en el calc del scrim del hero: mejor
+    una sola fuente para ese numero que repetirlo aqui. */}
+<section class="bar-services" aria-labelledby="services-title">
+  <div class="wrapper-bar-services">
+    <div class="servicios-cabecera">
+      {/* .h2/.h3 no son decorativas: un <h2> pelado cae en la regla base del
+          vendor (Arial 32px) y estas llevan la tipografia real del sitio. */}
+      <h2 class="h2" id="services-title">{c.home.serviciosTitulo}</h2>
+      <p class="servicios-intro">{c.home.serviciosIntro}</p>
+    </div>
+
+    <div class="servicios-rejilla">
+      {
+        grupos.map((grupo) => (
+          <div class="servicios-tarjeta">
+            <h3 class="h3">{c.home.serviciosCategorias[grupo.id]}</h3>
+            {/* <ul> de verdad: la lista anterior iba en <div> porque
+                .collection-list era un grid y estorbaba el padding del agente de
+                usuario; esto es una lista vertical. role=list porque
+                list-style:none le quita la semantica de lista a VoiceOver en
+                Safari — mismo motivo que en PuntosConfianza.astro. */}
+            <ul class="servicios-lista" role="list">
+              {grupo.items.map((s) => (
+                <li>
+                  <a href={enlace(lang, `/services/${s.slug}`)} class="servicios-enlace">
+                    {s.icon && (
+                      <img
+                        src={s.icon.url}
+                        width={s.icon.w}
+                        height={s.icon.h}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        class="servicios-icono"
+                      />
+                    )}
+                    {/* Icono decorativo: el nombre del servicio va justo al lado
+                        y es el nombre accesible del enlace. Los SVG van con la
+                        URL CRUDA de Sanity — pasarlos por el helper src() los
+                        rasterizaria (fm=webp). */}
+                    <span>{titulo(s)}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

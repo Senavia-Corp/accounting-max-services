@@ -241,6 +241,49 @@ const EN = {
     // aqui NO sobra: es lo unico que obliga a ES a tener la suya.
     faqAlt:
       "Help center screen with a search box and a list of expandable questions, next to a chat reply, a confirmation card and an Ask us anything button, with two support advisors.",
+
+    // COPY NUEVO — PENDIENTE DE APROBACION DEL CLIENTE.
+    // Rediseno de .bar-services (site.css, CAMBIO 7): hasta ahora la seccion de
+    // servicios de la portada era una rejilla suelta SIN encabezado, asi que
+    // estas cinco cadenas no vienen de ninguna pagina en produccion. Son lo
+    // unico de este cambio que no es layout.
+    //
+    // EL TITULAR CARGA AHORA LAS KEYWORDS que antes repartian los 12 <h2> de las
+    // tarjetas. El nombre de cada servicio sigue en la pagina, pero como texto de
+    // enlace, asi que el <h2> nombra impuestos, contabilidad, IRS y Coral
+    // Springs, FL en vez de decir "Our Services".
+    //
+    // OJO CON EL CAPITALIZE: .h2 y .h3 del vendor llevan
+    // `text-transform: capitalize` (accounting-max:562 y :718), asi que esto se
+    // pinta con La Inicial De Cada Palabra En Mayuscula. Es lo que YA les pasa a
+    // las otras cuatro cabeceras de la portada en las dos lenguas y a todo el
+    // sitio (site.css no lo neutraliza en ningun sitio). Se documenta y se
+    // reporta aparte: arreglarlo aqui dejaria esta seccion como la unica
+    // distinta, y arreglarlo en todas es otro cambio.
+    //
+    // Y LOS TRES NOMBRES DE CATEGORIA SON UNA DECISION DE CONTENIDO, no una
+    // traduccion: el tipo `service` de Sanity no tiene campo de categoria, asi
+    // que el reparto (5/3/4) lo decide el mapa de ServiciosPorCategoria.astro.
+    // Las claves son las mismas que los `id` de CATEGORIAS, y no por gusto: alli
+    // el tipo se deriva de estas claves, asi que anadir una categoria sin su
+    // copia en EN **y** en ES es un error de `astro check`.
+    serviciosTitulo: "Tax, Accounting and IRS Services in Coral Springs, FL",
+    serviciosIntro:
+      "Enrolled Agents and CPAs who handle it all — from your yearly return to monthly bookkeeping, incorporating your company and representing you before the IRS.",
+    // LOS TRES NOMBRES TIENEN QUE CABER EN UNA LINEA, y no es una preferencia:
+    // con uno a dos lineas su tarjeta queda con el titulo de doble alto y las
+    // otras dos con un hueco debajo, o sea la asimetria que este rediseno venia
+    // a quitar. El presupuesto REAL, medido sobre la fuente del .h3
+    // (stix-two-text 700 25px) en la tarjeta mas estrecha con tres columnas
+    // (1280px -> 389px de tarjeta - 60 de padding - 6 del canto): **323px**.
+    // Medido de los que se descartaron: "IRS Representation and Tax IDs" = 376px
+    // y en ES "Representación ante el IRS y números fiscales" = 572px.
+    // Los tres actuales miden 204 / 203 / 142. Si se reescriben, MEDIR.
+    serviciosCategorias: {
+      negocios: "Business Services",
+      personas: "Personal Services",
+      irs: "IRS Services",
+    },
   },
 
   // Carrusel de testimonios. Lo comparten la portada y las 12 rutas de servicio.
@@ -614,6 +657,25 @@ const ES: Cadenas = {
     // con "Book a call" ("un boton para reservar una llamada").
     faqAlt:
       "Pantalla de centro de ayuda con un buscador y una lista de preguntas desplegables, junto a una respuesta de chat, una tarjeta de confirmación y un botón para preguntar cualquier duda, con dos asesoras.",
+
+    // COPY NUEVO — PENDIENTE DE APROBACION DEL CLIENTE. Ver la nota del EN.
+    // "IRS", "Enrolled Agents" y "CPAs" no se traducen (glosario). "Notary
+    // Public" no aparece aqui a proposito: es un titulo de servicio de Sanity, no
+    // un nombre de categoria, y anunciar un notary como "notario" en espanol es
+    // delito en Florida.
+    serviciosTitulo: "Impuestos, contabilidad y representación ante el IRS en Coral Springs, FL",
+    serviciosIntro:
+      "Enrolled Agents y CPAs que se ocupan de todo: de su declaración anual a la contabilidad mensual, la constitución de su empresa y su representación ante el IRS.",
+    // Una linea cada uno, presupuesto 323px (ver la nota del EN). Miden
+    // 283 / 236 / 245, asi que ademas quedan parejos entre si. La estructura
+    // "Servicios + complemento" es paralela en los tres a proposito: es lo que
+    // hace que las tres cabeceras se lean como una serie y no como tres frases
+    // sueltas. Los EIN e ITIN no hace falta nombrarlos aqui, los dice la lista.
+    serviciosCategorias: {
+      negocios: "Servicios para empresas",
+      personas: "Servicios personales",
+      irs: "Servicios ante el IRS",
+    },
   },
 
   reviews: {

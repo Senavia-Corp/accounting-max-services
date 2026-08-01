@@ -28,7 +28,8 @@ import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
 import CtaConsulta from "../components/CtaConsulta.astro";
 import PuntosConfianza from "../components/PuntosConfianza.astro";
-import { servicios, testimonios, sanity, NEGOCIO } from "../lib/sanity";
+import ServiciosPorCategoria from "../components/ServiciosPorCategoria.astro";
+import { testimonios, sanity, NEGOCIO } from "../lib/sanity";
 
 // Assets sueltos en Sanity (sin documento que los referencie). Se piden por
 // nombre original en una sola consulta, igual que hacen Nav y Footer.
@@ -44,7 +45,6 @@ const MEDIOS = [
 
 type Asset = { originalFilename: string; url: string; w: number; h: number };
 
-const g = globalThis as any;
 const assets: Asset[] = await sanity.fetch(
   `*[_type == "sanity.imageAsset" && originalFilename in $f]{
      originalFilename, url,
@@ -84,22 +84,9 @@ const srcset = (a: Asset, ws: number[]) =>
 //   - la del hero es eager + fetchpriority=high: no hay hueco que tapar, y el
 //     desenfoque saldria detras del H1.
 
-// Los DOCE servicios, como en produccion. Antes se filtraba por `feature`, que
-// dejaba 5 en una reticula de 4 columnas: una fila huerfana de un solo elemento
-// que se lee como maqueta rota, y 116px menos de seccion que el baseline (332 ->
-// 216 medidos a 1440). Centrar esa fila seria inventar una maqueta que no existe
-// en produccion; .collection-list ya degrada sola a 2 y a 1 columna.
-// El campo `feature` se queda en Sanity: no se toca el CMS.
-// El orden es el de produccion: los `feature` primero y, dentro de cada grupo,
-// el orden de la coleccion. Por eso `feature` existe — no era un capricho del
-// import: es el interruptor "Destacado" de Webflow sobre el que esta lista
-// ordenaba. Comprobado contra el baseline: los 5 destacados caen exactamente en
-// las posiciones 1-5 y la permutacion completa sale identica.
-const servs = await (g.__amsServicios ??= servicios());
-if (servs.length !== 12) {
-  throw new Error(`Se esperaban 12 servicios, hay ${servs.length}.`);
-}
-const destacados = [...servs].sort((a, b) => Number(b.feature) - Number(a.feature));
+// Los DOCE servicios ya NO se piden aqui: se los trae ServiciosPorCategoria.astro
+// por el mismo memo de globalThis, igual que Nav.astro y Footer.astro. Alli
+// tambien vive el conteo de 12 y el orden `feature desc, order asc`.
 
 // Los 20 testimonios se muestran TAL CUAL: ni se traducen ni se editan, y no
 // se reordenan (no hay campo por el que reproducir el orden de produccion).
@@ -192,40 +179,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
     </section>
 
     {/* ====================================================== BAR-SERVICES */}
-    {/* role=list/listitem sobre <div>, como en produccion: .collection-list es
-        un grid y meter <ul>/<li> arrastraria el padding del agente de usuario. */}
-    <section class="bar-services">
-      <div class="wrapper-bar-services">
-        <div class="collection-list-wrapper w-dyn-list">
-          <div role="list" class="collection-list w-dyn-items">
-            {
-              destacados.map((s) => (
-                <div role="listitem" class="collection-item w-dyn-item">
-                  <a href={`/services/${s.slug}`} class="block-bar-services w-inline-block">
-                    <div class="block-title-services">
-                      {s.icon && (
-                        <img
-                          src={s.icon.url}
-                          width={s.icon.w}
-                          height={s.icon.h}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          class="icon-bar-services"
-                        />
-                      )}
-                      {/* Icono decorativo: el nombre del servicio va justo al
-                          lado y es el nombre accesible del enlace. */}
-                      <h2 class="title-bar-services">{s.title.trim()}</h2>
-                    </div>
-                  </a>
-                </div>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
+    <ServiciosPorCategoria />
 
     {/* ============================================================ ABOUT-US */}
     <section class="about-us" aria-labelledby="about-title">
