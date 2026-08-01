@@ -91,6 +91,19 @@ if (distintas < lista.length) {
                           hacer scroll. Sin webflow.js las 10 tarjetas se
                           quedarian invisibles, asi que el opacity:0 se cae. */}
                       <div class="block-blog">
+                        {/* alt: la miniatura es redundante — el h2 que va justo
+                            al lado, dentro de la misma tarjeta, ya es su
+                            alternativa textual, y el enlace nombra el post.
+                            Repetir una descripcion x10 solo anade ruido al
+                            lector de pantalla. Si Sanity trae alt, manda el
+                            alt de Sanity. Nunca el nombre del fichero. */}
+                        {/* Sin lqip a proposito. Medido en el HTML generado:
+                            2,5 KB de base64 por imagen, 9 imagenes lazy =
+                            +22 KB de documento (34 KB -> 56 KB, un 65% mas)
+                            para tapar un hueco que ya no salta (.pic-blog
+                            fija height:250px, asi que no hay CLS) y que
+                            ademas queda bajo el pliegue. Mismo criterio que
+                            Footer.astro. */}
                         {p.heroImage && (
                           <img
                             src={src(p.heroImage.url, CARD_W)}
@@ -98,23 +111,10 @@ if (distintas < lista.length) {
                             sizes={SIZES}
                             width={CARD_W}
                             height={CARD_H}
-                            /* Miniatura redundante: el <h2> que va justo al
-                               lado, dentro de la misma tarjeta, ya es su
-                               alternativa textual, y el enlace nombra el post.
-                               Repetir una descripcion x10 solo anade ruido al
-                               lector de pantalla. Si Sanity trae alt, manda el
-                               alt de Sanity. Nunca el nombre del fichero. */
                             alt={p.heroImage.alt?.trim() ?? ""}
                             loading={primera ? "eager" : "lazy"}
                             fetchpriority={primera ? "high" : undefined}
                             decoding="async"
-                            /* Sin lqip a proposito. Medido en el HTML generado:
-                               2,5 KB de base64 por imagen, 9 imagenes lazy =
-                               +22 KB de documento (34 KB -> 56 KB, un 65% mas)
-                               para tapar un hueco que ya no salta (.pic-blog
-                               fija height:250px, asi que no hay CLS) y que
-                               ademas queda bajo el pliegue. Mismo criterio que
-                               Footer.astro. */
                             class="pic-blog"
                           />
                         )}

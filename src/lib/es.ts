@@ -70,6 +70,21 @@ export function requiereEs<T = any>(doc: Doc, campo: string, ruta?: string): T {
 }
 
 /**
+ * `requiereEs` fijado a string. Misma funcion exacta, sin argumento de tipo.
+ *
+ * Existe por una razon muy concreta: `requiereEs<string>(...)` escrito DENTRO
+ * del markup de un .astro rompe el analizador, que lee `<string>` como una
+ * etiqueta que se abre y nunca se cierra. El compilador de Astro lo tolera,
+ * pero `astro check` cae en cascada: "Expected corresponding JSX closing tag"
+ * y todas las variables del bloque pasan a "used before declaration".
+ *
+ * En el frontmatter (entre las dos `---`) no pasa: ahi `requiereEs<string>`
+ * es correcto y se puede seguir usando.
+ */
+export const requiereEsTexto = (doc: Doc, campo: string, ruta?: string): string =>
+  requiereEs<string>(doc, campo, ruta);
+
+/**
  * Comprueba de golpe todos los campos obligatorios de un documento. Se llama al
  * principio de cada plantilla ES, antes de pintar nada: mejor caer con el
  * documento entero senalado que campo a campo en tres builds seguidos.

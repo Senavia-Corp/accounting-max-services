@@ -105,6 +105,9 @@ const tituloDe = (p: Post) =>
             <div>{resumen}</div>
           </div>
 
+          {/* Candidata a LCP: ni lazy ni prioridad por defecto. Sin lqip a
+              proposito — el asset es un PNG con canal alfa y el
+              placeholder se veria por las zonas transparentes. */}
           {
             hero && (
               <img
@@ -114,9 +117,6 @@ const tituloDe = (p: Post) =>
                 width={hero.w}
                 height={hero.h}
                 alt={altHero}
-                /* Candidata a LCP: ni lazy ni prioridad por defecto. Sin lqip a
-                   proposito — el asset es un PNG con canal alfa y el
-                   placeholder se veria por las zonas transparentes. */
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"

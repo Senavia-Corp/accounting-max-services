@@ -103,18 +103,18 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
       {/* Fondo decorativo del bloque promocional: el mensaje esta en el texto.
           Sin lqip a proposito: son 2,5 KB de base64 en linea x26 rutas para
           tapar un hueco que esta bajo el pliegue y que nadie llega a ver. */}
+      {/* `sizes`: el ancho de esta imagen NO sigue al viewport: .bg-pic va a
+          height:90% dentro de .block-pic, asi que manda la ALTURA y el ancho
+          sale de la proporcion (1289/1679 = 0,77). Medido en el build: 357px
+          de ancho a 1280px de viewport, practicamente constante en escritorio.
+          Declararlo como 50vw hacia que el navegador pidiese la variante de
+          1289px — 162 KB — para un hueco de 357px, en las 54 rutas. Con un
+          valor fijo pide la de 800w (87 KB) a 2x y la de 500w (41 KB) a 1x.
+          En movil si ocupa el ancho completo: medido 375px a 375px de
+          viewport. No cambia ni un pixel de lo que se ve. */}
       <img
         src={src(pic, 1289)}
         srcset={`${src(pic, 500)} 500w, ${src(pic, 800)} 800w, ${src(pic, 1080)} 1080w, ${src(pic, 1289)} 1289w`}
-        {/* El ancho de esta imagen NO sigue al viewport: .bg-pic va a height:90%
-            dentro de .block-pic, asi que manda la ALTURA y el ancho sale de la
-            proporcion (1289/1679 = 0,77). Medido en el build: 357px de ancho a
-            1280px de viewport, practicamente constante en escritorio.
-            Declararlo como 50vw hacia que el navegador pidiese la variante de
-            1289px — 162 KB — para un hueco de 357px, en las 54 rutas. Con un
-            valor fijo pide la de 800w (87 KB) a 2x y la de 500w (41 KB) a 1x.
-            En movil si ocupa el ancho completo: medido 375px a 375px de
-            viewport. No cambia ni un pixel de lo que se ve. */}
         sizes="(max-width: 767px) 100vw, 400px"
         width={pic.w}
         height={pic.h}

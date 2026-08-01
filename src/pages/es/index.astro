@@ -36,7 +36,7 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
-import { requiereEs, enlace } from "../../lib/es";
+import { requiereEsTexto, enlace } from "../../lib/es";
 
 const lang = "es" as const;
 const c = t(lang);
@@ -175,7 +175,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                       )}
                       {/* R5: titleEs o el build cae. Nunca el titulo ingles. */}
                       <h2 class="title-bar-services">
-                        {requiereEs<string>(s, "titleEs", `/es/services/${s.slug}`).trim()}
+                        {requiereEsTexto(s, "titleEs", `/es/services/${s.slug}`).trim()}
                       </h2>
                     </div>
                   </a>

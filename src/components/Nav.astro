@@ -34,7 +34,7 @@
 // Los titulos de los 12 servicios del desplegable salen del CMS y en ES pasan
 // por requiereEs(): si a un servicio le falta titleEs, el build cae aqui — que
 // es el sitio mas ruidoso posible, porque el desplegable esta en las 26 rutas.
-import { servicios, sanity, NEGOCIO } from "../lib/sanity";
+import { servicios, sanity, NEGOCIO, type Servicio } from "../lib/sanity";
 import { t, idiomaDeRuta, interpola, type Lang } from "../lib/i18n";
 import { requiereEs, inicio, enlace } from "../lib/es";
 import SelectorIdioma from "./SelectorIdioma.astro";
@@ -69,7 +69,9 @@ const assets: Asset[] = await (g.__amsAssetsNav ??= sanity.fetch(
    }`,
   { f: MARCA },
 ));
-const servs = await (g.__amsServicios ??= servicios());
+// Anotado a mano: `g` es `globalThis as any`, asi que el ??= devuelve any y
+// servs perdia el tipo que servicios() ya trae.
+const servs: Servicio[] = await (g.__amsServicios ??= servicios());
 
 /** Falla en voz alta: una imagen rota en el cromo se ve en las 26 rutas. */
 const img = (nombre: string): Asset => {

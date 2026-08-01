@@ -15,7 +15,7 @@ import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import { posts, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
-import { requiereEs, enlace } from "../../lib/es";
+import { requiereEsTexto, enlace } from "../../lib/es";
 
 const lang = "es" as const;
 const c = t(lang);
@@ -60,11 +60,18 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                   const href = enlace(lang, `/post/${p.slug}`);
                   const primera = i === 0;
                   // R5: titleEs y excerptEs o el build cae. Nunca el ingles.
-                  const titulo = requiereEs<string>(p, "titleEs", href).trim();
-                  const extracto = requiereEs<string>(p, "excerptEs", href).trim();
+                  const titulo = requiereEsTexto(p, "titleEs", href).trim();
+                  const extracto = requiereEsTexto(p, "excerptEs", href).trim();
                   return (
                     <li class="collection-item-blog">
                       <div class="block-blog">
+                        {/* alt: la miniatura es redundante — el h2 de al lado ya
+                            es su alternativa textual y el enlace nombra el post.
+                            Si Sanity trae altEs, manda altEs. NUNCA se cae
+                            al alt ingles: en una ruta /es/ eso es
+                            exactamente el fallback silencioso que R5
+                            prohibe. Sin altEs va vacio, que es lo correcto
+                            para una imagen decorativa. */}
                         {p.heroImage && (
                           <img
                             src={src(p.heroImage.url, CARD_W)}
@@ -72,13 +79,6 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                             sizes={SIZES}
                             width={CARD_W}
                             height={CARD_H}
-                            /* Miniatura redundante: el <h2> de al lado ya es su
-                               alternativa textual y el enlace nombra el post.
-                               Si Sanity trae altEs, manda altEs. NUNCA se cae
-                               al alt ingles: en una ruta /es/ eso es
-                               exactamente el fallback silencioso que R5
-                               prohibe. Sin altEs va vacio, que es lo correcto
-                               para una imagen decorativa. */
                             alt={p.heroImage.altEs?.trim() ?? ""}
                             loading={primera ? "eager" : "lazy"}
                             fetchpriority={primera ? "high" : undefined}

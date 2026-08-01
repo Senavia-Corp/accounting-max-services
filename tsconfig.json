@@ -1,5 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  // `tools/` fuera A PROPOSITO: son scripts sueltos que se lanzan a mano
+  // (`node tools/X.mjs`), no forman parte del sitio y no pasan por el build.
+  // Ademas los de la FASE 0 (00-identity.ts, ams.ts) esperan un `execute`
+  // global que inyecta el runtime de un agente y que no existe fuera de el:
+  // comprobarles los tipos solo puede dar ruido permanente, y un `check` que
+  // siempre sale en rojo no lo mira nadie.
+  // El unico script de tools/ que importa hoy, correo-check.mjs, tiene una
+  // puerta MEJOR que el typecheck: `npm run check` lo EJECUTA.
+  "exclude": ["dist", "tools"]
 }
