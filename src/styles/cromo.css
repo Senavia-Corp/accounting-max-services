@@ -446,9 +446,43 @@ html.nav-abierto body {
  * PROMO DEL PIE Y BOLETÍN
  * =========================================================================== */
 
+/* OJO CON EL COLOR HEREDADO. Estos dos bloques viven DENTRO de `.footer`, que
+ * declara `color: var(--blanco)`. Ponerles fondo claro sin reponer el color de
+ * texto deja blanco sobre #f4f7f5: 1,07:1, o sea invisible — y en las 54 rutas
+ * a la vez, porque el pie es cromo. Medido con Lighthouse justo después de
+ * borrar el vendor: 5 nodos por página que no existían antes.
+ *
+ * La clase `.white` es del vendor y significa «texto blanco». Dentro de un
+ * bloque claro es exactamente lo contrario de lo que hace falta, así que aquí
+ * se neutraliza en vez de dejar que gane por herencia. */
 .footer-subscribe,
-.block-promo {
+.block-promo,
+.wrapper-form-email {
   background: var(--superficie-2);
+  color: var(--tinta);
+}
+
+.footer-subscribe .white,
+.block-promo .white,
+.wrapper-form-email .white,
+.footer-subscribe h2,
+.block-promo h2,
+.wrapper-form-email h2 {
+  color: var(--tinta);
+}
+
+.footer-subscribe .w-form-done,
+.wrapper-form-email .w-form-done,
+.footer-subscribe .w-form-done *,
+.wrapper-form-email .w-form-done * {
+  color: var(--exito);
+}
+
+.footer-subscribe .w-form-fail,
+.wrapper-form-email .w-form-fail,
+.footer-subscribe .w-form-fail *,
+.wrapper-form-email .w-form-fail * {
+  color: var(--error);
 }
 
 .wrapper-promo,
