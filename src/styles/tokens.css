@@ -1,0 +1,222 @@
+/* Sistema de diseño — FASE 1 del rediseño.
+ *
+ * Este fichero es la ÚNICA fuente de valores del sitio nuevo: color, tipografía,
+ * espacio, radios, elevación y movimiento. Fuera de aquí no se escribe un color
+ * ni una duración a mano.
+ *
+ * Va SIN capa, igual que site.css y por la misma razón que explica main.css: lo
+ * que no está en una capa gana a todo lo que sí lo está, sin importar la
+ * especificidad. Así estos tokens pisan las 9 variables del vendor sin un solo
+ * !important, y el día que `layer(webflow)` desaparezca (FASE 4) aquí no hay que
+ * tocar nada.
+ *
+ * Medido el 31-jul-2026 contra producción; el punto de partida está en
+ * entrega/fase0-baseline.md.
+ */
+
+/* ===========================================================================
+ * TIPOGRAFÍA — 2 familias, 3 ficheros, 95.100 B
+ *
+ * SUSTITUYE A: Campton (comercial SIN licencia, D2), el kit blq3zch de Adobe
+ * Typekit (D9) y Google Fonts. Eran 5 familias de 3 proveedores para 5 usos, y
+ * costaban 2.462 ms de bloqueo de render en las 54 rutas — el 89 % del total
+ * (fase0-baseline.md §2). Ahora: cero peticiones a terceros, cero hojas
+ * bloqueantes de fuera.
+ *
+ * Las dos son SIL Open Font License, o sea que auto-alojarlas es legal y D2
+ * queda cerrado por sustitución. Los 6 .ttf de Campton se borran en este mismo
+ * commit: eran 660.708 B servidos públicamente desde un repo público.
+ *
+ * POR QUÉ ESTAS DOS:
+ *   Source Serif 4 — serif de texto de Adobe, sobria y con autoridad. En un
+ *     despacho que representa contribuyentes ante el IRS, la autoridad la da
+ *     una serif seria, no una con carácter. UNA sola cara (600): la jerarquía
+ *     de titulares la hace el tamaño, no el peso. 21.488 B, y es la fuente del
+ *     elemento LCP en 3 de las 5 plantillas — por eso va en <link rel=preload>.
+ *   Inter — sans de interfaz con cifras tabulares, que este sitio necesita
+ *     porque habla de plazos, importes y años. VARIABLE en 300..700: un solo
+ *     fichero de 48.432 B da los cinco pesos EXACTOS que el sitio usa hoy
+ *     (medidos en BaseLayout.astro:130-134), sin sintetizar ninguno.
+ *
+ * La cursiva va aparte (25.180 B) y no se sintetiza: <em> aparece en el rich
+ * text de servicios y de /about-us, y una oblicua falsa se ve barata.
+ *
+ * `font-display: swap` en las tres. El CLS está en 0,00000 y el criterio de
+ * cierre de la fase es que siga ahí: se comprueba con Lighthouse después de
+ * desplegar, no se estima. Si se moviera, la corrección es size-adjust sobre
+ * una @font-face de respaldo — pero no se añaden métricas inventadas antes de
+ * tener una medición que las justifique.
+ * =========================================================================== */
+
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("/fonts/source-serif-4-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-var.woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-italic-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* -------------------------------------------------------------------------
+   * COLOR
+   *
+   * El verde y el navy son del cliente y NO se tocan (decisión expresa). Lo que
+   * se añade es lo que faltaba para poder construir un sistema: superficies,
+   * bordes, texto secundario y estados.
+   * ---------------------------------------------------------------------- */
+
+  --verde: #6da228; /* marca — INTOCABLE */
+  --verde-claro: #9dbf43;
+  --verde-oscuro: #87af0b;
+  --navy: #243137; /* marca — el `--bllue` del vendor, con la errata corregida */
+
+  /* EL TOKEN QUE ARREGLA LA ACCESIBILIDAD SIN TOCAR LA MARCA.
+   *
+   * Sobre el verde #6da228 no vale ni el blanco (3,07:1) ni el propio navy de
+   * marca (4,36:1): AA pide 4,5:1 para texto normal, y axe ya reporta los dos
+   * como fallo en las 5 rutas medidas. Este es el navy un punto más oscuro:
+   * 4,73:1, con margen para que un cambio de peso tipográfico no lo tumbe.
+   *
+   * Regla de uso, sin excepciones:
+   *   - texto < 24 px sobre verde  -> var(--sobre-verde)
+   *   - titulares >= 24 px         -> blanco permitido (3,07 >= 3:1 de AA large)
+   *   - texto pequeño en blanco sobre verde -> PROHIBIDO (hoy hay dos a 10 px
+   *     en la barra superior; no vuelven)
+   */
+  --sobre-verde: #1f2b30;
+
+  /* SEGUNDA REGLA DE COLOR, y tampoco es intuitiva: sobre el NAVY el verde de
+   * marca da 4,36:1 — el mismo par que falla al revés. O sea que `--verde` no
+   * vale como texto pequeño ni sobre blanco ni sobre navy.
+   * Sobre superficie oscura se usa `--verde-claro` (6,35:1 sobre navy). */
+
+  --tinta: #1a2427; /* texto principal sobre claro — 15,84:1 */
+  --tinta-media: #45555d; /* texto secundario — 7,75:1 */
+  --tinta-suave: #5d6d75; /* metadatos, pies de foto — 5,37:1 */
+
+  --blanco: #fff;
+  --superficie: #fff;
+  --superficie-2: #f4f7f5; /* secciones alternas — la tinta da 14,69:1 */
+  --superficie-oscura: var(--navy); /* blanco encima: 13,38:1 */
+  --borde: #dde3e0; /* 1,30:1 — DECORATIVO, nunca el único indicador */
+  --borde-fuerte: #c2ccc7; /* 1,65:1 — separadores */
+
+  /* Borde de control de formulario. Va aparte de --borde a propósito: cuando el
+   * borde es lo ÚNICO que delimita un campo, SC 1.4.11 pide 3:1 y los dos de
+   * arriba no llegan ni de lejos. Este da 3,56:1. */
+  --borde-control: #7d8b85;
+
+  --exito: #2f7d32;
+  --error: #b3261e;
+  --aviso: #8a5a00;
+
+  /* -------------------------------------------------------------------------
+   * TIPOGRAFÍA
+   * ---------------------------------------------------------------------- */
+
+  --fuente-titular: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --fuente-texto: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Escala fluida, razón 1,25. El clamp() evita los saltos de breakpoint del
+   * vendor, que resolvía el tamaño con 4 media queries sueltas. */
+  --fs-xs: 0.8125rem; /* 13px — etiquetas, pies */
+  --fs-sm: 0.875rem; /* 14px */
+  --fs-base: 1rem; /* 16px — cuerpo */
+  --fs-md: 1.125rem; /* 18px — entradillas */
+  --fs-lg: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --fs-xl: clamp(1.5rem, 1.32rem + 0.9vw, 2rem);
+  --fs-2xl: clamp(1.875rem, 1.55rem + 1.6vw, 2.5rem);
+  --fs-3xl: clamp(2.25rem, 1.75rem + 2.5vw, 3.25rem);
+  --fs-4xl: clamp(2.625rem, 1.9rem + 3.6vw, 4.25rem); /* h1 del hero */
+
+  --lh-apretado: 1.1; /* titulares grandes */
+  --lh-titular: 1.2;
+  --lh-texto: 1.6; /* cuerpo — respira */
+  --lh-corto: 1.4;
+
+  --peso-texto: 400;
+  --peso-medio: 500;
+  --peso-fuerte: 600;
+  --peso-titular: 600; /* Source Serif solo trae la 600, a propósito */
+
+  --medida: 68ch; /* longitud de línea máxima en prosa */
+
+  /* -------------------------------------------------------------------------
+   * ESPACIO — una sola escala, base 4px. Nada de márgenes a ojo.
+   * ---------------------------------------------------------------------- */
+
+  --e-1: 0.25rem; /* 4 */
+  --e-2: 0.5rem; /* 8 */
+  --e-3: 0.75rem; /* 12 */
+  --e-4: 1rem; /* 16 */
+  --e-5: 1.5rem; /* 24 */
+  --e-6: 2rem; /* 32 */
+  --e-7: 3rem; /* 48 */
+  --e-8: 4rem; /* 64 */
+  --e-9: 6rem; /* 96 */
+  --e-10: 8rem; /* 128 */
+
+  /* Ritmo vertical de sección. El vendor usaba 8em/4em y era de lo poco
+   * consistente que tenía: se conserva la proporción, en unidades del sistema. */
+  --seccion-y: clamp(var(--e-7), 5vw, var(--e-9));
+  --seccion-y-corta: clamp(var(--e-6), 3vw, var(--e-7));
+
+  /* -------------------------------------------------------------------------
+   * REJILLA
+   *
+   * El .container del vendor tira el 29,9 % del viewport a 767px y el 32,6 % a
+   * 991px (barrido de fase 0): no era un sistema, eran 4 números sueltos.
+   * ---------------------------------------------------------------------- */
+
+  --ancho-contenido: 75rem; /* 1200px */
+  --ancho-prosa: 42rem; /* 672px — ~68ch a 16px */
+  --canal: var(--e-5);
+  --margen-lateral: clamp(var(--e-4), 5vw, var(--e-8));
+
+  /* -------------------------------------------------------------------------
+   * RADIOS Y ELEVACIÓN — dos radios, tres sombras. No seis de cada.
+   * ---------------------------------------------------------------------- */
+
+  --radio-control: 0.5rem;
+  --radio-caja: 1rem;
+
+  /* Misma dirección de luz y desenfoque proporcional en los tres niveles. */
+  --sombra-1: 0 1px 2px rgb(26 36 39 / 0.06), 0 1px 3px rgb(26 36 39 / 0.1);
+  --sombra-2: 0 4px 8px rgb(26 36 39 / 0.06), 0 8px 24px rgb(26 36 39 / 0.1);
+  --sombra-3: 0 8px 16px rgb(26 36 39 / 0.08), 0 24px 48px rgb(26 36 39 / 0.14);
+
+  /* -------------------------------------------------------------------------
+   * MOVIMIENTO — los valores del §5.3 del prompt, cerrados.
+   *
+   * Se declaran aquí aunque la fase de animación sea la 5: así ningún componente
+   * de las fases 2-4 inventa una duración por su cuenta y luego hay que
+   * unificarlas.
+   * ---------------------------------------------------------------------- */
+
+  --dur-micro: 120ms; /* hover, foco, cambio de estado */
+  --dur-corta: 200ms; /* acordeón, desplegable */
+  --dur-media: 420ms; /* entrada de tarjeta o sección */
+  --dur-pagina: 320ms; /* transición de vista entre rutas */
+
+  --ease-salida: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-estandar: cubic-bezier(0.2, 0, 0, 1);
+  --ease-muelle: linear(0, 0.4 12%, 0.9 26%, 1.06 40%, 1 60%, 1);
+
+  --stagger: 70ms; /* retardo entre hermanos; se congela al 6.º */
+}

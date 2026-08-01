@@ -103,44 +103,42 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
     <meta name="twitter:image:alt" content={ogAlt} />
 
     {/*
-      Typekit: SOLO la hoja de estilos. El <script> blq3zch.js + Typekit.load()
-      del sitio original es el cargador antiguo y duplica la misma peticion.
-      El kit sirve `stix-two-text`, que alimenta .h1/.h2/.h3 (61 usos): es carga
-      estructural, no se puede quitar.
+      FASE 1 DEL REDISENO — las fuentes se auto-alojan y no queda ni un
+      proveedor tipografico externo.
 
-      OJO (D9): los kits de Typekit estan restringidos por dominio. Hasta que
-      alguien anada *.vercel.app al kit, los titulares caeran a sans-serif en
-      las previews. Es esperado, NO es un port de CSS mal hecho.
+      LO QUE HABIA AQUI, y por que se fue:
+
+        use.typekit.net/blq3zch.css   842 ms de bloqueo. Servia 7 familias
+          (21 @font-face) declaradas con font-display:auto, o sea BLOQUEANTES,
+          de las que el sitio usaba dos: stix-two-text y dolly-new. Ademas
+          encadenaba una segunda peticion a p.typekit.net (772 ms) y una
+          tercera al binario. Tres saltos antes de poder pintar una letra.
+          Cierra D9.
+
+        fonts.googleapis.com          848 ms de bloqueo + 4 woff2 (56.740 B) de
+          Ubuntu y Open Sans. Eran valores por defecto de Webflow, no una
+          decision de diseno: Open Sans existia por UNA regla presente en 2 de
+          las 54 rutas.
+
+      Entre los tres, 2.462 ms de bloqueo de render en las 54 rutas: el 89 % del
+      total, con solo 4.361 bytes de hoja. No era peso, era negociar con 5
+      origenes distintos. Medicion completa en entrega/fase0-baseline.md §2.
+
+      AHORA: dos familias OFL auto-alojadas, 95.100 B en 3 ficheros, cero
+      peticiones a terceros. Declaradas en src/styles/tokens.css.
+
+      El preload es SOLO de la serif de titulares porque el elemento LCP es el
+      <h1> en 3 de las 5 plantillas medidas (portada, /contact-us y /es): esos
+      20 KB son literalmente la ruta critica. Inter NO se precarga — el cuerpo
+      esta por debajo del pliegue y `swap` le basta, y precargar todo es no
+      priorizar nada.
     */}
-    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
-    <link rel="stylesheet" href="https://use.typekit.net/blq3zch.css" />
-
-    {/*
-      El sitio original cargaba 24 variantes con webfont.js: Ubuntu, Open Sans y
-      Roboto en todos sus pesos y cursivas. Roboto no lo pide el CSS ni una vez,
-      y de Open Sans solo se usa el 600 (`.h3.title-faq`, accounting-max:727).
-
-      Pero de Ubuntu — que es la familia del `body` (linea 90) — el CSS pide
-      CINCO caras, no una. Medido contra el baseline con una cadena de prueba a
-      40px: con solo la 400 cargada, Chrome renderiza los cinco pesos con el
-      MISMO fichero (289,33px en 300/400/500/600/700), mientras que produccion
-      da 285,56 / 289,33 / 295,28 / 301,28. O sea: ni los <strong>, ni los
-      titulares sin clase, ni los textos ligeros pesaban lo que deben.
-
-        300  .title-cms-services (144 usos) · .info-contact-page @<=479
-        400  body
-        500  .title-special · .title-blog · .name-customer · .info-contact-page
-        700  h1 · h2 · .top-title-contact-page · todo <strong>
-        400 cursiva  <em> (rich text de servicios y de /about-us)
-
-      Ni una variante mas: el unico 600 de Ubuntu seria `.h2-2`, y esa clase no
-      aparece en ninguno de los 26 HTML del baseline ni en `src/`.
-    */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
+      rel="preload"
+      href="/fonts/source-serif-4-600.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
 
     {/*

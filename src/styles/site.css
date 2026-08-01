@@ -1133,3 +1133,88 @@
     width: 100%;
   }
 }
+
+/* ===========================================================================
+ * TIPOGRAFIA DEL SISTEMA — FASE 1 del rediseno.
+ *
+ * Los valores viven en tokens.css; esto es solo el cableado. Va al final del
+ * fichero, sin capa, asi que gana al vendor sin especificidad ni !important.
+ *
+ * Se queda cuando `layer(webflow)` desaparezca en la FASE 4: es la primera
+ * pieza del sistema nuevo, no un parche de transicion.
+ * =========================================================================== */
+
+body {
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  line-height: var(--lh-texto);
+  color: var(--tinta);
+  /* Cifras tabulares en todo el sitio: este despacho escribe importes, plazos y
+   * anos fiscales, y una columna de numeros mal alineada se ve barata. */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Los titulares del vendor pedian font-weight:700 y Source Serif solo trae la
+ * 600 a proposito (la jerarquia la hace el tamano, no el peso). Sin esta regla
+ * el navegador sintetiza una negrita falsa, que es el defecto tipografico que
+ * mas rapido delata a un sitio barato. */
+h1, h2, h3, h4,
+.h1, .h2, .h3, .h1-2, .h2-2 {
+  font-family: var(--fuente-titular);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-titular);
+  letter-spacing: -0.01em;
+}
+
+h1, .h1 { line-height: var(--lh-apretado); }
+
+/* PROSA DEL CMS — el hueco que encontro el barrido de la fase 0.
+ *
+ * `.w-richtext` tiene 39 reglas en vendor/webflow.css y CERO en la hoja del
+ * proyecto: el cuerpo de los 10 posts y el de las 12 fichas de servicio —44
+ * rutas contando las gemelas /es, la mayoria del sitio— nunca tuvo tipografia
+ * propia. Se pintaba con lo que cayera por herencia.
+ *
+ * La medida limita la linea a --medida (68ch). Por encima de ~75 caracteres el
+ * ojo pierde el renglon al volver, y es la diferencia mas barata que existe
+ * entre un texto que se lee y uno que se abandona. */
+.w-richtext {
+  max-width: var(--medida);
+  font-size: var(--fs-md);
+  line-height: var(--lh-texto);
+  color: var(--tinta);
+}
+
+.w-richtext > * + * { margin-block-start: var(--e-5); }
+
+.w-richtext h2,
+.w-richtext h3,
+.w-richtext h4 {
+  margin-block-start: var(--e-7);
+  margin-block-end: var(--e-3);
+}
+
+.w-richtext h2 { font-size: var(--fs-xl); }
+.w-richtext h3 { font-size: var(--fs-lg); }
+
+.w-richtext ul,
+.w-richtext ol { padding-inline-start: var(--e-5); }
+
+.w-richtext li + li { margin-block-start: var(--e-2); }
+
+.w-richtext strong { font-weight: var(--peso-fuerte); }
+
+.w-richtext a {
+  color: var(--tinta);
+  text-decoration-color: var(--verde);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
+}
+
+.w-richtext a:hover { text-decoration-color: var(--tinta); }
+
+/* Los 70 enlaces internos editoriales del cuerpo de los servicios pasan por
+ * aqui (37 EN + 33 ES). Son invisibles al CSS pero valiosos para SEO: el
+ * subrayado verde los hace visibles sin pintarlos de otro color, que es lo que
+ * los volvia indistinguibles del texto en el diseno viejo. */
