@@ -11,11 +11,9 @@
 // R3 — QUE ES HECHO Y QUE ES MARCADOR:
 //   - Hecho: el NAP, que sale de NEGOCIO; los campos que recogen los dos
 //     formularios del sitio (verificados en contact-us.astro y
-//     FooterSubscribe.astro); que desde la FASE 1 del rediseno las fuentes se
-//     auto-alojan y el navegador NO contacta con ningun proveedor tipografico
-//     externo (antes eran use.typekit.net, fonts.googleapis.com y
-//     fonts.gstatic.com — ver BaseLayout.astro); que hoy no hay analitica ni
-//     cookies de publicidad (D7).
+//     FooterSubscribe.astro); los terceros a los que el navegador pide fuentes
+//     (use.typekit.net, fonts.googleapis.com, fonts.gstatic.com — ver
+//     BaseLayout.astro); que hoy no hay analitica ni cookies de publicidad (D7).
 //   - Marcador: TODO lo que depende de una decision del despacho o de un dato
 //     que solo ellos tienen — con quien comparten, cuanto conservan, que
 //     proveedores usan, que salvaguardas tienen, la fecha de entrada en vigor.
@@ -370,9 +368,11 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
             cookies, and it runs no tracking or advertising scripts.
           </p>
           <p>
-            The fonts this site is designed in are served from this website itself. Your
-            browser does not contact Adobe Typekit, Google Fonts or any other outside font
-            service, so no third party learns your IP address from loading our typography.
+            Your browser does contact three outside services to load the fonts the site is
+            designed in: Adobe Typekit (<code>use.typekit.net</code>) and Google Fonts
+            (<code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>). Those
+            requests tell Adobe and Google your IP address and general browser information. We
+            do not receive that data and we do not use it.
           </p>
           <p>
             <mark class="pendiente">
@@ -539,13 +539,13 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
   }
   .legal-table th,
   .legal-table td {
-    border: 1px solid var(--borde-fuerte);
+    border: 1px solid var(--gray);
     padding: .6em .75em;
     text-align: left;
     vertical-align: top;
   }
   .legal-table thead th {
-    background-color: var(--borde-fuerte);
+    background-color: var(--gray);
   }
   .legal-table tbody th {
     font-weight: 400;

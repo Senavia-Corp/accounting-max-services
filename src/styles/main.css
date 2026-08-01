@@ -1,16 +1,18 @@
-/* Punto de entrada de estilos — sin una linea de Webflow.
+/* Punto de entrada de estilos.
  *
- * Las tres @import de `layer(webflow)` que habia aqui desaparecieron en la
- * FASE 4, y con ellas las 5.181 lineas de `src/styles/vendor/`. La capa existia
- * SOLO para poder pisar ese CSS sin `!important`; muerto el vendor, la capa
- * sobra. Nada de lo que queda esta en una capa, asi que el orden de abajo es el
- * orden en que se resuelven los empates.
+ * Direccion de las capas, que es lo contrario de lo intuitivo:
+ * las declaraciones SIN capa ganan a TODAS las capadas, sin importar la
+ * especificidad. Por eso el CSS generado por Webflow (95 KB) va dentro de
+ * layer(webflow) y el nuestro va suelto: asi site.css gana siempre sin
+ * necesidad de un solo !important.
+ *
+ * Poner site.css en una capa "encima" haria justo lo contrario y garantizaria
+ * la guerra de especificidad que esto evita.
  *
  * Los @import tienen que ir antes que cualquier otra regla del fichero.
  */
-@import url("./tokens.css");      /* valores: color, tipografia, espacio, motion */
-@import url("./base.css");        /* reset — sustituye a normalize.css */
-@import url("./componentes.css"); /* componentes del sistema nuevo */
-@import url("./cromo.css");       /* cabecera, pie y restos genericos */
-@import url("./paginas.css");     /* plantillas aun sin reconstruir */
-@import url("./site.css");        /* accesibilidad y correcciones propias */
+@import url("./vendor/normalize.css") layer(webflow);
+@import url("./vendor/webflow.css") layer(webflow);
+@import url("./vendor/accounting-max.webflow.css") layer(webflow);
+
+@import url("./site.css");

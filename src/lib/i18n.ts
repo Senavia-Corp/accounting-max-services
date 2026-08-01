@@ -220,77 +220,6 @@ const EN = {
       "Accounting dashboard showing sales revenue and a Top Expenses breakdown by category, reviewed by an advisor on a tablet.",
       "Accounting dashboard with total revenue, total expenses and net profit next to a monthly revenue and profit chart.",
     ],
-
-    // ------------------------------------------------------------------
-    // FASE 2 DEL REDISENO — secciones nuevas de la portada.
-    //
-    // R3 SIGUE VIGENTE Y SE CUMPLE: aqui no se afirma NADA que el sitio no
-    // afirmara ya. Cada linea es un replanteo de una frase que ya estaba
-    // publicada, y se anota su origen. En el sitio de un despacho fiscal
-    // inventar una credencial, un plazo o una garantia no es marketing
-    // flojo, es riesgo legal.
-    //
-    // Lo que se ha dejado FUERA a proposito, aunque quedaria bien:
-    //   - "document portals" (FAQ 5). El barrido de la fase 0 lo marco como
-    //     promesa sin nada detras. No se apoya un paso del proceso en el.
-    //   - numero de clientes, valoracion media, anos de cada profesional:
-    //     no hay dato verificable.
-    // ------------------------------------------------------------------
-
-    /** Barra de confianza. Las 4 salen de about.introHtml, ya publicado. */
-    confianza: [
-      { fuerte: "Enrolled Agents", suave: "Licensed to practice before the IRS" },
-      { fuerte: "CPAs", suave: "Certified Public Accountants" },
-      { fuerte: "Since 2009", suave: "17+ years of combined experience" },
-      { fuerte: "English & Spanish", suave: "Every service, in both languages" },
-    ],
-
-    /** Los 12 servicios en 3 familias. Los nombres salen del CMS. */
-    familiasTitulo: "What we do",
-    familiasIntro:
-      "Twelve services, three questions. Start with the one that sounds like your situation.",
-    familias: [
-      {
-        nombre: "Taxes",
-        resumen: "Personal, corporate and sales tax — prepared accurately and filed on time.",
-      },
-      {
-        nombre: "Your business",
-        resumen:
-          "Incorporation in Florida, EIN and ITIN, monthly bookkeeping and financial statements.",
-      },
-      {
-        nombre: "IRS & support",
-        resumen:
-          "Representation before the IRS, audit assistance, Notary Public and bilingual service.",
-      },
-    ],
-    familiaVerTodos: "See all {n} services",
-
-    /** Proceso. Paso 1 sale de cta.text; 2 y 3 del FAQ 1, 2 y 4. */
-    procesoTitulo: "How it works",
-    procesoPasos: [
-      {
-        titulo: "Book a free 30-minute call",
-        texto: "Tell us your situation. No cost and no commitment to find out where you stand.",
-      },
-      {
-        titulo: "We tell you exactly what you need",
-        texto:
-          "We walk you through the checklist — W-2s, 1099s, IDs, records — and handle the paperwork so nothing stalls.",
-      },
-      {
-        titulo: "We file, and we answer the IRS",
-        texto:
-          "Your return goes out accurate and on time. If a letter or an audit arrives, our Enrolled Agents represent you directly.",
-      },
-    ],
-
-    /** CTA de cierre. El telefono sale de NEGOCIO, no se escribe aqui. */
-    cierreTitulo: "Talk to a real person about your taxes",
-    cierreTexto:
-      "A free 30-minute consultation, in English or Spanish, with an Enrolled Agent or a CPA.",
-    cierreLlamar: "Call {telefono}",
   },
 
   // Carrusel de testimonios. Lo comparten la portada y las 12 rutas de servicio.
@@ -449,8 +378,6 @@ const EN = {
   },
 
   service: {
-    // FASE 3: sustituye al titulo de la caja con los 12 servicios.
-    relacionados: "Related services",
     heroCta: "Book A consultation",
     // En produccion es un <h1 class="h2"> en minusculas. Se conserva la caja.
     sidebarTitle: "global financial solutions",
@@ -622,62 +549,6 @@ const ES: Cadenas = {
       "Panel de contabilidad que muestra los ingresos por ventas y un desglose de los principales gastos por categoría, revisado por un asesor en una tableta.",
       "Panel de contabilidad con ingresos totales, gastos totales y utilidad neta junto a una gráfica mensual de ingresos y utilidad.",
     ],
-
-    // FASE 2. Traduccion de lo anadido en EN, con el glosario intacto:
-    // Enrolled Agent, CPA, IRS, EIN, ITIN, W-2, 1099 y Notary Public NO se
-    // traducen — hacerlo fabricaria una credencial falsa (ver cabecera).
-    confianza: [
-      { fuerte: "Enrolled Agents", suave: "Autorizados para ejercer ante el IRS" },
-      { fuerte: "CPAs", suave: "Certified Public Accountants" },
-      { fuerte: "Desde 2009", suave: "Más de 17 años de experiencia combinada" },
-      { fuerte: "Español e inglés", suave: "Todos los servicios, en los dos idiomas" },
-    ],
-
-    familiasTitulo: "Qué hacemos",
-    familiasIntro:
-      "Doce servicios, tres preguntas. Empiece por la que se parezca a su situación.",
-    familias: [
-      {
-        nombre: "Impuestos",
-        resumen:
-          "Impuestos personales, corporativos y Sales Tax — preparados con precisión y presentados a tiempo.",
-      },
-      {
-        nombre: "Su empresa",
-        resumen:
-          "Incorporación en Florida, EIN e ITIN, contabilidad mensual y estados financieros.",
-      },
-      {
-        nombre: "IRS y respaldo",
-        resumen:
-          "Representación ante el IRS, asistencia en auditorías, Notary Public y atención bilingüe.",
-      },
-    ],
-    familiaVerTodos: "Ver los {n} servicios",
-
-    procesoTitulo: "Cómo funciona",
-    procesoPasos: [
-      {
-        titulo: "Reserve una llamada gratuita de 30 minutos",
-        texto:
-          "Cuéntenos su situación. Sin costo y sin compromiso, para saber en qué punto está.",
-      },
-      {
-        titulo: "Le decimos exactamente qué necesita",
-        texto:
-          "Repasamos con usted la lista — W-2, 1099, identificación, comprobantes — y nos encargamos del papeleo para que nada se detenga.",
-      },
-      {
-        titulo: "Presentamos, y le respondemos al IRS",
-        texto:
-          "Su declaración sale correcta y a tiempo. Si llega una carta o una auditoría, nuestros Enrolled Agents lo representan directamente.",
-      },
-    ],
-
-    cierreTitulo: "Hable con una persona de verdad sobre sus impuestos",
-    cierreTexto:
-      "Una consulta gratuita de 30 minutos, en español o en inglés, con un Enrolled Agent o un CPA.",
-    cierreLlamar: "Llamar al {telefono}",
   },
 
   reviews: {
@@ -817,8 +688,6 @@ const ES: Cadenas = {
   },
 
   service: {
-    // FASE 3.
-    relacionados: "Servicios relacionados",
     heroCta: "Reserve una consulta",
     sidebarTitle: "soluciones financieras globales",
     pendienteIntro: "{{PENDIENTE}} intro del servicio",

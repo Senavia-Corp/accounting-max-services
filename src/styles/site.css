@@ -38,9 +38,26 @@
  * boletin con su <input type=submit>, que van en el pie de todas las rutas. Y
  * las dos bandas no caben en `outline`, que es una linea de un solo color. */
 :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  outline: 2px solid var(--blanco);
+  outline: 2px solid var(--white);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px var(--navy), var(--sombra-reposo, 0 0 #0000);
+  box-shadow: 0 0 0 4px var(--bllue), var(--sombra-reposo, 0 0 #0000);
+}
+
+/* Los unicos controles focalizables con sombra propia en todo el port. El valor
+ * se repite aqui porque CSS no sabe leer la sombra que ya tiene un elemento:
+ * la variable es la lista que hay que RE-ANADIR bajo el anillo, no la que lo
+ * pinta en reposo — eso lo sigue haciendo el vendor y no se toca.
+ * La herencia de las custom properties no molesta: ninguno de los tres tiene
+ * descendientes focalizables (.block-bar-services lleva un <img> decorativo y
+ * los campos no llevan nada). */
+.block-bar-services {
+  --sombra-reposo: 0 2px 5px 3px #0003; /* accounting-max:420 */
+}
+.text-field-form {
+  --sombra-reposo: 0 2px 5px #0003; /* accounting-max:1853 */
+}
+.button-slider-cms:hover {
+  --sombra-reposo: 0 2px 11px -4px #fff3; /* accounting-max:1672 */
 }
 
 /* Utilidad para etiquetas de formulario accesibles sin cambiar el diseno:
@@ -100,7 +117,7 @@
   }
 
   /* .faq-question era un <a href="#">, o sea que su texto heredaba el #333 de
-   * `a{color:var(--tinta)}` (accounting-max:112). Como <button> heredaba el
+   * `a{color:var(--black)}` (accounting-max:112). Como <button> heredaba el
    * navy del body: rgb(51,51,51) -> rgb(36,49,55) medido en .title-faq.
    * Aqui NO vale :where(): `button,input,…{color:inherit}` de normalize:205 es
    * 0-0-1 y le gana a una especificidad 0 dentro de la misma capa. Con
@@ -115,7 +132,7 @@
    * donde esta declaracion no cambia nada porque ya es su color. */
   button.faq-question,
   .block-icon-contact-page {
-    color: var(--tinta);
+    color: var(--black);
   }
 }
 
@@ -183,8 +200,8 @@
   z-index: 100;
   padding: 10px 16px;
   border-radius: 4px;
-  background-color: var(--navy);
-  color: var(--blanco);
+  background-color: var(--bllue);
+  color: var(--white);
   text-decoration: none;
   font-size: 15px;
   transform: translateY(-200%);
@@ -214,7 +231,7 @@
 /* El telefono y el correo del bloque de contacto eran <div> en produccion.
  * Footer.astro:155-158 los convierte en tel:/mailto: — la llamada es la
  * conversion del despacho y ese cambio no se discute — pero al hacerse <a> les
- * alcanza `a{color:var(--tinta);text-decoration:underline}` (accounting-max:112),
+ * alcanza `a{color:var(--black);text-decoration:underline}` (accounting-max:112),
  * que a un <div> nunca le llegaba: salian en #333 y subrayados al lado de la
  * direccion y el horario, que siguen siendo <div> en navy y sin subrayar. Es la
  * misma compensacion que el bloque de .block-icon-contact-page de mas arriba,
@@ -224,7 +241,7 @@
  * estan (auditoria-diseno.md §6). */
 .link-footer[href^="tel:"],
 .link-footer[href^="mailto:"] {
-  color: var(--navy);
+  color: var(--bllue);
   text-decoration: none;
 }
 
@@ -237,7 +254,7 @@
  * los campos por su propio CSS, asi que la regla sobra. */
 
 /* --- Boton de telefono ----------------------------------------------------
- * Gana a `a { color: var(--tinta); text-decoration: underline }` del port
+ * Gana a `a { color: var(--black); text-decoration: underline }` del port
  * (accounting-max:112), que lo pintaria #333 y subrayado sobre navy = 1,7:1.
  * Perfil en --green-1 sobre --bllue = 6,35:1 (SC 1.4.11 pide 3:1 para el
  * limite de un control); la etiqueta blanca sobre navy, 13,4:1. */
@@ -250,9 +267,9 @@
   min-width: 44px;
   min-height: 44px;
   padding: 0 14px;
-  border: 1px solid var(--verde-claro);
+  border: 1px solid var(--green-1);
   border-radius: 4px;
-  color: var(--blanco);
+  color: var(--white);
   text-decoration: none;
   font-size: 15px;
   line-height: 1;
@@ -286,7 +303,7 @@
    *
    * Estaba asi en produccion y no se veia, porque el escudo caia sobre una
    * FOTO y su silueta se recortaba sola. Las portadas nuevas son ilustraciones
-   * con fondo var(--navy) — el MISMO color que .brand (verificado: los dos son
+   * con fondo #243137 — el MISMO color que .brand (verificado: los dos son
    * rgb(36,49,55)) — y el escudo se funde con la imagen: parece un borron, no
    * un solape intencionado.
    *
@@ -382,10 +399,10 @@
   }
 
   /* --- Hamburguesa dibujada en CSS ---------------------------------------
-   * Gana a .menu-button{background:var(--borde-fuerte); width:100px; color:var(--tinta);
+   * Gana a .menu-button{background:var(--gray); width:100px; color:var(--black);
    * font-size:50px} (accounting-max:2320), a .w-nav-button{padding:18px}
    * (webflow:1650) y sobre todo a .w-nav-button.w--open{background:#C8C8C8;
-   * color:var(--blanco)} (webflow:1664), que es el 1,67:1 que incumple SC 1.4.11.
+   * color:#fff} (webflow:1664), que es el 1,67:1 que incumple SC 1.4.11.
    * El <span class="icon w-icon-nav-menu"> NO cambia en el marcado: content:""
    * apaga el glifo de la fuente webflow-icons y el propio span hace de barra
    * central. (Ese span sigue sujeto a [class^="w-icon-"]{font-family:...
@@ -400,11 +417,11 @@
     padding: 0;
     border-radius: 4px;
     background-color: transparent;
-    color: var(--blanco);
+    color: var(--white);
   }
   .menu-button.w--open {
     background-color: transparent;
-    color: var(--blanco);
+    color: var(--white);
   }
   .menu-button .icon {
     flex: none;
@@ -468,7 +485,7 @@
     padding: 12px 20px 32px;
     overflow-y: auto;
     overscroll-behavior: contain;
-    background-color: var(--navy);
+    background-color: var(--bllue);
     box-shadow: 0 10px 20px #0003;
   }
 
@@ -581,14 +598,14 @@
     flex: 1;
     align-items: center;
     min-height: 44px;
-    color: var(--blanco);
+    color: var(--white);
     transition: color 0.2s;
   }
   .navbar[data-nav-open="true"] .link-submenu:hover {
     transform: none;
   }
   .navbar[data-nav-open="true"] .link-submenu.w--current {
-    color: var(--verde-claro);
+    color: var(--green-1);
   }
 
   /* Vuelta al nivel 1. Es un <button> real: cierra el desplegable y devuelve el
@@ -606,7 +623,7 @@
      * sustituyen a controles de Webflow; este es nuevo, asi que hay que
      * neutralizarle aqui el gris por defecto del navegador. */
     background-color: transparent;
-    color: var(--verde-claro);
+    color: var(--green-1);
     font-size: 15px;
     text-align: left;
   }
@@ -660,6 +677,29 @@
   }
 }
 
+/* Recortes que en produccion vivian en un <style> incrustado (.w-embed) dentro
+ * del HTML, no en la hoja de Webflow. Sin ellos las cuatro esquinas del bloque
+ * azul de .reviews salen como cuadrados de 100x100 (medido: clip-path `none`) y
+ * la imagen de cabecera de las 12 fichas de servicio pierde su corte diagonal.
+ * Mismo caso que .block-pic, mas abajo. */
+.corner-top-1,
+.corner-bottom-1 {
+  clip-path: polygon(50% 50%, 100% 0, 0 0, 0% 100%);
+}
+.corner-top-2,
+.corner-bottom-2 {
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%, 0% 100%);
+}
+
+.background-services {
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+@media screen and (max-width: 789px) {
+  .background-services {
+    clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}
+
 /* Acordeon de FAQ. Sin las interacciones de Webflow el aspa nunca cambiaba de
  * estado: el "+" se quedaba fijo con el panel abierto. `data-open` lo pone
  * ui.ts sobre .faq-item, que es el unico ancestro estable de .plus. */
@@ -673,12 +713,29 @@
   transform: rotate(90deg);
 }
 
+/* Carrusel de testimonios: tiene que moverse SIN JS. Webflow dejaba la pista en
+ * overflow:hidden porque Splide (desde unpkg, sin version fijada) la desplazaba
+ * por transform; sin Splide, eso es un carrusel congelado. */
+.splide-track {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  /* Sin scroll-behavior:smooth a proposito. Comprobado en el navegador: en un
+   * entorno donde la animacion de scroll esta desactivada, con smooth puesto
+   * NI la asignacion de scrollLeft ni scrollBy() mueven nada — el carrusel se
+   * queda congelado y las flechas dejan de servir. El desplazamiento seco
+   * siempre funciona; el arrastre nativo sigue siendo suave. */
+}
+.splide-slide {
+  scroll-snap-align: start;
+}
+
 /* .w-form-done y .w-form-fail no fijan color y heredan el blanco de
  * .email-subscribed: blanco sobre #dddddd es 1.3:1. El mensaje de confirmacion
  * del formulario era ilegible. */
 .email-subscribed .w-form-done,
 .email-subscribed .w-form-fail {
-  color: var(--navy);
+  color: var(--bllue);
 }
 
 /* Recorte del bloque de imagen del promo del pie. En produccion vivia en un
@@ -689,6 +746,92 @@
 @media screen and (max-width: 789px) {
   .block-pic {
     clip-path: polygon(100% 0, 100% 100%, 50% 90%, 0 100%, 0 0);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * DENSIDAD VERTICAL de .reviews y del promo verde del pie.
+ *
+ * Solo se toca el eje vertical, y por eso NO hay ni un atajo `padding`/`margin`
+ * en todo el bloque: solo longhand. Un `.block-review{margin:0 10px}` pisaria el
+ * `margin-right:15px` de <=991px y el `margin-right:0` de <=767px, o sea que
+ * moveria anchos en movil sin que se notara en escritorio. Con longhand vertical
+ * eso es imposible por construccion.
+ *
+ * Todos los valores nuevos salen de la escala que ya usa el sitio —
+ * 2em/4em/6em/8em (16px base -> 32/64/96/128px). Ninguno es inventado: `4em` es
+ * el padding de .call-action en escritorio y el que .reviews YA tiene por debajo
+ * de 992px, y `2em` es el padding horizontal de todas las secciones de la
+ * portada. Cual de los dos toca en cada sitio lo decide la medida, no el gusto:
+ * esta escrito regla por regla mas abajo.
+ * ------------------------------------------------------------------------- */
+
+/* .reviews era la unica seccion de la portada con 6em (el resto es 8em o 4em).
+ * Pero el hueco gordo no era el padding: .block-review se forzaba a 300px con
+ * `min-height` teniendo 190px de contenido, y con `justify-content:center` esos
+ * 110px sobrantes salian como aire arriba y abajo de cada cita. Medido a 1440:
+ * las 20 tarjetas a 300px clavadas, con un contenido real de 165px a 190px. Ahora
+ * quedan las 20 a 222px = los 190px de la mas alta + 1em de padding por lado.
+ *
+ * El recorte del padding va ACOTADO a >=1440 porque manda el corte diagonal, no
+ * el gusto. .corner-top-1 es un cuadrado de 100x100 recortado en triangulo: a
+ * distancia x del borde izquierdo tapa hasta `y = 100 - x`. El contenido arranca
+ * en `x = max(32, (W-1250)/2)` — 32px por el `padding-left:2em` de .reviews, y
+ * (W-1250)/2 cuando el .container ya llego a su max-width y se centra. O sea que
+ * por debajo de 1314px la diagonal tapa 68px, y ahi ni siquiera `4em` (64px)
+ * llega: medido a 1024, el h2 caia en y=64 contra 68 de diagonal -> -4px, se
+ * metia debajo. Por eso entre 992 y 1439 se queda el 6em de Webflow, intacto.
+ * Por simetria pasa lo mismo abajo a la derecha con .corner-bottom-2 y la pista.
+ *
+ * A partir de 1440 el .container ya se centra y la diagonal solo alcanza 5px, asi
+ * que el suelo real deja de ser la diagonal. Se usa `2em` y no `4em` porque el
+ * encargo pide >=30% a 1440 y `4em` se queda en -27,6% (465px); `2em` da 401px,
+ * o sea -37,5%. Los dos estan en la escala del sitio, pero solo uno cumple.
+ * Comprobado en los 5 anchos: la holgura minima contra la diagonal es de 27px,
+ * arriba y abajo. Encoger las esquinas no era opcion: el corte tiene que verse
+ * exactamente igual. */
+@media screen and (min-width: 1440px) {
+  .reviews {
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
+}
+.block-review {
+  min-height: 0;
+  /* Los 10px de abajo eran hueco muerto contra el fondo de la seccion; los 10px
+   * de arriba se quedan porque ahora son ELLOS la separacion con el titulo (ver
+   * .block-services-animation), y los de los lados son la calle entre tarjetas. */
+  margin-bottom: 0;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+/* Los 25px de separacion con el bloque de titulo sobran una vez que la tarjeta
+ * aporta su propio margin-top de 10px. */
+.block-services-animation {
+  margin-top: 0;
+}
+/* Sin `min-height` la tarjeta es un hijo BLOQUE de altura natural, asi que las
+ * citas cortas quedaban mas bajas que la pista y los bordes inferiores salian
+ * dentados. La columna hace que .block-review sea item flex: `stretch` iguala el
+ * ancho (el mismo que ya tenia como bloque) y el crecimiento iguala el alto. */
+.splide-slide {
+  display: flex;
+  flex-direction: column;
+}
+.block-review {
+  /* `flex-grow:1` y NO el atajo `flex:1`: el atajo pone `flex-basis:0%`, y con el
+   * `min-height:0` de arriba se anula tambien el tamano minimo automatico, asi
+   * que la altura hipotetica de la diapositiva pasa a ser cero y la pista entera
+   * colapsa. Con `flex-grow` a secas la base sigue siendo `auto` = la altura del
+   * contenido, que es justo lo que tiene que igualarse. */
+  flex-grow: 1;
+}
+/* A >=1920px .wrapper-reviews sumaba 150px+150px, el unico salto de padding en
+ * un `min-width` de todo el sitio y fuera de cualquier escala. */
+@media screen and (min-width: 1920px) {
+  .wrapper-reviews {
+    padding-top: 4em;
+    padding-bottom: 4em;
   }
 }
 
@@ -882,13 +1025,13 @@
   border: 1px solid #ffffff40;
   border-radius: 4px;
   background-color: transparent;
-  color: var(--blanco);
+  color: var(--white);
   font-size: 15px;
   line-height: 1;
   cursor: pointer;
 }
 .selector-idioma:hover {
-  border-color: var(--verde-claro);
+  border-color: var(--green-1);
 }
 .selector-idioma-codigo {
   font-weight: 500;
@@ -935,7 +1078,7 @@
   min-width: 190px;
   padding: 6px;
   border-radius: 10px;
-  background-color: var(--navy);
+  background-color: var(--bllue);
   box-shadow: 0 8px 20px #0000004d;
   opacity: 0;
   transform: translateY(-4px);
@@ -953,7 +1096,7 @@
   min-height: 44px;
   padding: 0 10px;
   border-radius: 6px;
-  color: var(--blanco);
+  color: var(--white);
   font-size: 15px;
   text-decoration: none;
 }
@@ -962,7 +1105,7 @@
 }
 /* El activo con acento verde y check, como pide el encargo. */
 .selector-idioma-opcion[aria-current="true"] {
-  color: var(--verde-claro);
+  color: var(--green-1);
 }
 .selector-idioma-check {
   width: 6px;
@@ -990,88 +1133,3 @@
     width: 100%;
   }
 }
-
-/* ===========================================================================
- * TIPOGRAFIA DEL SISTEMA — FASE 1 del rediseno.
- *
- * Los valores viven en tokens.css; esto es solo el cableado. Va al final del
- * fichero, sin capa, asi que gana al vendor sin especificidad ni !important.
- *
- * Se queda cuando `layer(webflow)` desaparezca en la FASE 4: es la primera
- * pieza del sistema nuevo, no un parche de transicion.
- * =========================================================================== */
-
-body {
-  font-family: var(--fuente-texto);
-  font-size: var(--fs-base);
-  line-height: var(--lh-texto);
-  color: var(--tinta);
-  /* Cifras tabulares en todo el sitio: este despacho escribe importes, plazos y
-   * anos fiscales, y una columna de numeros mal alineada se ve barata. */
-  font-variant-numeric: tabular-nums;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Los titulares del vendor pedian font-weight:700 y Source Serif solo trae la
- * 600 a proposito (la jerarquia la hace el tamano, no el peso). Sin esta regla
- * el navegador sintetiza una negrita falsa, que es el defecto tipografico que
- * mas rapido delata a un sitio barato. */
-h1, h2, h3, h4,
-.h1, .h2, .h3, .h1-2, .h2-2 {
-  font-family: var(--fuente-titular);
-  font-weight: var(--peso-titular);
-  line-height: var(--lh-titular);
-  letter-spacing: -0.01em;
-}
-
-h1, .h1 { line-height: var(--lh-apretado); }
-
-/* PROSA DEL CMS — el hueco que encontro el barrido de la fase 0.
- *
- * `.w-richtext` tiene 39 reglas en vendor/webflow.css y CERO en la hoja del
- * proyecto: el cuerpo de los 10 posts y el de las 12 fichas de servicio —44
- * rutas contando las gemelas /es, la mayoria del sitio— nunca tuvo tipografia
- * propia. Se pintaba con lo que cayera por herencia.
- *
- * La medida limita la linea a --medida (68ch). Por encima de ~75 caracteres el
- * ojo pierde el renglon al volver, y es la diferencia mas barata que existe
- * entre un texto que se lee y uno que se abandona. */
-.w-richtext {
-  max-width: var(--medida);
-  font-size: var(--fs-md);
-  line-height: var(--lh-texto);
-  color: var(--tinta);
-}
-
-.w-richtext > * + * { margin-block-start: var(--e-5); }
-
-.w-richtext h2,
-.w-richtext h3,
-.w-richtext h4 {
-  margin-block-start: var(--e-7);
-  margin-block-end: var(--e-3);
-}
-
-.w-richtext h2 { font-size: var(--fs-xl); }
-.w-richtext h3 { font-size: var(--fs-lg); }
-
-.w-richtext ul,
-.w-richtext ol { padding-inline-start: var(--e-5); }
-
-.w-richtext li + li { margin-block-start: var(--e-2); }
-
-.w-richtext strong { font-weight: var(--peso-fuerte); }
-
-.w-richtext a {
-  color: var(--tinta);
-  text-decoration-color: var(--verde);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.15em;
-}
-
-.w-richtext a:hover { text-decoration-color: var(--tinta); }
-
-/* Los 70 enlaces internos editoriales del cuerpo de los servicios pasan por
- * aqui (37 EN + 33 ES). Son invisibles al CSS pero valiosos para SEO: el
- * subrayado verde los hace visibles sin pintarlos de otro color, que es lo que
- * los volvia indistinguibles del texto en el diseno viejo. */

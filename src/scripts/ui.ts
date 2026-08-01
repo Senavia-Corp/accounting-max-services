@@ -227,33 +227,56 @@ function iniciarMenu() {
  * En produccion el disparador es <a href="#">: si aun llega asi, se le pone
  * role/tabindex y teclado para no dejarlo roto.
  * -------------------------------------------------------------------------*/
-/**
- * Carrusel de scroll-snap — FASE 2 del rediseno.
- *
- * Los botones solo empujan el scroll; la zona ya es desplazable sin JS con el
- * dedo, la rueda y el teclado. Por eso esto no es "el carrusel": es el atajo
- * para raton, y si el script no llega no se pierde nada.
- *
- * Convive con iniciarCarrusel() a proposito: aquel sirve a .splide, que las 24
- * fichas de servicio siguen usando hasta la FASE 3.
- */
-function iniciarCarruselSnap() {
-  document.querySelectorAll<HTMLElement>("[data-carrusel]").forEach((pista) => {
-    const raiz = pista.parentElement;
-    if (!raiz) return;
-    const mover = (signo: number) => {
-      // Un "paso" es el ancho de la primera tarjeta mas su hueco. Se mide en
-      // vivo y no se cachea: el ancho depende de un min() con el viewport.
-      const tarjeta = pista.firstElementChild as HTMLElement | null;
-      const hueco = parseFloat(getComputedStyle(pista).columnGap) || 0;
-      const paso = tarjeta ? tarjeta.getBoundingClientRect().width + hueco : pista.clientWidth;
-      pista.scrollBy({ left: signo * paso, behavior: "smooth" });
+function iniciarFaq() {
+  document.querySelectorAll<HTMLElement>(".faq-item").forEach((item, i) => {
+    const disparador = item.querySelector<HTMLElement>(".faq-question");
+    const panel = item.querySelector<HTMLElement>(".faq-answer");
+    if (!disparador || !panel) return;
+
+    if (!panel.id) panel.id = `faq-answer-${i + 1}`;
+    disparador.setAttribute("aria-controls", panel.id);
+    disparador.setAttribute("aria-expanded", "false");
+    panel.hidden = true;
+    item.dataset.open = "false";
+
+    const esBoton = disparador.tagName === "BUTTON";
+    if (!esBoton) {
+      disparador.setAttribute("role", "button");
+      disparador.setAttribute("tabindex", "0");
+    }
+
+    const alternar = () => {
+      const abierto = disparador.getAttribute("aria-expanded") === "true";
+      disparador.setAttribute("aria-expanded", String(!abierto));
+      panel.hidden = abierto;
+      // Lo usa site.css para tapar el aspa del + cuando esta abierto.
+      item.dataset.open = String(!abierto);
     };
-    raiz.querySelector("[data-carrusel-prev]")?.addEventListener("click", () => mover(-1));
-    raiz.querySelector("[data-carrusel-next]")?.addEventListener("click", () => mover(1));
+
+    disparador.addEventListener("click", (e) => {
+      e.preventDefault();
+      alternar();
+    });
+    if (!esBoton) {
+      disparador.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        alternar();
+      });
+    }
   });
 }
 
+/* ---------------------------------------------------------------------- 4 --
+ * Carrusel de testimonios.
+ *
+ * La pista ya se desplaza sin JS (overflow-x:auto + scroll-snap en site.css).
+ * Aqui solo se enganchan las flechas y se hace la pista alcanzable con teclado,
+ * que es obligatorio: una zona con scroll que no recibe foco incumple 2.1.1.
+ *
+ * Marcado esperado: .splide > .splide-track > .splide-list > .splide-slide,
+ * con .prev-splide / .next-splide en cualquier ancestro comun.
+ * -------------------------------------------------------------------------*/
 function iniciarCarrusel() {
   document.querySelectorAll<HTMLElement>(".splide").forEach((raiz) => {
     const pista = raiz.querySelector<HTMLElement>(".splide-track");
@@ -437,7 +460,7 @@ function iniciarCromo() {
 
 const iniciar = () => {
   iniciarMenu();
-  iniciarCarruselSnap();
+  iniciarFaq();
   iniciarCarrusel();
   iniciarCromo();
 };

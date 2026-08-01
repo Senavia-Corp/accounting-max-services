@@ -17,13 +17,9 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import PortableText from "../../components/PortableText.astro";
-import LeadForm from "../../components/LeadForm.astro";
-import JsonLd from "../../components/JsonLd.astro";
 import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../lib/sanity";
 import type { Servicio, Testimonio } from "../../lib/sanity";
 import type { GetStaticPaths } from "astro";
-import { relacionados } from "../../lib/familias";
-import { t } from "../../lib/i18n";
 
 type Asset = { originalFilename: string; url: string; w: number; h: number };
 
@@ -180,11 +176,6 @@ const FEATURES = [
 ];
 
 const aqui = `/services/${servicio.slug}`;
-
-const c = t("en");
-
-// FASE 3: 2-3 hermanos de la misma familia en vez de la caja con los DOCE.
-const hermanos = relacionados(todos, servicio.slug);
 ---
 
 <BaseLayout
@@ -193,146 +184,323 @@ const hermanos = relacionados(todos, servicio.slug);
   ogImage={ogUrl(foto)}
   ogImageAlt={altFoto || undefined}
 >
-  <JsonLd tipo="service" nombre={titulo} descripcion={metaDescription} imagen={foto?.url} />
   <Nav />
 
   {/* El baseline no tiene <main>: las 26 rutas van de <section> en <section>
       sin un solo landmark de contenido principal. */}
   <main id="main">
-    {/* =============================================================== HERO */}
-    {/* FASE 3. La ficha deja de ser una ficha y pasa a ser una landing: es el
-        destino de una campana que gasta $120/dia y hasta hoy no tenia ni
-        formulario propio, ni precio, ni un siguiente paso que no fuera saltar
-        a otra pagina. */}
-    <section class="servicio__hero">
-      <div class="contenido">
-        <p class="servicio__eyebrow">{c.nav.services}</p>
-        <h1 class="servicio__titulo">{titulo}</h1>
-        {intro && <p class="servicio__intro">{intro}</p>}
-        <div class="hero__acciones">
-          <a href="#lead-titulo" class="boton boton--principal">{c.form.submit}</a>
-          <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
-            {`Call ${NEGOCIO.telefono}`}
-          </a>
+    <section class="header-page">
+      {/* Sin data-w-id ni style="opacity:0". Ese opacity lo levantaba la
+          interaccion de webflow.js; sin webflow.js el bloque se quedaria
+          invisible para siempre. */}
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="block-header-page">
+          <h1 class="h1">{titulo}</h1>
+          <div>{intro ?? "{{PENDIENTE}} intro del servicio"}</div>
+          <a href="/contact-us" class="button w-button">Book A consultation</a>
         </div>
       </div>
+
+      {/* LCP de la ruta: eager + fetchpriority, nunca lazy. El lqip tapa el
+          hueco mientras carga. */}
+      {
+        foto && (
+          <img
+            src={src(foto.url, 1250)}
+            srcset={`${src(foto.url, 500)} 500w, ${src(foto.url, 800)} 800w, ${src(foto.url, 1080)} 1080w, ${src(foto.url, 1250)} 1250w`}
+            sizes="(max-width: 991px) 100vw, 50vw"
+            width={foto.w}
+            height={foto.h}
+            alt={altFoto}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            style={foto.lqip ? `background-image:url(${foto.lqip})` : undefined}
+            class="background-services"
+          />
+        )
+      }
     </section>
 
-    {/* ============================================================= CUERPO */}
-    {/* La prosa manda y el formulario acompana. En movil el formulario baja
-        debajo: primero se entiende el servicio, luego se pide presupuesto.
-
-        FUERA la caja «Global Financial Solutions», que repetia los DOCE
-        servicios y ocupaba la mitad exacta del cuerpo en las 24 fichas.
-        Devolver al menu completo a quien ya eligio es lo que mata la
-        conversion en una landing. */}
-    <section class="seccion">
-      <div class="contenido">
-        <div class="servicio__cuerpo">
-          <div class="w-richtext">
-            {foto && (
+    {/* Texto identico en las 12 rutas del baseline. No esta en Sanity: hoy no
+        hay tipo para los bloques fijos de plantilla. Se transcribe verbatim. */}
+    <section class="call-action">
+      <div class="w-layout-blockcontainer container w-container">
+        {/* En produccion esto era un <section class="footer-subscribe"> anidado
+            dentro de otro <section>: un landmark de region sin nombre. La clase
+            solo aporta position:relative, asi que baja a <div>. */}
+        <div class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              {/* Decorativo: el titular de al lado ya dice lo mismo. */}
               <img
-                src={src(foto.url, 1080)}
-                srcset={[500, 800, 1080].map((w) => `${src(foto.url, w)} ${w}w`).join(", ")}
-                sizes="(max-width: 62rem) 100vw, 55vw"
-                width={foto.w}
-                height={foto.h}
-                alt={altFoto}
-                loading="eager"
-                fetchpriority="high"
+                src={iconoCta.url}
+                width={iconoCta.w}
+                height={iconoCta.h}
+                alt=""
+                loading="lazy"
                 decoding="async"
-                style="width:100%;height:auto;border-radius:var(--radio-caja);margin-bottom:var(--e-6)"
+                class="icon-news"
               />
-            )}
-            <PortableText value={servicio.body} />
+              <div class="div-block-10">
+                <h2 class="h2">Schedule a free consultation call Today!</h2>
+                <div>
+                  Take the first step towards stress-free accounting! Schedule your free 30-minute
+                  consultation call now and get tailored advice for your small business.
+                </div>
+              </div>
+            </div>
+            <div>
+              <a href="/contact-us" class="button padding w-button">Book A Consultation</a>
+            </div>
           </div>
-          <aside class="servicio__aparte">
-            <LeadForm lang="en" servicio={servicio.slug} />
-          </aside>
         </div>
       </div>
     </section>
 
-    {/* ======================================================= RELACIONADOS */}
-    {
-      hermanos.length > 0 && (
-        <section class="seccion seccion--alterna" aria-labelledby="relacionados-titulo">
-          <div class="contenido">
-            <div class="cabecera-seccion">
-              <h2 id="relacionados-titulo">{c.service.relacionados}</h2>
+    <section class="body-service">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-service">
+          <div class="block-left">
+            {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio. */}
+            <div class="w-richtext">
+              {
+                servicio.body?.length ? (
+                  <PortableText value={servicio.body} />
+                ) : (
+                  <p>{"{{PENDIENTE}}"} cuerpo del servicio</p>
+                )
+              }
             </div>
-            <ul class="relacionados">
-              {hermanos.map((h) => (
-                <li>
-                  <a href={`/services/${h.slug}`} class="relacionado">
-                    <span class="relacionado__nombre">{h.title.trim()}</span>
-                    {h.intro && <span class="relacionado__intro">{h.intro.trim()}</span>}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
-        </section>
-      )
-    }
 
-
-    {/* ========================================================= TESTIMONIOS */}
-    {/* Mismo componente que la portada: scroll-snap nativo, cero libreria.
-        D5 intacto — se muestran como testimonios y nada mas. */}
-    <section class="seccion" aria-labelledby="titulo-resenas">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="titulo-resenas">{c.reviews.title}</h2>
+          <div class="block-right">
+            {/* En produccion era <h1 class="h2">: un SEGUNDO <h1> en la pagina,
+                por debajo del titulo del servicio. Baja a <h2>; la clase .h2 es
+                la que pinta, asi que el aspecto no cambia. */}
+            <h2 class="h2">global financial solutions</h2>
+            <div class="collection-list-wrapper-2 w-dyn-list">
+              {/* Se mantienen los <div role="list">/<div role="listitem"> del
+                  baseline: son una lista real de 12 y el CSS portado da por
+                  hecho que no hay padding de <ul>. */}
+              <div role="list" class="collection-list-2 w-dyn-items">
+                {/* Invertida, igual que la del pie: es el orden de produccion,
+                    verificado en dos fichas distintas del baseline. */}
+                {
+                  [...todos].reverse().map((s) => {
+                    const href = `/services/${s.slug}`;
+                    const actual = href === aqui;
+                    return (
+                      <div role="listitem" class="collection-item-2 w-dyn-item">
+                        <a
+                          href={href}
+                          class={`link-block w-inline-block${actual ? " w--current" : ""}`}
+                          aria-current={actual ? "page" : undefined}
+                        >
+                          {s.icon && (
+                            <img
+                              src={s.icon.url}
+                              width={s.icon.w}
+                              height={s.icon.h}
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                              class="icon-services"
+                            />
+                          )}
+                          <div class="title-cms-services">{s.title.trim()}</div>
+                        </a>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          class="testimonios"
-          data-carrusel
-          tabindex="0"
-          role="group"
-          aria-labelledby="titulo-resenas"
-        >
+      </div>
+    </section>
+
+    {/* D5: se muestran como testimonios y NADA MAS. Prohibido JSON-LD Review o
+        aggregateRating — los 20 no traen rating, ni fecha, ni fuente. El texto
+        "5.0 Ranking on Google reviews" es copia del sitio en produccion, se
+        migra verbatim y queda reportado, no se reescribe aqui. */}
+    <section class="reviews" aria-labelledby="titulo-resenas">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-reviews">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 id="titulo-resenas" class="h2">What Our Customers Are Saying About Us</h2>
+                <div>
+                  Trusted by small business owners nationwide, Accounting Max Services is known for
+                  delivering results. Discover how we’ve helped businesses succeed—read our customer
+                  success stories.
+                </div>
+              </div>
+              {/* En produccion eran dos <div> con una imagen dentro: sin foco,
+                  sin teclado y sin nombre. Los engancha src/scripts/ui.ts. */}
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label="Previous testimonials"
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label="Next testimonials"
+                  aria-controls="pista-resenas"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="block-services-animation">
+              <div class="splide">
+                {/* tabindex/role/aria-label van en el HTML y no solo en ui.ts:
+                    la pista se desplaza con CSS aunque el JS no cargue, y una
+                    zona con scroll que no recibe foco incumple 2.1.1. */}
+                <div
+                  id="pista-resenas"
+                  class="splide-track w-dyn-list"
+                  tabindex="0"
+                  role="group"
+                  aria-label="Customer testimonials"
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      resenas.map((t) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={logoGoogle.url}
+                                    width={logoGoogle.w}
+                                    height={logoGoogle.h}
+                                    alt="Google Reviews"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  {/* Decorativa: las 5 estrellas son lo mismo
+                                      que dice el texto de debajo. */}
+                                  <img
+                                    src={estrellas.url}
+                                    width={estrellas.w}
+                                    height={estrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                <div class="mini-text-reviews">5.0 Ranking on Google reviews</div>
+                              </div>
+                            </div>
+                            {/* Palabras de clientes reales: ni se traducen ni se
+                                editan. Salen tal cual de Sanity. */}
+                            <p class="paragraph">{t.quote}</p>
+                            <div>
+                              <div class="name-customer">{t.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">Published on Google</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Cuatro cuadrados decorativos de 100x100 en las esquinas de la seccion. */}
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
+    </section>
+
+    {/* Texto identico en las 12 rutas del baseline. Transcrito verbatim. */}
+    <section class="features" aria-labelledby="titulo-features">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML en produccion: separa el titular del
+              parrafo. Se conserva por paridad. */}
+          <h2 id="titulo-features" class="h2">
+            What to expect from accounting Max Services?<br />
+          </h2>
+          <div>
+            At Accounting Max Services, we prioritize delivering exceptional service to our clients
+            by offering personalized financial and tax solutions. When you work with us, you can
+            expect expert guidance, transparent communication, and a commitment to your financial
+            success.
+          </div>
+        </div>
+
+        <div class="div-block-5">
           {
-            resenas.map((o) => (
-              <figure class="testimonio">
-                <blockquote class="testimonio__texto">{o.quote}</blockquote>
-                <figcaption>
-                  <div class="testimonio__autor">{o.author}</div>
-                  <div class="testimonio__fuente">{c.reviews.publicado}</div>
-                </figcaption>
-              </figure>
-            ))
+            FEATURES.map((f) => {
+              const imagen = (
+                <div>
+                  <img
+                    src={src(f.imagen.url, 940)}
+                    srcset={`${src(f.imagen.url, 500)} 500w, ${src(f.imagen.url, 800)} 800w, ${src(f.imagen.url, 940)} 940w`}
+                    sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                    width={f.imagen.w}
+                    height={f.imagen.h}
+                    alt={f.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="image-2"
+                  />
+                </div>
+              );
+              const texto = (
+                <div>
+                  <h3 class="h3">{f.titulo}</h3>
+                  <div set:html={f.parrafo} />
+                </div>
+              );
+              // .rotate invierte el orden en el DOM, igual que en el baseline.
+              return (
+                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
+                  {f.invertido ? texto : imagen}
+                  {f.invertido ? imagen : texto}
+                </div>
+              );
+            })
           }
         </div>
-        <div class="carrusel__mandos">
-          <button type="button" class="carrusel__boton" data-carrusel-prev aria-label={c.reviews.prev}>
-            &#8592;
-          </button>
-          <button type="button" class="carrusel__boton" data-carrusel-next aria-label={c.reviews.next}>
-            &#8594;
-          </button>
-        </div>
       </div>
     </section>
-
-    {/* ============================================================== CIERRE */}
-    <section class="seccion seccion--oscura" aria-labelledby="cierre-titulo">
-      <div class="contenido">
-        <div class="cierre">
-          <div class="cierre__texto">
-            <h2 id="cierre-titulo">{c.home.cierreTitulo}</h2>
-            <p>{c.home.cierreTexto}</p>
-          </div>
-          <div class="cierre__acciones">
-            <a href="#lead-titulo" class="boton boton--principal">{c.form.submit}</a>
-            <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
-              {`Call ${NEGOCIO.telefono}`}
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <Footer />

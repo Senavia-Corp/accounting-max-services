@@ -37,8 +37,6 @@ import Footer from "../../components/Footer.astro";
 import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
 import { requiereEs, enlace } from "../../lib/es";
-import JsonLd from "../../components/JsonLd.astro";
-import { agrupar } from "../../lib/familias";
 
 const lang = "es" as const;
 const c = t(lang);
@@ -96,10 +94,7 @@ const servs = await (g.__amsServicios ??= servicios());
 if (servs.length !== 12) {
   throw new Error(`Se esperaban 12 servicios, hay ${servs.length}.`);
 }
-// FASE 2: los 12 en 3 familias, igual que la portada EN. El agrupado va por
-// slug (src/lib/familias.ts), que es el mismo en las dos lenguas: /es hereda
-// el reparto sin duplicarlo y sin poder divergir.
-const familias = agrupar(servs);
+const destacados = [...servs].sort((a, b) => Number(b.feature) - Number(a.feature));
 
 // Los 20 testimonios se muestran TAL CUAL: son palabras de clientes reales, no
 // se traducen ni se editan (regla de FASE 5). El unico texto que cambia a su
@@ -126,257 +121,385 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 ---
 
 <BaseLayout title={TITULO} description={c.meta.homeDescription} lang={lang}>
-  <JsonLd tipo="home" nombre={TITULO} descripcion={c.meta.homeDescription} faq={c.faq.items} />
   <Nav lang={lang} />
 
   <main id="main">
     {/* ================================================================ HERO */}
-    {/* FASE 2 — espejo exacto de src/pages/index.astro. Todo el texto sale de
-        i18n.ts, asi que las dos portadas no pueden divergir. */}
-    <section class="hero">
-      <div class="contenido">
-        <div class="hero__rejilla">
-          <div>
-            <ul class="hero__credenciales">
-              {c.home.confianza.map((x) => <li>{x.fuerte}</li>)}
-            </ul>
-            <h1 class="hero__titulo"><strong>{c.home.heroTitle}</strong></h1>
-            <p class="hero__entrada">{c.home.heroIntro}</p>
-            <div class="hero__acciones">
-              <a href={CONTACTO} class="boton boton--principal">{c.home.heroCta}</a>
-              <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
-                {interpola(c.home.cierreLlamar, { telefono: NEGOCIO.telefono })}
-              </a>
-            </div>
+    <section class="header">
+      <div class="wrapper-header">
+        <div class="w-layout-blockcontainer container w-container">
+          <div class="block-header">
+            <h1 class="h1"><strong>{c.home.heroTitle}</strong></h1>
+            <div>{c.home.heroIntro}</div>
+            <a href={CONTACTO} class="button w-button">{c.home.heroCta}</a>
           </div>
-          <img
-            src={src(hero, 1080)}
-            srcset={srcset(hero, [500, 800, 1080, 1600])}
-            sizes="(max-width: 62rem) 100vw, 45vw"
-            width={hero.w}
-            height={hero.h}
-            alt={c.home.heroAlt}
-            loading="eager"
-            decoding="async"
-            class="hero__foto"
-          />
+        </div>
+      </div>
+      <img
+        src={src(hero, 2000)}
+        srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
+        sizes="100vw"
+        width={hero.w}
+        height={hero.h}
+        alt={c.home.heroAlt}
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        class="background-header"
+      />
+    </section>
+
+    {/* ====================================================== BAR-SERVICES */}
+    <section class="bar-services">
+      <div class="wrapper-bar-services">
+        <div class="collection-list-wrapper w-dyn-list">
+          <div role="list" class="collection-list w-dyn-items">
+            {
+              destacados.map((s) => (
+                <div role="listitem" class="collection-item w-dyn-item">
+                  <a
+                    href={enlace(lang, `/services/${s.slug}`)}
+                    class="block-bar-services w-inline-block"
+                  >
+                    <div class="block-title-services">
+                      {s.icon && (
+                        <img
+                          src={s.icon.url}
+                          width={s.icon.w}
+                          height={s.icon.h}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          class="icon-bar-services"
+                        />
+                      )}
+                      {/* R5: titleEs o el build cae. Nunca el titulo ingles. */}
+                      <h2 class="title-bar-services">
+                        {requiereEs<string>(s, "titleEs", `/es/services/${s.slug}`).trim()}
+                      </h2>
+                    </div>
+                  </a>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </section>
-
-    {/* ========================================================== CONFIANZA */}
-    <section class="seccion seccion--corta" aria-label="Credenciales">
-      <div class="contenido">
-        <ul class="confianza revelar">
-          {
-            c.home.confianza.map((x) => (
-              <li class="confianza__item">
-                <span class="confianza__fuerte">{x.fuerte}</span>
-                <span class="confianza__suave">{x.suave}</span>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
-
-    {/* =========================================================== SERVICIOS */}
-    <section class="seccion seccion--alterna" aria-labelledby="servicios-titulo">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="servicios-titulo">{c.home.familiasTitulo}</h2>
-          <p>{c.home.familiasIntro}</p>
-        </div>
-        <div class="familias">
-          {
-            familias.map((grupo, i) => (
-              <article class="familia revelar">
-                <span class="familia__numero">{String(i + 1).padStart(2, "0")}</span>
-                <h3 class="familia__nombre">{c.home.familias[i].nombre}</h3>
-                <p class="familia__resumen">{c.home.familias[i].resumen}</p>
-                <ul class="familia__lista">
-                  {grupo.map((s) => (
-                    <li>
-                      <a href={enlace(lang, `/services/${s.slug}`)} class="familia__enlace">
-                        {(s.titleEs || s.title).trim()}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
 
     {/* ============================================================ ABOUT-US */}
-    {/* FASE 2: mismas piezas (video + credenciales), clases propias. La caja
-        16:9 la da `aspect-ratio` en vez del padding-top en linea que heredaba
-        de .w-embed-youtubevideo — un truco de cuando aspect-ratio no existia.
-        La fachada click-to-load NO se toca: sigue evitando ~700 KB y las
-        cookies de Google en la primera visita. */}
-    <section class="seccion" aria-labelledby="about-titulo">
-      <div class="contenido">
-        <div class="sobre">
-          <div class="sobre__video" data-yt-caja>
-            <button
-              type="button"
-              class="yt-facade"
-              data-yt-id={VIDEO.id}
-              data-yt-titulo={VIDEO.titulo}
-              aria-label={interpola(c.home.videoCta, { titulo: VIDEO.titulo })}
+    <section class="about-us" aria-labelledby="about-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="wrapper-about">
+          <div class="block-video">
+            {/* Facade click-to-load, igual que en la ruta EN: hasta que no se
+                pulsa, el navegador no habla con YouTube. */}
+            <div
+              class="w-embed-youtubevideo youtube"
+              style="padding-top:56.17021276595745%"
+              data-yt-caja
             >
-              <img
-                src={VIDEO.miniatura}
-                width="1280"
-                height="720"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                referrerpolicy="no-referrer"
-              />
-              <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
-                <path
-                  d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
-                  fill="#212121"
-                  fill-opacity="0.8"></path>
-                <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
-              </svg>
-            </button>
+              <button
+                type="button"
+                class="yt-facade"
+                data-yt-id={VIDEO.id}
+                data-yt-titulo={VIDEO.titulo}
+                aria-label={interpola(c.home.videoCta, { titulo: VIDEO.titulo })}
+              >
+                <img
+                  src={VIDEO.miniatura}
+                  width="1280"
+                  height="720"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
+                />
+                <svg class="yt-play" viewBox="0 0 68 48" aria-hidden="true" focusable="false">
+                  <path
+                    d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2 0 34 0 34 0S12.8 0 7.5 1.7a8.5 8.5 0 0 0-6 6A88.6 88.6 0 0 0 0 24a88.6 88.6 0 0 0 1.5 16.3 8.5 8.5 0 0 0 6 6C12.8 48 34 48 34 48s21.2 0 26.5-1.7a8.5 8.5 0 0 0 6-6A88.6 88.6 0 0 0 68 24a88.6 88.6 0 0 0-1.5-16.3z"
+                    fill="#212121"
+                    fill-opacity="0.8"></path>
+                  <path d="M27 34V14l18 10-18 10z" fill="#fff"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="block-deco-1"><div class="block-deco-2"></div></div>
+            <div class="block-deco-1-copy"><div class="block-deco-2"></div></div>
           </div>
-          <div class="sobre__texto">
-            <h2 id="about-titulo">{c.home.aboutTitle}</h2>
-            <p set:html={c.home.aboutHtml} />
-            <a href={SOBRE} class="boton boton--secundario">{c.home.aboutCta}</a>
+
+          {/* El id lo usa el CSS portado (@media 991px). No se puede quitar. */}
+          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
+            <div class="block-info-content">
+              {/* GLOSARIO: "Enrolled Agents" y "Certified Public Accountants"
+                  van literales. Traducirlos fabrica credenciales falsas. */}
+              <h2 class="h2" id="about-title"><strong>{c.home.aboutTitle}</strong></h2>
+              {/* Lleva <strong> y <br>: solo vale con set:html. */}
+              <div set:html={c.home.aboutHtml} />
+              <a href={SOBRE} class="button blue w-button">{c.home.aboutCta}</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    {/* ============================================================= REVIEWS */}
+    <section class="reviews">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="wrapper-reviews" aria-labelledby="reviews-title">
+          <div class="w-layout-blockcontainer container w-container">
+            <div class="wrapper-header-slider">
+              <div class="box-title-review">
+                <h2 class="h2" id="reviews-title">{c.reviews.title}</h2>
+                <div>{c.reviews.text}</div>
+              </div>
+              <div class="block-button-slider">
+                <button
+                  type="button"
+                  class="button-slider-cms prev-splide"
+                  aria-label={c.reviews.prev}
+                  aria-controls="reviews-track"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha back"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="button-slider-cms next-splide"
+                  aria-label={c.reviews.next}
+                  aria-controls="reviews-track"
+                >
+                  <img
+                    src={flecha.url}
+                    width={flecha.w}
+                    height={flecha.h}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    class="flecha"
+                  />
+                </button>
+              </div>
+            </div>
 
-    {/* ============================================================= PROCESO */}
-    <section class="seccion" aria-labelledby="proceso-titulo">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="proceso-titulo">{c.home.procesoTitulo}</h2>
-        </div>
-        <ol class="proceso">
-          {
-            c.home.procesoPasos.map((paso) => (
-              <li class="proceso__paso revelar">
-                <h3 class="proceso__titulo">{paso.titulo}</h3>
-                <p class="proceso__texto">{paso.texto}</p>
-              </li>
-            ))
-          }
-        </ol>
+            <div class="block-services-animation">
+              <div class="splide">
+                <div
+                  id="reviews-track"
+                  class="splide-track w-dyn-list"
+                  aria-labelledby="reviews-title"
+                >
+                  <div role="list" class="splide-list w-dyn-items">
+                    {
+                      opiniones.map((o) => (
+                        <div role="listitem" class="splide-slide w-dyn-item">
+                          <div class="block-review">
+                            <div class="block-header-review">
+                              <div>
+                                <div>
+                                  <img
+                                    src={iconGoogle.url}
+                                    width={iconGoogle.w}
+                                    height={iconGoogle.h}
+                                    alt={c.reviews.googleAltPortada}
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-google"
+                                  />
+                                  <img
+                                    src={iconEstrellas.url}
+                                    width={iconEstrellas.w}
+                                    height={iconEstrellas.h}
+                                    alt=""
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="icon-start"
+                                  />
+                                </div>
+                                {/* La cifra (5.0) se copia tal cual; solo se
+                                    traduce la formula que la rodea. */}
+                                <div class="mini-text-reviews">{c.reviews.ranking}</div>
+                              </div>
+                            </div>
+                            {/* NO SE TRADUCE: palabras de clientes reales. */}
+                            <p class="paragraph">{o.quote}</p>
+                            <div>
+                              <div class="name-customer">{o.author}</div>
+                              <div class="block-city">
+                                <div class="text-mini-reviews">{c.reviews.publicado}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
-
-    {/* ========================================================= TESTIMONIOS */}
-    {/* Los 20 testimonios NO se traducen: son palabras de clientes reales
-        (regla de FASE 5, y D5 sigue prohibiendo JSON-LD Review). */}
-    <section class="seccion seccion--alterna" aria-labelledby="reviews-titulo">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="reviews-titulo">{c.reviews.title}</h2>
-          <p>{c.reviews.text}</p>
-        </div>
-        <div
-          class="testimonios"
-          data-carrusel
-          tabindex="0"
-          role="group"
-          aria-labelledby="reviews-titulo"
-        >
-          {
-            opiniones.map((o) => (
-              <figure class="testimonio">
-                <blockquote class="testimonio__texto">{o.quote}</blockquote>
-                <figcaption>
-                  <div class="testimonio__autor">{o.author}</div>
-                  <div class="testimonio__fuente">{c.reviews.publicado}</div>
-                </figcaption>
-              </figure>
-            ))
-          }
-        </div>
-        <div class="carrusel__mandos">
-          <button type="button" class="carrusel__boton" data-carrusel-prev aria-label={c.reviews.prev}>
-            &#8592;
-          </button>
-          <button type="button" class="carrusel__boton" data-carrusel-next aria-label={c.reviews.next}>
-            &#8594;
-          </button>
-        </div>
-      </div>
+      <div class="corner-top-1"></div>
+      <div class="corner-bottom-1"></div>
+      <div class="corner-top-2"></div>
+      <div class="corner-bottom-2"></div>
     </section>
 
     {/* ============================================================ FEATURES */}
-    <section class="seccion" aria-labelledby="features-titulo">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="features-titulo">{c.features.title}</h2>
-          <p>{c.features.text}</p>
+    <section class="features" aria-labelledby="features-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="title-center">
+          {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
+          <h2 class="h2" id="features-title">{c.features.title}<br /></h2>
+          <div>{c.features.text}</div>
         </div>
-        <div class="familias">
-          {
-            [feat1, feat3, feat2].map((im, i) => (
-              <article class="familia revelar">
-                <img
-                  src={src(im, 800)}
-                  srcset={srcset(im, [500, 800, im.w])}
-                  sizes="(max-width: 62rem) 100vw, 30vw"
-                  width={im.w}
-                  height={im.h}
-                  alt={c.home.featuresAlt[i]}
-                  loading="lazy"
-                  decoding="async"
-                  style="width:100%;height:auto;border-radius:var(--radio-control)"
-                />
-                <h3 class="familia__nombre">{c.features.items[i].title}</h3>
-                <p class="familia__resumen" set:html={c.features.items[i].html} />
-              </article>
-            ))
-          }
+        <div class="div-block-5">
+          {/* Mismo orden e inversion (.rotate) que la ruta EN: imagen, texto /
+              texto, imagen / imagen, texto. Los <div> sin clase son las celdas
+              del grid de .div-block-4; quitarlos rompe la maqueta. */}
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat1, 1080)}
+                srcset={srcset(feat1, [500, 800, 1080, feat1.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat1.w}
+                height={feat1.h}
+                alt={c.home.featuresAlt[0]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">{c.features.items[0].title}</h3>
+              <div set:html={c.features.items[0].html} />
+            </div>
+          </div>
+
+          <div class="div-block-4 rotate">
+            <div>
+              <h3 class="h3">{c.features.items[1].title}</h3>
+              <div set:html={c.features.items[1].html} />
+            </div>
+            <div>
+              <img
+                src={src(feat3, 1080)}
+                srcset={srcset(feat3, [500, 800, 1080, feat3.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat3.w}
+                height={feat3.h}
+                alt={c.home.featuresAlt[1]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+          </div>
+
+          <div class="div-block-4">
+            <div>
+              <img
+                src={src(feat2, 1080)}
+                srcset={srcset(feat2, [500, 800, 1080, feat2.w])}
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
+                width={feat2.w}
+                height={feat2.h}
+                alt={c.home.featuresAlt[2]}
+                loading="lazy"
+                decoding="async"
+                class="image-2"
+              />
+            </div>
+            <div>
+              <h3 class="h3">{c.features.items[2].title}</h3>
+              <div set:html={c.features.items[2].html} />
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+
+    {/* ========================================================= CALL-ACTION */}
+    <section class="call-action" aria-labelledby="cta-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <section class="footer-subscribe">
+          <div class="wrapper-call-action">
+            <div class="block-content-call-to-action">
+              <img
+                src={iconCta.url}
+                width={iconCta.w}
+                height={iconCta.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                class="icon-news"
+              />
+              <div class="div-block-10">
+                <h2 class="h2" id="cta-title">{c.cta.title}</h2>
+                <div>{c.cta.text}</div>
+              </div>
+            </div>
+            <div>
+              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
     {/* ================================================================= FAQ */}
-    <section class="seccion seccion--alterna" aria-labelledby="faq-titulo">
-      <div class="contenido">
-        <div class="cabecera-seccion">
-          <h2 id="faq-titulo">{c.faq.title}</h2>
-        </div>
-        <div class="faq-lista">
-          {
-            c.faq.items.map((item) => (
-              <details class="faq-item">
-                <summary class="faq-item__titulo">{item.q}</summary>
-                <p class="faq-item__cuerpo">{item.a}</p>
-              </details>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {/* ============================================================== CIERRE */}
-    <section class="seccion seccion--oscura" aria-labelledby="cierre-titulo">
-      <div class="contenido">
-        <div class="cierre">
-          <div class="cierre__texto">
-            <h2 id="cierre-titulo">{c.home.cierreTitulo}</h2>
-            <p>{c.home.cierreTexto}</p>
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="w-layout-blockcontainer container w-container">
+        <div class="container-faq">
+          <div class="block-title-faq">
+            <h2 class="h2" id="faq-title">{c.faq.title}</h2>
+            {/* Sin entradilla, igual que la ruta EN: en produccion ese <div>
+                contiene el placeholder de Webflow. No se migra ni se inventa
+                un sustituto (R3, D12). */}
           </div>
-          <div class="cierre__acciones">
-            <a href={CONTACTO} class="boton boton--principal">{c.home.heroCta}</a>
-            <a href={NEGOCIO.telefonoHref} class="boton boton--secundario">
-              {interpola(c.home.cierreLlamar, { telefono: NEGOCIO.telefono })}
-            </a>
+
+          {/* Mismo marcado de acordeon que la ruta EN: lo mueve scripts/ui.ts,
+              que carga Nav. Las preguntas van en primera persona porque son la
+              voz del visitante, igual que en el original. */}
+          <div class="block-faq">
+            {
+              c.faq.items.map((item, i) => (
+                <div class="faq-item">
+                  <button
+                    type="button"
+                    id={`faq-question-${i + 1}`}
+                    class="faq-question w-inline-block"
+                    aria-expanded="false"
+                    aria-controls={`faq-answer-${i + 1}`}
+                  >
+                    <h3 class="h3 title-faq">{item.q}</h3>
+                    <span class="p-m-wrap" aria-hidden="true">
+                      <span class="minus" />
+                      <span class="plus" />
+                    </span>
+                  </button>
+                  <div
+                    id={`faq-answer-${i + 1}`}
+                    class="faq-answer"
+                    role="region"
+                    aria-labelledby={`faq-question-${i + 1}`}
+                  >
+                    <div class="faq-answer-inner">
+                      <p>{item.a}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -436,7 +559,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
    * pseudoelemento posicionado si se pinta por encima del contenido en flujo.
    * La banda blanca es el `outline` del boton, con offset NEGATIVO. */
   .yt-facade:focus-visible {
-    outline: 2px solid var(--blanco);
+    outline: 2px solid var(--white);
     outline-offset: -4px;
     box-shadow: none;
   }
@@ -449,7 +572,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     /* Solo 2px: la banda navy ocupa 0-2px y la blanca del outline 2-4px, sin
      * solaparse. Con 4px aqui el ::after tapaba el outline (Chrome pinta el
      * pseudoelemento posicionado por encima) y el anillo salia de un solo tono. */
-    box-shadow: inset 0 0 0 2px var(--navy);
+    box-shadow: inset 0 0 0 2px var(--bllue);
   }
 </style>
 
