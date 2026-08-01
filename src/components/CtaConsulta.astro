@@ -1,0 +1,94 @@
+---
+// Barra de llamada a la accion "Schedule a free consultation call Today!".
+//
+// Estaba copiada y pegada LITERAL en seis ficheros: index, about-us y
+// services/[slug] de las dos lenguas. Ya se estaban desincronizando (las tres
+// rutas EN tenian el texto a mano mientras las tres ES leian de i18n), asi que
+// vive aqui.
+//
+// LA EXTRACCION NO CAMBIA UNA LETRA VISIBLE. Comprobado antes de moverlo:
+//   - c.cta.title/text/button (i18n.ts:266-271) son byte a byte las cadenas que
+//     las tres rutas EN tenian escritas a mano.
+//   - enlace("en", "/contact-us") === "/contact-us", que es el href literal que
+//     habia en EN.
+//
+// DOS DESVIACIONES DELIBERADAS RESPECTO AL BASELINE, las dos a mejor:
+//
+//  1. El envoltorio interno es <div class="footer-subscribe"> SIEMPRE. En las
+//     dos portadas era un <section> anidado dentro de otro <section> ya
+//     nombrado: una region sin nombre accesible dentro de una nombrada. Es
+//     exactamente lo que services/[slug].astro razono en su dia para bajarlo a
+//     <div>; aqui se aplica tambien a index y /es. La clase solo aporta
+//     position:relative (accounting-max.webflow.css:851), asi que no se ve.
+//
+//  2. El icono se pide UNA vez y se memoiza en globalThis, en vez de viajar en
+//     el lote de assets de cada pagina. Es el mismo fichero en las seis rutas
+//     (icon-13.svg), asi que no habia nada que parametrizar. Mismo patron que
+//     FooterSubscribe.astro, que hace lo propio con news.svg.
+//
+// OJO con .footer-subscribe: esa clase la comparte la newsletter del pie. Todo
+// el CSS de esta barra en site.css va prefijado con `.call-action ` para no
+// alcanzarla.
+import { sanity } from "../lib/sanity";
+import { t, idiomaDeRuta, type Lang } from "../lib/i18n";
+import { enlace } from "../lib/es";
+
+interface Props {
+  lang?: Lang;
+  /**
+   * id del <h2>, para que la pagina pueda nombrar la <section> con
+   * aria-labelledby. Solo lo pasan las dos portadas, que es donde el baseline
+   * lo traia. Astro omite los atributos `undefined`, asi que en /about-us y en
+   * las fichas de servicio el HTML sale identico al de hoy.
+   */
+  tituloId?: string;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname), tituloId } = Astro.props;
+const c = t(lang);
+
+type Asset = { url: string; w: number; h: number };
+const g = globalThis as any;
+const icono: Asset = await (g.__amsIconoCta ??= sanity
+  .fetch<Asset[]>(
+    `*[_type == "sanity.imageAsset" && originalFilename == $f]{
+       url, "w": metadata.dimensions.width, "h": metadata.dimensions.height
+     }`,
+    { f: "6785bf353063de8bcbcf3dfc-icon-13.svg" },
+  )
+  .then((r) => {
+    if (!r[0]) throw new Error("Falta en Sanity el icono del CTA (icon-13.svg).");
+    return r[0];
+  }));
+
+const CONTACTO = enlace(lang, "/contact-us");
+---
+
+<section class="call-action" aria-labelledby={tituloId}>
+  <div class="w-layout-blockcontainer container w-container">
+    <div class="footer-subscribe">
+      <div class="wrapper-call-action">
+        <div class="block-content-call-to-action">
+          {/* Decorativo: el titular de al lado ya dice lo mismo. */}
+          <img
+            src={icono.url}
+            width={icono.w}
+            height={icono.h}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="icon-news"
+          />
+          <div class="div-block-10">
+            <h2 class="h2" id={tituloId}>{c.cta.title}</h2>
+            <div>{c.cta.text}</div>
+          </div>
+        </div>
+        {/* El <div> suelto del baseline gana clase: es la tercera zona de la
+            reticula y sin nombre no se puede alinear a la derecha. */}
+        <div class="block-cta-accion">
+          <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

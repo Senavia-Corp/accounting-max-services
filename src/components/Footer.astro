@@ -28,7 +28,7 @@
 import FooterSubscribe from "./FooterSubscribe.astro";
 import { servicios, sanity, NEGOCIO } from "../lib/sanity";
 import { t, idiomaDeRuta, type Lang } from "../lib/i18n";
-import { requiereEs, enlace } from "../lib/es";
+import { requiereEs, enlace, LEGAL_PUBLICO } from "../lib/es";
 
 interface Props {
   lang?: Lang;
@@ -211,6 +211,52 @@ const [dias, horas] = NEGOCIO.horario.split(" (");
               }
             </ul>
           </div>
+        </div>
+
+        {/* --- Legales y credito de autoria ---------------------------------
+            VAN EN LA ZONA CLARA, no en la barra verde de abajo. Blanco sobre
+            --green-2 (#6da228) da 3,07:1 y SC 1.4.3 pide 4,5:1 para texto
+            normal; el tamano pequeno no rebaja ese umbral, lo sube. Aqui el
+            navy del <body> sobre blanco da 13,4:1.
+
+            El copyright de AMS se queda donde esta (en la barra verde): es la
+            titularidad del CONTENIDO y la marca. Esto de aqui es la autoria del
+            SITIO, que es otra cosa, y por eso va en otra linea y en otra zona,
+            nunca fundido con aquel en un solo "©". */}
+        <div class="footer-legal">
+          {
+            LEGAL_PUBLICO && (
+              <ul role="list" class="footer-legal-enlaces">
+                <li>
+                  {/* NO pasan por enlace(): no existe /es/privacy-policy y un
+                      aviso GLBA no se traduce a ojo (D4). Se enlaza la version
+                      inglesa con hreflang, que es el criterio que ya aplica
+                      es/contact-us.astro.
+                      TODO: cuando D4 se cierre y existan las gemelas /es/,
+                      cambiar a enlace(lang, ...) y sacar las dos rutas de
+                      SIN_ES en src/lib/es.ts. */}
+                  <a
+                    href="/privacy-policy"
+                    hreflang={lang === "es" ? "en" : undefined}
+                    class="footer-legal-link"
+                  >
+                    {c.footer.privacy}
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/terms"
+                    hreflang={lang === "es" ? "en" : undefined}
+                    class="footer-legal-link"
+                  >
+                    {c.footer.terms}
+                  </a>
+                </li>
+              </ul>
+            )
+          }
+
+          <p class="footer-credito">{c.footer.credit}<a href="https://senaviacorp.com" rel="noopener" class="footer-credito-link">{c.footer.creditLink}</a></p>
         </div>
       </div>
     </div>

@@ -17,6 +17,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import PortableText from "../../components/PortableText.astro";
+import CtaConsulta from "../../components/CtaConsulta.astro";
+import PuntosConfianza from "../../components/PuntosConfianza.astro";
 import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../lib/sanity";
 import type { Servicio, Testimonio } from "../../lib/sanity";
 import type { GetStaticPaths } from "astro";
@@ -24,14 +26,15 @@ import type { GetStaticPaths } from "astro";
 type Asset = { originalFilename: string; url: string; w: number; h: number };
 
 export const getStaticPaths = (async () => {
-  // Assets estaticos de la plantilla (no son de ningun documento): el icono de
-  // la llamada a la accion, el logo y las estrellas del carrusel, la flecha de
-  // las pistas y las 3 ilustraciones de .features. Estan en Sanity como assets
-  // sueltos; las URLs de cdn.prod.website-files.com estan prohibidas.
+  // Assets estaticos de la plantilla (no son de ningun documento): el logo y
+  // las estrellas del carrusel, la flecha de las pistas y las 3 ilustraciones
+  // de .features. Estan en Sanity como assets sueltos; las URLs de
+  // cdn.prod.website-files.com estan prohibidas.
+  // (El icono de la llamada a la accion ya no viene por aqui: se lo pide
+  // CtaConsulta.astro, que es quien lo pinta en las seis rutas.)
   // Va DENTRO de getStaticPaths: Astro lo saca a modulo aparte y no ve las
   // constantes del frontmatter.
   const MARCA = [
-    "6785bf353063de8bcbcf3dfc-icon-13.svg",
     "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
     "684a14073e3e3c127cc2a315-starts.svg",
     "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
@@ -84,7 +87,6 @@ const img = (nombre: string): Asset => {
   return a;
 };
 
-const iconoCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
 const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
 const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
 const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
@@ -198,6 +200,7 @@ const aqui = `/services/${servicio.slug}`;
           <h1 class="h1">{titulo}</h1>
           <div>{intro ?? "{{PENDIENTE}} intro del servicio"}</div>
           <a href="/contact-us" class="button w-button">Book A consultation</a>
+          <PuntosConfianza />
         </div>
       </div>
 
@@ -222,41 +225,7 @@ const aqui = `/services/${servicio.slug}`;
       }
     </section>
 
-    {/* Texto identico en las 12 rutas del baseline. No esta en Sanity: hoy no
-        hay tipo para los bloques fijos de plantilla. Se transcribe verbatim. */}
-    <section class="call-action">
-      <div class="w-layout-blockcontainer container w-container">
-        {/* En produccion esto era un <section class="footer-subscribe"> anidado
-            dentro de otro <section>: un landmark de region sin nombre. La clase
-            solo aporta position:relative, asi que baja a <div>. */}
-        <div class="footer-subscribe">
-          <div class="wrapper-call-action">
-            <div class="block-content-call-to-action">
-              {/* Decorativo: el titular de al lado ya dice lo mismo. */}
-              <img
-                src={iconoCta.url}
-                width={iconoCta.w}
-                height={iconoCta.h}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                class="icon-news"
-              />
-              <div class="div-block-10">
-                <h2 class="h2">Schedule a free consultation call Today!</h2>
-                <div>
-                  Take the first step towards stress-free accounting! Schedule your free 30-minute
-                  consultation call now and get tailored advice for your small business.
-                </div>
-              </div>
-            </div>
-            <div>
-              <a href="/contact-us" class="button padding w-button">Book A Consultation</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <CtaConsulta />
 
     <section class="body-service">
       <div class="w-layout-blockcontainer container w-container">

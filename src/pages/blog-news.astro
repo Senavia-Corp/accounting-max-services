@@ -15,6 +15,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import PuntosConfianza from "../components/PuntosConfianza.astro";
 import { posts, NEGOCIO } from "../lib/sanity";
 
 const lista = await posts();
@@ -68,7 +69,13 @@ if (distintas < lista.length) {
       <div class="w-layout-blockcontainer container w-container">
         <div class="title-center">
           <h1 class="h1">{TITULAR}</h1>
+          {/* OJO: ENTRADA (arriba, linea 24) es byte a byte
+              EN.meta.blogDescription, NO EN.blog.intro — que dice otra cosa.
+              Es asi en produccion. NO lo "arregles" cambiandolo a c.blog.intro:
+              seria un cambio de copy visible sin aprobacion del cliente. */}
           <div>{ENTRADA}</div>
+          {/* Esta cabecera no tiene CTA: las senales van tras la entradilla. */}
+          <PuntosConfianza />
         </div>
 
         {/* .wrapper-team es la clase que usa el propio baseline en esta pagina

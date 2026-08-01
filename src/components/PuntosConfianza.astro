@@ -1,0 +1,55 @@
+---
+// Senales de confianza del hero — portada, /about-us, /services/<slug> y
+// /blog-news, en las dos lenguas. Ocho puntos de insercion, un solo sitio.
+//
+// LAS CUATRO AFIRMACIONES YA ESTAN PUBLICADAS. El origen de cada una esta
+// citado en el bloque `confianza` de i18n.ts. Aqui no se inventa nada y, sobre
+// todo, no se meten cifras que no vengan de ahi.
+//
+// ICONOS EN LINEA, no assets de Sanity. Cuatro peticiones a un CDN por encima
+// del pliegue en las 54 rutas competirian con el LCP de la propia cabecera, que
+// es justo lo que este cambio no puede empeorar. En linea son ~1,5 KB de
+// marcado que gzip aplasta y cero red. No es una libreria nueva: es la misma
+// tecnica que ya usa el telefono del cromo movil (Nav.astro).
+//
+// NO SON ENLACES: son afirmaciones, no navegacion. Nada de <a>, nada de
+// tabindex, nada de role. Un <ul> de cuatro <li> es exactamente lo que son.
+//
+// Sin `aria-label` en el <ul>: cuatro frases cortas detras de la entradilla se
+// leen solas, y ponerle nombre obligaria a inventar una quinta cadena.
+import { t, idiomaDeRuta, type Lang } from "../lib/i18n";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = idiomaDeRuta(Astro.url.pathname) } = Astro.props;
+const c = t(lang);
+
+// Un trazado por afirmacion, EN EL MISMO ORDEN que confianza.items. Los cuatro
+// sobre viewBox 0 0 24 24 para que las cajas midan igual y el trazo pese lo
+// mismo. Decorativos: aria-hidden y fill:currentColor, asi que el contraste lo
+// hereda de la pastilla y no hay un color suelto que mantener.
+const ICONOS = [
+  // Escudo con visto: credencial / autorizacion ante el IRS.
+  "M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Zm-1 14-4-4 1.4-1.4L11 13.2l4.6-4.6L17 10l-6 6Z",
+  // Globo con meridianos: dos lenguas.
+  "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2c1.3 0 2.8 2.3 3.3 6H8.7C9.2 6.3 10.7 4 12 4ZM4.3 10h3.4a24 24 0 0 0 0 4H4.3a8 8 0 0 1 0-4Zm4.4 6h6.6c-.5 3.7-2 6-3.3 6s-2.8-2.3-3.3-6Zm7.6-2a24 24 0 0 0 0-4h3.4a8 8 0 0 1 0 4h-3.4Z",
+  // Calendario: antiguedad, desde 2009.
+  "M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7ZM5 9h14v11H5V9Z",
+  // Reloj: los 30 minutos de la consulta.
+  "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v5.2l4 2.4-.8 1.3-4.7-2.8V7h1.5Z",
+];
+---
+
+<ul class="hero-confianza" role="list">
+  {
+    c.confianza.items.map((texto, i) => (
+      <li>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d={ICONOS[i]} />
+        </svg>
+        <span>{texto}</span>
+      </li>
+    ))
+  }
+</ul>

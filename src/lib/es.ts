@@ -125,6 +125,30 @@ export const enlace = (lang: Lang, ruta: string): string => raiz(lang) + ruta;
 const SIN_ES = ["/privacy-policy", "/terms"];
 
 /**
+ * ¿SE ENLAZAN LOS LEGALES DESDE EL PIE? Hoy NO, y es deliberado.
+ *
+ * Las dos rutas de SIN_ES existen, pero son BORRADORES: llevan `noindex`, estan
+ * fuera del sitemap (astro.config.mjs) y muestran 33 marcadores {{PENDIENTE}}
+ * en amarillo y a la vista (21 en privacy-policy, 12 en terms), incluido el
+ * formulario modelo de la FTC que el propio fichero dice estar reconstruido de
+ * memoria y pendiente de cotejo del abogado.
+ *
+ * Footer.astro es un componente compartido: enlazarlos ahi los publica en las
+ * 54 rutas. Para un preparador de impuestos, un aviso GLBA incompleto puesto en
+ * el pie de todo el sitio es peor que uno enlazado solo desde un formulario.
+ *
+ * El marcado, el CSS y las cadenas i18n YA ESTAN ESCRITOS y probados: lo unico
+ * que falta es la firma. Un solo booleano, mismo patron que ES_PUBLICO en
+ * i18n.ts. Cuando el abogado firme se pone a `true`, y ENTONCES van las tres
+ * cosas juntas o ninguna:
+ *   1. este booleano,
+ *   2. el `noindex` de privacy-policy.astro y terms.astro,
+ *   3. el filtro de sitemap de astro.config.mjs.
+ * Cambiar una sola de las tres deja el sitio contradiciendose.
+ */
+export const LEGAL_PUBLICO = false;
+
+/**
  * La inversa de `enlace()`: dada la ruta actual, la MISMA pagina en el otro
  * idioma. Devuelve null cuando esa pagina no existe.
  *

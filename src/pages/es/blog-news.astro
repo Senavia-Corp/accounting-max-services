@@ -13,6 +13,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import PuntosConfianza from "../../components/PuntosConfianza.astro";
 import { posts, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
 import { requiereEsTexto, enlace } from "../../lib/es";
@@ -48,6 +49,8 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         <div class="title-center">
           <h1 class="h1">{c.blog.title}</h1>
           <div>{c.blog.intro}</div>
+          {/* Sin CTA en esta cabecera: van tras la entradilla, igual que en EN. */}
+          <PuntosConfianza lang={lang} />
         </div>
 
         {/* .wrapper-team es la clase que usa el propio baseline aqui (artefacto

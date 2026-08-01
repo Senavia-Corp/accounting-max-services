@@ -34,6 +34,8 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import CtaConsulta from "../../components/CtaConsulta.astro";
+import PuntosConfianza from "../../components/PuntosConfianza.astro";
 import { servicios, testimonios, sanity, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
 import { requiereEsTexto, enlace } from "../../lib/es";
@@ -46,7 +48,6 @@ const MEDIOS = [
   "66591cff761a876e791ad585-1.png",
   "66591defc9bd4c2b2a6fd8c8-2.png",
   "66591fc962e8774f9117068b-3.png",
-  "6785bf353063de8bcbcf3dfc-icon-13.svg",
   "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
   "684a14073e3e3c127cc2a315-starts.svg",
   "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
@@ -75,7 +76,6 @@ const hero = img("6658e5a9a386bf0eb1b0c6a0-main-picture.jpg");
 const feat1 = img("66591cff761a876e791ad585-1.png");
 const feat2 = img("66591defc9bd4c2b2a6fd8c8-2.png");
 const feat3 = img("66591fc962e8774f9117068b-3.png");
-const iconCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
 const iconGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
 const iconEstrellas = img("684a14073e3e3c127cc2a315-starts.svg");
 const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
@@ -132,21 +132,32 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
             <h1 class="h1"><strong>{c.home.heroTitle}</strong></h1>
             <div>{c.home.heroIntro}</div>
             <a href={CONTACTO} class="button w-button">{c.home.heroCta}</a>
+            <PuntosConfianza lang={lang} />
           </div>
         </div>
       </div>
-      <img
-        src={src(hero, 2000)}
-        srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
-        sizes="100vw"
-        width={hero.w}
-        height={hero.h}
-        alt={c.home.heroAlt}
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-        class="background-header"
-      />
+      {/* La fuente alternativa en data: evita que la portada movil descargue
+          una foto que el vendor pone en display:none a <=991. Va en base64 y
+          sin espacios: en un `srcset` el espacio separa la URL del descriptor.
+          Explicado a fondo en el gemelo ingles (index.astro). */}
+      <picture>
+        <source
+          media="(max-width: 991px)"
+          srcset="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        />
+        <img
+          src={src(hero, 2000)}
+          srcset={srcset(hero, [500, 800, 1080, 1600, 2000])}
+          sizes="100vw"
+          width={hero.w}
+          height={hero.h}
+          alt={c.home.heroAlt}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          class="background-header"
+        />
+      </picture>
     </section>
 
     {/* ====================================================== BAR-SERVICES */}
@@ -429,32 +440,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     </section>
 
     {/* ========================================================= CALL-ACTION */}
-    <section class="call-action" aria-labelledby="cta-title">
-      <div class="w-layout-blockcontainer container w-container">
-        <section class="footer-subscribe">
-          <div class="wrapper-call-action">
-            <div class="block-content-call-to-action">
-              <img
-                src={iconCta.url}
-                width={iconCta.w}
-                height={iconCta.h}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                class="icon-news"
-              />
-              <div class="div-block-10">
-                <h2 class="h2" id="cta-title">{c.cta.title}</h2>
-                <div>{c.cta.text}</div>
-              </div>
-            </div>
-            <div>
-              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
-            </div>
-          </div>
-        </section>
-      </div>
-    </section>
+    <CtaConsulta lang={lang} tituloId="cta-title" />
 
     {/* ================================================================= FAQ */}
     <section class="faq" aria-labelledby="faq-title">

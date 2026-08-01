@@ -1133,3 +1133,601 @@
     width: 100%;
   }
 }
+
+/* ===========================================================================
+ * CAMBIO 1 — BARRA CTA DE CONSULTA (CtaConsulta.astro, 6 rutas)
+ *
+ * El problema no era la fila: era la MEDIDA. `.block-content-call-to-action`
+ * (accounting-max:1097) es un flex con max-width:800px dentro de un .container
+ * de 1250px, asi que el parrafo corria ~90 caracteres por linea y el titular
+ * partia dejando "Today!" huerfano. Y con `justify-content:space-between` el
+ * hueco sobrante caia entero entre el fin del parrafo y el boton.
+ *
+ * Aqui se declara una reticula de tres zonas con anchos definidos (icono /
+ * texto / accion), una sola medida compartida por titular y parrafo, y una
+ * sola alineacion vertical: centrado respecto al alto de la barra.
+ *
+ * ACOTADO A >=992px A PROPOSITO. Por debajo manda lo que ya hace el vendor
+ * —columna a <=991 (accounting-max:2414) y columna centrada a <=767
+ * (:2788/:2797)— asi que la pila movil no hereda ni una pista de esta
+ * reticula.
+ *
+ * TODOS los selectores van prefijados con `.call-action `. Sin ese prefijo
+ * alcanzarian a la newsletter del pie, que reutiliza .footer-subscribe y
+ * .icon-news.
+ * ======================================================================== */
+@media screen and (min-width: 992px) {
+  /* UN CONFLICTO QUE HAY QUE NOMBRAR, porque la solucion depende de el.
+   *
+   * Se pedian tres cosas a la vez: medida comoda de 60-75 caracteres, boton
+   * pegado al borde derecho del .container, y ningun hueco muerto delante del
+   * boton. En un contenedor de 1250px las tres NO caben juntas:
+   *
+   *     icono 100 + hueco 25 + texto T + hueco 32 + boton ~230 = 1250
+   *     =>  T = 863px  =>  ~96 caracteres por linea
+   *
+   * O sea que llenar el ancho exige romper la medida, y respetar la medida
+   * deja hueco. Medido con el boton a ras del borde: el texto acababa 372px
+   * antes que el boton — exactamente el "hueco muerto" del que venia la queja.
+   *
+   * Se elige la medida, que es la peticion con un motivo tipografico detras, y
+   * el hueco se elimina de raiz: la FILA se dimensiona por su contenido y se
+   * centra. Asi las tres zonas quedan juntas y simetricas dentro de la barra,
+   * y el navy sigue ocupando el ancho completo. El boton ya no toca el borde
+   * del .container, toca el de la fila: es el unico borde que existe cuando no
+   * hay hueco que rellenar. */
+  .call-action .wrapper-call-action {
+    display: grid;
+    /* Zona 1+2 (contenido) | zona 3 (accion), las dos por contenido. */
+    grid-template-columns: auto auto;
+    justify-content: center;
+    /* UNA sola alineacion vertical para las tres zonas: el centro de la fila.
+     * Antes el icono se alineaba arriba con el H2, el parrafo caia libre y el
+     * boton se centraba respecto a toda la barra: tres criterios distintos. */
+    align-items: center;
+    column-gap: 2em;
+  }
+
+  /* Zona 1 (icono) | zona 2 (texto). 100px es el alto real de .icon-news
+   * (accounting-max:1057): la pista mide lo que mide el icono, con un ancho
+   * declarado y no emergente.
+   * max-width:none anula el 800px del vendor. Quien fija la medida ahora es
+   * .div-block-10, y dos topes compitiendo es como se pierde el control. */
+  .call-action .block-content-call-to-action {
+    display: grid;
+    grid-template-columns: 100px minmax(0, 50ch);
+    align-items: center;
+    column-gap: 25px;
+    max-width: none;
+  }
+
+  /* LA MEDIDA. La fija la pista de arriba y .div-block-10 solo la hereda, asi
+   * que titular y parrafo comparten borde derecho exacto — comprobado: los dos
+   * acaban en el mismo pixel. Antes cada uno tenia su propio ancho y el bloque
+   * se veia escalonado por la derecha.
+   *
+   * Va en el contenedor de los dos y NO sobre el <h2>: el h2 va a 35px y el
+   * mismo numero de `ch` ahi daria una caja del doble de ancha.
+   *
+   * 50 SALE DE CONTAR CARACTERES EN EL NAVEGADOR, no de la teoria: `ch` es el
+   * avance del glifo "0", mas ancho que la media de la prosa, asi que 50ch son
+   * 451px y dan 66 caracteres por linea. Tabla medida (EN / ES):
+   *
+   *      ch   EN                 ES
+   *      58   74 / 77            78 / 73 / 16   <- se pasa de banda y huerfana
+   *      52   71 / 65 / 15       70 / 66 / 31   <- huerfana en EN
+   *      50   66 / 65 / 20       67 / 69 / 31   <- elegido: los dos en banda
+   *      48   61 / 59 / 31       61 / 61 / 45   <- se queda corto de mas
+   *
+   * El ES es el caso limite en las seis rutas: es mas largo que el EN. */
+  .call-action .div-block-10 {
+    min-width: 0;
+  }
+
+  /* Reparte las dos lineas del titular. Antes partia dejando "Today!" solo en
+   * la segunda; medido con balance da 16/24 y "Today!" ya no queda huerfano. */
+  .call-action .div-block-10 .h2 {
+    text-wrap: balance;
+  }
+
+  /* Ayuda con la ultima linea del parrafo. No hace milagros —solo reajusta las
+   * ultimas lineas dentro de un margen corto—, por eso la medida de arriba
+   * esta elegida contando, y no confiando en esta declaracion. */
+  .call-action .div-block-10 > div {
+    text-wrap: pretty;
+  }
+}
+
+/* El vendor recorta el bloque de texto a 300px a <=479 (accounting-max:2971).
+ * A 375px de viewport el hueco util ya es de 311px, asi que ese tope solo
+ * regala 11px de ancho a cambio de apretar el texto. Se neutraliza ahora que
+ * la medida la fija .div-block-10 mas arriba.
+ * DESVIACION DEL BASELINE: 11px de ancho, 6 rutas. */
+@media screen and (max-width: 479px) {
+  .call-action .div-block-10 {
+    max-width: 100%;
+  }
+}
+
+/* ===========================================================================
+ * CAMBIOS 3 y 4 — BARRAS LATERALES PEGAJOSAS
+ *
+ * EL `top` NO ES SIMETRIA, ES UN OBSTACULO MEDIDO. A >=992px la cupula navy
+ * de .brand (accounting-max:778) es `position:absolute` DENTRO de .navbar y
+ * cuelga por debajo del .menu de 125px. Medido en el navegador, en estado
+ * condensado (que es el unico que coexiste con una barra ya pegada, porque las
+ * dos empiezan a pegarse mucho mas abajo del umbral de 88px):
+ *
+ *     .brand condensado -> bottom 137,5px · x de 652 a 788
+ *     .block-right empieza en x=736  ->  SE SOLAPAN de 736 a 788
+ *
+ * Con --menu-alto + 24 = 149px la tarjeta pasa 11,5px por debajo de la cupula
+ * y su <h2> queda a 199px, muy despejado. Por eso el numero sale de
+ * --menu-alto y no de un valor suelto: hay algo fisico a esa altura.
+ *
+ * --menu-alto ya existe (mas arriba en este fichero, 125px / 108px a <=991) y
+ * es la misma variable que usan el cajon movil y el scroll-margin de #main. No
+ * se duplica.
+ *
+ * Sin JavaScript, sin IntersectionObserver, sin librerias: el grid y el flex
+ * ya dan el recorrido. Solo a >=992px, que es EXACTAMENTE donde el vendor
+ * colapsa las dos maquetaciones a una columna (accounting-max:2440 para
+ * .wrapper-service y :2638 para .wrapper-content-blog). En movil y tablet no
+ * hay nada de esto: flujo normal.
+ * ======================================================================== */
+
+/* --- CAMBIO 3: ficha de servicio ---------------------------------------- */
+@media screen and (min-width: 992px) {
+  /* `align-self:start` NO es cosmetica y va PRIMERO: .wrapper-service es
+   * `display:grid` (accounting-max:1325) y sus hijos van a `stretch`, asi que
+   * .block-right medía exactamente lo mismo que el articulo (2600px medidos en
+   * /services/personal-tax-preparation). Un elemento tan alto como su bloque
+   * contenedor no tiene por donde desplazarse: `sticky` no haria nada. */
+  .wrapper-service > .block-right {
+    align-self: start;
+    position: sticky;
+    top: calc(var(--menu-alto) + 24px);
+
+    /* ELECCION DE ALTURA: tope + scroll interno, NO anclaje por abajo.
+     *
+     * La tarjeta mide ~680px en EN y ~720px en ES (el titulo "soluciones
+     * financieras globales" parte en dos lineas). La banda util en una
+     * pantalla de 800px es 800-149-24 = 627px, asi que en ES no cabe.
+     *
+     * Con anclaje por abajo (`top:auto; bottom:24px`) la tarjeta ES arrancaria
+     * en y=56 y su <h2> blanco a y=106, o sea DEBAJO de la cupula navy: y como
+     * la cupula y la tarjeta son las dos exactamente var(--bllue), el fallo es
+     * invisible en una revision rapida de escritorio y solo se ve en ES a
+     * 1280x800. Ademas la lista de servicios no tiene tope en Sanity
+     * (sanity.ts la pide entera): cada servicio nuevo suma ~45px y empeora el
+     * anclaje por abajo, mientras que el tope de aqui aguanta.
+     *
+     * Coste honesto: en pantallas bajas aparece una barra de scroll dentro de
+     * la tarjeta. A cambio NUNCA se recorta un servicio, que era el requisito.
+     * A partir de ~900px de alto no aparece ninguna barra (por eso `auto`). */
+    max-height: calc(100vh - var(--menu-alto) - 48px);
+    overflow-y: auto;
+    /* Sin esto, llegar al final de la lista encadena el scroll con la pagina. */
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--green-1) #ffffff1a;
+  }
+}
+
+/* --- CAMBIO 4: entrada de blog ------------------------------------------ */
+@media screen and (min-width: 992px) {
+  /* AQUI NO SE TOCA `align-self`, Y ESA ES LA CLAVE. Va justo al reves de lo
+   * que parece: .blog-column-right SIGUE estirada al alto del articulo, y
+   * precisamente por eso su hijo pegajoso tiene por donde viajar. Consecuencias
+   * en cadena, todas buenas:
+   *   · el fondo #eee (accounting-max:2044) sigue llegando al pie del articulo,
+   *     asi que no hay franja blanca y no hay que mudar el gris a las tarjetas;
+   *   · no hace falta tope de altura ni scroll anidado: lo pegajoso es el promo
+   *     (~380px), no el riel entero (~950px);
+   *   · los articulos destacados (10 hoy, sin tope en sanity.ts) jamas se
+   *     recortan, porque son estaticos.
+   *
+   * POR QUE SE INVIERTE EL ORDEN VISUAL, que es lo unico que se ve:
+   * `sticky` conserva su hueco de layout. Con el promo de primer hijo —como
+   * viene del baseline— al desplazarse se iria ENCIMA de la lista de
+   * destacados, y .block-promo-blog (accounting-max:2093) declara solo
+   * `border:1px dashed`, SIN FONDO: seria texto sobre texto. No es una
+   * preferencia editorial, es la unica colocacion en la que el promo puede
+   * pegarse sin tapar nada.
+   *
+   * En el DOM el promo sigue siendo el primero, asi que en movil (donde esta
+   * regla no aplica) y para un lector de pantalla se lee antes que la lista.
+   * Esa divergencia entre orden visual y orden de DOM se anota: SC 1.3.2 y
+   * 2.4.3. Impacto bajo — son dos bloques grandes, autonomos y el <aside> esta
+   * nombrado— pero queda escrita. */
+  .blog-column-right > .block-blogs-features {
+    order: 1;
+  }
+  .blog-column-right > .block-promo-blog {
+    order: 2;
+    position: sticky;
+    top: calc(var(--menu-alto) + 24px);
+    /* .blog-column-right no declara `gap`: sin esto el promo quedaria pegado
+     * a la lista que ahora tiene encima. */
+    margin-top: 25px;
+  }
+}
+
+/* ===========================================================================
+ * CAMBIO 6 — CABECERAS: ESCALA VERTICAL UNICA EN MOVIL
+ *
+ * Medido en el navegador a 400x790, ANTES de tocar nada. Blanco por encima del
+ * titular en las cuatro cabeceras:
+ *
+ *     .header               (portada)   96px   padding-top:6em  (accounting-max:2170)
+ *     .header-page          (servicios) 228px  8em que sobrevive + .block-header-page 100px
+ *     .header-page-about-us (about)     96px + 250px de foto DELANTE del H1 = 378px
+ *     .blog                 (blog-news) 64px   padding-top:4em  (accounting-max:2523)
+ *
+ * Cuatro numeros sin relacion: no habia escala, cada cabecera se parcheo por
+ * separado. Eso es el motivo de fondo de "los espacios no son correctos".
+ *
+ * POR QUE NO SE DERIVA DE --menu-alto, que es lo que parecia razonable:
+ * .menu es `position:sticky` (accounting-max:164), o sea EN FLUJO. Ocupa su
+ * banda en el documento y la cabecera empieza YA por debajo: el padding
+ * superior del hero no esta compensando la altura del cromo, no compensa nada.
+ * Colgarlo de --menu-alto obligaria a inventar un coeficiente (x0,6, -44px,
+ * lo que sea) y la arbitrariedad solo se mudaria del padding al coeficiente.
+ * Peor: --menu-alto se redefine a <=991 por un motivo ajeno (es el `top` del
+ * cajon movil), asi que retocar la barra superior moveria cuatro cabeceras.
+ * Los valores salen de la escala que el sitio ya usa (2/4/6/8em), en `rem`
+ * para que no hereden ningun font-size intermedio.
+ *
+ * ACOTADO A <=991px A PROPOSITO. En escritorio no hay nada que unificar y si
+ * mucho que romper: .header no tiene padding-top ahi porque manda
+ * `height:650px` + centrado (accounting-max:244), y anadirle padding con
+ * box-sizing:border-box BAJARIA el bloque centrado. Y el padding-bottom:2em de
+ * .header-page-about-us existe porque .bar-features no tiene padding-top.
+ * ======================================================================== */
+@media screen and (max-width: 991px) {
+  :root {
+    --hero-pt: 4rem; /* 64px — el mismo blanco sobre el titular en las cuatro */
+    --hero-pb: 4rem; /* 64px — cierre de las que NO acaban en foto a sangre */
+    --hero-gap: 2rem; /* 32px — separacion constante dentro de la cabecera */
+  }
+
+  .header,
+  .header-page,
+  .header-page-about-us,
+  .blog {
+    padding-top: var(--hero-pt);
+    /* En columna, `space-between` reparte el sobrante y separa el texto de la
+     * foto por un hueco que cambia con el largo del copy — por eso el espacio
+     * se veia distinto en cada ficha de servicio. Apilado y con gap constante. */
+    justify-content: flex-start;
+    gap: var(--hero-gap);
+  }
+
+  /* El cierre inferior depende de en que TERMINA la cabecera, que es una razon
+   * y no cuatro valores sueltos: las que acaban en texto o en una rejilla
+   * cierran con --hero-pb; la de servicios acaba en una foto a sangre y
+   * cualquier padding ahi se ve como franja blanca. */
+  .header,
+  .header-page-about-us,
+  .blog {
+    padding-bottom: var(--hero-pb);
+  }
+
+  /* --- Fuera las alturas de escritorio ---------------------------------- */
+  /* Que el alto lo de el contenido. `height` ya lo hacia el vendor (:2172); se
+   * repite por simetria con las otras tres y porque una altura fija en un hero
+   * movil es siempre el mismo bug. */
+  .header {
+    height: auto;
+  }
+  /* 550px forzaba hueco muerto en las fichas de intro corta. */
+  .header-page {
+    min-height: 0;
+  }
+
+  /* El aire bajo el bloque de texto de la portada lo daba un margin suelto de
+   * 4em (accounting-max:2178). Ahora lo da --hero-gap, en la misma escala. */
+  .block-header {
+    margin-bottom: 0;
+  }
+
+  /* Los 100px que .block-header-page (accounting-max:2426) sumaba ENCIMA de los
+   * 8em de la seccion: juntos daban los 228px de servicios. */
+  .block-header-page {
+    padding-top: 0;
+  }
+
+  /* --- LA FRANJA BLANCA BAJO LA FOTO DE SERVICIO ------------------------ */
+  /* No era un fallo aparte: es la otra mitad de la MISMA declaracion.
+   * `padding: 8em 2em` (accounting-max:1300) nunca se sobreescribia en
+   * vertical —el :2420 solo anula izquierda y derecha—, asi que los mismos
+   * 128px salian arriba Y abajo. Medidos: 128px exactos de blanco entre el
+   * final de la foto del W-7 y la seccion siguiente. */
+  .header-page {
+    padding-bottom: 0;
+  }
+
+  /* Y el agravante que hacia que la franja cambiara por ficha: `height:100%`
+   * (accounting-max:1313) SOBREVIVE al :2434, que solo cambia width y
+   * position. Al entrar en flujo dentro de un flex en columna, ese 100% se
+   * convierte en una base de 941px que luego el reparto de flex ENCOGE hasta
+   * lo que sobre — o sea que el alto de la foto dependia del largo del copy y
+   * `object-fit:cover` recortaba distinto en cada uno de los 12 servicios.
+   * Con `flex:none` + `height:auto` manda la proporcion intrinseca (4:3) y la
+   * foto mide lo mismo en las 12. */
+  .background-services {
+    flex: none;
+    height: auto;
+  }
+
+  /* El recorte movil estaba acotado a <=789px por paridad con el <style>
+   * incrustado de produccion, asi que entre 790 y 991 se aplicaba la cuna de
+   * ESCRITORIO a una foto que ya va a ancho completo y en flujo. Con la altura
+   * ya intrinseca la caja cambia de forma y esa cuna recorta la esquina
+   * superior izquierda. Se sube el corte al breakpoint real del layout.
+   * DESVIACION DEL BASELINE en la banda 790-991. */
+  .background-services {
+    clip-path: polygon(50% 20%, 100% 0, 100% 100%, 0 100%, 0 0);
+  }
+
+  /* --- Orden en movil: titular -> intro -> CTA -> confianza -> imagen ---- */
+  /* Portada, servicios y blog ya lo cumplen. En /about-us la foto es el PRIMER
+   * hijo del DOM y el grid colapsa a una columna (accounting-max:2475), asi que
+   * el usuario veia 96px de blanco y un edificio, sin titular.
+   *
+   * Se reordena solo la PINTURA, con `order` sobre los dos <div> que son las
+   * celdas del grid. El <img> NO se mueve del DOM: es el LCP de escritorio y
+   * lleva loading="eager" + fetchpriority="high" a proposito. */
+  .wrapper-about-us > .bloque-hero-texto {
+    order: 1;
+  }
+  .wrapper-about-us > .bloque-hero-foto {
+    order: 2;
+  }
+
+  /* --- Portada: superficie de marca en vez de blanco roto ---------------- */
+  /* La portada movil no esta "a medio cargar": es
+   * .background-header{display:none} (accounting-max:2194), del propio Webflow.
+   * Se le da superficie con un degradado de dos tintas claras derivadas de
+   * --green-1, cero peticiones y cero bytes. NO se restaura la foto: hoy el LCP
+   * movil de la portada es un nodo de TEXTO, y meter una imagen a sangre justo
+   * en el pliegue lo convertiria en un LCP de imagen y lo empeoraria en red
+   * lenta — justo lo que este cambio no puede hacer. La envoltura con fuente
+   * alternativa de index.astro remata la decision cancelando la descarga. */
+  .header {
+    background-image: linear-gradient(160deg, #f2f6ea 0%, #ffffff 62%);
+  }
+}
+
+/* ===========================================================================
+ * CAMBIO 2 — CABECERA DE /blog-news
+ *
+ * Correccion al diagnostico de partida: /blog-news NO usa .header-page-blog
+ * (esa es la de /post/<slug>, /privacy-policy y /terms). Usa
+ * <section class="blog"> (accounting-max:1571) con un .title-center dentro
+ * (:532, max-width:950px, margin auto). O sea que el titular y la entradilla
+ * SI comparten ya un contenedor centrado: el defecto no es que falte la caja,
+ * es que 950px es demasiado ancho y la entradilla corria ~110 caracteres por
+ * linea. Solo tipografia, entonces.
+ *
+ * ACOTADO A .blog A PROPOSITO. .title-center no es de esta pagina: lo
+ * reutilizan el bloque .features de la portada y las 12 fichas de servicio, o
+ * sea 26 rutas x 2 lenguas. Una regla suelta sobre .title-center le cambiaria
+ * la medida al titular de todas ellas.
+ *
+ * El espacio superior NO se toca aqui: .blog es una de las cuatro cabeceras
+ * del CAMBIO 6 y su padding lo fija --hero-pt. Dos declaraciones peleando por
+ * el mismo padding es como se pierde el rastro de quien manda.
+ * ======================================================================== */
+.blog .title-center .h1 {
+  /* "…from Accounting Max Services" partia dejando "Max Services" sola en la
+   * segunda linea. `balance` reparte los caracteres entre las lineas. Quien no
+   * lo entienda descarta la declaracion y se queda exactamente como hoy. */
+  text-wrap: balance;
+}
+
+.blog .title-center > div {
+  /* LA MEDIDA. `ch` es el avance del glifo "0", mas ancho que la media de la
+   * prosa, asi que el numero de `ch` NO es el numero de caracteres: 56ch a
+   * 16px son 505px y dan 76 caracteres en la linea mas larga.
+   *
+   * 56 SALE DE MEDIR, no de la teoria, y es un compromiso EN/ES explicito.
+   * Contados caracter a caracter en el navegador (el ES es el caso limite,
+   * 231 caracteres frente a 148):
+   *
+   *      ch   EN                    ES
+   *      58   76 / 72               74 / 69 / 68 / 20  <- huerfana en ES
+   *      56   76 / 72               61 / 68 / 71 / 31  <- elegido
+   *      54   68 / 70 / 10          61 / 68 / 63 / 39  <- huerfana en EN
+   *
+   * O sea: bajar mas arregla la cola del ES pero PARTE el EN en tres lineas
+   * con una de diez caracteres, que es peor defecto que pasarse uno de la
+   * banda comoda. A 56 el EN son dos lineas limpias y el ES cierra con 31
+   * caracteres, que ya es una linea, no una huerfana.
+   *
+   * `text-wrap: pretty` esta soportado y puesto, pero por si solo NO evita
+   * estas colas: solo reajusta las ultimas lineas dentro de un margen corto.
+   * Comprobado, no supuesto.
+   *
+   * margin-inline:auto porque .title-center va centrado y sin el la caja
+   * recortada quedaria pegada a la izquierda. */
+  max-width: 56ch;
+  margin-inline: auto;
+  text-wrap: pretty;
+}
+
+/* ===========================================================================
+ * CAMBIO 6 (bis) — PUNTOS DE CONFIANZA DEL HERO (PuntosConfianza.astro)
+ *
+ * CONTRASTE, que aqui no es un detalle: la superficie es OPACA (--white) y el
+ * texto va en --bllue = 13,4:1. Es obligatorio y no decorativo. En
+ * .header-page el bloque de texto ocupa el 55% y la foto empieza en el 50%, o
+ * sea que la franja inferior de las pastillas CAE SOBRE LA FOTO — y esa foto
+ * cambia con cada uno de los 12 servicios. Contra doce imagenes distintas lo
+ * unico que se puede garantizar es una superficie opaca: nada de texto directo
+ * sobre la imagen, nada de fondos semitransparentes. En portada y /about-us el
+ * fondo es claro y el mismo par de colores sigue valiendo.
+ *
+ * El borde es decoracion y no el limite de un control (no son interactivas),
+ * asi que SC 1.4.11 no aplica; aun asi #dfe4d5 sobre blanco se distingue.
+ *
+ * El icono va en --green-2 y es aria-hidden: no transporta informacion, la
+ * etiqueta de al lado lo dice todo, asi que su contraste no es el que manda.
+ * ======================================================================== */
+.hero-confianza {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block: 25px 0;
+  /* webflow.css:256 le da 40px de padding a TODO <ul>. */
+  padding-left: 0;
+  list-style: none;
+}
+
+.hero-confianza > li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* Sin esto el texto largo del ES no puede partir dentro de la pastilla. */
+  min-width: 0;
+  padding: 7px 14px;
+  border: 1px solid #dfe4d5;
+  border-radius: 999px;
+  background-color: var(--white);
+  color: var(--bllue);
+  font-size: 14px;
+  line-height: 18px;
+  /* El -0,5px del <body> aprieta demasiado a 14px. */
+  letter-spacing: 0;
+  box-shadow: 0 1px 2px #0000000f;
+}
+
+.hero-confianza svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--green-2);
+}
+
+/* .title-center va centrado: sin esto las pastillas de /blog-news quedarian
+ * alineadas a la izquierda dentro de un bloque centrado. */
+.blog .hero-confianza {
+  justify-content: center;
+}
+
+@media screen and (max-width: 767px) {
+  /* 2x2 GARANTIZADO, y por eso `grid` y no el `flex-wrap` de arriba. Con wrap
+   * el reparto depende del ancho de cada etiqueta, y el ES es mas largo y
+   * desigual: sale 3+1 con una pastilla huerfana en la ultima fila. Con cuatro
+   * elementos en dos columnas la reticula solo puede dar dos filas. */
+  .hero-confianza {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    /* Las pastillas miden lo que mide su etiqueta, no lo que mide la columna:
+     * estiradas dejaban un vacio largo detras del texto y se leian como
+     * botones, no como pastillas. La que no cabe se queda al ancho de la
+     * columna y parte, que es lo correcto. */
+    justify-items: center;
+  }
+  /* Cada fila sigue la alineacion de SU cabecera: portada, servicios y blog van
+   * centradas en movil (.block-header, .block-header-page y .title-center lo
+   * son), pero el texto de /about-us va a la izquierda y unas pastillas
+   * centradas debajo quedarian descolgadas. */
+  .wrapper-about-us .hero-confianza {
+    justify-items: start;
+  }
+  .blog .hero-confianza {
+    justify-content: stretch;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  /* Una sola columna, y esto SI se midio antes de decidirlo. A 400px de
+   * viewport, forzando dos columnas la pastilla queda en 163px y las etiquetas
+   * se parten asi (lineas por pastilla):
+   *
+   *      2 columnas   EN [4, 2, 2, 2]     ES [4, 1, 3, 3]
+   *      1 columna    EN [2, 1, 1, 1]     ES [2, 1, 1, 1]
+   *
+   * O sea que la primera —"Enrolled Agents licensed to practice before the
+   * IRS", la mas larga y la que mas pesa— se parte en CUATRO lineas dentro de
+   * una pastilla de 163px. Cuatro filas cortas se leen; cuatro bloques
+   * desiguales de dos a cuatro lineas son ruido decorativo. */
+  .hero-confianza {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===========================================================================
+ * CAMBIO 5 — PIE: ENLACES LEGALES Y CREDITO DE AUTORIA
+ *
+ * POR QUE EN LA ZONA CLARA Y NO EN LA BARRA VERDE: --white sobre --green-2
+ * (#6da228) da 3,07:1 y SC 1.4.3 pide 4,5:1 para texto normal. Texto pequeno
+ * NO rebaja ese umbral, lo sube. En .container-footer no hay background, asi
+ * que manda el blanco del <body> con el color --bllue: 13,4:1.
+ *
+ * (Nota aparte, no se toca en este cambio: el copyright que YA existe en
+ * .bar-footer es blanco sobre ese mismo verde y falla el mismo criterio. Es
+ * preexistente y del baseline; se reporta, no se arregla de tapadillo.)
+ * ======================================================================== */
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 25px;
+  margin-top: 2em;
+  padding-top: 1.5em;
+  border-top: 1px solid #2431371f;
+}
+
+/* webflow.css:256 da `margin-bottom:10px; padding-left:40px` a TODO <ul>, que
+ * a estos nunca les habia llegado porque no existian. Mismo caso ya resuelto
+ * mas arriba para .collection-list-footer. */
+.footer-legal-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 25px;
+  margin-block: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+/* min-height:44px por SC 2.5.8, mismo criterio y mismo valor que .link-footer
+ * mas arriba en este fichero. El subrayado NO se quita: es un enlace legal y
+ * `a{text-decoration:underline}` es lo correcto aqui. Solo se corrige el
+ * color, que ese mismo selector deja en #333 mientras el resto va en navy. */
+.footer-legal-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--bllue);
+  font-size: 14px;
+}
+
+/* Secundario de verdad: mas pequeno que el copyright de AMS y en el mismo
+ * navy. Nada de un gris nuevo — la paleta son nueve tokens y esta linea no
+ * justifica el decimo. */
+.footer-credito {
+  margin-block: 0;
+  font-size: 13px;
+  line-height: 20px;
+}
+.footer-credito-link {
+  color: var(--bllue);
+}
+
+@media screen and (max-width: 767px) {
+  /* A este ancho .wrapper-footer cae a una columna y .block-footer pasa a
+   * text-align:center (accounting-max:2703-2712). La fila legal se alinea con
+   * ellos o queda descolgada a la izquierda de tres bloques centrados. */
+  .footer-legal {
+    justify-content: center;
+    text-align: center;
+  }
+  .footer-legal-enlaces {
+    justify-content: center;
+    width: 100%;
+  }
+}

@@ -120,6 +120,18 @@ const EN = {
     servicesTitle: "Services",
     // El ano y la razon social NO se tocan (R3): solo se traduce la formula.
     copyright: "Copyright 2025 Accounting Max Services Inc. All rights reserved.",
+    // Enlaces legales del pie. Las dos rutas son EN-only por D4 (ver SIN_ES en
+    // src/lib/es.ts), asi que en /es/ se enlazan igual con hreflang="en" — el
+    // mismo criterio que ya aplica es/contact-us.astro.
+    privacy: "Privacy Policy",
+    terms: "Terms & Conditions",
+    // Credito de autoria del SITIO. Es otra cosa que el copyright de arriba,
+    // que es la titularidad del contenido y la marca de AMS: van en lineas
+    // separadas y nunca fundidos en un solo "©".
+    // "Senavia Corp" es nombre propio: literal en las dos lenguas, igual que
+    // "Accounting Max Services". El espacio final es intencionado.
+    credit: "Designed & developed by ",
+    creditLink: "Senavia Corp",
   },
 
   newsletter: {
@@ -268,6 +280,40 @@ const EN = {
     title: "Schedule a free consultation call Today!",
     text: "Take the first step towards stress-free accounting! Schedule your free 30-minute consultation call now and get tailored advice for your small business.",
     button: "Book A Consultation",
+  },
+
+  // Senales de confianza bajo el CTA de las cuatro cabeceras.
+  //
+  // NINGUNA AFIRMACION ES NUEVA. Las cuatro ya estan publicadas en el sitio y
+  // aqui va citado el origen de cada una. Lo que SI es nuevo es la REDACCION
+  // corta: eso lo firma quien reviso D3 antes de publicarse, sobre todo el ES.
+  //   [0] about.introHtml · faq.items[3].a · about.features[0] · post.promoText
+  //   [1] about.features[1] · about.introHtml · faq.items[2].a
+  //   [2] meta.aboutDescription · about.introHtml
+  //   [3] cta.text
+  //
+  // Prohibido anadir aqui cifras que no esten ya publicadas y verificadas
+  // ("500+ clientes", "4,9 estrellas", "#1 de Florida"). Es un despacho con
+  // Enrolled Agents autorizados ante el IRS: una cifra inventada no es un
+  // detalle de copy.
+  //
+  // GLOSARIO: "Enrolled Agents" va literal, y va DENTRO de la etiqueta a
+  // proposito. "Licensed to practice before the IRS" a secas sugiere que la
+  // licencia la tiene el DESPACHO, y la tienen las personas. Cuesta ancho de
+  // pastilla; es el precio correcto.
+  //
+  // No repite la barra verde del cromo: aquella da los NOMBRES de las
+  // credenciales ("Certified Public Accounting" / "Enrolled Agent (EA)") y
+  // esta da la CAPACIDAD, que es otra informacion.
+  //
+  // La tupla es de 4 y el tipo Cadenas obliga a 4 tambien en ES.
+  confianza: {
+    items: [
+      "Enrolled Agents licensed to practice before the IRS",
+      "English and Spanish",
+      "Since 2009 · 17+ years combined",
+      "Free 30-minute consultation",
+    ],
   },
 
   // FAQ de la portada. Contenido fiscal: el glosario manda (W-2, 1099, EIN,
@@ -467,6 +513,10 @@ const ES: Cadenas = {
     contactTitle: "Información de contacto",
     servicesTitle: "Servicios",
     copyright: "Copyright 2025 Accounting Max Services Inc. Todos los derechos reservados.",
+    privacy: "Política de Privacidad",
+    terms: "Términos y Condiciones",
+    credit: "Diseñado y desarrollado por ",
+    creditLink: "Senavia Corp",
   },
 
   newsletter: {
@@ -591,6 +641,18 @@ const ES: Cadenas = {
     title: "¡Agende hoy su llamada de consulta gratuita!",
     text: "¡Dé el primer paso hacia una contabilidad sin estrés! Agende ahora su llamada de consulta gratuita de 30 minutos y reciba asesoría a la medida para su pequeño negocio.",
     button: "Reserve una consulta",
+  },
+
+  // Las cuatro afirmaciones salen del ES ya publicado, no de traducir el EN a
+  // ojo: "Enrolled Agents autorizados a ejercer ante el IRS" es la formula
+  // canonica del sitio (meta.aboutDescription, about.introHtml, post.promoText).
+  confianza: {
+    items: [
+      "Enrolled Agents autorizados a ejercer ante el IRS",
+      "Inglés y español",
+      "Desde 2009 · más de 17 años acumulados",
+      "Consulta gratuita de 30 minutos",
+    ],
   },
 
   faq: {

@@ -24,6 +24,8 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import Nav from "../../../components/Nav.astro";
 import Footer from "../../../components/Footer.astro";
 import PortableText from "../../../components/PortableText.astro";
+import CtaConsulta from "../../../components/CtaConsulta.astro";
+import PuntosConfianza from "../../../components/PuntosConfianza.astro";
 import { servicios, testimonios, sanity, ogUrl, NEGOCIO } from "../../../lib/sanity";
 import type { Servicio, Testimonio } from "../../../lib/sanity";
 import { t } from "../../../lib/i18n";
@@ -34,7 +36,6 @@ type Asset = { originalFilename: string; url: string; w: number; h: number };
 
 export const getStaticPaths = (async () => {
   const MARCA = [
-    "6785bf353063de8bcbcf3dfc-icon-13.svg",
     "684a14073e3e3c127cc2a314-logo-google-reviews.svg",
     "684a14073e3e3c127cc2a315-starts.svg",
     "684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg",
@@ -101,7 +102,6 @@ const img = (nombre: string): Asset => {
   return a;
 };
 
-const iconoCta = img("6785bf353063de8bcbcf3dfc-icon-13.svg");
 const logoGoogle = img("684a14073e3e3c127cc2a314-logo-google-reviews.svg");
 const estrellas = img("684a14073e3e3c127cc2a315-starts.svg");
 const flecha = img("684a15893000dfa033be0899-684a120d78059a4010848353-arow.svg");
@@ -191,6 +191,7 @@ const tituloDe = (s: Servicio) =>
           <h1 class="h1">{titulo}</h1>
           <div>{intro}</div>
           <a href={CONTACTO} class="button w-button">{c.service.heroCta}</a>
+          <PuntosConfianza lang={lang} />
         </div>
       </div>
 
@@ -214,34 +215,7 @@ const tituloDe = (s: Servicio) =>
       }
     </section>
 
-    <section class="call-action">
-      <div class="w-layout-blockcontainer container w-container">
-        {/* En produccion era un <section class="footer-subscribe"> anidado: un
-            landmark de region sin nombre. Baja a <div>, igual que en EN. */}
-        <div class="footer-subscribe">
-          <div class="wrapper-call-action">
-            <div class="block-content-call-to-action">
-              <img
-                src={iconoCta.url}
-                width={iconoCta.w}
-                height={iconoCta.h}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                class="icon-news"
-              />
-              <div class="div-block-10">
-                <h2 class="h2">{c.cta.title}</h2>
-                <div>{c.cta.text}</div>
-              </div>
-            </div>
-            <div>
-              <a href={CONTACTO} class="button padding w-button">{c.cta.button}</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <CtaConsulta lang={lang} />
 
     <section class="body-service">
       <div class="w-layout-blockcontainer container w-container">
