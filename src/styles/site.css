@@ -1970,17 +1970,25 @@
  * paso deja inertes `justify-content` y `align-items` de la misma regla: una
  * declaracion neutraliza las tres.
  *
- * 6em/6em es el paso PEQUENO del vocabulario del sitio (.reviews lleva 6em,
- * accounting-max:506; .about-us y .features llevan 8em). Se usa el pequeno
- * porque los dos vecinos ya ponen aire por su cuenta: el hero cierra con 7rem
- * por debajo de su texto y .about-us abre con 8em por encima del suyo. Con 8em
- * aqui, el hueco hasta "about" serian 256px de blanco seguido.
+ * 6em ARRIBA y CERO ABAJO, y el cero no es un descuido.
+ *
+ * El hueco de abajo lo paga ENTERO el `padding-top: 8em` que .about-us ya trae
+ * del vendor (accounting-max:447). Con 6em aqui los dos paddings cobraban el
+ * mismo espacio dos veces: 96 + 128 = 218px de blanco medidos entre la ultima
+ * tarjeta y el video, el hueco MAS GRANDE de toda la portada — los demas van en
+ * 154 y 192 (reviews->features, features->call-action, call-action->faq). Con
+ * cero quedan los 128px de .about-us, por debajo de todos ellos.
+ *
+ * Se cede el hueco al vecino y no al reves porque .about-us es regla del vendor
+ * y solo existe en las dos portadas: bajarle el padding obligaria a un override
+ * mas para el mismo pixel. Si algun dia esta seccion deja de ir seguida de
+ * .about-us, habra que devolverle un padding-bottom propio.
  * `padding-left/right: 2em` del vendor se conserva: es el canal lateral comun. */
 .bar-services {
   display: block;
   margin-top: 0;
   padding-top: 6em;
-  padding-bottom: 6em;
+  padding-bottom: 0;
 }
 
 /* NEUTRALIZA el `display: flex` de accounting-max:406. Se conserva la regla del
@@ -2205,7 +2213,8 @@
 @media screen and (max-width: 991px) {
   .bar-services {
     padding-top: 4em;
-    padding-bottom: 4em;
+    /* Sin padding-bottom, igual que en escritorio: aqui .about-us tambien baja a
+     * 4em (accounting-max, bloque de 991px) y ese es el hueco. */
   }
 
   .servicios-rejilla {
