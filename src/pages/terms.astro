@@ -127,8 +127,8 @@ const DESCRIPCION =
             </mark>
           </p>
           <p>
-            How we handle what you do send us is described in our
-            <a href="/privacy-policy">Privacy Policy</a>, which includes our
+            How we handle what you do send us is described in
+            our <a href="/privacy-policy">Privacy Policy</a>, which includes our
             Gramm-Leach-Bliley Act privacy notice and forms part of these Terms.
           </p>
 
@@ -246,8 +246,10 @@ const DESCRIPCION =
 
           <h2 class="h2">16. How to reach us</h2>
           <p>
-            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>, email
-            <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
+            {/* El <a> no puede empezar renglon: Astro se come el salto y sale
+                "emailinfo@...". Ver la nota en privacy-policy.astro. */}
+            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>,
+            email <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
           </p>
           <address class="legal-address">
             {NEGOCIO.nombre}<br />

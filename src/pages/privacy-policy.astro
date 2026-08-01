@@ -370,8 +370,8 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
           </p>
           <p>
             Your browser does contact one outside service to load the headline typeface the site
-            is designed in: Adobe Typekit (<code>use.typekit.net</code>, which in turn loads
-            <code>p.typekit.net</code>). Those requests tell Adobe your IP address and general
+            is designed in: Adobe Typekit (<code>use.typekit.net</code>, which in turn
+            loads <code>p.typekit.net</code>). Those requests tell Adobe your IP address and general
             browser information. We do not receive that data and we do not use it. Every other
             typeface on this site is served from this website itself, so loading it tells no one
             else anything.
@@ -438,8 +438,11 @@ const COMPARTIR: { razon: string; detalle: string; limitar: string }[] = [
 
           <h3 class="h3">Questions?</h3>
           <p>
-            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>, email
-            <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
+            {/* OJO: el <a> NO puede empezar renglon. Astro se come el salto de
+                linea que lo precede y el texto sale pegado ("email info@..." ->
+                "emailinfo@..."). Mismo caso documentado en Footer.astro. */}
+            Call us at <a href={NEGOCIO.telefonoHref}>{NEGOCIO.telefono}</a>,
+            email <a href={`mailto:${NEGOCIO.email}`}>{NEGOCIO.email}</a>, or write to us:
           </p>
           <address class="legal-address">
             {NEGOCIO.nombre}<br />
