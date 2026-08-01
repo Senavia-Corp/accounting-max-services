@@ -611,3 +611,19 @@ textarea.text-field-form {
 .lead {
   display: block;
 }
+
+/* `.link-footer` es una clase del PIE reutilizada en el lateral del blog. En el
+ * pie es blanco al 82 % sobre navy; aquí el fondo es claro y daba 1,06:1.
+ * Cuarta vez que muerde el mismo patrón en esta fase: una clase que lleva su
+ * color de otro contexto y viaja con él. */
+.block-blogs-features .link-footer,
+.block-promo-blog .link-footer,
+.blog-column-right .link-footer {
+  color: var(--tinta);
+}
+
+.block-blogs-features .link-footer:hover,
+.block-promo-blog .link-footer:hover,
+.blog-column-right .link-footer:hover {
+  color: var(--verde-texto);
+}
