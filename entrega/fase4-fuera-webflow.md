@@ -140,3 +140,59 @@ privado), **SMTP** inexistente, **`SANITY_WRITE_TOKEN`** con permiso expreso pen
 El captcha de producción sigue con la clave de **pruebas** de Cloudflare
 (`1x00000000000000000000AA`, «siempre pasa») en las 54 rutas. Zona prohibida por
 concurrencia; este encargo no lo ha tocado.
+
+---
+
+## Cierre — `/contact-us` y limpieza de `site.css`
+
+**1 de agosto de 2026.** Commits `a3b8e4d` (formulario) y `52f8229` (limpieza).
+
+### El formulario, con una sola fuente
+
+`/contact-us` y `/es/contact-us` usan ahora el mismo `LeadForm.astro` que las 24 fichas:
+**−596 líneas**. Había dos copias del contrato de Turnstile —los cuatro `data-` del widget,
+el honeypot `ref_id`, el campo `ts` y la carga en fachada— y dos copias de su script. Dos
+fuentes para un contrato de seguridad es una de más: el día que una se actualice y la otra
+no, el fallo es silencioso y solo se nota porque dejan de llegar leads.
+
+De paso, esa copia arrastraba dos defectos que el componente no tiene: el reto iba
+**después** del botón de enviar (SC 2.4.3) y su caja no reservaba altura. Y las casillas de
+consentimiento pasan de 18×18 a **24×24** (SC 2.5.8).
+
+### `site.css`: 1.220 → 1.077 líneas
+
+Fuera **15 bloques** cuyos selectores ya no existen en ninguna de las 54 rutas: el carrusel
+`.splide` y sus flechas, `.block-review`, `.wrapper-reviews` y los cuatro `.corner-*`
+(sustituidos por scroll-snap), el acordeón `.faq-question` (ahora `<details>`),
+`.text-field-form` (ahora `LeadForm`) y los restos de `.block-bar-services`.
+
+**`.nav-abierto` y `.w--open` se quedan a propósito.** No aparecen en el HTML estático
+porque las aplica `ui.ts` en runtime, y borrarlas «por no usadas» habría dejado sin estilo
+el bloqueo de scroll y el estado abierto del menú. Es el error que una limpieza automática
+comete sola.
+
+Las **25 referencias** a las variables del vendor pasan a los tokens reales, más 8 en
+estilos en línea de cinco páginas. Con eso los alias de compatibilidad de la fase 4 sobran
+y se borran: **ya no hay dos nombres para el mismo color**.
+
+Verificado **con Tab real** —`.focus()` no dispara `:focus-visible`— que el anillo de dos
+tonos sigue pintando su banda blanca de 2 px con offset y su banda navy de 4 px. Era lo
+único que daba miedo tocar.
+
+Quedan **18 colores literales**: 7 con alfa dentro del anillo de foco y las sombras, que se
+midieron byte a byte, y 4 grises sin token idéntico. Migrarlos no es renombrar, es cambiar
+el color.
+
+### Medición final
+
+| Ruta | perf móvil | perf escritorio | A11y | BP | SEO | CLS |
+|---|---:|---:|---:|---:|---:|---:|
+| `/` | 97 | 100 | **100** | 100 | 100 | 0,000 |
+| `/contact-us` | 97 | 100 | **100** | 100 | 100 | 0,000 |
+| `/es/contact-us` | 99 | 100 | **100** | 100 | 100 | 0,009 |
+| `/services/personal-tax-preparation` | 95 | 100 | **100** | 100 | 100 | 0,000 |
+| `/blog-news` | **100** | 100 | **100** | 100 | 100 | 0,002 |
+
+**0 nodos de contraste. Las 54 rutas a 200.** Los dos CLS distintos de cero están muy por
+debajo del umbral de 0,1, pero se anotan porque antes eran 0,000 exactos: aparecen en las
+dos rutas cuyo contenido depende de un widget de terceros.
