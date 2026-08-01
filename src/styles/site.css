@@ -1777,3 +1777,105 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* ===========================================================================
+ * HERO DE LA PORTADA — ESCRITORIO (>=992px)
+ *
+ * ACOTADO A ESCRITORIO. El hero movil ya se resolvio mas arriba en este fichero
+ * (bloque de --hero-pt, <=991px) y aquello no se toca: son dos problemas
+ * distintos con dos causas distintas.
+ *
+ * LA CAUSA DEL AMONTONAMIENTO no es el padding: es que .header tiene
+ * `height: 650px` FIJA (accounting-max:244) y al hero le crecio el contenido.
+ * Con las pastillas de confianza el stack pasó a H1 (4 lineas) + parrafo +
+ * boton + 2 filas de pastillas dentro de una caja de 522px utiles, y como
+ * .wrapper-header centra en vertical, el sobrante se repartia en dos margenes
+ * minimos. Medido antes de tocar: 27px de aire arriba y 0 de padding-top, o sea
+ * el titular pegado al cromo. Mientras la altura siga congelada, cualquier
+ * padding que se anada se lo come la propia caja: por eso lo primero es matar
+ * el `height`.
+ * ======================================================================== */
+@media screen and (min-width: 992px) {
+  :root {
+    /* Aire por encima del bloque de texto. El de abajo NO es el mismo numero a
+     * proposito: .bar-services sube 100px con margin-top:-100px
+     * (accounting-max:383) y tapa el ultimo tramo del hero, asi que para que el
+     * bloque SE VEA centrado hay que devolverle esos 100px por abajo. Simetria
+     * optica, no aritmetica. */
+    --hero-esc-pt: 7rem;
+  }
+
+  .header {
+    /* De altura fija a altura minima: manda el contenido, con un suelo para que
+     * el hero no encoja si algun dia se acorta el copy. */
+    height: auto;
+    min-height: 620px;
+    padding-top: var(--hero-esc-pt);
+    padding-bottom: calc(var(--hero-esc-pt) + 100px);
+  }
+
+  /* El ancho es la unica palanca real sobre el numero de lineas del titular:
+   * el font-size no se toca (perderia jerarquia) y el copy tampoco (lleva las
+   * keywords locales y es del cliente).
+   * 820px NO es un numero redondo elegido a ojo — ver la nota del scrim. */
+  .block-header {
+    max-width: 820px;
+  }
+
+  /* Reparte las lineas del titular en vez de dejar uno o dos huerfanos. */
+  .header .h1 {
+    text-wrap: balance;
+  }
+
+  /* --- SCRIM ------------------------------------------------------------
+   * El texto del hero es navy #243137 sobre una foto. Analizada la imagen
+   * pixel a pixel (2000x832), el navy tiene 8,2-9,7:1 en toda la mitad
+   * izquierda... y cae a 1,0:1 a partir de x~1250, donde esta la calculadora.
+   * O sea que hoy el hero se lee por SUERTE: porque el texto se queda corto y
+   * no llega a esa zona. Ensancharlo sin scrim lo mete de lleno.
+   *
+   * El degradado va de blanco casi opaco a la izquierda a transparente hacia
+   * la derecha, y mantiene >=0,58 de alfa en toda la banda del texto. Ese 0,58
+   * es el valor con el que el navy llega a 4,5:1 incluso sobre NEGRO PURO, asi
+   * que la legibilidad deja de depender de esta foto: si el cliente la cambia
+   * manana, sigue cumpliendo.
+   *
+   * z-index: la foto va a -1 (accounting-max:374), el scrim a 0 y el contenido
+   * a 1. .wrapper-header necesita position:relative para que el z-index le
+   * aplique; sin eso el scrim se le pinta encima al texto. */
+  .header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    /* LAS PARADAS VAN ANCLADAS AL BLOQUE DE TEXTO, NO A PORCENTAJES DEL ANCHO.
+     * Con porcentajes esto se rompia justo en el escritorio estrecho, y de la
+     * peor manera: el bloque mide 820px fijos, asi que cuanto MAS estrecha es
+     * la ventana mayor fraccion ocupa, y el degradado ya se habia desvanecido
+     * donde todavia hay texto. Medido sobre la foto real con paradas en %:
+     *
+     *      992px -> el texto acaba al 86% del ancho, alfa 0,06 ->  1,01:1
+     *     1100px -> 77%, alfa 0,30 ->  2,18:1
+     *     1200px -> 71%, alfa 0,48 ->  4,06:1
+     *     1280px -> 67%, alfa 0,60 ->  9,07:1  (a partir de aqui iba bien)
+     *
+     * O sea que por debajo de 1280 quedaba peor que sin scrim. Anclado al final
+     * real del texto —que es el borde izquierdo del contenedor mas los 820px—
+     * la cobertura es la misma a cualquier ancho. */
+    --txt-fin: calc(max(32px, (100vw - 1250px) / 2) + 820px);
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.93) 0px,
+      rgba(255, 255, 255, 0.88) calc(var(--txt-fin) * 0.55),
+      rgba(255, 255, 255, 0.68) var(--txt-fin),
+      rgba(255, 255, 255, 0) calc(var(--txt-fin) + 22vw)
+    );
+  }
+
+  .header .wrapper-header {
+    position: relative;
+    z-index: 1;
+  }
+}
