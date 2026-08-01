@@ -47,21 +47,25 @@ habría abierto al despacho el cliente de correo con **un asunto y un cuerpo esc
 un desconocido**. `hrefMail()` los percent-codifica. Lo mismo con `phone`, que solo se
 valida contando dígitos.
 
-## Lo que NO pude verificar, y hace falta un par de ojos
+## La última milla — confirmada por Sebastian
 
-**No he podido confirmar la recepción ni el render en un buzón real.** El buscador de
+Yo no pude comprobar la recepción con las herramientas de esta sesión: el buscador de
 Gmail vía Composio devuelve resultados inconsistentes (la misma consulta dio 2 y luego 0
-para mensajes que existen), no hay Chrome conectado, y el API de logs en runtime de
-Vercel devuelve `{"logs": []}`. El envío está probado hasta el `250 OK` de Gmail; **la
-última milla no**.
+para mensajes que existen), no había Chrome conectado, y el API de logs en runtime de
+Vercel devuelve `{"logs": []}`. Mi verificación llegaba hasta el `250 OK` de Gmail.
 
-Queda por mirar en `info@accountingmaxservices.com`, con los dos correos de las pruebas
-de producción del 1-ago:
+**Sebastian lo cerró a mano el 1-ago-2026, revisando `info@accountingmaxservices.com`:**
 
-1. Que **llegan** y no caen en Spam. Si caen, es alineación SPF/DKIM de `SMTP_FROM`, no la plantilla.
-2. **Responder** al aviso: el destinatario tiene que ser el lead, no `info@` (prueba de no regresión de `replyTo`).
-3. **Modo oscuro** en Gmail móvil y Apple Mail.
-4. Pulsar el botón verde en un móvil de verdad: tiene que abrir el marcador.
+| # | Comprobación | Estado |
+|---|---|---|
+| 1 | Los dos correos **llegan** a `info@` | ✅ confirmado |
+| 2 | **Responder** al aviso escribe **al lead**, no a `info@` — no regresión de `replyTo` | ✅ confirmado |
+| 3 | Modo oscuro en Gmail móvil y Apple Mail | sin comprobar en cliente real (sí en navegador) |
+| 4 | Pulsar el botón verde en un móvil abre el marcador | sin comprobar en móvil real |
+
+Los dos que importaban están cerrados. Los dos que quedan son cosméticos y de bajo
+riesgo: el modo oscuro está verificado en navegador con `prefers-color-scheme: dark`, y
+el `tel:` está verificado como `href` bien formado (solo dígitos) por el self-check.
 
 ## Limpieza — hecha
 
