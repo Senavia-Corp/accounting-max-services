@@ -38,6 +38,7 @@ import {
   verificarCaptcha,
 } from "../../lib/antibot";
 import { detectarPii, resumenPii, mensajeCanalSeguro } from "../../lib/pii";
+import { construirAcuse, construirAvisoLead } from "../../lib/correo";
 
 export const prerender = false;
 
@@ -261,7 +262,17 @@ export async function guardarLead(lead: LeadNuevo): Promise<string> {
  */
 export type Aviso = {
   asunto: string;
+  /**
+   * NUNCA opcional, ni cuando hay html. nodemailer manda multipart/alternative
+   * con las dos partes, y el texto es lo que leen los filtros de spam y quien
+   * tiene el cliente en texto plano. Un correo solo-HTML puntua peor.
+   */
   texto: string;
+  /**
+   * Alternativa HTML, opcional a proposito: sin ella el correo sale igual que
+   * hoy. Es lo que deja intacta la llamada de /api/newsletter.
+   */
+  html?: string;
   para?: string;
   responderA?: string;
   cabeceras?: Record<string, string>;
@@ -311,6 +322,7 @@ export async function enviarAviso(aviso: Aviso): Promise<{ enviado: boolean; mot
       to: cfg.to,
       subject: aviso.asunto,
       text: aviso.texto,
+      html: aviso.html,
       replyTo: aviso.responderA,
       headers: aviso.cabeceras,
     });
@@ -469,24 +481,31 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   }
 
   // 10. Correo DESPUES y en try/catch. Que falle no puede tocar la respuesta:
-  //     el lead ya esta guardado.
+  //     el lead ya esta guardado. Y va aqui, no antes: asi los DOS correos
+  //     quedan por detras de las cinco capas de arriba (honeypot, time-trap,
+  //     limite por IP, filtro de PII y captcha).
   try {
+    const base = { fullName, email, phone, message, lang, consentCall, consentSms };
+
+    // El aviso al despacho PRIMERO: es el que no se puede perder. Los dos
+    // envios son secuenciales y no hace falta Promise.all, porque enviarAviso()
+    // no lanza nunca y encadenarlos no puede saltarse el segundo.
+    const aviso = construirAvisoLead(
+      { ...base, consentAt, ip, id, dataset: DATASET_LEADS, source: "contact-us" },
+      NEGOCIO,
+    );
+    await enviarAviso({ ...aviso, responderA: email });
+
+    // Acuse al prospecto, a la direccion que escribio. TRANSACCIONAL: sin
+    // enlace de baja y sin List-Unsubscribe — CAN-SPAM no los exige para un
+    // acuse de recibo, y ponerlos lo convierte en marketing. Auto-Submitted es
+    // RFC 3834: corta el bucle si la direccion de destino autorresponde.
+    const acuse = construirAcuse(base, NEGOCIO);
     await enviarAviso({
-      asunto: `Nuevo lead: ${fullName}`,
-      responderA: email,
-      texto: [
-        `Nombre:   ${fullName}`,
-        `Correo:   ${email}`,
-        `Telefono: ${phone}`,
-        `Idioma:   ${lang}`,
-        `Llamadas: ${consentCall ? "SI consiente" : "no"}`,
-        `SMS:      ${consentSms ? "SI consiente" : "no"}`,
-        `Fecha:    ${consentAt}`,
-        `IP:       ${ip}`,
-        `Sanity:   ${id} (dataset ${DATASET_LEADS})`,
-        "",
-        message || "(sin mensaje)",
-      ].join("\n"),
+      ...acuse,
+      para: email,
+      responderA: NEGOCIO.email,
+      cabeceras: { "Auto-Submitted": "auto-replied", "X-Auto-Response-Suppress": "All" },
     });
   } catch (e) {
     console.error(`[lead] aviso no enviado, lead ${id} guardado igualmente: ${(e as Error).message}`);

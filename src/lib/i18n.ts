@@ -16,6 +16,10 @@
 //     editan (regla de FASE 5).
 //   - El nombre del negocio, "Accounting Max Services", que es NAP y va literal
 //     en las dos lenguas (tambien dentro de las frases).
+//   - EL TEXTO DE LOS CORREOS. Vive en COPIA_ACUSE, dentro de src/lib/correo.ts,
+//     por la misma razon que los errores de /api/lead viven en la ruta: ninguna
+//     pagina lo pinta. Rigen las mismas reglas de aqui (usted, glosario, NAP
+//     fuera), y lo revisa quien revise el ES de D3.
 //
 // GLOSARIO — NO SE TRADUCEN, NUNCA:
 //   IRS · Enrolled Agent (y EA) · CPA · ITIN · EIN · LLC · S-Corp · C-Corp ·
