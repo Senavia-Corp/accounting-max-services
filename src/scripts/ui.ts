@@ -51,6 +51,10 @@ function iniciarMenu() {
   const lista = (t: HTMLElement) =>
     document.getElementById(t.getAttribute("aria-controls") ?? "");
 
+  // Solo puede haber un desplegable abierto a la vez (cerrarDesplegables corre
+  // antes de cada apertura), asi que un unico controlador cubre el listener vivo.
+  let cierreScroll: AbortController | null = null;
+
   const desplegar = (t: HTMLElement, abierto: boolean) => {
     t.setAttribute("aria-expanded", String(abierto));
     t.classList.toggle("w--open", abierto);
@@ -63,11 +67,31 @@ function iniciarMenu() {
     // de servicios: si pusiera nivel 2 secuestraria el segundo nivel del cajon.
     if (cajon && !t.classList.contains("selector-idioma"))
       cajon.dataset.nivel = abierto && MOVIL.matches ? "2" : "1";
-    // Cerrar al hacer scroll, sin dejar ningun listener puesto en reposo: se
-    // registra al abrir y `once` lo retira solo al primer evento. Desplazar
-    // DENTRO del panel no lo dispara (los eventos de scroll de un elemento no
-    // burbujean, y overscroll-behavior:contain corta el encadenado).
-    if (abierto) addEventListener("scroll", () => cerrarDesplegables(), { passive: true, once: true });
+    // Cerrar al hacer scroll, SOLO en escritorio. Desplazar DENTRO del panel no
+    // lo dispara (los eventos de scroll de un elemento no burbujean, y
+    // overscroll-behavior:contain corta el encadenado) — pero eso solo cubre el
+    // scroll DEL USUARIO. En un telefono real el navegador emite `scroll` en
+    // window por su cuenta, sin que nadie desplace nada: la barra de direcciones
+    // que se contrae al tocar, el rebote de iOS, el viewport que se reasienta
+    // cuando el cromo se asienta tras el toque. Cualquiera de esos llega justo
+    // detras del click sintetizado y cerraba el submenu en el mismo frame en que
+    // se abria — se percibia como "no funciona", y en escritorio no se reproduce
+    // porque ahi no hay barra de direcciones que se mueva. Ademas en movil no
+    // hay nada que cerrar al desplazar: el cajon es fixed y la pagina esta en
+    // overflow:hidden.
+    // El AbortController lo retira AL CERRAR, no solo al dispararse: `once` solo
+    // lo quita cuando el evento LLEGA, asi que abrir/cerrar/abrir dejaba
+    // listeners vivos acumulados y el fallo empeoraba con cada intento.
+    cierreScroll?.abort();
+    cierreScroll = null;
+    if (abierto && !MOVIL.matches) {
+      cierreScroll = new AbortController();
+      addEventListener("scroll", () => cerrarDesplegables(), {
+        passive: true,
+        once: true,
+        signal: cierreScroll.signal,
+      });
+    }
   };
   const cerrarDesplegables = () => toggles.forEach((t) => desplegar(t, false));
 
