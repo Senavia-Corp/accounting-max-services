@@ -627,3 +627,12 @@ textarea.text-field-form {
 .blog-column-right .link-footer:hover {
   color: var(--verde-texto);
 }
+
+/* El «Read more» de cada tarjeta del blog es un `.button` con `.mini` encima:
+ * `.mini` es texto pequeño y gris (--tinta-suave) y le ganaba al color del
+ * botón, dejando gris sobre el verde de marca a 1,75:1. El botón manda. */
+.block-info-blog .button.mini,
+.block-info-blog .button {
+  color: var(--sobre-verde);
+  font-size: var(--fs-sm);
+}
