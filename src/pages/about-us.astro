@@ -33,6 +33,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import JsonLd from "../components/JsonLd.astro";
 import CtaConsulta from "../components/CtaConsulta.astro";
 import PuntosConfianza from "../components/PuntosConfianza.astro";
 import { sanity } from "../lib/sanity";
@@ -154,6 +155,7 @@ const DESCRIPCION =
 ---
 
 <BaseLayout title="About Our Coral Springs Tax Firm | Accounting Max Services" description={DESCRIPCION}>
+  <JsonLd slot="head" nombre="About Us" descripcion={DESCRIPCION} />
   <Nav />
 
   <main id="main">

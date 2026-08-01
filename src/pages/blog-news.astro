@@ -15,6 +15,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import JsonLd from "../components/JsonLd.astro";
 import PuntosConfianza from "../components/PuntosConfianza.astro";
 import { posts, NEGOCIO } from "../lib/sanity";
 
@@ -62,6 +63,7 @@ if (distintas < lista.length) {
     description no existe en produccion; se usa la propia entradilla de la
     pagina — texto real del cliente, no redactado aqui (R3). */}
 <BaseLayout title={`Tax Blog & News | ${NEGOCIO.nombre}`} description={ENTRADA}>
+  <JsonLd slot="head" nombre="Blog & News" descripcion={ENTRADA} />
   <Nav />
 
   <main id="main">

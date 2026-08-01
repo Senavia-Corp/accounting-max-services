@@ -25,6 +25,8 @@
 //     geo: no hay dato. Los 3 iconos de redes del pie apuntan a href="#" (ver
 //     Nav.astro), asi que no existe ni un perfil social verificable.
 import { NEGOCIO, sanity } from "../lib/sanity";
+import { t } from "../lib/i18n";
+import { inicio, enlace } from "../lib/es";
 
 export type Faq = { q: string; a: string };
 
@@ -67,11 +69,22 @@ interface Props {
   descripcion?: string;
   /** Imagen principal de la pagina, URL absoluta (las de Sanity ya lo son). */
   imagen?: string;
-  /** FAQ real. Si no se pasa y tipo="home", se usan las 5 de la portada. */
-  faq?: Faq[];
+  /**
+   * FAQ real. Si no se pasa y tipo="home", se usan las 5 de la portada.
+   * `readonly` porque las de /es llegan desde i18n.ts, que es `as const`: alli
+   * son una tupla de solo lectura. Aqui solo se leen, asi que se acepta tal
+   * cual en vez de obligar a cada pagina a copiar el array.
+   */
+  faq?: readonly Faq[];
+  /**
+   * Idioma de la pagina, para `inLanguage` del WebPage. Estaba fijo a "en", y
+   * asi las 10 rutas /es/post/* habrian declarado que estaban en ingles: un
+   * dato falso justo en el marcado que existe para dar datos ciertos.
+   */
+  lang?: "en" | "es";
 }
 
-const { tipo = "page", nombre, descripcion, imagen, faq } = Astro.props;
+const { tipo = "page", nombre, descripcion, imagen, faq, lang = "en" } = Astro.props;
 
 // `Astro.site` esta fijado en astro.config.mjs; sin el no habria ni canonical.
 const SITE = Astro.site!.origin;
@@ -178,10 +191,18 @@ const negocio: Record<string, unknown> = {
 // No existe indice /services: las rutas son /services/<slug> a secas. Meter un
 // escalon intermedio "Services" apuntaria a un 404, asi que el rastro de un
 // servicio es Home > <servicio>. El blog SI tiene indice (/blog-news).
+//
+// Los escalones van EN EL IDIOMA DE LA PAGINA y apuntan a las URLs de ese
+// idioma. Estaban fijos a "Home" / "Blog & News" y a las rutas inglesas, asi
+// que las 22 rutas /es/ emitian un rastro en ingles que ademas sacaba al
+// usuario de su idioma. Los rotulos salen de i18n y las URLs de enlace(), que
+// son las mismas funciones que pintan el cromo: imposible que divergan.
+const c = t(lang);
 const migas: { name: string; item: string }[] = [];
 if ((tipo === "service" || tipo === "post") && nombre) {
-  migas.push({ name: "Home", item: `${SITE}/` });
-  if (tipo === "post") migas.push({ name: "Blog & News", item: `${SITE}/blog-news` });
+  migas.push({ name: c.nav.home, item: new URL(inicio(lang), Astro.site).href });
+  if (tipo === "post")
+    migas.push({ name: c.nav.blog, item: new URL(enlace(lang, "/blog-news"), Astro.site).href });
   migas.push({ name: nombre, item: url });
 }
 
@@ -214,7 +235,7 @@ const pagina =
           : {}),
         ...(breadcrumb ? { breadcrumb: { "@id": `${url}#breadcrumb` } } : {}),
         publisher: { "@id": ID_NEGOCIO },
-        inLanguage: "en",
+        inLanguage: lang,
       }
     : null;
 

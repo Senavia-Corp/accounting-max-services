@@ -20,6 +20,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import JsonLd from "../../components/JsonLd.astro";
 import { NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
 import { SITE_KEY } from "../../lib/turnstile";
@@ -49,6 +50,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
 ---
 
 <BaseLayout title={TITULO} description={c.meta.contactDescription} lang={lang}>
+  <JsonLd slot="head" lang={lang} nombre={c.nav.contact} descripcion={c.meta.contactDescription} />
   <Nav lang={lang} />
 
   <main id="main">

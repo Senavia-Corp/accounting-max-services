@@ -16,6 +16,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import JsonLd from "../../components/JsonLd.astro";
 import PortableText from "../../components/PortableText.astro";
 import CtaConsulta from "../../components/CtaConsulta.astro";
 import PuntosConfianza from "../../components/PuntosConfianza.astro";
@@ -186,6 +187,7 @@ const aqui = `/services/${servicio.slug}`;
   ogImage={ogUrl(foto)}
   ogImageAlt={altFoto || undefined}
 >
+  <JsonLd slot="head" tipo="service" nombre={titulo} descripcion={metaDescription} imagen={ogUrl(foto)} />
   <Nav />
 
   {/* El baseline no tiene <main>: las 26 rutas van de <section> en <section>

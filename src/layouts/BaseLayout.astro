@@ -73,6 +73,27 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/*
+      ICONOS. Antes de esto el <head> no emitia NI UNO, asi que el navegador
+      caia a /favicon.ico por convencion — y ese fichero era el logo de Astro,
+      el que trae `npm create astro`. Salia el cohete en la pestana, en los
+      favoritos y en los resultados de Google.
+
+      Los seis ficheros los genera tools/generar-favicon.mjs a partir del logo
+      oficial que ya vive en Sanity. No se dibujo nada nuevo.
+
+      El .ico va PRIMERO y sin `type`: es el unico que entienden los rastreadores
+      viejos, y Google lo quiere en multiplos de 48px (lleva 16, 32 y 48 dentro).
+      El SVG va despues porque quien lo soporta lo prefiere sobre el .ico
+      independientemente del orden.
+    */}
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#243137" />
+
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <link rel="canonical" href={canonical} />

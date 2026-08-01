@@ -25,6 +25,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import JsonLd from "../components/JsonLd.astro";
 import CtaConsulta from "../components/CtaConsulta.astro";
 import PuntosConfianza from "../components/PuntosConfianza.astro";
 import { servicios, testimonios, sanity, NEGOCIO } from "../lib/sanity";
@@ -131,6 +132,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
 ---
 
 <BaseLayout title={TITULO} description={ENTRADA}>
+  <JsonLd slot="head" tipo="home" nombre={TITULO} descripcion={ENTRADA} />
   <Nav />
 
   <main id="main">

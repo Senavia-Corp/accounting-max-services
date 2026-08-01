@@ -23,6 +23,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
+import JsonLd from "../../components/JsonLd.astro";
 import PortableText from "../../components/PortableText.astro";
 import { posts, ogUrl, NEGOCIO } from "../../lib/sanity";
 import type { Post } from "../../lib/sanity";
@@ -145,6 +146,7 @@ const altHero = hero?.alt?.trim() || `Illustration for the article â€œ${titulo}â
   ogImage={ogUrl(hero)}
   ogImageAlt={altHero}
 >
+  <JsonLd slot="head" tipo="post" nombre={titulo} descripcion={metaDesc} imagen={ogUrl(hero)} />
   <Nav />
 
   <main id="main">
