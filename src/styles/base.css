@@ -1,0 +1,118 @@
+/* Reset. FASE 4.
+ *
+ * Sustituye a `vendor/normalize.css` (355 líneas) y a la parte de reset que
+ * traía `vendor/webflow.css`. Son 40 líneas porque normalize resolvía
+ * incompatibilidades de navegadores que ya no existen: IE, Edge Legacy y
+ * Safari 6. Lo que sí hace falta hoy es esto y poco más.
+ *
+ * Sin este fichero el `<body>` vuelve al `margin: 8px` del navegador —de ahí el
+ * borde negro que apareció al borrar el vendor— y el `box-sizing` vuelve a
+ * `content-box`, que rompe cualquier maquetación pensada con `border-box`.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100svh;
+  background: var(--superficie);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  line-height: var(--lh-texto);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* El desplazamiento suave es una animación: quien pide menos movimiento no la
+ * quiere, y en una página larga además marea. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* El cromo es sticky: sin esto, un enlace a #ancla deja el destino debajo de la
+ * barra. El valor sigue al alto real del cromo. */
+:target {
+  scroll-margin-top: 8rem;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+}
+
+/* Sin esto una palabra larga —una URL en el aviso legal, por ejemplo— desborda
+ * su columna y produce scroll horizontal en móvil. */
+p,
+h1,
+h2,
+h3,
+h4,
+li,
+figcaption {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fuente-titular);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-titular);
+  text-wrap: balance;
+}
+
+/* La prosa que no pasa por un contenedor del sistema necesita su propio ritmo:
+ * sin esto los párrafos de las rutas legales quedan pegados unos a otros. */
+p + p,
+ul + p,
+p + ul,
+ol + p,
+p + ol {
+  margin-block-start: var(--e-4);
+}
+
+ul,
+ol {
+  padding-inline-start: var(--e-5);
+}
+
+a {
+  color: inherit;
+}
+
+table {
+  border-collapse: collapse;
+}

@@ -1,0 +1,645 @@
+/* CROMO — Nav, Footer y FooterSubscribe. FASE 4 del rediseño.
+ *
+ * Este fichero sustituye a lo que el CSS de Webflow daba a la cabecera y al pie.
+ * Es lo último que faltaba para poder borrar `src/styles/vendor/` entero.
+ *
+ * POR QUE LOS NOMBRES DE CLASE NO CAMBIAN. `.navbar`, `.menu-button`,
+ * `.block-items-menu`, `.w--open`, `.dropdown`, `.cromo-centinela` y compañía
+ * no son «clases de Webflow» que haya que exorcizar: son los GANCHOS que usa
+ * `src/scripts/ui.ts` para la hamburguesa, el cajón de dos niveles, el bloqueo
+ * de scroll, la gestión de foco y la navegación con scroll (D13). Ese
+ * JavaScript concentra los ocho arreglos de accesibilidad medidos y anotados en
+ * `baseline/auditoria-diseno.md` §1, y renombrarlos obligaría a tocar las dos
+ * piezas a la vez sin ganar nada: lo que se borra es el CSS del vendor, no una
+ * lista de nombres.
+ *
+ * Lo que sí se arregla aquí, y son los 4 nodos que mantenían la accesibilidad
+ * clavada en 97 desde la fase 0:
+ *
+ *   .text-top-bar        blanco sobre verde a 10px  -> --sobre-verde y 13px
+ *   .text-top-bar-social idem
+ *   .button-news         blanco sobre verde         -> --sobre-verde
+ *   .bar-footer          copyright blanco sobre verde -> --sobre-verde
+ */
+
+/* ===========================================================================
+ * CABECERA
+ * =========================================================================== */
+
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: transform var(--dur-corta) var(--ease-estandar);
+}
+
+/* La navegación con scroll de D13: el cromo se retira al bajar y vuelve al
+ * subir. `ui.ts` escribe estos dos atributos; aquí solo se pintan. */
+.menu[data-direccion="oculto"] {
+  transform: translateY(-100%);
+}
+
+.menu[data-direccion="visible"] {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu {
+    transition: none;
+  }
+}
+
+/* --- Barra superior ------------------------------------------------------- */
+
+.top-bar {
+  background: var(--verde);
+  /* Regla del §4.1: sobre el verde, texto normal SIEMPRE --sobre-verde.
+   * Antes era blanco a 3,07:1 y a 10px, o sea ilegible por partida doble. */
+  color: var(--sobre-verde);
+}
+
+.wrapper-top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2) var(--e-5);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  padding-block: var(--e-2);
+}
+
+.block-icons-top-bar,
+.block-top-info,
+.block-social-media {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.block-icons-top-bar {
+  gap: var(--e-5);
+  flex-wrap: wrap;
+}
+
+.text-top-bar,
+.text-top-bar-social {
+  /* 13px y no 10px: a 10px no era una credencial, era una marca de agua. */
+  font-size: var(--fs-xs);
+  font-weight: var(--peso-medio);
+  color: var(--sobre-verde);
+}
+
+.block-icon-top-bar,
+.icon-top-bar {
+  display: block;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.social-link {
+  display: grid;
+  place-items: center;
+  min-width: 1.75rem;
+  min-height: 1.75rem;
+  color: inherit;
+}
+
+.icon-sociall {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (max-width: 47.9375rem) {
+  .block-social-media {
+    display: none;
+  }
+}
+
+/* --- Barra de navegación -------------------------------------------------- */
+
+.navbar {
+  position: relative;
+  background: var(--navy);
+  color: var(--blanco);
+}
+
+.container-menu,
+.wrapper-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-5);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  min-height: 4.5rem;
+}
+
+/* EL ESCUDO SE ACABA. En el diseño de Webflow `.brand` era un círculo navy en
+ * `position:absolute`, centrado al 50 % del viewport y colgando 17 px por
+ * debajo de la barra: el gesto más llamativo de la página, y no decía nada.
+ * Rompía la línea del cromo, robaba el centro óptico —que es donde tiene que ir
+ * el titular— y obligó a parchear un solape de 144×5 px en `entrega/mejoras.md`.
+ * Ahora es lo que debía haber sido siempre: el logo, a la izquierda, en flujo. */
+.brand {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  transform: none;
+}
+
+.brand img {
+  display: block;
+  height: 2.75rem;
+  width: auto;
+}
+
+.nav-menu,
+.block-items-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--e-5);
+}
+
+.nav-link,
+.w-nav-link {
+  color: var(--blanco);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  padding-block: var(--e-2);
+}
+
+.nav-link:hover,
+.w-nav-link:hover,
+.nav-link.w--current {
+  color: var(--verde-claro); /* 6,35:1 sobre el navy */
+}
+
+/* --- Desplegable de servicios --------------------------------------------- */
+
+.dropdown {
+  position: relative;
+}
+
+button.w-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  background: none;
+  border: 0;
+  color: var(--blanco);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-sm);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+}
+
+.collection-list-wrapper-submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 60;
+  min-width: 18rem;
+  padding: var(--e-3);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-3);
+}
+
+.collection-list-wrapper-submenu.w--open {
+  display: block;
+}
+
+.collection-list-submenu {
+  display: grid;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-submenu {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: 2.5rem;
+  padding: var(--e-2) var(--e-3);
+  border-radius: var(--radio-control);
+  color: var(--tinta);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+
+.link-submenu:hover {
+  background: var(--superficie-2);
+  color: var(--verde-texto);
+}
+
+.icon-submenu {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+}
+
+/* --- Hamburguesa y cajón móvil -------------------------------------------- */
+
+button.menu-button {
+  display: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: none;
+  border: 1px solid color-mix(in srgb, var(--blanco) 35%, transparent);
+  border-radius: var(--radio-control);
+  color: var(--blanco);
+  cursor: pointer;
+}
+
+@media (max-width: 61.9375rem) {
+  button.menu-button {
+    display: grid;
+  }
+
+  .nav-menu,
+  .block-items-menu {
+    position: fixed;
+    inset: var(--alto-cromo, 7.5rem) 0 0;
+    z-index: 40;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--e-5) var(--margen-lateral);
+    background: var(--navy);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .navbar[data-nav-open="true"] .nav-menu,
+  .navbar[data-nav-open="true"] .block-items-menu {
+    display: flex;
+  }
+
+  /* El cajón de dos niveles: con nivel 2 el listado tapa al menú principal.
+   * Es `ui.ts` quien mueve el atributo; aquí solo se pinta. */
+  .block-items-menu[data-nivel="2"] > *:not(.dropdown) {
+    display: none;
+  }
+
+  .nav-link,
+  .w-nav-link,
+  button.w-dropdown-toggle {
+    min-height: 3rem;
+    padding-block: var(--e-3);
+    border-bottom: 1px solid color-mix(in srgb, var(--blanco) 15%, transparent);
+    font-size: var(--fs-md);
+  }
+
+  .collection-list-wrapper-submenu {
+    position: static;
+    min-width: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .link-submenu {
+    color: var(--blanco);
+    min-height: 3rem;
+  }
+
+  .link-submenu:hover {
+    background: color-mix(in srgb, var(--blanco) 10%, transparent);
+    color: var(--blanco);
+  }
+
+  button.nav-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-2);
+    min-height: 3rem;
+    background: none;
+    border: 0;
+    color: var(--verde-claro);
+    font-family: var(--fuente-texto);
+    font-size: var(--fs-sm);
+    font-weight: var(--peso-medio);
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 62rem) {
+  button.nav-volver {
+    display: none;
+  }
+}
+
+/* Bloqueo de scroll del documento mientras el cajón está abierto. */
+html.nav-abierto,
+html.nav-abierto body {
+  overflow: hidden;
+}
+
+/* Centinelas de la navegación con scroll: fuera de flujo a propósito, para que
+ * no desplacen nada. Es lo que mantiene el CLS en 0,000. */
+.cromo-centinela {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ===========================================================================
+ * PIE
+ * =========================================================================== */
+
+.footer {
+  background: var(--navy);
+  color: var(--blanco);
+}
+
+.container-footer,
+.wrapper-footer {
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+}
+
+.wrapper-footer {
+  display: grid;
+  gap: var(--e-7);
+  padding-block: var(--seccion-y);
+}
+
+@media (min-width: 48rem) {
+  .wrapper-footer {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+}
+
+.logo-footer {
+  height: 3.5rem;
+  width: auto;
+}
+
+.block-footer h3,
+.block-footer .h3 {
+  font-size: var(--fs-lg);
+  margin: 0 0 var(--e-4);
+  color: var(--blanco);
+}
+
+.list-footer,
+.collection-list-footer {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link-footer {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  color: color-mix(in srgb, var(--blanco) 82%, transparent);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+
+.link-footer:hover {
+  color: var(--blanco);
+  text-decoration: underline;
+}
+
+/* Franja de copyright. Cuarto y último nodo de contraste que quedaba. */
+.bar-footer {
+  background: var(--verde);
+  color: var(--sobre-verde);
+}
+
+.bar-footer .div-block-7,
+.bar-footer .div-block-8 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-3);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  padding-block: var(--e-3);
+  font-size: var(--fs-xs);
+  color: var(--sobre-verde);
+  text-align: center;
+}
+
+/* ===========================================================================
+ * PROMO DEL PIE Y BOLETÍN
+ * =========================================================================== */
+
+.footer-subscribe,
+.block-promo {
+  background: var(--superficie-2);
+}
+
+.wrapper-promo,
+.wrapper-call-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-6);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  padding-block: var(--seccion-y-corta);
+}
+
+.block-content-promo,
+.block-content-call-to-action {
+  display: flex;
+  align-items: center;
+  gap: var(--e-5);
+  max-width: var(--medida);
+}
+
+.icon-news {
+  width: 3.5rem;
+  height: 3.5rem;
+  flex: none;
+}
+
+.block-title-form-email h2,
+.block-title-form-email .h2 {
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--e-3);
+}
+
+.wrapper-form-email {
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  padding-block: var(--seccion-y-corta);
+}
+
+.form-block {
+  max-width: 34rem;
+}
+
+/* El formulario del boletín deja de ser una «pastilla» campo+botón pegados: esa
+ * caja era lo que impedía meter el reto de Turnstile en su sitio, y por eso el
+ * widget acabó DESPUÉS del botón de enviar en las 54 rutas — quien navega con
+ * teclado llegaba a «Enviar» antes que al reto que lo autoriza (SC 2.4.3).
+ * Con el pie reconstruido, la restricción desaparece. */
+.block-form-email {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+}
+
+.text-field {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--e-3) var(--e-4);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  color: var(--tinta);
+  background: var(--superficie);
+  border: 1px solid var(--borde-control);
+  border-radius: var(--radio-control);
+}
+
+.button-news {
+  align-self: start;
+  min-height: 3rem;
+  padding: var(--e-3) var(--e-6);
+  background: var(--verde);
+  /* Tercero de los cuatro nodos: era blanco sobre verde, 3,07:1. */
+  color: var(--sobre-verde);
+  border: 0;
+  border-radius: var(--radio-control);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  font-weight: var(--peso-fuerte);
+  cursor: pointer;
+}
+
+/* Altura reservada para el reto del boletín, igual que en LeadForm: sin esto
+ * el widget al pintarse empuja el botón y reaparece el CLS. */
+[data-turnstile] {
+  min-height: 65px;
+}
+
+.email-subscribed,
+.w-form-done,
+.w-form-fail {
+  margin-block-start: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  border-radius: var(--radio-control);
+  font-size: var(--fs-sm);
+}
+
+.w-form-done {
+  background: color-mix(in srgb, var(--exito) 12%, var(--superficie));
+  color: var(--exito);
+}
+
+.w-form-fail {
+  background: color-mix(in srgb, var(--error) 10%, var(--superficie));
+  color: var(--error);
+}
+
+/* ===========================================================================
+ * RESTOS DEL VENDOR QUE SIGUEN EN USO
+ *
+ * Clases genéricas que las plantillas todavía comparten. Van aquí para que el
+ * borrado de src/styles/vendor/ no deje nada sin estilo; conforme las páginas
+ * se reconstruyan, esta sección se vacía sola.
+ * =========================================================================== */
+
+.container,
+.w-container,
+.w-layout-blockcontainer {
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+}
+
+.h1 {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-3xl);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-apretado);
+}
+
+.h2 {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-2xl);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-titular);
+}
+
+.h3 {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-titular);
+}
+
+.h2.white,
+.h3.white,
+.white {
+  color: var(--blanco);
+}
+
+/* El .button heredado se alinea con .boton--principal, incluido el contraste. */
+.button,
+.w-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: var(--e-3) var(--e-6);
+  background: var(--verde);
+  color: var(--sobre-verde);
+  border: 0;
+  border-radius: var(--radio-control);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  font-weight: var(--peso-fuerte);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button.blue {
+  background: var(--navy);
+  color: var(--blanco);
+}
+
+.w-inline-block {
+  max-width: 100%;
+  display: inline-block;
+}
+
+.w-list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.w-embed:before,
+.w-embed:after {
+  content: " ";
+  display: table;
+}
+
+.w-embed:after {
+  clear: both;
+}

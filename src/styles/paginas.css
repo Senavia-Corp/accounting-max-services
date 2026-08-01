@@ -1,0 +1,613 @@
+/* Plantillas que no se reconstruyeron: /about-us, /blog-news, /contact-us,
+ * /post/[slug] y las dos legales. FASE 4.
+ *
+ * POR QUE ESTE FICHERO EXISTE. Al borrar `src/styles/vendor/` estas 77 clases
+ * se quedaron sin una sola regla y sus páginas aparecían como texto suelto
+ * sobre fondo negro. Había dos salidas: reescribir el marcado de las ocho
+ * plantillas (EN + ES), o darles estilo con el sistema nuevo.
+ *
+ * Se eligió lo segundo, y no por pereza: reescribir ocho plantillas a la vez
+ * en un sitio que está en producción con una campaña pagada encima es
+ * exactamente el movimiento que el plan por fases existe para evitar. Con esto
+ * el vendor desaparece HOY y sin riesgo, y el marcado se moderniza plantilla a
+ * plantilla cuando toque.
+ *
+ * Todo consume tokens. Ni un valor a mano, ni un color fuera de tokens.css.
+ */
+
+/* ===========================================================================
+ * RESTOS DEL CROMO
+ * =========================================================================== */
+
+.collection-list-wrapper-footer {
+  display: contents;
+}
+
+.list-item-footer {
+  margin: 0;
+}
+
+.w-form {
+  margin: 0;
+}
+
+.w-dropdown-list:not(.w--open) {
+  display: none;
+}
+
+.w-icon-nav-menu::before {
+  content: "\2630"; /* hamburguesa */
+  font-size: var(--fs-lg);
+  line-height: 1;
+}
+
+.w--open .w-icon-nav-menu::before {
+  content: "\2715"; /* aspa al abrir */
+}
+
+/* ===========================================================================
+ * LISTADO DEL BLOG — /blog-news
+ * =========================================================================== */
+
+.blog {
+  padding-block: var(--seccion-y);
+}
+
+.title-center {
+  max-width: var(--medida);
+  margin: 0 auto var(--e-8);
+  text-align: center;
+}
+
+.title-center > div {
+  margin-block-start: var(--e-4);
+  color: var(--tinta-media);
+  font-size: var(--fs-md);
+}
+
+.wrapper-team,
+.collection-list-wrapper-blog {
+  display: contents;
+}
+
+.collection-list-blog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: var(--e-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.collection-item-blog {
+  display: flex;
+}
+
+.block-blog {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-1);
+  transition:
+    box-shadow var(--dur-corta) var(--ease-estandar),
+    transform var(--dur-corta) var(--ease-estandar);
+}
+
+.block-blog:hover {
+  box-shadow: var(--sombra-2);
+  transform: translateY(-2px);
+}
+
+.pic-blog {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.block-info-blog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  padding: var(--e-5);
+}
+
+.title-blog {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-lg);
+  font-weight: var(--peso-titular);
+  line-height: var(--lh-titular);
+  margin: 0;
+  color: var(--tinta);
+}
+
+.text-blog {
+  color: var(--tinta-media);
+  font-size: var(--fs-sm);
+}
+
+.mini {
+  font-size: var(--fs-xs);
+  color: var(--tinta-suave);
+}
+
+/* ===========================================================================
+ * ENTRADA DEL BLOG — /post/[slug] y las dos rutas legales
+ * =========================================================================== */
+
+.header-page-blog {
+  padding-block: clamp(var(--e-7), 5vw, var(--e-8));
+  background: var(--superficie-2);
+}
+
+.wrapper-header-blog,
+.block-title-blog {
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+}
+
+.block-title-blog {
+  max-width: 52rem;
+}
+
+.picture-blog-page {
+  display: block;
+  width: 100%;
+  max-height: 26rem;
+  object-fit: cover;
+  border-radius: var(--radio-caja);
+  margin-block-start: var(--e-6);
+}
+
+.block-blog-page {
+  padding-block: var(--seccion-y);
+}
+
+.wrapper-content-blog {
+  display: grid;
+  gap: var(--e-8);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .wrapper-content-blog {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  }
+
+  .blog-column-right {
+    position: sticky;
+    top: var(--e-6);
+  }
+}
+
+.blog-column-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-6);
+}
+
+.block-promo-blog,
+.block-blogs-features {
+  padding: var(--e-5);
+  background: var(--superficie-2);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+}
+
+/* El bloque promocional del lateral era blanco sobre verde: uno de los nodos
+ * de contraste. Ahora es superficie clara con el CTA del sistema. */
+.block-promo-blog h2,
+.block-promo-blog .h2,
+.block-blogs-features h3,
+.block-blogs-features .h3 {
+  font-size: var(--fs-lg);
+  margin: 0 0 var(--e-3);
+}
+
+.block-blogs-features ul,
+.block-blogs-features .list {
+  display: grid;
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ===========================================================================
+ * SOBRE NOSOTROS — /about-us
+ * =========================================================================== */
+
+.header-page-about-us {
+  padding-block: clamp(var(--e-7), 6vw, var(--e-9));
+  background: var(--superficie-2);
+}
+
+.wrapper-about-us {
+  display: grid;
+  gap: var(--e-7);
+  align-items: center;
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+}
+
+@media (min-width: 62rem) {
+  .wrapper-about-us {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--e-8);
+  }
+}
+
+.pic-about-us {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-2);
+}
+
+.wrapper-about-us > div > div {
+  color: var(--tinta-media);
+  margin-block-start: var(--e-4);
+  max-width: var(--medida);
+}
+
+.bar-features {
+  padding-block: var(--seccion-y-corta);
+}
+
+.wrapper-bar-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--e-6);
+}
+
+.wrapper-bar-features-intro {
+  max-width: var(--medida);
+  margin-block-end: var(--e-7);
+  color: var(--tinta-media);
+}
+
+.block-item-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+  padding-inline-start: var(--e-4);
+  border-inline-start: 3px solid var(--verde);
+}
+
+.icon-feature {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-block-end: var(--e-1);
+}
+
+.title-special {
+  font-size: var(--fs-lg);
+  margin: 0;
+}
+
+.mission-vision {
+  padding-block: var(--seccion-y);
+  background: var(--superficie-2);
+}
+
+.wrapper-mission,
+.wrapper-vision {
+  display: grid;
+  gap: var(--e-6);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  align-items: center;
+}
+
+@media (min-width: 62rem) {
+  .wrapper-mission,
+  .wrapper-vision {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .wrapper-vision {
+    direction: rtl;
+  }
+
+  .wrapper-vision > * {
+    direction: ltr;
+  }
+}
+
+.wrapper-vision {
+  margin-block-start: var(--e-8);
+}
+
+.mission-vision img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radio-caja);
+}
+
+.div-block-10 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-2);
+}
+
+.padding {
+  padding-inline: var(--e-7);
+}
+
+/* ===========================================================================
+ * CONTACTO — /contact-us
+ * =========================================================================== */
+
+.header-contact-page {
+  padding-block: clamp(var(--e-7), 5vw, var(--e-8));
+  background: var(--superficie-2);
+}
+
+.wrapper-contact-page {
+  display: grid;
+  gap: var(--e-8);
+  width: min(100% - var(--margen-lateral) * 2, var(--ancho-contenido));
+  margin-inline: auto;
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .wrapper-contact-page {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  }
+}
+
+.block-info-contact,
+.block-info-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-5);
+}
+
+.block-left-info,
+.block-right-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+
+.box-icon-contact {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: none;
+  background: var(--verde);
+  border-radius: var(--radio-control);
+}
+
+.box-icon-contact img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.top-title-contact-page {
+  font-family: var(--fuente-titular);
+  font-size: var(--fs-base);
+  font-weight: var(--peso-titular);
+  margin: 0;
+}
+
+.info-contact-page {
+  color: var(--tinta-media);
+  font-size: var(--fs-sm);
+}
+
+.info-contact-page a {
+  color: var(--tinta);
+  text-decoration-color: var(--verde-texto);
+}
+
+.list {
+  display: grid;
+  gap: var(--e-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list-item {
+  display: flex;
+  align-items: start;
+  gap: var(--e-4);
+}
+
+/* Los `ikonik-*` son identificadores que Webflow generaba por icono. Se les da
+ * el mismo tamaño a todos: no tenían más función que esa. */
+[class^="ikonik-"],
+[class*=" ikonik-"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* --- Formulario de /contact-us -------------------------------------------
+ * Sigue siendo el marcado inline de la página, no LeadForm.astro: es la única
+ * vía de lead que hoy funciona y migrarla es lo último que se toca. Estas
+ * reglas lo dejan idéntico en apariencia al componente nuevo. */
+
+.block-form-contact,
+.wrapper-form-page,
+.block-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-block-contact {
+  padding: var(--e-6);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-caja);
+  box-shadow: var(--sombra-2);
+}
+
+.header-form {
+  margin-block-end: var(--e-5);
+}
+
+.title-form {
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--e-2);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+
+.text-field-form {
+  width: 100%;
+  min-height: 3rem;
+  padding: var(--e-3) var(--e-4);
+  font-family: var(--fuente-texto);
+  font-size: var(--fs-base);
+  color: var(--tinta);
+  background: var(--superficie);
+  border: 1px solid var(--borde-control);
+  border-radius: var(--radio-control);
+}
+
+textarea.text-field-form {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.lead-consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-3);
+  margin: 0;
+  padding: var(--e-4);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-control);
+  background: var(--superficie-2);
+}
+
+.lead-consent-row {
+  display: flex;
+  gap: var(--e-3);
+  align-items: start;
+}
+
+/* 24×24 CSS px: SC 2.5.8. El barrido de la fase 0 las midió a 18×18. */
+.lead-consent-row input[type="checkbox"] {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  accent-color: var(--verde-texto);
+}
+
+.lead-note,
+.small-text {
+  font-size: var(--fs-xs);
+  line-height: var(--lh-corto);
+  color: var(--tinta-media);
+  margin: 0;
+}
+
+.lead-captcha {
+  min-height: 65px;
+}
+
+.success-message {
+  padding: var(--e-4);
+  border-radius: var(--radio-control);
+  background: color-mix(in srgb, var(--exito) 12%, var(--superficie));
+  color: var(--exito);
+}
+
+/* ===========================================================================
+ * RUTAS LEGALES — /privacy-policy y /terms
+ * =========================================================================== */
+
+.legal-header {
+  max-width: 52rem;
+}
+
+.legal-body {
+  max-width: var(--medida);
+}
+
+.legal-body h2 {
+  font-size: var(--fs-xl);
+  margin-block: var(--e-7) var(--e-3);
+}
+
+.legal-body h3 {
+  font-size: var(--fs-lg);
+  margin-block: var(--e-6) var(--e-2);
+}
+
+.legal-body p,
+.legal-body li {
+  color: var(--tinta-media);
+}
+
+.legal-meta,
+.legal-address {
+  font-size: var(--fs-sm);
+  color: var(--tinta-suave);
+}
+
+.legal-draft {
+  padding: var(--e-4);
+  margin-block-end: var(--e-6);
+  border-inline-start: 4px solid var(--aviso);
+  background: color-mix(in srgb, var(--aviso) 8%, var(--superficie));
+}
+
+.legal-table-scroll {
+  overflow-x: auto;
+}
+
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+
+.legal-table th,
+.legal-table td {
+  padding: var(--e-3);
+  border: 1px solid var(--borde);
+  text-align: start;
+}
+
+.legal-defs {
+  display: grid;
+  gap: var(--e-2);
+}
+
+/* Hueco pendiente de decisión del cliente. Amarillo y VISIBLE a propósito:
+ * marcarlo en gris sería esconderlo. */
+.pendiente {
+  background: color-mix(in srgb, var(--aviso) 22%, var(--superficie));
+  color: var(--tinta);
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+}
+
+/* La columna del artículo. `.blog-column-right` ya lleva su sticky arriba. */
+.blog-column-left {
+  min-width: 0;
+}
+
+/* `.lead` es el <section> que envuelve a LeadForm.astro. No lleva estilo
+ * propio a propósito: quien manda es el contenedor que lo coloca — el <aside>
+ * de la ficha de servicio hoy, y mañana quien lo reutilice. */
+.lead {
+  display: block;
+}
