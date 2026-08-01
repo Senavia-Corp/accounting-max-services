@@ -155,7 +155,15 @@
   --peso-fuerte: 600;
   --peso-titular: 600; /* Source Serif solo trae la 600, a propósito */
 
-  --medida: 68ch; /* longitud de línea máxima en prosa */
+  /* Longitud de línea máxima en prosa.
+   *
+   * OJO CON `ch`, que engaña: mide el ancho del glifo «0», más ancho que la
+   * letra media de un texto corrido. Medido en producción sobre
+   * /post/understanding-tax-deductions con Inter a 18px, `68ch` daban 772px y
+   * **96 caracteres reales** por línea — muy por encima de los 60-75 que se
+   * buscan. `48ch` da los ~68 de verdad. El número sale de medir, no de la
+   * intuición de que 68ch son 68 caracteres. */
+  --medida: 48ch;
 
   /* -------------------------------------------------------------------------
    * ESPACIO — una sola escala, base 4px. Nada de márgenes a ojo.
@@ -185,7 +193,7 @@
    * ---------------------------------------------------------------------- */
 
   --ancho-contenido: 75rem; /* 1200px */
-  --ancho-prosa: 42rem; /* 672px — ~68ch a 16px */
+  --ancho-prosa: 34rem; /* 544px — ~68 caracteres reales a 16px, ver --medida */
   --canal: var(--e-5);
   --margen-lateral: clamp(var(--e-4), 5vw, var(--e-8));
 
