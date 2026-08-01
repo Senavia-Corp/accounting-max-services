@@ -29,8 +29,19 @@ Vigente desde 2026-07-31 (D15 en DECISIONS.md).
   GQM, `team_rtKW2Pw4fLvbavehX9tF3W9Q`). La unica via correcta para leer o tocar el
   proyecto Vercel de este cliente es Composio con `--account accounting-max-services`
   explicito en cada llamada.
-- ANTES de cada push: si el cambio toca codigo (no solo Markdown), `npm run build` tiene
-  que pasar limpio.
+- ANTES de cada push: si el cambio toca codigo (no solo Markdown), `npm run build` y
+  `npm run check` tienen que pasar limpios. **Los dos, y el segundo no es opcional:**
+  `astro build` transpila con esbuild y NO comprueba tipos, asi que por si solo deja
+  pasar en verde un campo mal escrito o una clave que falte en el `ES` de `i18n.ts`.
+  `npm run check` corre `astro check` (0 errores hoy, mantenerlo asi) y ademas EJECUTA
+  `tools/correo-check.mjs`, que es la comprobacion de los dos correos de `/api/lead`.
+  - `typescript` esta clavado en **6.x a proposito**: la 7.0 es el compilador nativo
+    nuevo y todavia no expone la API que `astro check` necesita — con la 7 instalada,
+    `astro check` aborta. Seguimiento en withastro/roadmap#1321.
+  - Dentro del markup de un `.astro`, NO escribas comentarios `/* ... */` en la lista
+    de atributos de una etiqueta ni genericos tipo `requiereEs<string>(...)`: Astro los
+    compila, pero rompen el analizador de `astro check`. Usa `{/* ... */}` como hijo y
+    `requiereEsTexto()`. En el frontmatter ambas formas son correctas.
 - DESPUES de cada despliegue: comprobar que la portada y una ruta de servicio responden
   200 en la URL de produccion.
 
