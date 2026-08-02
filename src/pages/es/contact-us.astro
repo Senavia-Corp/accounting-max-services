@@ -7,9 +7,11 @@
 // Espejo de src/pages/contact-us.astro: mismo marcado, mismos SVG, mismo
 // contrato de campos contra /api/lead. Solo cambia el idioma de los rotulos.
 //
-// SIN ANIMACIONES DE ENTRADA, igual que la ruta EN y por los mismos motivos
-// (seccion unica sobre el pliegue + formulario excluido). El porque completo
-// esta en la cabecera del gemelo ingles.
+// ANIMACION DE ENTRADA: un fundido en la tarjeta del formulario, igual que la
+// ruta EN. En escritorio se revela al cargar (el telefono y el formulario
+// tienen que verse ya) y solo anima de verdad en movil. Nunca un token con
+// transform: descolocaria la capa `fixed` de Turnstile. Detalle completo en la
+// cabecera del gemelo ingles.
 //
 // EL NAP NO PASA POR EL TRADUCTOR. Telefono, correo, direccion y horario salen
 // de NEGOCIO (src/lib/sanity.ts) y se pintan IDENTICOS en las dos lenguas,
@@ -25,6 +27,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Nav from "../../components/Nav.astro";
 import Footer from "../../components/Footer.astro";
 import JsonLd from "../../components/JsonLd.astro";
+import PuntosConfianza from "../../components/PuntosConfianza.astro";
 import { NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
 import { SITE_KEY } from "../../lib/turnstile";
@@ -196,9 +199,19 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                 </div>
               </li>
             </ul>
+
+            {/* Mismo motivo que en la ruta EN: la columna gris se estira hasta
+                igualar al formulario y quedaban 564px de gris vacio al fondo.
+                Los cuatro puntos ya estan publicados en las otras ocho
+                inserciones del componente. */}
+            <PuntosConfianza lang={lang} />
           </div>
 
-          <div class="block-form-contact">
+          {/* Fundido SIN transform, igual que en la ruta EN: en escritorio se
+              revela al cargar y solo anima de verdad en movil. El porque de que
+              no lleve transform —la capa `fixed` de Turnstile— esta en la
+              cabecera del gemelo ingles. */}
+          <div class="block-form-contact" data-entra>
             <div class="wrapper-form-page">
               <div class="block-form">
                 <div class="form-block-contact w-form">

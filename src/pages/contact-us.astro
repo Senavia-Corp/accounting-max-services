@@ -14,19 +14,28 @@
 //     sin webflow.js ese estilo en linea deja el contenido INVISIBLE;
 //   - el POST va a /api/lead con nombres de campo limpios, no a Webflow.
 //
-// SIN ANIMACIONES DE ENTRADA, Y ES DELIBERADO — no es un olvido. Esta plantilla
-// tiene UNA sola <section> que cabe casi entera sobre el pliegue a 1440x900:
-// .block-info-contact termina hacia y=725, y es ademas la candidata a LCP de la
-// ruta. Lo unico que queda por debajo es el formulario, que esta excluido del
-// sistema en las 26 rutas: el JS le escribe `display` a .w-form-done y
-// .w-form-fail y les mueve el foco, y Turnstile pinta su reto en un overlay
-// `position:fixed` que un transform en cualquier ancestro descolocaria.
-// Que una pagina no lleve animacion es un resultado, no una tarea pendiente.
-// tools/entradas-check.mjs comprueba que el cero sea cero en las DOS lenguas.
+// ANIMACION DE ENTRADA: solo un fundido en la tarjeta del formulario, y solo
+// llega a verse en movil. Medido a 1440x900, la columna izquierda arranca en
+// y=253 —por encima del umbral del observador, que esta en 500— asi que se
+// revela al cargar sin animar. Es lo correcto: en una pagina de contacto el
+// telefono y el formulario tienen que estar visibles ya, no esperando a un
+// scroll. A 390x844 el formulario cae apilado en y=776 y ahi si entra.
+//
+// El token es `data-entra` A SECAS y jamas uno con transform: Turnstile pinta
+// su reto en una capa `position:fixed` y un transform en cualquier ancestro la
+// descolocaria. `opacity` no crea bloque contenedor, asi que es seguro. Y el
+// manejador de `focusin` revela la tarjeta en cuanto el usuario entra en un
+// campo, con lo que .w-form-done y .w-form-fail —a las que el JS les escribe
+// `display` y les mueve el foco— nunca quedan dentro de algo invisible.
+//
+// (La version anterior de esta cabecera decia que la seccion cabia entera sobre
+// el pliegue y que la ruta no llevaria animacion nunca. Estaba mal: medido,
+// .header-contact-page mide 1337px y el formulario baja hasta y=1270.)
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
+import PuntosConfianza from "../components/PuntosConfianza.astro";
 import { NEGOCIO } from "../lib/sanity";
 import { SITE_KEY } from "../lib/turnstile";
 
@@ -199,9 +208,31 @@ const DESCRIPCION =
                 </div>
               </li>
             </ul>
+
+            {/* La columna gris lleva `align-self: stretch` y se estira hasta
+                igualar al formulario, que es mucho mas alto: medido a 1440x900,
+                la caja acababa en y=1334 y su contenido en y=770, o sea 564px
+                de gris vacio al fondo. Estos cuatro puntos ya estan publicados
+                en las otras ocho inserciones del componente, asi que no se
+                inventa nada, y aqui ademas caen donde mas sirven: responden
+                «por que os llamo a vosotros» justo al lado del formulario. */}
+            <PuntosConfianza />
           </div>
 
-          <div class="block-form-contact">
+          {/* Fundido SIN transform. En escritorio la tarjeta arranca por encima
+              del umbral y se revela al cargar, que es lo correcto en una pagina
+              de contacto: el telefono y el formulario tienen que verse ya. La
+              animacion solo ocurre de verdad en movil, donde la columna cae
+              apilada en y=776 y entra al hacer scroll.
+
+              `data-entra` a secas y nunca un token con transform: Turnstile
+              pinta su reto en una capa `position: fixed` y un transform en
+              cualquier ancestro la descolocaria. `opacity` no crea bloque
+              contenedor, asi que es seguro. Y el manejador de `focusin` revela
+              la tarjeta en cuanto el usuario entra en un campo, asi que
+              .w-form-done y .w-form-fail nunca se quedan dentro de algo
+              invisible. */}
+          <div class="block-form-contact" data-entra>
             <div class="wrapper-form-page">
               <div class="block-form">
                 <div class="form-block-contact w-form">
