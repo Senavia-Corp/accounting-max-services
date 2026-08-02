@@ -195,8 +195,8 @@ export const testimonios = (): Promise<Testimonio[]> =>
  */
 export const NEGOCIO = {
   nombre: "Accounting Max Services",
-  telefono: "+1 (754) 244-3993",
-  telefonoHref: "tel:+17542443993",
+  telefono: "+1 (954) 724-1114",
+  telefonoHref: "tel:+19547241114",
   email: "info@accountingmaxservices.com",
   calle: "1700 N University Dr STE 210",
   ciudad: "Coral Springs",
