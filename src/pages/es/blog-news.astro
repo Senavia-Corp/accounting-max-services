@@ -68,7 +68,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                   const titulo = requiereEsTexto(p, "titleEs", href).trim();
                   const extracto = requiereEsTexto(p, "excerptEs", href).trim();
                   return (
-                    <li class="collection-item-blog">
+                    <li class="collection-item-blog" data-entra={primera ? undefined : "sube"}>
                       <div class="block-blog">
                         {/* alt: la miniatura es redundante — el h2 de al lado ya
                             es su alternativa textual y el enlace nombra el post.

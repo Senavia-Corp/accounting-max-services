@@ -210,7 +210,7 @@ const DESCRIPCION =
     <section class="bar-features">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-bar-features">
-          <div class="wrapper-bar-features-intro">
+          <div class="wrapper-bar-features-intro" data-entra-cascada>
             {
               CARACTERISTICAS.map((c) => {
                 const icono = img(c.icono);
@@ -253,7 +253,7 @@ const DESCRIPCION =
     <section class="mission-vision">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-mission">
-          <div class="block-left-info">
+          <div class="block-left-info" data-entra="izquierda">
             <img
               src={src(mision, 1250)}
               srcset={srcset(mision)}
@@ -267,7 +267,7 @@ const DESCRIPCION =
               class="pic-about-us"
             />
           </div>
-          <div class="block-right-info">
+          <div class="block-right-info" data-entra="derecha">
             <h2 class="h2">Our Mission</h2>
             <div>
               At Accounting Max Services, our mission is to empower individuals and businesses with
@@ -285,7 +285,7 @@ const DESCRIPCION =
         {/* A <=991px .wrapper-vision usa flex-flow:wrap-reverse, asi que la foto
             sube por encima del texto sin tocar el orden del DOM. */}
         <div class="wrapper-vision">
-          <div class="block-left-info">
+          <div class="block-left-info" data-entra="izquierda">
             <h2 class="h2">Our Vision </h2>
             <div>
               To be a leading bilingual tax and accounting firm recognized for excellence, trust,
@@ -294,7 +294,7 @@ const DESCRIPCION =
             </div>
             <a href="/contact-us" class="button w-button">Book A Consultation</a>
           </div>
-          <div class="block-right-info">
+          <div class="block-right-info" data-entra="derecha">
             <img
               src={src(vision, 1250)}
               srcset={srcset(vision)}

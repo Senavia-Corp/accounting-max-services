@@ -226,6 +226,94 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
       </style>
     </noscript>
 
+    {/*
+      ENTRADAS POR SCROLL. El estado oculto vive detras del sello que escribe
+      este script (`data-entradas` en <html>): si no corre, el selector de
+      site.css no casa y TODO se ve. No es un detalle — es la leccion del port.
+      Los `data-w-id` + `style="opacity:0"` de Webflow se quitaron a mano de las
+      26 rutas porque sin webflow.js dejaban el H1, el bloque about y el FAQ
+      invisibles para siempre (ver cabecera de src/pages/index.astro).
+
+      Va INLINE y en el <head> por dos razones distintas:
+      - Un <script> normal de Astro sale como type="module" en el <body>, o sea
+        diferido. Sellar desde ahi se ve como visible -> oculto -> visible, que
+        es un parpadeo y no una animacion.
+      - El sello solo se escribe DESPUES de construir el observador. Sellar
+        antes y que el observador falle deja todo invisible: seria el fallo de
+        Webflow otra vez, entrando por la puerta de atras.
+
+      JAVASCRIPT PLANO, sin TypeScript. `astro check` funde todos los is:inline
+      de un .astro en un inline.mjs virtual y le pide getSyntacticDiagnostics a
+      TypeScript: una anotacion de tipo o un generico da TS8010 y tumba
+      `npm run check`, que es puerta de despliegue. El resto de <script> del
+      repo SI son TypeScript porque los procesa Vite; este no.
+    */}
+    <script is:inline>
+      (function () {
+        var raiz = document.documentElement;
+        var io;
+
+        // El margen inferior es en px y no en %, para que no dependa del alto
+        // de la ventana: con un -12% en una pantalla alta, un bloque cercano al
+        // final del documento podria no cruzar el umbral ni con el scroll al
+        // maximo, y quedarse invisible.
+        try {
+          io = new IntersectionObserver(alVer, { rootMargin: "0px 0px -72px 0px", threshold: 0 });
+        } catch (e) {
+          return;
+        }
+        raiz.setAttribute("data-entradas", "");
+
+        function revelar(el) {
+          el.setAttribute("data-visto", "");
+          io.unobserve(el);
+        }
+
+        var listo = false;
+        function alVer(entradas) {
+          for (var i = 0; i < entradas.length; i++) {
+            if (entradas[i].isIntersecting) revelar(entradas[i].target);
+          }
+          // El primer callback llega DESPUES del primer pintado. Sin esto, al
+          // recargar a media pagina o volver por bfcache se funde de golpe todo
+          // lo que ya estaba en pantalla. Mismo patron que `data-cromo-listo`
+          // (ui.ts) y misma razon. Ademas es lo que evita la regresion de LCP:
+          // un elemento en opacity:0 no cuenta como pintado, y DOMContentLoaded
+          // espera a la hoja bloqueante de Typekit de mas arriba.
+          if (!listo) {
+            listo = true;
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                raiz.setAttribute("data-entradas-listo", "");
+              });
+            });
+          }
+        }
+
+        // Tabular no puede llevar el foco a algo invisible (SC 2.4.7 / 2.4.11).
+        // Se registra ya, no dentro del DOMContentLoaded, para cubrir el foco
+        // que llega por fragmento de URL antes de que exista el observador.
+        document.addEventListener("focusin", function (e) {
+          var el = e.target && e.target.closest ? e.target.closest("[data-entra],[data-entra-cascada]") : null;
+          while (el) {
+            revelar(el);
+            el = el.parentElement ? el.parentElement.closest("[data-entra],[data-entra-cascada]") : null;
+          }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+          try {
+            var nodos = document.querySelectorAll("[data-entra],[data-entra-cascada]");
+            for (var i = 0; i < nodos.length; i++) io.observe(nodos[i]);
+          } catch (e) {
+            // Fallo a mitad de camino: se retira el sello y todo vuelve a ser
+            // visible. Preferible un sitio sin animacion a un sitio en blanco.
+            raiz.removeAttribute("data-entradas");
+          }
+        });
+      })();
+    </script>
+
     <slot name="head" />
   </head>
   <body>

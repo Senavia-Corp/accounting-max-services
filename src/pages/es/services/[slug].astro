@@ -222,7 +222,7 @@ const tituloDe = (s: Servicio) =>
     <section class="body-service">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-service">
-          <div class="block-left">
+          <div class="block-left" data-entra>
             {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio.
                 El cuerpo es bodyEs: PortableText es el MISMO componente que usa
                 la ruta EN, solo cambia el campo del que sale el dato. */}
@@ -231,7 +231,7 @@ const tituloDe = (s: Servicio) =>
             </div>
           </div>
 
-          <div class="block-right">
+          <div class="block-right" data-entra>
             {/* En produccion era un SEGUNDO <h1 class="h2">. Baja a <h2>; la
                 clase .h2 es la que pinta. Minusculas como en el original. */}
             <h2 class="h2">{c.service.sidebarTitle}</h2>
@@ -280,7 +280,7 @@ const tituloDe = (s: Servicio) =>
         <div class="wrapper-reviews">
           <div class="w-layout-blockcontainer container w-container">
             <div class="wrapper-header-slider">
-              <div class="box-title-review">
+              <div class="box-title-review" data-entra="sube">
                 <h2 id="titulo-resenas" class="h2">{c.reviews.title}</h2>
                 <div>{c.reviews.text}</div>
               </div>
@@ -320,7 +320,7 @@ const tituloDe = (s: Servicio) =>
               </div>
             </div>
 
-            <div class="block-services-animation">
+            <div class="block-services-animation" data-entra>
               <div class="splide">
                 <div
                   id="pista-resenas"
@@ -387,7 +387,7 @@ const tituloDe = (s: Servicio) =>
 
     <section class="features" aria-labelledby="titulo-features">
       <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
+        <div class="title-center" data-entra="sube">
           {/* El <br> final es del HTML en produccion: se conserva por paridad. */}
           <h2 id="titulo-features" class="h2">{c.features.title}<br /></h2>
           <div>{c.features.text}</div>
@@ -419,7 +419,7 @@ const tituloDe = (s: Servicio) =>
               );
               // .rotate invierte el orden en el DOM, igual que en el baseline.
               return (
-                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
+                <div class={`div-block-4${f.invertido ? " rotate" : ""}`} data-entra-cascada>
                   {f.invertido ? texto : imagen}
                   {f.invertido ? imagen : texto}
                 </div>

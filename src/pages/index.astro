@@ -189,7 +189,14 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
     <section class="about-us" aria-labelledby="about-title">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-about">
-          <div class="block-video">
+          {/* Unidad, NUNCA cascada: sus hijos son el video y los dos cuadrados
+              decorativos en z-index:-1. Escalonarlos los haria entrar despues
+              del video, que es justo lo que no se quiere. El `opacity` convierte
+              este bloque en contexto de apilamiento durante los 450ms y los
+              cuadrados se funden CON el video en vez de quedarse a opacidad 1;
+              al terminar el contexto se destruye y no hay salto, porque ni
+              .about-us ni .container ni .wrapper-about pintan fondo. */}
+          <div class="block-video" data-entra="izquierda">
             {/* Facade click-to-load. En produccion aqui habia un <iframe> de
                 youtube.com que se cargaba siempre: ~700 KB y cookies de Google
                 en la primera visita, sin que nadie le diera al play. El iframe
@@ -235,7 +242,11 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
 
           {/* El id lo usa el CSS portado (#w-node-_42cc5f49-… en el @media de
               991px, accounting-max.webflow.css:3021). No se puede quitar. */}
-          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
+          <div
+            id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67"
+            class="block-about-us"
+            data-entra="derecha"
+          >
             <div class="block-info-content">
               <h2 class="h2" id="about-title">
                 <strong>IRS Enrolled Agents &amp; Certified Public Accountants In Coral Springs, FL </strong>
@@ -263,7 +274,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
         <section class="wrapper-reviews" aria-labelledby="reviews-title">
           <div class="w-layout-blockcontainer container w-container">
             <div class="wrapper-header-slider">
-              <div class="box-title-review">
+              <div class="box-title-review" data-entra="sube">
                 <h2 class="h2" id="reviews-title">What Our Customers Are Saying About Us</h2>
                 <div>
                   Trusted by small business owners nationwide, Accounting Max Services is known
@@ -311,7 +322,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
               </div>
             </div>
 
-            <div class="block-services-animation">
+            <div class="block-services-animation" data-entra>
               <div class="splide">
                 {/* ui.ts hace la pista alcanzable con teclado (2.1.1) y le pone
                     role=group; el nombre lo damos aqui con el h2 de arriba. */}
@@ -381,7 +392,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
     {/* ============================================================ FEATURES */}
     <section class="features" aria-labelledby="features-title">
       <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
+        <div class="title-center" data-entra="sube">
           {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
           <h2 class="h2" id="features-title">What to expect from accounting Max Services?<br /></h2>
           <div>
@@ -394,7 +405,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
         <div class="div-block-5">
           {/* Los <div> sin clase que envuelven imagen y texto son las CELDAS del
               grid de .div-block-4 (1fr 1fr). Quitarlos rompe la maqueta. */}
-          <div class="div-block-4">
+          <div class="div-block-4" data-entra-cascada>
             <div>
               <img
                 src={src(feat1, 1080)}
@@ -422,7 +433,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
             </div>
           </div>
 
-          <div class="div-block-4 rotate">
+          <div class="div-block-4 rotate" data-entra-cascada>
             <div>
               <h3 class="h3">Powerful financial reporting</h3>
               <div>
@@ -450,7 +461,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
             </div>
           </div>
 
-          <div class="div-block-4">
+          <div class="div-block-4" data-entra-cascada>
             <div>
               <img
                 src={src(feat2, 1080)}
@@ -487,7 +498,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
     <section class="faq" aria-labelledby="faq-title">
       <div class="w-layout-blockcontainer container w-container">
         <div class="container-faq">
-          <div class="block-title-faq">
+          <div class="block-title-faq" data-entra="sube">
             <h2 class="h2" id="faq-title">Frequently Asked Questions</h2>
             {/* R3: en produccion aqui hay texto de relleno de Webflow ("This is
                 some text inside of a div block."). Ni se copia ni se inventa un
@@ -527,6 +538,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
               loading="lazy"
               decoding="async"
               class="image-faq"
+              data-entra="sube"
             />
 
             {/* Acordeon. El marcado es el que documenta scripts/ui.ts, que le pone
@@ -534,7 +546,7 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
                 Sin JS los cinco quedan abiertos y legibles: .faq-answer es
                 height:auto en el CSS portado. Por eso no se emite el
                 style="height:0px" del original. */}
-            <div class="block-faq">
+            <div class="block-faq" data-entra="sube">
               {
                 [
                   {

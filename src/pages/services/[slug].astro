@@ -232,7 +232,7 @@ const aqui = `/services/${servicio.slug}`;
     <section class="body-service">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-service">
-          <div class="block-left">
+          <div class="block-left" data-entra>
             {/* .w-richtext lo pone quien llama; PortableText no emite envoltorio. */}
             <div class="w-richtext">
               {
@@ -245,7 +245,7 @@ const aqui = `/services/${servicio.slug}`;
             </div>
           </div>
 
-          <div class="block-right">
+          <div class="block-right" data-entra>
             {/* En produccion era <h1 class="h2">: un SEGUNDO <h1> en la pagina,
                 por debajo del titulo del servicio. Baja a <h2>; la clase .h2 es
                 la que pinta, asi que el aspecto no cambia. */}
@@ -301,7 +301,7 @@ const aqui = `/services/${servicio.slug}`;
         <div class="wrapper-reviews">
           <div class="w-layout-blockcontainer container w-container">
             <div class="wrapper-header-slider">
-              <div class="box-title-review">
+              <div class="box-title-review" data-entra="sube">
                 <h2 id="titulo-resenas" class="h2">What Our Customers Are Saying About Us</h2>
                 <div>
                   Trusted by small business owners nationwide, Accounting Max Services is known for
@@ -347,7 +347,7 @@ const aqui = `/services/${servicio.slug}`;
               </div>
             </div>
 
-            <div class="block-services-animation">
+            <div class="block-services-animation" data-entra>
               <div class="splide">
                 {/* tabindex/role/aria-label van en el HTML y no solo en ui.ts:
                     la pista se desplaza con CSS aunque el JS no cargue, y una
@@ -422,7 +422,7 @@ const aqui = `/services/${servicio.slug}`;
     {/* Texto identico en las 12 rutas del baseline. Transcrito verbatim. */}
     <section class="features" aria-labelledby="titulo-features">
       <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
+        <div class="title-center" data-entra="sube">
           {/* El <br> final es del HTML en produccion: separa el titular del
               parrafo. Se conserva por paridad. */}
           <h2 id="titulo-features" class="h2">
@@ -462,7 +462,7 @@ const aqui = `/services/${servicio.slug}`;
               );
               // .rotate invierte el orden en el DOM, igual que en el baseline.
               return (
-                <div class={`div-block-4${f.invertido ? " rotate" : ""}`}>
+                <div class={`div-block-4${f.invertido ? " rotate" : ""}`} data-entra-cascada>
                   {f.invertido ? texto : imagen}
                   {f.invertido ? imagen : texto}
                 </div>

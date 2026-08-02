@@ -133,7 +133,7 @@ const tituloDe = (p: Post) =>
     <div class="block-blog-page">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-content-blog">
-          <article class="blog-column-left">
+          <article class="blog-column-left" data-entra>
             <div class="w-layout-blockcontainer container w-container">
               <div class="w-richtext">
                 {/* Mismo componente que /es/services/[slug]: una sola
@@ -146,13 +146,13 @@ const tituloDe = (p: Post) =>
           {/* role="complementary" con nombre: en produccion esta columna es un
               <div> anonimo y no se puede saltar a ella ni salir. */}
           <aside class="blog-column-right" aria-label={c.post.asideLabel}>
-            <div class="block-promo-blog">
+            <div class="block-promo-blog" data-entra="derecha">
               <h2 class="h3"><strong>{c.post.promoTitle}</strong></h2>
               <div>{c.post.promoText}</div>
               <a href={CONTACTO} class="button w-button">{c.post.promoCta}</a>
             </div>
 
-            <div class="block-blogs-features">
+            <div class="block-blogs-features" data-entra="derecha">
               <h2 class="h3">{c.post.destacadosTitle}</h2>
               <ul role="list">
                 {

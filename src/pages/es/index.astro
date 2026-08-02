@@ -170,7 +170,8 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     <section class="about-us" aria-labelledby="about-title">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-about">
-          <div class="block-video">
+          {/* Unidad, NUNCA cascada — mismo motivo que en la ruta EN. */}
+          <div class="block-video" data-entra="izquierda">
             {/* Facade click-to-load, igual que en la ruta EN: hasta que no se
                 pulsa, el navegador no habla con YouTube. */}
             <div
@@ -208,7 +209,11 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
           </div>
 
           {/* El id lo usa el CSS portado (@media 991px). No se puede quitar. */}
-          <div id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67" class="block-about-us">
+          <div
+            id="w-node-_42cc5f49-40c0-a4b2-857a-f634d5f3ff7b-9d7e9d67"
+            class="block-about-us"
+            data-entra="derecha"
+          >
             <div class="block-info-content">
               {/* GLOSARIO: "Enrolled Agents" y "Certified Public Accountants"
                   van literales. Traducirlos fabrica credenciales falsas. */}
@@ -228,7 +233,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         <section class="wrapper-reviews" aria-labelledby="reviews-title">
           <div class="w-layout-blockcontainer container w-container">
             <div class="wrapper-header-slider">
-              <div class="box-title-review">
+              <div class="box-title-review" data-entra="sube">
                 <h2 class="h2" id="reviews-title">{c.reviews.title}</h2>
                 <div>{c.reviews.text}</div>
               </div>
@@ -268,7 +273,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
               </div>
             </div>
 
-            <div class="block-services-animation">
+            <div class="block-services-animation" data-entra>
               <div class="splide">
                 <div
                   id="reviews-track"
@@ -335,7 +340,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     {/* ============================================================ FEATURES */}
     <section class="features" aria-labelledby="features-title">
       <div class="w-layout-blockcontainer container w-container">
-        <div class="title-center">
+        <div class="title-center" data-entra="sube">
           {/* El <br> final es del HTML de produccion: se conserva por paridad. */}
           <h2 class="h2" id="features-title">{c.features.title}<br /></h2>
           <div>{c.features.text}</div>
@@ -344,7 +349,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
           {/* Mismo orden e inversion (.rotate) que la ruta EN: imagen, texto /
               texto, imagen / imagen, texto. Los <div> sin clase son las celdas
               del grid de .div-block-4; quitarlos rompe la maqueta. */}
-          <div class="div-block-4">
+          <div class="div-block-4" data-entra-cascada>
             <div>
               <img
                 src={src(feat1, 1080)}
@@ -364,7 +369,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
             </div>
           </div>
 
-          <div class="div-block-4 rotate">
+          <div class="div-block-4 rotate" data-entra-cascada>
             <div>
               <h3 class="h3">{c.features.items[1].title}</h3>
               <div set:html={c.features.items[1].html} />
@@ -384,7 +389,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
             </div>
           </div>
 
-          <div class="div-block-4">
+          <div class="div-block-4" data-entra-cascada>
             <div>
               <img
                 src={src(feat2, 1080)}
@@ -414,7 +419,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     <section class="faq" aria-labelledby="faq-title">
       <div class="w-layout-blockcontainer container w-container">
         <div class="container-faq">
-          <div class="block-title-faq">
+          <div class="block-title-faq" data-entra="sube">
             <h2 class="h2" id="faq-title">{c.faq.title}</h2>
             {/* Sin entradilla, igual que la ruta EN: en produccion ese <div>
                 contiene el placeholder de Webflow. No se migra ni se inventa
@@ -436,12 +441,13 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
               loading="lazy"
               decoding="async"
               class="image-faq"
+              data-entra="sube"
             />
 
             {/* Mismo marcado de acordeon que la ruta EN: lo mueve scripts/ui.ts,
                 que carga Nav. Las preguntas van en primera persona porque son la
                 voz del visitante, igual que en el original. */}
-            <div class="block-faq">
+            <div class="block-faq" data-entra="sube">
               {
                 c.faq.items.map((item, i) => (
                   <div class="faq-item">

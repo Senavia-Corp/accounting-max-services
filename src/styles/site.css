@@ -2389,3 +2389,218 @@
     padding: 24px 22px;
   }
 }
+
+/* === ENTRADAS POR SCROLL ==================================================
+ *
+ * Los bloques entran fundiendose al aparecer en pantalla. Tres tokens y ni uno
+ * mas: `data-entra` (fundido), `data-entra="sube"` (el caso por defecto) y
+ * `data-entra="izquierda"|"derecha"` (solo con dos columnas reales). Mas un
+ * `data-entra-cascada` que escalona los hijos directos de un contenedor.
+ *
+ * TODO el estado oculto cuelga de `html[data-entradas]`, que lo escribe el
+ * script en linea del <head> de BaseLayout. Sin ese sello no casa ningun
+ * selector y el sitio se ve entero. Es deliberado: este repo ya se quedo
+ * invisible una vez por meter `opacity: 0` en la cascada a secas.
+ *
+ * Se anima con `animation` y no con `transition` por el escalonado: un
+ * `transition-delay` se queda puesto para siempre y cualquier hover futuro de
+ * ese hijo arrancaria hasta 350ms tarde. `animation-delay` no se filtra. Es
+ * ademas el mecanismo que ya usa la franja de logos aqui arriba.
+ *
+ * Lo que NO se anima esta igual de razonado que lo que si: los heroes (estan
+ * sobre el pliegue), todos los LCP, las <section> (son a sangre y llevan el
+ * fondo), el cromo, el acordeon, el carrusel, los formularios y el pie. */
+
+/* Estado oculto. Solo `opacity` y `transform`: `display:none`,
+ * `visibility:hidden`, `content-visibility:hidden` y `contain:size|content`
+ * impedirian que carguen las ~105 <img loading="lazy"> que viven dentro de
+ * estos bloques. */
+html[data-entradas] [data-entra]:not([data-visto]),
+html[data-entradas] [data-entra-cascada]:not([data-visto]) > * {
+  opacity: 0;
+}
+
+html[data-entradas] [data-entra="sube"]:not([data-visto]),
+html[data-entradas] [data-entra-cascada]:not([data-visto]) > * {
+  transform: translateY(20px);
+}
+
+/* 20px y no mas. La holgura lateral medida es de 32px por lado en toda la
+ * banda 992-1313px, que es el suelo de todo el sitio (el canal de 2em de las
+ * secciones; el .container de 1250px solo empieza a sobrar a partir de 1314).
+ * A 1440 hay 95px y a 1920, 335px. En LTR el desbordamiento por la izquierda
+ * no saca barra, solo el positivo, asi que el que manda es "derecha". */
+html[data-entradas] [data-entra="izquierda"]:not([data-visto]) {
+  transform: translateX(-20px);
+}
+
+html[data-entradas] [data-entra="derecha"]:not([data-visto]) {
+  transform: translateX(20px);
+}
+
+/* La animacion se habilita un frame despues del primer callback del
+ * observador, no antes: ver el comentario del script en BaseLayout. Hasta
+ * entonces basta con que `data-visto` deje de casar el selector de arriba, que
+ * revela sin movimiento. */
+/* `backwards` y NO `both`, y esto no es un detalle de estilo. Con un @keyframes
+ * de un solo fotograma `from`, el `forwards` que lleva dentro `both` deja el
+ * efecto de la animacion aplicado para siempre: el `transform` se queda
+ * serializado como `matrix(1, 0, 0, 1, 0, 0)` en vez de volver a `none`. Es la
+ * matriz identidad —no se ve— pero un `transform` distinto de `none` crea
+ * contexto de apilamiento y bloque contenedor para los descendientes `fixed` y
+ * `absolute`. Medido en el navegador: con `both`, .block-video se quedaba
+ * atrapando de forma PERMANENTE sus dos decorativos en z-index:-1, no solo
+ * durante los 450ms.
+ *
+ * `backwards` da lo unico que hacia falta de `both` —sostener el fotograma
+ * `from` durante el animation-delay de la cascada— y al terminar devuelve el
+ * elemento a su valor de reposo, que con `data-visto` puesto ya es
+ * opacity:1 / transform:none. */
+html[data-entradas-listo] [data-entra][data-visto],
+html[data-entradas-listo] [data-entra-cascada][data-visto] > * {
+  animation: entra-fundido 450ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+html[data-entradas-listo] [data-entra="sube"][data-visto],
+html[data-entradas-listo] [data-entra-cascada][data-visto] > * {
+  animation-name: entra-sube;
+}
+
+html[data-entradas-listo] [data-entra="izquierda"][data-visto] {
+  animation-name: entra-izquierda;
+}
+
+html[data-entradas-listo] [data-entra="derecha"][data-visto] {
+  animation-name: entra-derecha;
+}
+
+/* Cascada de 70ms con tope en el 6.o hijo: mas alla se lee como carga lenta y
+ * no como ritmo. `both` es obligatorio — es lo que mantiene al hijo 6 en su
+ * fotograma `from` durante los 350ms de espera, porque el selector de estado
+ * oculto deja de casar en cuanto el PADRE recibe `data-visto`. */
+html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(2) {
+  animation-delay: 70ms;
+}
+html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(3) {
+  animation-delay: 140ms;
+}
+html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(4) {
+  animation-delay: 210ms;
+}
+html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(5) {
+  animation-delay: 280ms;
+}
+html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(n + 6) {
+  animation-delay: 350ms;
+}
+
+/* Las dos celdas de un bloque de `features` entran cada una desde SU lado y a
+ * la vez — de ahi el `animation-delay: 0s`, que anula el paso de la cascada:
+ * con entrada lateral opuesta, un desfase de 70ms se lee como descuido, no como
+ * ritmo.
+ *
+ * `.div-block-4.rotate` NO existe en escritorio: su unica regla vive dentro del
+ * @media de 991 (accounting-max:2269). A >=992 la inversion del bloque del
+ * medio esta en el propio DOM —celda de texto primero, imagen despues— asi que
+ * `:first-child` ES siempre la celda izquierda en los tres bloques y el zigzag
+ * sale sin una sola condicion. */
+html[data-entradas] .div-block-4[data-entra-cascada]:not([data-visto]) > *:first-child {
+  transform: translateX(-20px);
+}
+html[data-entradas] .div-block-4[data-entra-cascada]:not([data-visto]) > *:last-child {
+  transform: translateX(20px);
+}
+html[data-entradas-listo] .div-block-4[data-entra-cascada][data-visto] > *:first-child {
+  animation-name: entra-izquierda;
+  animation-delay: 0s;
+}
+html[data-entradas-listo] .div-block-4[data-entra-cascada][data-visto] > *:last-child {
+  animation-name: entra-derecha;
+  animation-delay: 0s;
+}
+
+/* Un solo fotograma, como `logos-aparecer`: el que falta lo aporta el valor
+ * computado del elemento, que es su estado de reposo normal. */
+@keyframes entra-fundido {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes entra-sube {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes entra-izquierda {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+@keyframes entra-derecha {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+/* 991 es el breakpoint del port. Ahi las retículas de 2 y 3 columnas ya son de
+ * una sola, asi que "izquierda" y "derecha" dejan de significar nada — y en
+ * .div-block-4.rotate y .wrapper-vision el `wrap-reverse` invierte el par, con
+ * lo que el lado ademas mentiria. Todo lateral pasa a `sube`. */
+@media screen and (max-width: 991px) {
+  html[data-entradas] [data-entra="izquierda"]:not([data-visto]),
+  html[data-entradas] [data-entra="derecha"]:not([data-visto]) {
+    transform: translateY(20px);
+  }
+
+  html[data-entradas-listo] [data-entra="izquierda"][data-visto],
+  html[data-entradas-listo] [data-entra="derecha"][data-visto] {
+    animation-name: entra-sube;
+  }
+
+  /* Las celdas de `features` van por selector propio, mas especifico que el de
+   * arriba, asi que hay que repetirlo aqui: aqui el bloque es de una columna y
+   * en el del medio el `wrap-reverse` invierte el par, con lo que el lado
+   * ademas mentiria. */
+  html[data-entradas] .div-block-4[data-entra-cascada]:not([data-visto]) > *:first-child,
+  html[data-entradas] .div-block-4[data-entra-cascada]:not([data-visto]) > *:last-child {
+    transform: translateY(20px);
+  }
+  html[data-entradas-listo] .div-block-4[data-entra-cascada][data-visto] > *:first-child,
+  html[data-entradas-listo] .div-block-4[data-entra-cascada][data-visto] > *:last-child {
+    animation-name: entra-sube;
+  }
+}
+
+/* Los dos bloques de seguridad. Sin `!important`: repiten la MISMA cadena de
+ * selectores que la regla que oculta, asi que ganan por orden de aparicion. La
+ * regla de la casa es cero `!important` fuera del reset de la cabecera. */
+
+/* Sin esto, imprimir o guardar como PDF cualquier ruta saca en blanco todo lo
+ * que hay bajo el pliegue. Importa en concreto en /privacy-policy y /terms,
+ * que son los dos documentos que la gente imprime. */
+@media print {
+  html[data-entradas] [data-entra]:not([data-visto]),
+  html[data-entradas] [data-entra-cascada]:not([data-visto]) > * {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* El reset global de la cabecera de este fichero NO basta aqui. Comprime la
+ * duracion a 0,01ms, que neutraliza bien el movimiento, pero no restablece
+ * `opacity` ni `transform`: si el observador no llegara a disparar sobre un
+ * bloque, ese bloque quedaria invisible SOLO para quien tiene el movimiento
+ * reducido. Es el peor fallo posible, el que no se ve en QA. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-entradas] [data-entra]:not([data-visto]),
+  html[data-entradas] [data-entra-cascada]:not([data-visto]) > * {
+    opacity: 1;
+    transform: none;
+  }
+}

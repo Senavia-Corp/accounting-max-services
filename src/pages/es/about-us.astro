@@ -128,7 +128,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     <section class="bar-features">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-bar-features">
-          <div class="wrapper-bar-features-intro">
+          <div class="wrapper-bar-features-intro" data-entra-cascada>
             {
               c.about.features.map((f, i) => {
                 const icono = img(ICONOS[i]);
@@ -173,7 +173,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
     <section class="mission-vision">
       <div class="w-layout-blockcontainer container w-container">
         <div class="wrapper-mission">
-          <div class="block-left-info">
+          <div class="block-left-info" data-entra="izquierda">
             <img
               src={src(mision, 1250)}
               srcset={srcset(mision)}
@@ -187,7 +187,7 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
               class="pic-about-us"
             />
           </div>
-          <div class="block-right-info">
+          <div class="block-right-info" data-entra="derecha">
             <h2 class="h2">{c.about.missionTitle}</h2>
             <div>{c.about.missionText}</div>
             <a href={CONTACTO} class="button w-button">{c.about.cta}</a>
@@ -197,12 +197,12 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         {/* A <=991px .wrapper-vision usa flex-flow:wrap-reverse: la foto sube
             sobre el texto sin tocar el orden del DOM. */}
         <div class="wrapper-vision">
-          <div class="block-left-info">
+          <div class="block-left-info" data-entra="izquierda">
             <h2 class="h2">{c.about.visionTitle}</h2>
             <div>{c.about.visionText}</div>
             <a href={CONTACTO} class="button w-button">{c.about.cta}</a>
           </div>
-          <div class="block-right-info">
+          <div class="block-right-info" data-entra="derecha">
             <img
               src={src(vision, 1250)}
               srcset={srcset(vision)}

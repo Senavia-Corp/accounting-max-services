@@ -148,14 +148,21 @@ const titulo = (s: Servicio): string =>
     una sola fuente para ese numero que repetirlo aqui. */}
 <section class="bar-services" aria-labelledby="services-title">
   <div class="wrapper-bar-services">
-    <div class="servicios-cabecera">
+    {/* La <section> NO se anima: es a sangre y lleva el fondo. Se entra del
+        carril hacia dentro. */}
+    <div class="servicios-cabecera" data-entra="sube">
       {/* .h2/.h3 no son decorativas: un <h2> pelado cae en la regla base del
           vendor (Arial 32px) y estas llevan la tipografia real del sitio. */}
       <h2 class="h2" id="services-title">{c.home.serviciosTitulo}</h2>
       <p class="servicios-intro">{c.home.serviciosIntro}</p>
     </div>
 
-    <div class="servicios-rejilla">
+    {/* Cascada sobre las 3 tarjetas. El subgrid aguanta: `opacity` y
+        `transform` no afectan a la maqueta, asi que la fila de titulos que las
+        tres comparten no se mueve. Lo que NO se puede es envolver las tarjetas
+        en un <div>: dejarian de ser hijas directas de la rejilla y la
+        subrejilla se rompe. */}
+    <div class="servicios-rejilla" data-entra-cascada>
       {
         grupos.map((grupo) => (
           <div class="servicios-tarjeta">

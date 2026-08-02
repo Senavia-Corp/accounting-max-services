@@ -66,7 +66,15 @@ const CONTACTO = enlace(lang, "/contact-us");
 <section class="call-action" aria-labelledby={tituloId}>
   <div class="w-layout-blockcontainer container w-container">
     <div class="footer-subscribe">
-      <div class="wrapper-call-action">
+      {/* El token va aqui y no en `.footer-subscribe`, que es clase COMPARTIDA
+          con el newsletter del pie (por eso todo su CSS va prefijado con
+          `.call-action `): marcarla animaria tambien el pie, que esta en lista
+          negra. Y tampoco en la <section>, que es a sangre y lleva el navy.
+
+          En /services/* este bloque cae justo sobre el pliegue a 1440x900; lo
+          que lo salva es que el primer callback del observador revela sin
+          animar (ver el script de BaseLayout). */}
+      <div class="wrapper-call-action" data-entra-cascada>
         <div class="block-content-call-to-action">
           {/* Decorativo: el titular de al lado ya dice lo mismo. */}
           <img

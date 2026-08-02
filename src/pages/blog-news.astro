@@ -94,7 +94,7 @@ if (distintas < lista.length) {
                   // La primera tarjeta es la candidata a LCP: entra eager.
                   const primera = i === 0;
                   return (
-                    <li class="collection-item-blog">
+                    <li class="collection-item-blog" data-entra={primera ? undefined : "sube"}>
                       {/* En produccion este div llevaba style="opacity:0" y un
                           data-w-id: la interaccion de Webflow lo revelaba al
                           hacer scroll. Sin webflow.js las 10 tarjetas se
