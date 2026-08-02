@@ -75,6 +75,43 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     {/*
+      MEDICION. Contenedor de Google Tag Manager, el unico rastreador del sitio.
+
+      La propiedad GA4 (G-L521MPS8H9) se configura DENTRO de GTM y no aparece en
+      este repositorio. El snippet de gtag.js que Google entrega junto a ese ID
+      NO se instala: con los dos a la vez cada una de las 54 rutas emitiria dos
+      page_view — uno por gtag.js y otro por el GA4 de GTM — y toda metrica de
+      sesion y de conversion saldria inflada. tools/gtm-check.mjs lo vigila para
+      que una sesion futura no lo pegue «porque Google lo dio».
+
+      `is:inline` es OBLIGATORIO. Un <script> normal de Astro sale como
+      type="module" en el <body> (ver la nota de mas abajo en este mismo head),
+      o sea diferido y DESPUES de los scripts de los formularios: el dataLayer
+      no existiria en el instante en que contact-us y FooterSubscribe empujan su
+      conversion.
+
+      El ID va literal y no en una PUBLIC_GTM_ID. Es publico —se lee en el HTML
+      de las 54 rutas— y las variables PUBLIC_ las hornea Vite en tiempo de
+      build, que es justo la clase de fallo que costo una sesion entera con la
+      site key de Turnstile.
+
+      page_language se empuja ANTES del contenedor, para que GTM lo tenga desde
+      el primer evento y no a partir del segundo. No es redundante con la
+      dimension «Idioma» de GA4: esa es el idioma del NAVEGADOR, no el de la
+      pagina que se sirvio, y sin este parametro no se puede comparar como
+      convierte /es frente a la version inglesa.
+    */}
+    <script is:inline define:vars={{ pageLang: lang }}>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ page_language: pageLang });
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-WHNFLL7H');
+    </script>
+
+    {/*
       ICONOS. Antes de esto el <head> no emitia NI UNO, asi que el navegador
       caia a /favicon.ico por convencion — y ese fichero era el logo de Astro,
       el que trae `npm create astro`. Salia el cohete en la pestana, en los
@@ -267,12 +304,38 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
         // bloque marcado queda 1071px POR ENCIMA del borde superior a scroll
         // maximo, asi que 400px sobra por un factor de 2,7. El pie va en las 54
         // rutas y nunca lleva token: es el que da la garantia.
-        var freno = Math.min(Math.round(window.innerHeight * 0.45), 400);
+        // El freno es el precio del umbral profundo, y hay que verlo asi: el
+        // bloque esta OCUPANDO pantalla mientras sigue invisible, asi que la
+        // banda vacia que se ve antes del fundido mide exactamente `freno`. A
+        // 0,45 de la ventana eran 380px en un movil de 844 — el 45% de la
+        // pantalla en hueco, y en la portada le pasaba a 6 de 14 bloques.
+        //
+        // 0,25 con tope de 200px deja la banda en ~24% de la pantalla y el
+        // disparo a tres cuartos de altura: el bloque sigue entrando bien
+        // dentro del campo de vision, pero ya no abre un agujero. Es un
+        // compromiso REAL entre dos peticiones opuestas —«que dispare en la
+        // mitad de la pantalla» y «que no se vea el hueco»— porque las dos
+        // mueven este mismo numero en direcciones contrarias.
+        var freno = Math.min(Math.round(window.innerHeight * 0.25), 200);
+        var ioBorde;
         try {
           io = new IntersectionObserver(alVer, {
             rootMargin: "0px 0px -" + freno + "px 0px",
             threshold: 0,
           });
+          // SEGUNDO OBSERVADOR, sin freno, para los bloques que NO CABEN en la
+          // pantalla. Un bloque mas alto que la ventana no puede «entrar»:
+          // nunca se le ve entero, asi que el umbral profundo solo consigue que
+          // se scrolleen `freno` px con el bloque ya en pantalla y en blanco
+          // antes de que arranque el fundido. Medido en /contact-us a 390x844:
+          // 380px de scroll con el 45% de la pantalla vacia. Y no era un caso
+          // aislado — a 390 hay seis bloques asi, desde 1,0x en la portada
+          // hasta 7,3x en /terms.
+          //
+          // Para esos, el disparo va en el borde de la ventana: el bloque se
+          // funde segun asoma, sin hueco previo. El umbral profundo se queda
+          // para lo que si cabe en pantalla, que es donde tiene sentido.
+          ioBorde = new IntersectionObserver(alVer, { threshold: 0 });
         } catch (e) {
           return;
         }
@@ -280,7 +343,9 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
 
         function revelar(el) {
           el.setAttribute("data-visto", "");
+          // Sobre un elemento que no observa, `unobserve` no hace nada.
           io.unobserve(el);
+          ioBorde.unobserve(el);
         }
 
         function alVer(entradas) {
@@ -319,9 +384,15 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
               // medido en /about-us, la barra de 4 caracteristicas empieza en
               // 779 con la ventana en 900 —asoma 121px, el 30% de su alto— y
               // aparecia ya puesta. Un mismo umbral para las dos cosas.
+              // Un bloque que no cabe en la pantalla usa el BORDE de la ventana
+              // como umbral, tanto aqui como en su observador: con el umbral
+              // profundo se quedaria en blanco ocupando media pantalla durante
+              // `freno` px de scroll. Ver el comentario de `ioBorde`.
               var caja = nodos[i].getBoundingClientRect();
-              if (caja.bottom > 0 && caja.top < window.innerHeight - freno) nodos[i].setAttribute("data-visto", "");
-              else io.observe(nodos[i]);
+              var noCabe = caja.height > window.innerHeight;
+              var umbral = noCabe ? window.innerHeight : window.innerHeight - freno;
+              if (caja.bottom > 0 && caja.top < umbral) nodos[i].setAttribute("data-visto", "");
+              else (noCabe ? ioBorde : io).observe(nodos[i]);
             }
             // La animacion se habilita un frame despues, para que lo revelado
             // arriba no llegue a animarse. Mismo patron que `data-cromo-listo`
@@ -343,6 +414,18 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
     <slot name="head" />
   </head>
   <body>
+    {/* Mitad `noscript` del contenedor. Sin JS no hay GA4 de todos modos, asi
+        que no mide nada por si sola: se pone porque es el snippet canonico y
+        porque el comprobador de instalacion de GTM la busca. Va lo primero
+        dentro del <body>, como pide Google. */}
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-WHNFLL7H"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"></iframe></noscript
+    >
+
     {/* SC 2.4.1 — Bypass Blocks. No habia ninguno en las 54 rutas, y en
         escritorio el cromo mete el logo, 5 enlaces, el CTA y los 12 del
         desplegable antes del contenido. Oculto hasta que recibe el foco, que

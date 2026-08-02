@@ -217,6 +217,20 @@ const icono: Asset = await (g.__amsIconoNews ??= sanity
         }
         form.style.display = "none";
         mostrar(hecho);
+
+        // CONVERSION del pie. Este componente lo llevan las 54 rutas, asi que
+        // esta unica linea cubre el sitio entero; `form_location` es lo que la
+        // separa del formulario de contacto en los informes.
+        //
+        // Evento propio y no el `sign_up` recomendado de GA4: `sign_up` es para
+        // alta de cuenta de usuario, y usarlo aqui mezclaria suscripciones al
+        // boletin con algo que este sitio no tiene.
+        //
+        // Va despues del `!res.ok` por el mismo motivo que en contact-us.
+        (window.dataLayer = window.dataLayer || []).push({
+          event: "newsletter_signup",
+          form_location: "footer",
+        });
       } catch {
         // El token es de un solo uso: si el servidor llego a verificarlo, el
         // siguiente envio con el mismo token da "timeout-or-duplicate".

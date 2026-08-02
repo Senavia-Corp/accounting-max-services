@@ -7,11 +7,11 @@
 // Espejo de src/pages/contact-us.astro: mismo marcado, mismos SVG, mismo
 // contrato de campos contra /api/lead. Solo cambia el idioma de los rotulos.
 //
-// ANIMACION DE ENTRADA: un fundido en la tarjeta del formulario, igual que la
-// ruta EN. En escritorio se revela al cargar (el telefono y el formulario
-// tienen que verse ya) y solo anima de verdad en movil. Nunca un token con
-// transform: descolocaria la capa `fixed` de Turnstile. Detalle completo en la
-// cabecera del gemelo ingles.
+// SIN ANIMACIONES DE ENTRADA: se probo un fundido en la tarjeta del formulario
+// y se retiro porque no funciona en ningun ancho — sobre el pliegue en
+// escritorio, mas alta que la ventana en movil. Medidas en el gemelo ingles.
+// Los PuntosConfianza de la columna izquierda SI se quedan: resolvian otra
+// cosa.
 //
 // EL NAP NO PASA POR EL TRADUCTOR. Telefono, correo, direccion y horario salen
 // de NEGOCIO (src/lib/sanity.ts) y se pintan IDENTICOS en las dos lenguas,
@@ -207,11 +207,10 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
             <PuntosConfianza lang={lang} />
           </div>
 
-          {/* Fundido SIN transform, igual que en la ruta EN: en escritorio se
-              revela al cargar y solo anima de verdad en movil. El porque de que
-              no lleve transform —la capa `fixed` de Turnstile— esta en la
-              cabecera del gemelo ingles. */}
-          <div class="block-form-contact" data-entra>
+          {/* SIN TOKEN, igual que la ruta EN: la tarjeta esta sobre el pliegue
+              en escritorio y mide mas que la ventana en movil, asi que no anima
+              bien en ningun ancho. Las medidas estan en el gemelo ingles. */}
+          <div class="block-form-contact">
             <div class="wrapper-form-page">
               <div class="block-form">
                 <div class="form-block-contact w-form">
@@ -490,6 +489,21 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
           }
           form.style.display = "none";
           mostrar(hecho);
+
+          // CONVERSION, identica a la del gemelo ingles y con el mismo nombre
+          // de evento: lo que distingue las dos rutas en GA4 es page_language,
+          // que GTM pega solo, no el nombre del evento.
+          //
+          // Olvidar esta linea es el fallo mas probable de todo el sistema —seis
+          // plantillas duplicadas a mano— y su sintoma seria que el español no
+          // reporta NI UNA conversion, en silencio y para siempre. Por eso
+          // tools/gtm-check.mjs comprueba la paridad EN/ES.
+          //
+          // El porque de que vaya despues del `!res.ok` esta en el gemelo ingles.
+          (window.dataLayer = window.dataLayer || []).push({
+            event: "generate_lead",
+            form_location: "contact_us",
+          });
         } catch {
           // El token es de un solo uso: si el servidor llego a verificarlo, el
           // siguiente envio con el mismo token da "timeout-or-duplicate".

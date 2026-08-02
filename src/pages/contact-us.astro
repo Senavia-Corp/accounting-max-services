@@ -14,23 +14,21 @@
 //     sin webflow.js ese estilo en linea deja el contenido INVISIBLE;
 //   - el POST va a /api/lead con nombres de campo limpios, no a Webflow.
 //
-// ANIMACION DE ENTRADA: solo un fundido en la tarjeta del formulario, y solo
-// llega a verse en movil. Medido a 1440x900, la columna izquierda arranca en
-// y=253 —por encima del umbral del observador, que esta en 500— asi que se
-// revela al cargar sin animar. Es lo correcto: en una pagina de contacto el
-// telefono y el formulario tienen que estar visibles ya, no esperando a un
-// scroll. A 390x844 el formulario cae apilado en y=776 y ahi si entra.
+// SIN ANIMACIONES DE ENTRADA, y esta vez con las medidas delante. Se probo un
+// fundido en la tarjeta del formulario y se retiro: no hay ningun tamano de
+// ventana en el que funcione. En escritorio la tarjeta arranca en y=253, por
+// encima del umbral (500), asi que no puede animar — lo unico que aportaba el
+// token era una ventana de ~180ms con el elemento mas grande de la pagina sin
+// pintar. En movil mide 1108px en 844 de pantalla, y un bloque mas alto que la
+// ventana no puede «entrar»: se veian 380px de scroll con la tarjeta en
+// pantalla y en blanco antes del fundido.
 //
-// El token es `data-entra` A SECAS y jamas uno con transform: Turnstile pinta
-// su reto en una capa `position:fixed` y un transform en cualquier ancestro la
-// descolocaria. `opacity` no crea bloque contenedor, asi que es seguro. Y el
-// manejador de `focusin` revela la tarjeta en cuanto el usuario entra en un
-// campo, con lo que .w-form-done y .w-form-fail —a las que el JS les escribe
-// `display` y les mueve el foco— nunca quedan dentro de algo invisible.
+// Lo que SI se quedo de aquel intento son los PuntosConfianza de la columna
+// izquierda, que resolvian un problema distinto (564px de gris vacio).
 //
-// (La version anterior de esta cabecera decia que la seccion cabia entera sobre
-// el pliegue y que la ruta no llevaria animacion nunca. Estaba mal: medido,
-// .header-contact-page mide 1337px y el formulario baja hasta y=1270.)
+// Si algun dia se vuelve a intentar: nunca un token con transform. Turnstile
+// pinta su reto en una capa `position:fixed` y un transform en cualquier
+// ancestro la descoloca.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
@@ -219,20 +217,19 @@ const DESCRIPCION =
             <PuntosConfianza />
           </div>
 
-          {/* Fundido SIN transform. En escritorio la tarjeta arranca por encima
-              del umbral y se revela al cargar, que es lo correcto en una pagina
-              de contacto: el telefono y el formulario tienen que verse ya. La
-              animacion solo ocurre de verdad en movil, donde la columna cae
-              apilada en y=776 y entra al hacer scroll.
-
-              `data-entra` a secas y nunca un token con transform: Turnstile
-              pinta su reto en una capa `position: fixed` y un transform en
-              cualquier ancestro la descolocaria. `opacity` no crea bloque
-              contenedor, asi que es seguro. Y el manejador de `focusin` revela
-              la tarjeta en cuanto el usuario entra en un campo, asi que
-              .w-form-done y .w-form-fail nunca se quedan dentro de algo
-              invisible. */}
-          <div class="block-form-contact" data-entra>
+          {/* SIN TOKEN, y medido: no hay ningun tamano de ventana en el que
+              esta tarjeta anime bien.
+                - En escritorio arranca en y=253, por encima del umbral, asi que
+                  no puede animar. Lo unico que aportaba el token era una
+                  ventana de ~180ms (domInteractive 1373 -> DOMContentLoaded
+                  1556 en produccion) con el elemento mas grande de la pagina
+                  SIN PINTAR, que luego aparecia.
+                - En movil mide 1108px en una pantalla de 844 —1,3x— asi que
+                  nunca se le ve entrar: se scrolleaban 380px con la tarjeta en
+                  pantalla y en blanco antes de que el fundido arrancara.
+              Un bloque mas alto que la ventana no puede «entrar»; solo puede
+              dejar un hueco que luego se rellena. */}
+          <div class="block-form-contact">
             <div class="wrapper-form-page">
               <div class="block-form">
                 <div class="form-block-contact w-form">
@@ -568,6 +565,24 @@ const DESCRIPCION =
           }
           form.style.display = "none";
           mostrar(hecho);
+
+          // CONVERSION. Va AQUI, y su sitio es lo unico que importa de estas
+          // cuatro lineas: en este punto ya paso el `throw` del `!res.ok`, o
+          // sea que el lead existe DE VERDAD en el servidor.
+          //
+          // Ponerlo en el manejador de `submit` —que es donde lo pone todo el
+          // mundo— contaria tambien los envios que Turnstile rechaza y los 4xx
+          // de /api/lead, y el despacho tomaria decisiones sobre un numero de
+          // leads que nunca llegaron. tools/gtm-check.mjs comprueba justamente
+          // que este push cae entre el `!res.ok` y el `catch`.
+          //
+          // El nombre `generate_lead` es un evento RECOMENDADO de GA4: cambiarlo
+          // por uno propio le quita el tratamiento especial en los informes.
+          // page_language no se pone aqui; lo pega GTM a todos los eventos.
+          (window.dataLayer = window.dataLayer || []).push({
+            event: "generate_lead",
+            form_location: "contact_us",
+          });
         } catch {
           // El token es de un solo uso: si el servidor llego a verificarlo, el
           // siguiente envio con el mismo token da "timeout-or-duplicate".
