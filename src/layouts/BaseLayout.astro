@@ -253,12 +253,26 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
         var raiz = document.documentElement;
         var io;
 
-        // El margen inferior es en px y no en %, para que no dependa del alto
-        // de la ventana: con un -12% en una pantalla alta, un bloque cercano al
-        // final del documento podria no cruzar el umbral ni con el scroll al
-        // maximo, y quedarse invisible.
+        // PROFUNDIDAD DEL DISPARO. El bloque no se revela al asomar por el
+        // canto, sino cuando su borde superior llega a ~45% de la ventana, o
+        // sea con el bloque ya en la mitad de la pantalla. Con el disparo en el
+        // borde la animacion ocurre fuera del campo de atencion y para cuando
+        // el usuario mira el bloque ya termino: se veia el resultado, no la
+        // entrada. Esto es lo que hace que se aprecie al hacer scroll.
+        //
+        // Se acota a 400px, y el tope no es cosmetico: la franja que nunca
+        // cruza el umbral es la ultima del documento, y con un porcentaje puro
+        // esa franja creceria con la ventana hasta dejar un bloque invisible
+        // para siempre. Medido en la portada: el pie mide 1403px y el ultimo
+        // bloque marcado queda 1071px POR ENCIMA del borde superior a scroll
+        // maximo, asi que 400px sobra por un factor de 2,7. El pie va en las 54
+        // rutas y nunca lleva token: es el que da la garantia.
+        var freno = Math.min(Math.round(window.innerHeight * 0.45), 400);
         try {
-          io = new IntersectionObserver(alVer, { rootMargin: "0px 0px -72px 0px", threshold: 0 });
+          io = new IntersectionObserver(alVer, {
+            rootMargin: "0px 0px -" + freno + "px 0px",
+            threshold: 0,
+          });
         } catch (e) {
           return;
         }
@@ -269,24 +283,9 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
           io.unobserve(el);
         }
 
-        var listo = false;
         function alVer(entradas) {
           for (var i = 0; i < entradas.length; i++) {
             if (entradas[i].isIntersecting) revelar(entradas[i].target);
-          }
-          // El primer callback llega DESPUES del primer pintado. Sin esto, al
-          // recargar a media pagina o volver por bfcache se funde de golpe todo
-          // lo que ya estaba en pantalla. Mismo patron que `data-cromo-listo`
-          // (ui.ts) y misma razon. Ademas es lo que evita la regresion de LCP:
-          // un elemento en opacity:0 no cuenta como pintado, y DOMContentLoaded
-          // espera a la hoja bloqueante de Typekit de mas arriba.
-          if (!listo) {
-            listo = true;
-            requestAnimationFrame(function () {
-              requestAnimationFrame(function () {
-                raiz.setAttribute("data-entradas-listo", "");
-              });
-            });
           }
         }
 
@@ -304,7 +303,31 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
         document.addEventListener("DOMContentLoaded", function () {
           try {
             var nodos = document.querySelectorAll("[data-entra],[data-entra-cascada]");
-            for (var i = 0; i < nodos.length; i++) io.observe(nodos[i]);
+            for (var i = 0; i < nodos.length; i++) {
+              // PRIMER PASE, contra la ventana DE VERDAD y no contra la raiz
+              // encogida del observador: lo que ya se ve al aterrizar se revela
+              // sin animar y ni se observa. Dos motivos:
+              //   - Con el freno de 400px, un bloque a media pantalla queda por
+              //     debajo del umbral. Sin este pase se veria un hueco en
+              //     blanco en la franja baja de la primera pantalla hasta que
+              //     el usuario hiciera scroll.
+              //   - Un elemento en opacity:0 no cuenta como pintado para el
+              //     LCP, y DOMContentLoaded espera a la hoja bloqueante de
+              //     Typekit de mas arriba. Revelar ya lo que se ve quita ese
+              //     retraso, y de paso evita que al recargar a media pagina o
+              //     volver por bfcache se funda de golpe media pantalla.
+              var caja = nodos[i].getBoundingClientRect();
+              if (caja.top < window.innerHeight && caja.bottom > 0) nodos[i].setAttribute("data-visto", "");
+              else io.observe(nodos[i]);
+            }
+            // La animacion se habilita un frame despues, para que lo revelado
+            // arriba no llegue a animarse. Mismo patron que `data-cromo-listo`
+            // en ui.ts, y por la misma razon.
+            requestAnimationFrame(function () {
+              requestAnimationFrame(function () {
+                raiz.setAttribute("data-entradas-listo", "");
+              });
+            });
           } catch (e) {
             // Fallo a mitad de camino: se retira el sello y todo vuelve a ser
             // visible. Preferible un sitio sin animacion a un sitio en blanco.
