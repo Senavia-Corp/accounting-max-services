@@ -2390,6 +2390,30 @@
   }
 }
 
+/* Barrido de izquierda a derecha dentro de cada fila del listado del blog. Las
+ * tres tarjetas de una fila cruzan el umbral EN EL MISMO PIXEL de scroll
+ * —medido: 4, 5 y 6 disparan las tres a la vez en y=1124— y sin esto aparecen
+ * de golpe, que es justo lo que una entrada escalonada evita.
+ *
+ * El escalonado va aqui, por posicion en la rejilla, y NO con un
+ * `data-entra-cascada` en el contenedor: con la cascada las diez tarjetas
+ * dispararian al cruzar el borde superior de la rejilla y las filas 2 a 4 se
+ * animarian fuera de pantalla, donde nadie las ve.
+ *
+ * Con tres columnas, `3n+1` es la columna izquierda (retardo 0), `3n+2` la del
+ * medio y `3n` la derecha. Solo a >=992: por debajo la rejilla es de UNA
+ * columna y cada tarjeta ya entra sola, asi que el nth-child repartiria
+ * retardos arbitrarios. */
+@media screen and (min-width: 992px) {
+  html[data-entradas-listo] .collection-list-blog > li[data-visto]:nth-child(3n + 2) {
+    animation-delay: 90ms;
+  }
+
+  html[data-entradas-listo] .collection-list-blog > li[data-visto]:nth-child(3n) {
+    animation-delay: 180ms;
+  }
+}
+
 /* === ENTRADAS POR SCROLL ==================================================
  *
  * Los bloques entran fundiendose al aparecer en pantalla. Tres tokens y ni uno

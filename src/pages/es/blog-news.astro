@@ -64,11 +64,23 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
                 lista.map((p, i) => {
                   const href = enlace(lang, `/post/${p.slug}`);
                   const primera = i === 0;
+                  // LA FILA ENTERA, no solo la primera tarjeta. A >=992 la
+                  // rejilla es de tres columnas y las tres primeras comparten
+                  // fila en y=579, o sea a la vista al aterrizar. Como la #1 es
+                  // el LCP y no puede animarse nunca, animar sus dos companeras
+                  // dejaba la fila con una tarjeta pintada y dos huecos en
+                  // blanco hasta que el usuario hacia scroll: parecia una
+                  // pagina rota, no una animacion. A <=991 la rejilla es de una
+                  // columna (accounting-max:2531) y estas dos caen bajo el
+                  // pliegue; ahi el precio es que entran sin animar, que no se
+                  // nota, y a cambio no hay ninguna regla de CSS peleandose con
+                  // el sistema.
+                  const filaUno = i < 3;
                   // R5: titleEs y excerptEs o el build cae. Nunca el ingles.
                   const titulo = requiereEsTexto(p, "titleEs", href).trim();
                   const extracto = requiereEsTexto(p, "excerptEs", href).trim();
                   return (
-                    <li class="collection-item-blog" data-entra={primera ? undefined : "sube"}>
+                    <li class="collection-item-blog" data-entra={filaUno ? undefined : "sube"}>
                       <div class="block-blog">
                         {/* alt: la miniatura es redundante — el h2 de al lado ya
                             es su alternativa textual y el enlace nombra el post.
