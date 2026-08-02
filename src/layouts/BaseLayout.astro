@@ -307,17 +307,20 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
               // PRIMER PASE, contra la ventana DE VERDAD y no contra la raiz
               // encogida del observador: lo que ya se ve al aterrizar se revela
               // sin animar y ni se observa. Dos motivos:
-              //   - Con el freno de 400px, un bloque a media pantalla queda por
-              //     debajo del umbral. Sin este pase se veria un hueco en
-              //     blanco en la franja baja de la primera pantalla hasta que
-              //     el usuario hiciera scroll.
               //   - Un elemento en opacity:0 no cuenta como pintado para el
               //     LCP, y DOMContentLoaded espera a la hoja bloqueante de
               //     Typekit de mas arriba. Revelar ya lo que se ve quita ese
               //     retraso, y de paso evita que al recargar a media pagina o
               //     volver por bfcache se funda de golpe media pantalla.
+              //
+              // El corte es LA MISMA LINEA que usa el observador, no el borde
+              // de la ventana. Con el borde, un bloque que solo asoma unos
+              // pixeles al aterrizar se daba por visto y NO se animaba nunca:
+              // medido en /about-us, la barra de 4 caracteristicas empieza en
+              // 779 con la ventana en 900 —asoma 121px, el 30% de su alto— y
+              // aparecia ya puesta. Un mismo umbral para las dos cosas.
               var caja = nodos[i].getBoundingClientRect();
-              if (caja.top < window.innerHeight && caja.bottom > 0) nodos[i].setAttribute("data-visto", "");
+              if (caja.bottom > 0 && caja.top < window.innerHeight - freno) nodos[i].setAttribute("data-visto", "");
               else io.observe(nodos[i]);
             }
             // La animacion se habilita un frame despues, para que lo revelado

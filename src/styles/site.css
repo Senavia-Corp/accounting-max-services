@@ -2456,9 +2456,14 @@ html[data-entradas] [data-entra="derecha"]:not([data-visto]) {
  * `from` durante el animation-delay de la cascada— y al terminar devuelve el
  * elemento a su valor de reposo, que con `data-visto` puesto ya es
  * opacity:1 / transform:none. */
+/* 600ms y no 450: a 450 la entrada se leia como un parpadeo y no como un
+ * movimiento — el ojo llega tarde. Sigue estando lejos de lo lento; la banda de
+ * 150-250ms del resto del sitio es la de micro-interaccion del cromo (un hover,
+ * un desplegable), que es otra cosa: ahi el usuario ya esta mirando el elemento
+ * y espera respuesta inmediata. Una entrada tiene que dar tiempo a NOTARLA. */
 html[data-entradas-listo] [data-entra][data-visto],
 html[data-entradas-listo] [data-entra-cascada][data-visto] > * {
-  animation: entra-fundido 450ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: entra-fundido 600ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 html[data-entradas-listo] [data-entra="sube"][data-visto],
@@ -2474,24 +2479,42 @@ html[data-entradas-listo] [data-entra="derecha"][data-visto] {
   animation-name: entra-derecha;
 }
 
-/* Cascada de 70ms con tope en el 6.o hijo: mas alla se lee como carga lenta y
- * no como ritmo. `both` es obligatorio — es lo que mantiene al hijo 6 en su
- * fotograma `from` durante los 350ms de espera, porque el selector de estado
- * oculto deja de casar en cuanto el PADRE recibe `data-visto`. */
+/* Cascada de 90ms con tope en el 6.o hijo: mas alla se lee como carga lenta y
+ * no como ritmo. El `backwards` de arriba es obligatorio — es lo que mantiene
+ * al hijo 6 en su fotograma `from` durante los 450ms de espera, porque el
+ * selector de estado oculto deja de casar en cuanto el PADRE recibe
+ * `data-visto`. */
 html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(2) {
-  animation-delay: 70ms;
+  animation-delay: 90ms;
 }
 html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(3) {
-  animation-delay: 140ms;
+  animation-delay: 180ms;
 }
 html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(4) {
-  animation-delay: 210ms;
+  animation-delay: 270ms;
 }
 html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(5) {
-  animation-delay: 280ms;
+  animation-delay: 360ms;
 }
 html[data-entradas-listo] [data-entra-cascada][data-visto] > *:nth-child(n + 6) {
-  animation-delay: 350ms;
+  animation-delay: 450ms;
+}
+
+/* La mitad derecha de una pareja entra despues de la izquierda. Sin esto las
+ * dos llegan a la vez y se lee como un golpe, no como una composicion: medido
+ * en /about-us, los dos lados de .wrapper-mission cruzan el umbral con 40px de
+ * scroll de diferencia y los de .wrapper-vision con 103px, o sea a la vez a
+ * cualquier velocidad de lectura.
+ *
+ * Solo a >=992, que es donde «derecha» significa la columna derecha. Por debajo
+ * el lateral degrada a `sube` y ademas .wrapper-vision usa `wrap-reverse`: alli
+ * el retardo pondria a entrar antes al de ABAJO que al de arriba, que es
+ * justo el error de orden que este sistema evita en los otros tres sitios donde
+ * el DOM no coincide con lo que se ve. */
+@media screen and (min-width: 992px) {
+  html[data-entradas-listo] [data-entra="derecha"][data-visto] {
+    animation-delay: 140ms;
+  }
 }
 
 /* Las dos celdas de un bloque de `features` entran cada una desde SU lado y a
