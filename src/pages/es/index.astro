@@ -37,6 +37,7 @@ import Footer from "../../components/Footer.astro";
 import JsonLd from "../../components/JsonLd.astro";
 import CtaConsulta from "../../components/CtaConsulta.astro";
 import PuntosConfianza from "../../components/PuntosConfianza.astro";
+import CarruselLogos from "../../components/CarruselLogos.astro";
 import ServiciosPorCategoria from "../../components/ServiciosPorCategoria.astro";
 import { testimonios, sanity, NEGOCIO } from "../../lib/sanity";
 import { t, interpola } from "../../lib/i18n";
@@ -158,6 +159,9 @@ const TITULO = interpola(c.meta.plantillaTitulo, {
         />
       </picture>
     </section>
+
+    {/* =========================================================== LOGOS */}
+    <CarruselLogos />
 
     {/* ====================================================== BAR-SERVICES */}
     <ServiciosPorCategoria lang={lang} />

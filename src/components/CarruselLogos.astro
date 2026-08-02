@@ -1,0 +1,102 @@
+---
+// Franja de logos del software con el que trabaja el despacho. Va entre el hero
+// y la seccion de servicios de las dos portadas (/ y /es).
+//
+// SIN ROTULO Y SIN PROP DE IDIOMA, a peticion del cliente: es una linea de
+// logos y nada mas. Al quedarse sin texto propio se queda tambien sin nada
+// traducible — los nombres de las doce marcas son marcas registradas y van
+// literales en las dos lenguas — asi que el componente ya no recibe `lang` ni
+// consulta i18n. El bloque `logos` de i18n.ts se ha retirado con el rotulo.
+//
+// ES UN <div>, NO UN <section>. Sin encabezado, un <section aria-labelledby>
+// apuntaria a un id que ya no existe, y un <section> a secas seria una region
+// sin nombre en el arbol de accesibilidad: ruido para quien navega por
+// landmarks. La informacion sigue estando donde debe, en el alt de cada imagen.
+//
+// LOS DOCE ARCHIVOS ESTAN NORMALIZADOS, y de ahi sale casi toda la sencillez de
+// este componente. `tools/logos-build.mjs` los escala por AREA, no por altura:
+// a igual altura un logotipo 7,7:1 (Drake) pesa el triple que uno 1,5:1
+// (UltraTax) y la fila se lee torcida. Los deja a todos con la MISMA ALTURA de
+// lienzo (140 = 2x de 70) y anchura ajustada, asi que el CSS solo fija la altura
+// y las anchuras salen solas ya equilibradas.
+//
+// El alt y las medidas salen de src/lib/logos.json, que escribe ese mismo
+// script: si se cambia la lista o se sustituye un archivo, el componente se
+// entera sin tocarlo. Las medidas van explicitas en el <img> para que la
+// seccion no desplace nada mientras cargan.
+//
+// LA SEGUNDA COPIA DE LA PISTA NO ES ADORNO: es lo que hace que el bucle no
+// tenga costura. Va `aria-hidden` porque es un duplicado visual, y sin eso un
+// lector de pantalla leeria los doce nombres dos veces.
+//
+// LO QUE SE ANIMA ES LA CINTA, no cada pista, y ESE ENVOLTORIO EXTRA ES LA
+// PIEZA QUE HACE QUE EL BUCLE CIERRE. Animar cada pista un -100% de su propio
+// ancho parece equivalente y no lo es: las dos arrancan en posiciones
+// fraccionarias distintas y redondean distinto. Medido en el navegador, con los
+// doce <li> midiendo EXACTAMENTE lo mismo en las dos copias, las pistas salian a
+// 2271,5 y 2272,5 — 1px de deriva por vuelta. Un -50% de la cinta es por
+// construccion un ancho de pista exacto, calculado sobre un solo elemento, y esa
+// clase de fallo deja de existir.
+//
+// El separador entre logos es `margin-inline-end` de cada <li>, NO `gap` del
+// contenedor. Con `gap` el hueco no existe entre el ultimo logo de una copia y
+// el primero de la siguiente, y el bucle da un tiron visible cada vuelta.
+import LOGOS from "../lib/logos.json";
+
+// CUATRO COPIAS, Y EL NUMERO NO ES DECORATIVO. Para que NUNCA se vea un hueco
+// hace falta que el contenido cubra la ventana ademas de todo el recorrido:
+//
+//     (COPIAS - 1) x anchoDePista  >=  anchoDeVentana
+//
+// La pista mide 1673px (doce logos de 48px de alto mas sus separaciones), asi
+// que con las DOS copias que habia esto aguantaba hasta 1673px de ventana y se
+// rompia por encima. Medido en el navegador a 1920, la resolucion de escritorio
+// mas comun: 295px vacios al final de cada vuelta, cada 45 segundos.
+//   COPIAS=2 -> hasta 1673px   se rompe en cualquier monitor normal
+//   COPIAS=3 -> hasta 3345px   se rompe en ultrapanoramica de 3440
+//   COPIAS=4 -> hasta 5018px   cubre 1920, 2560, 3440 y 5K
+//
+// SI SE CAMBIA ALGO DE ESTO HAY QUE REHACER LA CUENTA: quitar logos de la lista
+// o bajar la altura del CSS encogen la pista y bajan el techo. Anadir logos lo
+// sube. Son 48 <img> en el DOM pero solo 12 URL distintas, asi que la red no
+// cambia: las copias salen de cache.
+const COPIAS = 4;
+---
+
+<div class="logos">
+  <div class="logos-carril">
+    {/* El CSS desplaza la cinta `-100% / var(--copias)`, que es exactamente una
+        pista. Va como variable y no como numero escrito en el keyframe para que
+        no pueda desincronizarse de COPIAS: con 4 copias y un -50% heredado el
+        bucle seguiria cerrando, pero recorreria dos pistas por vuelta y el techo
+        de ventana caeria de 5018px a 3345px sin que nada avisara. */}
+    <div class="logos-cinta" style={`--copias:${COPIAS}`}>
+      {
+        Array.from({ length: COPIAS }, (_, copia) => (
+          <ul class="logos-pista" role="list" aria-hidden={copia > 0 ? "true" : undefined}>
+            {LOGOS.map((l) => (
+              <li>
+                {/* `eager` + `fetchpriority=low` a proposito, y no `lazy`.
+                    Medido: la franja arranca a 405px del alto de pagina, o sea
+                    DENTRO de la primera pantalla en un escritorio de 900px de
+                    alto — y `lazy` sobre contenido que ya se ve solo retrasa su
+                    aparicion. `low` es lo que evita que estas doce compitan con
+                    la foto del hero, que es el LCP: se piden desde el principio,
+                    pero las ultimas de la cola. */}
+                <img
+                  src={`/images/logos/${l.slug}.webp`}
+                  alt={copia > 0 ? "" : l.nombre}
+                  width={l.ancho}
+                  height={l.alto}
+                  loading="eager"
+                  fetchpriority="low"
+                  decoding="async"
+                />
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </div>
+  </div>
+</div>

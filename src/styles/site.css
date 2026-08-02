@@ -2223,6 +2223,165 @@
   }
 }
 
+/* ===========================================================================
+ * CARRUSEL DE LOGOS — CarruselLogos.astro
+ *
+ * Entre el hero y .bar-services de las dos portadas. Banda clara de separacion
+ * entre la foto del hero y el fondo blanco de servicios.
+ * ======================================================================== */
+
+/* FRANJA FINA, sin rotulo: solo los logos. El alto total sale de la altura de
+ * las imagenes mas este padding, y nada mas — por eso el padding es lo unico que
+ * hay que tocar para hacerla mas o menos gruesa.
+ *
+ * Los dos cantos la separan del hero (que acaba en foto) y de .bar-services (que
+ * abre en blanco); sin ellos la banda flota sin principio ni fin. El de abajo es
+ * suyo aunque .bar-services traiga su propio `padding-top: 6em`: uno es el borde
+ * de la franja y el otro el aire de la seccion siguiente. */
+.logos {
+  padding: 1.25em 0;
+  background-color: #f6f7f5;
+  border-top: 1px solid #e4e7e0;
+  border-bottom: 1px solid #e4e7e0;
+}
+
+/* Ocupa el ancho de la ventana a proposito, sin el contenedor de 1250px: un
+ * marquee que se corta a mitad de columna se lee como desbordamiento accidental.
+ * `overflow: hidden` es tambien lo que impide que la cinta, que mide mas que la
+ * ventana, saque barra horizontal al <body>. */
+.logos-carril {
+  display: flex;
+  overflow: hidden;
+  /* ENTRADA. Los logos aparecen fundiendose al cargar la pagina, no de golpe.
+   *
+   * La opacidad de reposo NO se declara en 0. El fundido va entero dentro del
+   * @keyframes y `both` es lo que aplica el fotograma `from` mientras corre: si
+   * la animacion no llegara a ejecutarse —CSS a medias, un motor que no la
+   * soporte, la extension de alguien— el elemento se queda en su opacidad
+   * normal, que es 1. Con `opacity: 0` de base ese mismo fallo dejaria la franja
+   * invisible para siempre.
+   *
+   * Solo el carril: la banda gris y sus cantos entran ya pintados y son los
+   * logos los que se funden encima. Fundir `.logos` entero haria parpadear la
+   * franja completa contra el blanco de la seccion de abajo.
+   *
+   * No hace falta apagarlo en `prefers-reduced-motion`: el reset global de la
+   * cabecera de este fichero lo deja en 0,01ms, o sea el estado final —
+   * visible— sin transicion. Un fundido de entrada es justo lo que ese reset
+   * sabe neutralizar bien. */
+  animation: logos-aparecer 0.9s ease-out both;
+  /* Difumina los dos extremos para que los logos entren y salgan en vez de
+   * cortarse en seco contra el borde. `mask` sin prefijo: la soportan las cuatro
+   * familias vigentes, y donde no llegue simplemente no habra degradado — el
+   * carrusel funciona igual. */
+  mask: linear-gradient(90deg, #0000, #000 6em, #000 calc(100% - 6em), #0000);
+}
+
+/* LO QUE SE MUEVE. `flex: none` en los dos niveles para que ni la cinta ni las
+ * pistas se encojan al ancho del carril: tienen que medir lo que suman sus
+ * logos, que es mas que la ventana. */
+.logos-cinta {
+  display: flex;
+  flex: none;
+  animation: logos-desplazar 45s linear infinite;
+}
+
+.logos-pista {
+  display: flex;
+  flex: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* EL SEPARADOR VA AQUI, no como `gap` del carril: con `gap` no habria hueco
+ * entre el ultimo logo de una copia y el primero de la siguiente, y el bucle
+ * daria un tiron cada 45s. Ver el comentario del componente. */
+.logos-pista > li {
+  margin-inline-end: 3em;
+}
+
+/* SOLO LA ALTURA. Los doce archivos comparten altura de lienzo y llevan la
+ * anchura ya equilibrada por area, asi que `width: auto` las respeta y basta una
+ * regla. Fijar tambien la anchura las deformaria.
+ *
+ * 48px y no los 70 del lienzo: la franja es fina y aqui se REDUCE, que es la
+ * direccion buena — los doce archivos se sirven al doble de la altura de
+ * lienzo, asi que sobra resolucion. Ojo, el logotipo NO ocupa los 48: dentro del
+ * lienzo cada uno mide lo que le toca por area (UltraTax llena mas alto que
+ * Drake, a proposito). */
+.logos-pista img {
+  display: block;
+  width: auto;
+  height: 48px;
+}
+
+/* UNA PISTA EXACTA, sea cual sea el numero de copias: la cinta contiene
+ * `--copias` pistas iguales, asi que -100%/--copias es una de ellas clavada. Al
+ * terminar, la copia siguiente esta justo donde empezo la anterior y el salto de
+ * vuelta al fotograma 0 no se ve. `--copias` lo pone el componente. */
+@keyframes logos-desplazar {
+  to {
+    transform: translateX(calc(-100% / var(--copias)));
+  }
+}
+
+@keyframes logos-aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Pausa al pasar el raton: son doce nombres que alguien puede querer leer. */
+.logos-carril:hover .logos-cinta {
+  animation-play-state: paused;
+}
+
+/* Sin `animation-name` no hay animacion que aplicar, asi que el `!important` de
+ * `animation-duration`/`animation-iteration-count` del reset global de la
+ * cabecera de este fichero se queda sin efecto y el transform no se queda
+ * clavado en -100%. Por eso basta con la forma corta y NO hace falta
+ * `!important` aqui — comprobado: con el reset a solas la pista quedaba
+ * desplazada y solo se veia la copia duplicada.
+ *
+ * La copia duplicada se oculta porque sin movimiento solo seria la misma lista
+ * dos veces, y el carril pasa a desplazarse a mano. */
+@media (prefers-reduced-motion: reduce) {
+  .logos-carril {
+    overflow-x: auto;
+    mask: none;
+  }
+
+  .logos-cinta {
+    animation: none;
+  }
+
+  .logos-pista[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .logos {
+    padding: 1em 0;
+  }
+
+  /* El difuminado baja de 6em a 2em: en una ventana estrecha 96px por lado se
+   * comerian casi la mitad de lo visible. */
+  .logos-carril {
+    mask: linear-gradient(90deg, #0000, #000 2em, #000 calc(100% - 2em), #0000);
+  }
+
+  .logos-pista > li {
+    margin-inline-end: 2.25em;
+  }
+
+  .logos-pista img {
+    height: 40px;
+  }
+}
+
 /* A 390px quedan 326px utiles (2em de canal a cada lado, del vendor). Se afloja
  * el padding interior para que los titulos largos no partan en tres lineas. */
 @media screen and (max-width: 479px) {

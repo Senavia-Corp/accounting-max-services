@@ -28,6 +28,7 @@ import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
 import CtaConsulta from "../components/CtaConsulta.astro";
 import PuntosConfianza from "../components/PuntosConfianza.astro";
+import CarruselLogos from "../components/CarruselLogos.astro";
 import ServiciosPorCategoria from "../components/ServiciosPorCategoria.astro";
 import { testimonios, sanity, NEGOCIO } from "../lib/sanity";
 
@@ -177,6 +178,9 @@ const TITULO = `Tax & Accounting, Coral Springs FL | ${NEGOCIO.nombre}`;
         />
       </picture>
     </section>
+
+    {/* =========================================================== LOGOS */}
+    <CarruselLogos />
 
     {/* ====================================================== BAR-SERVICES */}
     <ServiciosPorCategoria />

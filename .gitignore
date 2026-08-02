@@ -28,6 +28,10 @@ pnpm-debug.log*
 # temporales que deja "composio run"
 .composio-run-*
 
+# Hoja de contactos que dibuja tools/logos-build.mjs para revisar a ojo el
+# equilibrio optico del carrusel. Es salida del script, se regenera sola.
+tools/.logos-preview.png
+
 # Documentos con identificadores de cuentas del cliente.
 # Viven en ~/outputs/accounting-max-privado/ — el repo es publico.
 ACCOUNTS.md

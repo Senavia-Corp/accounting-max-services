@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "drake",
+    "nombre": "Drake Software",
+    "ancho": 190,
+    "alto": 70
+  },
+  {
+    "slug": "ultratax",
+    "nombre": "UltraTax CS",
+    "ancho": 80,
+    "alto": 70
+  },
+  {
+    "slug": "lacerte",
+    "nombre": "Intuit Lacerte",
+    "ancho": 190,
+    "alto": 70
+  },
+  {
+    "slug": "proseries",
+    "nombre": "Intuit ProSeries Tax",
+    "ancho": 129,
+    "alto": 70
+  },
+  {
+    "slug": "cch-axcess",
+    "nombre": "CCH AXcess",
+    "ancho": 158,
+    "alto": 70
+  },
+  {
+    "slug": "quickbooks",
+    "nombre": "Intuit QuickBooks",
+    "ancho": 161,
+    "alto": 70
+  },
+  {
+    "slug": "xero",
+    "nombre": "Xero",
+    "ancho": 136,
+    "alto": 70
+  },
+  {
+    "slug": "sage",
+    "nombre": "Sage",
+    "ancho": 86,
+    "alto": 70
+  },
+  {
+    "slug": "gusto",
+    "nombre": "Gusto",
+    "ancho": 115,
+    "alto": 70
+  },
+  {
+    "slug": "adp",
+    "nombre": "ADP",
+    "ancho": 106,
+    "alto": 70
+  },
+  {
+    "slug": "stripe",
+    "nombre": "Stripe",
+    "ancho": 110,
+    "alto": 70
+  },
+  {
+    "slug": "square",
+    "nombre": "Square",
+    "ancho": 141,
+    "alto": 70
+  }
+]
