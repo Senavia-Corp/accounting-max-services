@@ -1,0 +1,461 @@
+---
+/*
+  Acceso a WhatsApp — burbuja flotante + panel con un boton que abre el chat
+  de la empresa. Sustituye al chat de IA (n8n + Gemini) que vivia en
+  ChatWidget.astro.
+
+  ESTO NO ES UN CHAT: es un enlace. Y por eso el fichero es lo que es — HTML,
+  CSS y ~60 lineas de JS para abrir y cerrar el panel. Cero peticiones, cero
+  cookies y cero terceros hasta que la persona pulsa el boton y se va a
+  WhatsApp. Comparado con lo que sustituye (bundle de 1,9 MB, proxy de
+  servidor, Turnstile, cookie firmada), esto no cuesta nada en Lighthouse ni
+  en privacidad, que es la ventaja real del cambio.
+
+  DOS COSAS DEL MOCKUP QUE NO SE COPIARON, A PROPOSITO:
+
+  1. «John Doe» y la foto de un hombre. Es el relleno de la plantilla de la
+     que sale el mockup. Un retrato de archivo con nombre inventado presenta a
+     una persona que no existe como quien te va a atender, y esto es un
+     despacho fiscal. Va el logo y el nombre del negocio, que son verdad.
+
+  2. «Online» fijo y el punto rojo de «tienes un mensaje». Lo primero seria
+     mentira a las 11 de la noche; lo segundo es un no-leido que no existe. El
+     estado se CALCULA contra el horario real de Florida (ver estaAbierto) y
+     el punto rojo no esta.
+
+  PALETA: la de WhatsApp, por decision expresa de Sebastian (2026-08-04) —
+  #25D366 para la burbuja y el boton, #075E54 (el teal clasico de la cabecera
+  de WhatsApp) para la cabecera, #ECE5DD para el fondo del chat.
+
+  CONTRASTE MEDIDO (WCAG 2.1), no supuesto:
+    #ffffff sobre #075E54 ...  7.67:1  AA    <- cabecera. Autentico Y accesible.
+    #333333 sobre #ECE5DD ... 10.12:1  AA    <- texto de la burbuja
+    #455158 sobre #ECE5DD ...  6.54:1  AA    <- la hora y el aviso, letra chica
+    #ffffff sobre #25D366 ...  1.98:1  FALLA <- texto del boton y glifo burbuja
+
+  Esa ultima linea es una desviacion CONSCIENTE, no un descuido: es la
+  combinacion oficial de WhatsApp y es lo que hace que el boton se reconozca
+  sin leerlo. Se midio la familia entera buscando una salida y no la hay: el
+  primer verde que aguanta blanco a 4.5:1 es #12833C, cinco pasos mas oscuro,
+  y a esas alturas ya no parece WhatsApp — deja de cumplir la funcion por la
+  que existe el color. Si algun dia se prefiere AA sobre el reconocimiento de
+  marca, es UN valor: `color: #1f2b30` en .awp-cta (7.32:1) y en el launcher.
+  El resto del panel no depende de eso, y el telefono y el correo del despacho
+  siguen en el pie de las 54 rutas con contraste AA.
+
+  Tampoco se copia el fondo de garabatos del mockup: ese patron es arte de
+  WhatsApp, no nuestro. Queda el beige liso, que es lo que aporta el aire de
+  la app sin usar un asset ajeno.
+*/
+import { NEGOCIO } from "../lib/sanity";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+
+// wa.me exige el numero en formato internacional y SOLO digitos: sin +, sin
+// espacios, sin parentesis ni guiones. Se deriva de NEGOCIO.telefonoHref
+// ("tel:+19547241114") para que el NAP siga teniendo UNA sola fuente: si
+// manana cambia el telefono en sanity.ts, este enlace cambia con el.
+const NUMERO_WA = NEGOCIO.telefonoHref.replace(/\D/g, "");
+
+const T = {
+  en: {
+    abrir: "Open WhatsApp chat",
+    cerrar: "Close",
+    saludo: "Hi there 👋",
+    ayuda:
+      "How can we help you? Send us a message on WhatsApp and a member of our team will reply.",
+    boton: "Chat on WhatsApp",
+    abierto: "Online now",
+    cerrado: "Outside office hours",
+    aviso:
+      "Please do not send Social Security (SSN), ITIN, EIN, bank account or card numbers over WhatsApp.",
+    prefill: "Hello! I would like information about your tax and accounting services.",
+  },
+  es: {
+    abrir: "Abrir chat de WhatsApp",
+    cerrar: "Cerrar",
+    saludo: "¡Hola! 👋",
+    ayuda:
+      "¿En qué le podemos ayudar? Escríbanos por WhatsApp y le responderá una persona del equipo.",
+    boton: "Escribir por WhatsApp",
+    abierto: "En línea ahora",
+    cerrado: "Fuera del horario de oficina",
+    aviso:
+      "Por su seguridad, no envíe por WhatsApp números de Seguro Social (SSN), ITIN, EIN, cuenta bancaria ni tarjeta.",
+    prefill: "¡Hola! Quisiera información sobre sus servicios de impuestos y contabilidad.",
+  },
+} as const;
+
+const t = T[lang];
+const HREF_WA = `https://wa.me/${NUMERO_WA}?text=${encodeURIComponent(t.prefill)}`;
+
+// El glifo de WhatsApp, una sola vez: lo usan la burbuja y el boton.
+const ICONO_WA =
+  "M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 23.6c-2 0-3.9-.5-5.5-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4c-1.1-1.7-1.6-3.7-1.6-5.7C5.3 10.1 10.1 5.3 16 5.3S26.7 10.1 26.7 16 21.9 26.6 16 26.6zm5.9-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1c-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3s0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.5s0-.4 0-.6-.7-1.7-1-2.3c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z";
+---
+
+<button
+  id="ams-wa-launcher"
+  type="button"
+  aria-haspopup="dialog"
+  aria-controls="ams-wa-panel"
+  aria-expanded="false"
+>
+  <span class="visually-hidden">{t.abrir}</span>
+  <svg class="awl-abrir" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+    <path fill="currentColor" d={ICONO_WA}></path>
+  </svg>
+  <svg class="awl-cerrar" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+    <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+  </svg>
+</button>
+
+<div id="ams-wa-panel" role="dialog" aria-modal="false" aria-label={NEGOCIO.nombre} hidden>
+  <div class="awp-cabecera">
+    <span class="awp-avatar" aria-hidden="true"></span>
+    <div class="awp-quien">
+      <p class="awp-nombre">{NEGOCIO.nombre}</p>
+      <p class="awp-estado">
+        <span class="awp-punto" data-abierto="no" aria-hidden="true"></span>
+        <span id="ams-wa-estado" data-abierto={t.abierto} data-cerrado={t.cerrado}>
+          {NEGOCIO.horario}
+        </span>
+      </p>
+    </div>
+    <button id="ams-wa-cerrar" type="button">
+      <span class="visually-hidden">{t.cerrar}</span>
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="awp-cuerpo">
+    <div class="awp-burbuja">
+      <p class="awp-saludo">{t.saludo}</p>
+      <p class="awp-ayuda">{t.ayuda}</p>
+      <span class="awp-hora" id="ams-wa-hora"></span>
+    </div>
+
+    <p class="awp-aviso">{t.aviso}</p>
+
+    <a id="ams-wa-cta" class="awp-cta" href={HREF_WA} target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 32 32" width="24" height="24" aria-hidden="true">
+        <path fill="currentColor" d={ICONO_WA}></path>
+      </svg>
+      <span>{t.boton}</span>
+    </a>
+  </div>
+</div>
+
+<style is:global>
+  /* ---------- Burbuja flotante ---------- */
+  #ams-wa-launcher {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 40;
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #25d366;
+    color: #ffffff;
+    box-shadow: 0 10px 26px rgba(7, 94, 84, 0.32), 0 0 0 1px rgba(7, 94, 84, 0.08);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  #ams-wa-launcher:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(36, 49, 55, 0.38);
+  }
+  #ams-wa-launcher:focus-visible {
+    outline: 3px solid #075e54;
+    outline-offset: 3px;
+  }
+  #ams-wa-launcher .awl-cerrar { display: none; }
+  #ams-wa-launcher[aria-expanded="true"] { z-index: 1001; }
+  #ams-wa-launcher[aria-expanded="true"] .awl-abrir { display: none; }
+  #ams-wa-launcher[aria-expanded="true"] .awl-cerrar { display: block; }
+
+  /* ---------- Panel ---------- */
+  #ams-wa-panel {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 5.75rem;
+    z-index: 1000;
+    width: 340px;
+    max-width: calc(100vw - 2rem);
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #dedede;
+    box-shadow: 0 24px 60px rgba(36, 49, 55, 0.28);
+    background: #ece5dd;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Roboto, Arial, sans-serif;
+    animation: awpEntra 0.18s ease;
+  }
+  #ams-wa-panel[hidden] { display: none; }
+
+  @keyframes awpEntra {
+    from { opacity: 0; transform: translateY(10px) scale(0.99); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #ams-wa-panel { animation: none; }
+    #ams-wa-launcher { transition: none; }
+  }
+
+  /* ---------- Cabecera ---------- */
+  .awp-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.85rem 3rem 0.85rem 0.9rem;
+    background: #075e54;
+    position: relative;
+  }
+  .awp-avatar {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff url("/favicon.svg") center / 64% no-repeat;
+    box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.55);
+  }
+  .awp-quien { min-width: 0; }
+  .awp-nombre {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  .awp-estado {
+    margin: 2px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    color: #cfd6d8;
+  }
+  .awp-punto {
+    flex: 0 0 auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8b989d;
+  }
+  .awp-punto[data-abierto="si"] { background: #25d366; }
+
+  #ams-wa-cerrar {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  #ams-wa-cerrar:hover { background: rgba(255, 255, 255, 0.26); }
+  #ams-wa-cerrar:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
+
+  /* ---------- Cuerpo ---------- */
+  .awp-cuerpo { padding: 1.1rem 1rem 1.15rem; }
+  .awp-burbuja {
+    position: relative;
+    background: #ffffff;
+    border-radius: 0 10px 10px 10px;
+    padding: 0.7rem 0.85rem 1.35rem;
+    box-shadow: 0 1px 2px rgba(36, 49, 55, 0.16);
+  }
+  .awp-burbuja::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-top: 8px solid #ffffff;
+    border-left: 7px solid transparent;
+  }
+  .awp-saludo {
+    margin: 0 0 0.35rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    font-weight: 700;
+    color: #333333;
+  }
+  .awp-ayuda {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333333;
+  }
+  .awp-hora {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.45rem;
+    font-size: 0.7rem;
+    color: #455158;
+  }
+
+  .awp-aviso {
+    margin: 0.8rem 0 0.9rem;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: #455158;
+  }
+
+  .awp-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.85rem 1rem;
+    border-radius: 999px;
+    background: #25d366;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .awp-cta:hover { background: #20c15c; transform: translateY(-1px); }
+  .awp-cta:focus-visible { outline: 3px solid #075e54; outline-offset: 2px; }
+
+  @media (max-width: 560px) {
+    #ams-wa-panel {
+      right: 1rem;
+      left: 1rem;
+      bottom: 5.5rem;
+      width: auto;
+      max-width: none;
+    }
+    #ams-wa-launcher { right: 1rem; bottom: 1rem; }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script is:inline define:vars={{ lang }}>
+  (function () {
+    var launcher = document.getElementById("ams-wa-launcher");
+    var panel = document.getElementById("ams-wa-panel");
+    var cerrar = document.getElementById("ams-wa-cerrar");
+    if (!launcher || !panel) return;
+
+    var abierto = false;
+
+    // Horario REAL del despacho, en la zona de Florida y no en la del
+    // visitante: alguien en Madrid a las 15:00 esta mirando un despacho
+    // cerrado. Intl resuelve el horario de verano solo, que es justo lo que
+    // no hay que escribir a mano.
+    function estaAbierto() {
+      try {
+        var partes = {};
+        new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/New_York",
+          weekday: "short",
+          hour: "numeric",
+          hour12: false,
+        })
+          .formatToParts(new Date())
+          .forEach(function (p) {
+            partes[p.type] = p.value;
+          });
+        var laborable = ["Mon", "Tue", "Wed", "Thu", "Fri"].indexOf(partes.weekday) > -1;
+        var hora = parseInt(partes.hour, 10);
+        return laborable && hora >= 8 && hora < 17;
+      } catch (e) {
+        // Sin Intl fiable no se afirma nada: se queda el horario escrito en el
+        // HTML, que siempre es cierto.
+        return null;
+      }
+    }
+
+    function pintarEstado() {
+      var etiqueta = document.getElementById("ams-wa-estado");
+      var punto = panel.querySelector(".awp-punto");
+      if (!etiqueta) return;
+      var ok = estaAbierto();
+      if (ok === null) return;
+      etiqueta.textContent = ok
+        ? etiqueta.getAttribute("data-abierto")
+        : etiqueta.getAttribute("data-cerrado");
+      if (punto) punto.setAttribute("data-abierto", ok ? "si" : "no");
+    }
+
+    function pintarHora() {
+      var el = document.getElementById("ams-wa-hora");
+      if (!el || el.textContent) return;
+      try {
+        el.textContent = new Intl.DateTimeFormat(lang === "es" ? "es-US" : "en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+        }).format(new Date());
+      } catch (e) {
+        /* mejor sin hora que con una hora inventada */
+      }
+    }
+
+    function abrir() {
+      panel.hidden = false;
+      launcher.setAttribute("aria-expanded", "true");
+      abierto = true;
+      pintarEstado();
+      pintarHora();
+    }
+    function cerrarPanel() {
+      panel.hidden = true;
+      launcher.setAttribute("aria-expanded", "false");
+      abierto = false;
+      launcher.focus();
+    }
+
+    launcher.addEventListener("click", function () {
+      abierto ? cerrarPanel() : abrir();
+    });
+    if (cerrar) cerrar.addEventListener("click", cerrarPanel);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && abierto) cerrarPanel();
+    });
+
+    // Medicion. NO se llama generate_lead A PROPOSITO: ese es el evento de un
+    // formulario enviado, y pulsar aqui solo abre WhatsApp — no hay dato
+    // capturado ni forma de saber si la persona llego a escribir. Meterlo en
+    // generate_lead inflaria los leads del despacho con simples clics, que es
+    // el fallo nº3 que vigila tools/gtm-check.mjs, por otra puerta.
+    var cta = document.getElementById("ams-wa-cta");
+    if (cta) {
+      cta.addEventListener("click", function () {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "whatsapp_click", page_language: lang });
+      });
+    }
+  })();
+</script>

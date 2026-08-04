@@ -1,41 +1,25 @@
-// Ayudantes de firma HMAC para el chat de IA.
+// Comparacion en tiempo constante para la cabecera compartida de
+// /api/chat-lead (X-Chat-Lead-Secret).
 //
-//   signToken/verifyToken -> la cookie "humano verificado" que exige
-//     /api/chat, emitida por /api/chat-verify tras pasar Turnstile. Puerto
-//     casi literal de src/lib/chatAuth.ts en senavia-corp: no tiene ningun
-//     acoplo a este sitio, es seguro copiarlo tal cual.
+// A diferencia del resto de puertas del sitio —el captcha de antibot.ts falla
+// ABIERTO, porque un captcha caido no puede dejar al despacho sin leads—, esta
+// falla CERRADA: /api/chat-lead escribe directo en Sanity y manda dos correos,
+// y no tiene detras ni honeypot, ni time-trap, ni origen de navegador que la
+// respalde. Sin secreto, o con uno que no coincide, 401 siempre.
 //
-//   secretoValido -> comparacion en tiempo constante para la cabecera
-//     compartida de /api/chat-lead. A diferencia de la cookie de arriba (que
-//     falla abierto cuando no esta configurada, igual que el resto del sitio),
-//     este gate falla CERRADO: es una via de escritura directa a Sanity y
-//     correo, sin honeypot ni time-trap detras que la proteja.
-import { createHmac, timingSafeEqual } from "node:crypto";
-
-export function signToken(expiryMs: number, secret: string): string {
-  const payload = String(expiryMs);
-  const sig = createHmac("sha256", secret).update(payload).digest("hex");
-  return `${payload}.${sig}`;
-}
-
-export function verifyToken(token: string | undefined, secret: string): boolean {
-  if (!token) return false;
-  const dot = token.lastIndexOf(".");
-  if (dot < 0) return false;
-  const payload = token.slice(0, dot);
-  const sig = token.slice(dot + 1);
-  const expected = createHmac("sha256", secret).update(payload).digest("hex");
-  const a = Buffer.from(sig);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length || !timingSafeEqual(a, b)) return false;
-  const exp = parseInt(payload, 10);
-  return Number.isFinite(exp) && Date.now() < exp;
-}
+// Este fichero tenia ademas signToken/verifyToken, que firmaban la cookie
+// "humano verificado" de 30 min del chat de IA. Se fueron con el: al cambiar
+// el widget por el acceso a WhatsApp (WhatsAppWidget.astro) desaparecieron
+// /api/chat y /api/chat-verify, que eran sus dos unicos llamantes. Siguen en
+// el historial de git si algun dia vuelve un chat de verdad.
+import { timingSafeEqual } from "node:crypto";
 
 export function secretoValido(candidato: string | null, real: string | undefined): boolean {
   if (!candidato || !real) return false;
   const a = Buffer.from(candidato);
   const b = Buffer.from(real);
+  // timingSafeEqual lanza si las longitudes no coinciden, asi que se comparan
+  // antes. La longitud no es el secreto.
   if (a.length !== b.length) return false;
   return timingSafeEqual(a, b);
 }
