@@ -280,5 +280,24 @@ const largo = construirAcuse({ ...BENIGNO, message: "x".repeat(5000) }, NEGOCIO)
 ok(!largo.html.includes("x".repeat(700)), "el eco del mensaje se recorta a 600 caracteres");
 ok(largo.html.includes("…"), "el recorte se marca con puntos suspensivos");
 
+// --- 8. Canal de origen: "chat" (submit_request via /api/chat-lead) -------
+console.log("\ncanal de origen (contact-us vs chat)");
+const acuseChatEn = construirAcuse({ ...BENIGNO, lang: "en", channel: "chat" }, NEGOCIO);
+const acuseChatEs = construirAcuse({ ...BENIGNO, lang: "es", channel: "chat" }, NEGOCIO);
+ok(!acuseChatEn.html.includes("contact form"), 'chat/en: no dice "contact form"');
+ok(!acuseChatEs.html.includes("formulario de contacto"), 'chat/es: no dice "formulario de contacto"');
+ok(acuseChatEn.html.includes("in a chat conversation"), 'chat/en: dice "in a chat conversation"');
+ok(acuseChatEs.html.includes("conversación de chat"), 'chat/es: dice "conversación de chat"');
+// Regresion: channel sin definir tiene que seguir siendo BYTE A BYTE igual que
+// "contact-us" explicito — es la prueba de que /api/lead no cambio ni una
+// letra con este cambio.
+const acuseDefaultEn = construirAcuse({ ...BENIGNO, lang: "en" }, NEGOCIO);
+const acuseExplicitoEn = construirAcuse({ ...BENIGNO, lang: "en", channel: "contact-us" }, NEGOCIO);
+ok(
+  acuseDefaultEn.html === acuseExplicitoEn.html && acuseDefaultEn.texto === acuseExplicitoEn.texto,
+  'channel sin definir === "contact-us" explicito, byte a byte (regresion de /api/lead)',
+);
+ok(acuseDefaultEn.html === acuseEn.html, "y ese default coincide con el acuseEn ya comprobado arriba");
+
 console.log(fallos ? `\n${fallos} comprobacion(es) FALLARON` : "\nOK: todo pasa");
 if (fallos) process.exitCode = 1;

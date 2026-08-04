@@ -1,0 +1,439 @@
+---
+/*
+  AMS AI Chat — floating widget, self-hosted @n8n/chat (mirrors senavia-corp's
+  SenaviaChat.astro). Lazy: the bundle + CSS load ONLY when the visitor opens
+  the chat, so there are zero third-party requests/cookies on initial load.
+
+  Sequence on open: render Turnstile VISIBLY inside the panel -> POST
+  /api/chat-verify -> only on success, dynamically import the chat bundle and
+  call createChat({ webhookUrl: '/api/chat', ... }). /api/chat is the proxy
+  that hides the real n8n webhook and injects the visitor's real IP into
+  metadata.visitor_ip for consentIp.
+
+  `lang` is a PROP, not detected from a DOM class: unlike senavia-corp (one
+  page toggling a `lang-es` class), AMS renders separate /en and /es routes,
+  so the server already knows the language at render time.
+*/
+import { SITE_KEY } from "../lib/turnstile";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const TURNSTILE_SITEKEY = SITE_KEY;
+---
+
+<button
+  id="ams-chat-launcher"
+  type="button"
+  aria-haspopup="dialog"
+  aria-controls="ams-chat-panel"
+  aria-expanded="false"
+>
+  <span class="visually-hidden">{lang === "es" ? "Abrir chat" : "Open chat"}</span>
+  <svg class="acl-icon-open" viewBox="0 0 24 24" width="26" height="26" fill="none" aria-hidden="true">
+    <path
+      d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+    ></path>
+  </svg>
+  <svg class="acl-icon-close" viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+    <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+  </svg>
+</button>
+
+<div id="ams-chat-panel" role="dialog" aria-modal="false" aria-label="Accounting Max Services" hidden>
+  <button id="ams-chat-close" type="button">
+    <span class="visually-hidden">{lang === "es" ? "Cerrar chat" : "Close chat"}</span>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">
+      <path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  <div id="ams-chat"></div>
+</div>
+
+<style is:global>
+  #ams-chat-launcher {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 40;
+    width: 60px;
+    height: 60px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7fb932, #6da228);
+    color: #1f2b30;
+    box-shadow: 0 10px 26px rgba(36, 49, 55, 0.35), 0 0 0 1px rgba(109, 162, 40, 0.3);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  #ams-chat-launcher:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(36, 49, 55, 0.4), 0 0 0 1px rgba(109, 162, 40, 0.5);
+  }
+  #ams-chat-launcher:focus-visible {
+    outline: 3px solid #4e751c;
+    outline-offset: 3px;
+  }
+  #ams-chat-launcher .acl-icon-close { display: none; }
+  #ams-chat-launcher[aria-expanded="true"] { z-index: 1001; }
+  #ams-chat-launcher[aria-expanded="true"] .acl-icon-open { display: none; }
+  #ams-chat-launcher[aria-expanded="true"] .acl-icon-close { display: block; }
+
+  #ams-chat-panel {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 5.75rem;
+    z-index: 1000;
+    width: 380px;
+    max-width: calc(100vw - 2rem);
+    height: 560px;
+    max-height: calc(100vh - 7.5rem);
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #dedede;
+    box-shadow: 0 24px 60px rgba(36, 49, 55, 0.28);
+    background: #ffffff;
+    animation: aclRise 0.18s ease;
+  }
+  #ams-chat-panel[hidden] { display: none; }
+  #ams-chat, #ams-chat > * { height: 100%; }
+  #ams-chat:empty::before {
+    content: "Loading…";
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: #5d6b70;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Roboto, sans-serif;
+    font-size: 0.9rem;
+  }
+
+  #ams-verify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: 100%;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  #ams-verify p {
+    margin: 0;
+    color: #243137;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Roboto, sans-serif;
+    font-size: 0.95rem;
+  }
+  #ams-turnstile { min-height: 65px; }
+
+  @keyframes aclRise {
+    from { opacity: 0; transform: translateY(10px) scale(0.99); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #ams-chat-panel { animation: none; }
+    #ams-chat-launcher { transition: none; }
+  }
+
+  #ams-chat-panel {
+    --chat--color--primary: #6da228;
+    --chat--color--primary-shade-50: #7fb932;
+    --chat--color--primary--shade-100: #4e751c;
+    --chat--color--secondary: #243137;
+    --chat--color-dark: #243137;
+    --chat--color-light: #ffffff;
+    --chat--color-typing: #6da228;
+    --chat--font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Ubuntu, Roboto, Arial, Helvetica, sans-serif;
+    --chat--border-radius: 12px;
+    --chat--transition-duration: 0.18s;
+
+    --chat--header--background: #243137;
+    --chat--header--color: #ffffff;
+    --chat--header--padding: 1.1rem 1.25rem;
+    --chat--header--border-bottom: 1px solid rgba(109, 162, 40, 0.3);
+    --chat--heading--font-size: 1.1rem;
+    --chat--subtitle--font-size: 0.85rem;
+    --chat--subtitle--line-height: 1.5;
+
+    --chat--body--background: #f4f6f6;
+    --chat--messages-list--padding: 1.1rem;
+    --chat--message--font-size: 0.95rem;
+    --chat--message-line-height: 1.5;
+    --chat--message--padding: 0.7rem 0.9rem;
+    --chat--message--border-radius: 12px;
+    --chat--message--margin-bottom: 0.65rem;
+    --chat--message--bot--background: #ffffff;
+    --chat--message--bot--color: #333333;
+    --chat--message--bot--border: 1px solid #dedede;
+    --chat--message--user--background: #6da228;
+    --chat--message--user--color: #1f2b30;
+    --chat--message--user--border: none;
+
+    --chat--input--container--background: #ffffff;
+    --chat--input--container--border: 1px solid #dedede;
+    --chat--input--background: #ffffff;
+    --chat--input--text-color: #243137;
+    --chat--input--border: 1px solid #cfd6d8;
+    --chat--input--border-active: 1px solid #6da228;
+    --chat--input--border-radius: 10px;
+    --chat--input--font-size: 0.95rem;
+    --chat--input--send--button--background: #6da228;
+    --chat--input--send--button--background-hover: #4e751c;
+    --chat--input--send--button--color: #1f2b30;
+    --chat--input--send--button--color-hover: #ffffff;
+
+    --chat--footer--background: #ffffff;
+    --chat--footer--color: #5d6b70;
+    --chat--footer--padding: 0.4rem 1rem 0.7rem;
+
+    --chat--button--background--primary: #6da228;
+    --chat--button--background--primary--hover: #4e751c;
+    --chat--button--color--primary: #1f2b30;
+
+    --chat--window--border: none;
+    --chat--window--border-radius: 0;
+  }
+
+  #ams-chat-panel .chat-powered-by { display: none !important; }
+
+  #ams-chat-panel .chat-heading {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.6rem;
+  }
+  #ams-chat-panel .chat-header { text-align: left; }
+  #ams-chat-panel .chat-header p { margin: 0; }
+  #ams-chat-panel .chat-heading h1,
+  #ams-chat-panel .chat-header h1 {
+    margin: 0;
+    line-height: 28px;
+  }
+  #ams-chat-panel .chat-heading::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: #ffffff url("/favicon.svg") center / 66% no-repeat;
+    box-shadow: 0 0 0 1.5px rgba(109, 162, 40, 0.6);
+  }
+
+  #ams-chat-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 6;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  #ams-chat-close:hover { background: rgba(109, 162, 40, 0.4); }
+  #ams-chat-close:focus-visible { outline: 2px solid #ffffff; outline-offset: 2px; }
+
+  #ams-chat-panel .chat-messages-list { margin-top: 0; }
+
+  @media (max-width: 560px) {
+    #ams-chat-panel {
+      inset: 0;
+      width: 100%;
+      max-width: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      border-radius: 0;
+      border: none;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    #ams-chat-close { top: 12px; right: 12px; width: 38px; height: 38px; }
+    #ams-chat-launcher { right: 1rem; bottom: 1rem; }
+    #ams-chat-launcher[aria-expanded="true"] { display: none; }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script is:inline define:vars={{ lang, TURNSTILE_SITEKEY }}>
+  (function () {
+    var launcher = document.getElementById("ams-chat-launcher");
+    var panel = document.getElementById("ams-chat-panel");
+    var closeBtn = document.getElementById("ams-chat-close");
+    if (!launcher || !panel) return;
+
+    var VERSION = "20260804a";
+    var loaded = false;
+    var isOpen = false;
+
+    function i18nFor(l) {
+      if (l === "es") {
+        return {
+          title: "Accounting Max Services · Asistente",
+          subtitle: "Escríbanos sobre nuestros servicios de impuestos y contabilidad.",
+          footer: "Al chatear acepta nuestra Política de Privacidad.",
+          getStarted: "Nueva conversación",
+          inputPlaceholder: "Escriba su mensaje…",
+          closeButtonTooltip: "Cerrar",
+        };
+      }
+      return {
+        title: "Accounting Max Services · Assistant",
+        subtitle: "Ask us anything about our tax and accounting services.",
+        footer: "By chatting you agree to our Privacy Policy.",
+        getStarted: "New conversation",
+        inputPlaceholder: "Type your message…",
+        closeButtonTooltip: "Close",
+      };
+    }
+
+    function greeting(l) {
+      return l === "es"
+        ? ["¡Hola! 👋 Soy el asistente de Accounting Max Services. ¿En qué le puedo ayudar — impuestos, contabilidad o algo más?"]
+        : ["Hi! 👋 I'm the Accounting Max Services assistant. How can I help — taxes, bookkeeping, or something else?"];
+    }
+
+    var tsLoading;
+    function loadTurnstileScript() {
+      if (window.turnstile) return Promise.resolve(true);
+      if (tsLoading) return tsLoading;
+      tsLoading = new Promise(function (resolve) {
+        var s = document.createElement("script");
+        s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        s.async = true;
+        s.onload = function () { resolve(true); };
+        s.onerror = function () { resolve(false); };
+        document.head.appendChild(s);
+        setTimeout(function () { resolve(!!window.turnstile); }, 6000);
+      });
+      return tsLoading;
+    }
+
+    function verifyHuman() {
+      if (!TURNSTILE_SITEKEY) return Promise.resolve(true);
+      return loadTurnstileScript().then(function (ok) {
+        if (!ok || !window.turnstile) return true;
+        return new Promise(function (resolve) {
+          var settled = false;
+          function done(v) {
+            if (!settled) { settled = true; resolve(v); }
+          }
+          var box = document.getElementById("ams-chat");
+          var msg = lang === "es" ? "Verificando que es una persona…" : "Verifying you are human…";
+          if (box) box.innerHTML = '<div id="ams-verify"><p>' + msg + '</p><div id="ams-turnstile"></div></div>';
+          var holder = document.getElementById("ams-turnstile");
+          if (!holder) { holder = document.createElement("div"); document.body.appendChild(holder); }
+          try {
+            window.turnstile.render(holder, {
+              sitekey: TURNSTILE_SITEKEY,
+              theme: "light",
+              callback: function (token) {
+                fetch("/api/chat-verify", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify({ token: token }),
+                })
+                  .then(function (r) { return r.json(); })
+                  .then(function (d) { done(!!d.ok); })
+                  .catch(function () { done(false); });
+              },
+              "error-callback": function () { done(false); },
+              "timeout-callback": function () { done(false); },
+            });
+          } catch (e) {
+            done(false);
+          }
+          setTimeout(function () { done(false); }, 30000);
+        });
+      });
+    }
+
+    function load() {
+      if (loaded) return Promise.resolve();
+      loaded = true;
+      return verifyHuman().then(function (human) {
+        if (!human) {
+          loaded = false;
+          var b = document.getElementById("ams-chat");
+          if (b) {
+            b.textContent =
+              lang === "es"
+                ? "No pudimos verificar que es una persona. Recargue la página, o escríbanos a info@accountingmaxservices.com / (954) 724-1114."
+                : "We could not verify you are human. Please refresh, or email info@accountingmaxservices.com / call (954) 724-1114.";
+          }
+          return;
+        }
+        var css = document.createElement("link");
+        css.rel = "stylesheet";
+        css.href = "/scripts/n8n-chat.css?v=" + VERSION;
+        document.head.appendChild(css);
+        var box0 = document.getElementById("ams-chat");
+        if (box0) box0.innerHTML = "";
+        return import("/scripts/n8n-chat.bundle.js?v=" + VERSION)
+          .then(function (mod) {
+            mod.createChat({
+              webhookUrl: "/api/chat",
+              target: "#ams-chat",
+              mode: "fullscreen",
+              showWelcomeScreen: false,
+              loadPreviousSession: true,
+              defaultLanguage: "en",
+              initialMessages: greeting(lang),
+              i18n: { en: i18nFor(lang) },
+              metadata: { source_url: location.pathname, site_lang: lang },
+            });
+          })
+          .catch(function () {
+            loaded = false;
+            var box = document.getElementById("ams-chat");
+            if (box) {
+              box.textContent =
+                lang === "es"
+                  ? "No pudimos cargar el chat. Escríbanos a info@accountingmaxservices.com o al (954) 724-1114."
+                  : "We could not load the chat. Email info@accountingmaxservices.com or call (954) 724-1114.";
+            }
+          });
+      });
+    }
+
+    function open() {
+      panel.hidden = false;
+      launcher.setAttribute("aria-expanded", "true");
+      isOpen = true;
+      load();
+    }
+    function close() {
+      panel.hidden = true;
+      launcher.setAttribute("aria-expanded", "false");
+      isOpen = false;
+      launcher.focus();
+    }
+
+    launcher.addEventListener("click", function () {
+      isOpen ? close() : open();
+    });
+    if (closeBtn) closeBtn.addEventListener("click", close);
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen) close();
+    });
+  })();
+</script>

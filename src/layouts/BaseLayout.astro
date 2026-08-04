@@ -4,6 +4,7 @@ import { t } from "../lib/i18n";
 import { otroIdioma } from "../lib/es";
 // El nombre del negocio es NAP y va literal en las dos lenguas (ver i18n.ts:17).
 import { NEGOCIO } from "../lib/sanity";
+import ChatWidget from "../components/ChatWidget.astro";
 
 interface Props {
   title: string;
@@ -432,5 +433,10 @@ const ogAlt = ogImageAlt || `${NEGOCIO.nombre} logo`;
         es el patron estandar; el destino es el <main id="main"> de cada ruta. */}
     <a href="#main" class="saltar-al-contenido">{t(lang).nav.saltar}</a>
     <slot />
+
+    {/* Chat de IA: perezoso y autohospedado (ver ChatWidget.astro). Activo en
+        preview ademas de en produccion, a proposito: es donde se prueba antes
+        de fusionar a main. */}
+    <ChatWidget lang={lang} />
   </body>
 </html>

@@ -69,6 +69,13 @@ export type DatosAcuse = {
    * tocar la constante.
    */
   plazo?: string | null;
+  /**
+   * Canal de origen del lead. `undefined` se comporta igual que "contact-us"
+   * (default seguro: el correo de hoy no cambia ni una letra). Solo cambia el
+   * texto de las 3 frases de CANAL_TEXTO_CHAT — el resto de COPIA_ACUSE es
+   * identico para los dos canales.
+   */
+  channel?: "contact-us" | "chat";
 };
 
 /** Lo anterior mas lo que anade el servidor. */
@@ -434,6 +441,37 @@ const COPIA_ACUSE = {
 } as const;
 
 /**
+ * Las 3 frases de COPIA_ACUSE que SI cambian segun el canal de origen: el
+ * aviso de pie ("recibio este correo porque...") y las dos explicaciones de
+ * consentimiento, que hoy dicen "en el formulario" / "on the form". Nada mas
+ * de COPIA_ACUSE depende del canal — por eso esto es un tipo de 3 claves
+ * escrito a mano, no una copia del bloque entero, que habria invitado a que
+ * las dos copias se fueran separando con el tiempo. "contact-us" no tiene
+ * entrada aqui a proposito: para ese canal (y para `channel` sin definir)
+ * construirAcuse lee directamente de COPIA_ACUSE, byte a byte igual que antes
+ * de este cambio.
+ */
+type TextoCanalChat = { canalSolo: string; canalLlamada: string; aviso: string };
+const CANAL_TEXTO_CHAT: Record<Lang, TextoCanalChat> = {
+  en: {
+    canalSolo:
+      "We will reply by email. We will not call or text you, because you left both consent options unselected in the chat.",
+    canalLlamada:
+      "We will reply by email, and we may also call or text you at the number you gave us, because you agreed to it in the chat.",
+    aviso:
+      "You are receiving this message because you provided this email address in a chat conversation with Accounting Max Services at accountingmaxservices.com. It confirms receipt of that request and nothing else.",
+  },
+  es: {
+    canalSolo:
+      "Le responderemos por correo electrónico. No le llamaremos ni le escribiremos por mensaje de texto, porque dejó sin marcar las dos opciones de consentimiento en el chat.",
+    canalLlamada:
+      "Le responderemos por correo electrónico y, además, podemos llamarle o escribirle por mensaje de texto al número que nos facilitó, porque lo autorizó en el chat.",
+    aviso:
+      "Este mensaje se le envía porque facilitó esta dirección de correo electrónico en una conversación de chat con Accounting Max Services en accountingmaxservices.com. Solo confirma la recepción de esa solicitud.",
+  },
+};
+
+/**
  * El eco del mensaje se RECORTA. Este correo sale a una direccion que escribio
  * un desconocido: alguien puede poner el correo de otra persona y usar el
  * textarea como megafono con el remitente del despacho. El captcha, el
@@ -444,8 +482,9 @@ const MAX_ECO = 600;
 
 export function construirAcuse(d: DatosAcuse, n: Negocio): Correo {
   const c = COPIA_ACUSE[d.lang];
+  const t = d.channel === "chat" ? CANAL_TEXTO_CHAT[d.lang] : c;
   const plazo = d.plazo === null ? HUECO_PLAZO : (d.plazo ?? PLAZO?.[d.lang] ?? HUECO_PLAZO);
-  const canal = d.consentCall || d.consentSms ? c.canalLlamada : c.canalSolo;
+  const canal = d.consentCall || d.consentSms ? t.canalLlamada : t.canalSolo;
   const eco = d.message.length > MAX_ECO ? d.message.slice(0, MAX_ECO) + "…" : d.message;
 
   const fila = (etiqueta: string, valorHtml: string): string => `
@@ -534,7 +573,7 @@ ${cabecera(n, { logo: true })}
   <td class="ams-card ams-pad" bgcolor="#ffffff" style="background-color:#ffffff;padding:14px 32px 26px;">
     <div style="height:1px;font-size:0;line-height:0;background-color:#dedede;">&#8203;</div>
     <p class="ams-apagado" style="margin:14px 0 0;font-family:${FUENTE};font-size:12px;line-height:18px;color:#5d6b70;">${esc(
-      c.aviso,
+      t.aviso,
     )}</p>
   </td>
 </tr>
@@ -561,7 +600,7 @@ ${pie(n)}`;
     "",
     `${c.urgente} ${n.telefono}`,
     "",
-    c.aviso,
+    t.aviso,
     "",
     "--",
     n.nombre,

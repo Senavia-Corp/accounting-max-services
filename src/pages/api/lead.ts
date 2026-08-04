@@ -335,7 +335,7 @@ export async function enviarAviso(aviso: Aviso): Promise<{ enviado: boolean; mot
 
 // --- Mensajes de error (bilingues: el prospecto los lee) --------------------
 
-const T = {
+export const T = {
   metodo: { en: "Method not allowed.", es: "Método no permitido." },
   grande: { en: "That message is too large.", es: "El mensaje es demasiado grande." },
   adjunto: {
@@ -500,7 +500,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     // enlace de baja y sin List-Unsubscribe — CAN-SPAM no los exige para un
     // acuse de recibo, y ponerlos lo convierte en marketing. Auto-Submitted es
     // RFC 3834: corta el bucle si la direccion de destino autorresponde.
-    const acuse = construirAcuse(base, NEGOCIO);
+    const acuse = construirAcuse({ ...base, channel: "contact-us" }, NEGOCIO);
     await enviarAviso({
       ...acuse,
       para: email,
